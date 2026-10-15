@@ -323,7 +323,7 @@ PERIODIC ACCESS REVIEW (quarterly/annual)
 
 3. **Profile controls CRUD and FLS; Role Hierarchy controls record visibility.** These are different security dimensions. A user can have Read access on an object (Profile) but still not see a specific record if the OWD is Private and they are not the owner or in the owner's role hierarchy.
 
-4. **Permission Set = additive, not replacement.** Permission Sets add to what a Profile already grants. They cannot remove permissions that a Profile grants. Use Permission Sets for "a few users need something extra," not for "a few users should not have what others have."
+4. **Permission Set = additive, not replacement.** Permission Sets add to what a Profile already grants. They cannot remove permissions that a Profile grants. Use Permission Sets for "a few users need something extra," not for "a few users should not have what others have.
 
 5. **SAP SM20 = Security Audit Log.** This transaction is always the answer when an auditor asks "who accessed what in SAP?" Combined with Change Documents, SM20 provides the complete audit trail for financial document access and modification.
 
@@ -340,7 +340,7 @@ PERIODIC ACCESS REVIEW (quarterly/annual)
 Complete before attempting the quiz:
 
 - **Salesforce Trailhead — Data Security**
-  trailhead.salesforce.com — search "Data Security"
+  trailhead.salesforce.com — search "Data Security
   Covers OWD, Role Hierarchy, Profiles, Permission Sets, and Sharing Rules tested on the Certified Associate exam.
 
 ---
@@ -488,8 +488,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

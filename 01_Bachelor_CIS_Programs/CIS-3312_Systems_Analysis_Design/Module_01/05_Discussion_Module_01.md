@@ -42,7 +42,7 @@ Sub-questions:
 
 ## Scenario C: The "Build It or Buy It" Feasibility Decision
 
-A mid-sized logistics company currently tracks driver routes and delivery confirmations using a combination of spreadsheets and phone calls. The operations director has proposed building a custom real-time route optimization system. The IT department estimates $800,000 in development costs and 18 months to build. A BA conducting a feasibility study discovers that three commercial SaaS platforms offer nearly identical functionality at $24,000 per year each, can be configured in 6–8 weeks, and have been validated by similar logistics companies. However, the operations director insists on custom development because "we need to own our own technology."
+A mid-sized logistics company currently tracks driver routes and delivery confirmations using a combination of spreadsheets and phone calls. The operations director has proposed building a custom real-time route optimization system. The IT department estimates $800,000 in development costs and 18 months to build. A BA conducting a feasibility study discovers that three commercial SaaS platforms offer nearly identical functionality at $24,000 per year each, can be configured in 6–8 weeks, and have been validated by similar logistics companies. However, the operations director insists on custom development because "we need to own our own technology.
 
 Sub-questions:
 

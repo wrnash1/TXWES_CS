@@ -413,7 +413,7 @@ A developer claims their algorithm is O(n) time. Under what condition would this
 
 - *Why A is incorrect:* A large constant factor is a valid concern for practical performance, but it does not make the O(n) claim technically wrong. The constant is dropped in Big-O analysis because it is hardware/implementation dependent. A truly large constant might matter in practice, but option C is a more direct example of a technically misleading (though not incorrect) claim.
 - *Why B is incorrect:* O(n) space is not "always worse" than O(1) space — it depends on context. The time-space tradeoff often makes O(n) space acceptable. This statement is a false universal claim.
-- *Why C is correct:* Big-O by convention refers to worst-case unless otherwise specified. If an algorithm is O(n) best-case but O(n²) worst-case, claiming "O(n)" without qualification is misleading. The interviewer hears "worst-case O(n)" when none was stated. Always clarify: "O(n) average case, O(n²) worst case."
+- *Why C is correct:* Big-O by convention refers to worst-case unless otherwise specified. If an algorithm is O(n) best-case but O(n²) worst-case, claiming "O(n)" without qualification is misleading. The interviewer hears "worst-case O(n)" when none was stated. Always clarify: "O(n) average case, O(n²) worst case.
 - *Why D is incorrect:* If sorting is part of the algorithm, its O(n log n) cost must be included in the overall analysis. An algorithm that sorts first is O(n log n), not O(n). This would be an incorrect claim, not merely a misleading one — the sorting cost cannot be hidden.
 
 ---

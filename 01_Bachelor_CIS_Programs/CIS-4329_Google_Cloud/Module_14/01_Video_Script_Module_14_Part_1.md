@@ -127,7 +127,7 @@ To actually stop resources when a budget is exceeded:
 4. The function calls the GCP API to stop VMs, disable billing, or take other action
 
 This is a common ACE exam scenario: "Budget alerts alone are not enough to stop
-overspending — you need a Pub/Sub + Cloud Function integration."
+overspending — you need a Pub/Sub + Cloud Function integration.
 
 ---
 

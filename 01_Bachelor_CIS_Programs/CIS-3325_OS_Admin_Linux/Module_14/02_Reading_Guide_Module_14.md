@@ -588,8 +588,6 @@ The official Ansible getting started guide. Covers installation, inventory file 
 **3. [SSH Hardening Guide — Mozilla InfoSec](https://infosec.mozilla.org/guidelines/openssh)**
 Mozilla's published SSH hardening guidelines, maintained by their security engineering team. Provides specific `sshd_config` and `ssh_config` recommendations with rationale, organized into Modern, Intermediate, and Old compatibility tiers. Covers key exchange algorithms, ciphers, MACs, authentication methods, and operational security practices. Directly applicable to the Module 14 lab's sshd_config hardening tasks.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

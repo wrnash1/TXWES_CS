@@ -482,8 +482,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
    URL: [https://www.crucial.com/articles/about-memory/support-what-does-the-memory-form-factor-mean](https://www.crucial.com/articles/about-memory/support-what-does-the-memory-form-factor-mean)
    Relevance: Free vendor-neutral reference explaining DIMM vs. SODIMM form factors with photos. Supplements the Module 04 reading guide section on physical form factor differences.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

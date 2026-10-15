@@ -20,7 +20,7 @@ Peer Responses: Due Sunday at 11:59 PM (minimum two responses)
 
 ## Scenario A: The Partial Map
 
-Your SOC manager shows you a threat intelligence report from a government advisory. The advisory describes a campaign in which attackers sent targeted emails with PDF attachments to employees at financial institutions. When the PDF was opened, it ran an embedded script that downloaded a file from a cloud storage URL. That file then created a new Windows service that survived reboots. The advisory does not include any specific IOCs — no hashes, no IPs, no domain names. Your manager asks: "Without IOCs, is this report useful to us?"
+Your SOC manager shows you a threat intelligence report from a government advisory. The advisory describes a campaign in which attackers sent targeted emails with PDF attachments to employees at financial institutions. When the PDF was opened, it ran an embedded script that downloaded a file from a cloud storage URL. That file then created a new Windows service that survived reboots. The advisory does not include any specific IOCs — no hashes, no IPs, no domain names. Your manager asks: "Without IOCs, is this report useful to us?
 
 In 175-225 words, address all three of the following points:
 

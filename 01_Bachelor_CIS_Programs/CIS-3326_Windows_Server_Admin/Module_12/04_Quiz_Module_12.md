@@ -522,7 +522,7 @@ PowerShell script every hour. Which script logic correctly checks the condition?
 ### Question 18 (5 points)
 
 An administrator runs `Get-Service -ComputerName DC2` and receives an error:
-"Cannot open Service Control Manager on computer 'DC2'. This operation might
+Cannot open Service Control Manager on computer 'DC2'. This operation might
 require other privileges." What is the most likely cause?
 
 - A) The WinRM service is not running on DC2

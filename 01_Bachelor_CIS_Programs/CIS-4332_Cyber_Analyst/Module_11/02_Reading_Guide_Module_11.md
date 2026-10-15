@@ -408,8 +408,6 @@ The ATT&CK Impact tactic page documents adversary actions that cause harm to sys
 - CertifyBreakfast CySA+ CS0-003 Complete Playlist — Incident Response sections
 - Module 11 Video Lecture (Professor Nash)
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

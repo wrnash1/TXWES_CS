@@ -45,8 +45,6 @@ By the end of this module you will be able to:
 
 Let's get started.
 
-[PAUSE]
-
 ---
 
 ## Section 1: Input Variables (1:30 – 5:30)
@@ -74,8 +72,6 @@ provider "aws" {
 ```
 
 Notice the `var.` prefix — that is how you always access a variable's value in Terraform.
-
-[PAUSE]
 
 ### Type Constraints
 
@@ -105,8 +101,6 @@ variable "tags" {
 ```
 
 When Terraform reads your configuration it enforces the type. If you pass a string where a number is expected, Terraform will attempt a conversion — and if that fails, it will error out with a clear message.
-
-[PAUSE]
 
 ### Variable Validation
 
@@ -147,8 +141,6 @@ environment must be one of: dev, staging, prod.
 
 Clean, informative, and it prevents misconfiguration before any infrastructure is touched.
 
-[PAUSE]
-
 ---
 
 ## Section 2: Sensitive Variables (5:30 – 8:00)
@@ -181,8 +173,6 @@ During `terraform apply`, sensitive values appear as `(sensitive value)` in the 
 ```
 
 **Important exam note**: Sensitive values are still stored in `terraform.tfstate` in plain text. Marking a variable sensitive only affects console output, not state file storage. This is why state file security matters — which we cover in Module 08.
-
-[PAUSE]
 
 ---
 
@@ -223,8 +213,6 @@ terraform output -json
 
 The `-json` flag is especially useful in CI/CD pipelines where a script needs to consume the value programmatically.
 
-[PAUSE]
-
 ### Output Dependencies
 
 Outputs also create implicit dependencies. If an output references a resource attribute, Terraform knows that resource must be created first. This is the same dependency graph mechanism that governs resource ordering.
@@ -244,8 +232,6 @@ resource "aws_instance" "web" {
 ```
 
 We will cover module composition in depth in Module 09, but this pattern is the foundation.
-
-[PAUSE]
 
 ---
 
@@ -282,8 +268,6 @@ resource "aws_s3_bucket" "assets" {
 }
 ```
 
-[PAUSE]
-
 ### Locals vs Variables
 
 This is a common point of confusion. Here is the key distinction:
@@ -292,8 +276,6 @@ This is a common point of confusion. Here is the key distinction:
 - **Local values** (`locals`) — computed inside the configuration from other values; the caller cannot override them directly
 
 Use locals when you have an expression that appears in multiple places, or when you want to name a derived value for clarity. Use variables when you need the caller to be able to supply or override the value.
-
-[PAUSE]
 
 ---
 
@@ -342,8 +324,6 @@ The `-var` flag wins — Terraform uses `ap-southeast-1`.
 
 The environment variable `TF_VAR_region` would beat the `.tfvars` file but loses to the explicit `-var` flag.
 
-[PAUSE]
-
 ### tfvars Files
 
 A `.tfvars` file is simply key-value pairs:
@@ -364,8 +344,6 @@ terraform plan -var-file="staging.tfvars"
 
 This pattern — one `.tfvars` file per environment — is extremely common in real-world Terraform projects.
 
-[PAUSE]
-
 ### Environment Variables
 
 For every input variable `foo`, Terraform reads the environment variable `TF_VAR_foo`. This is the standard way to pass secrets into Terraform in CI/CD pipelines without writing them to disk.
@@ -376,8 +354,6 @@ terraform apply
 ```
 
 The shell variable is consumed by Terraform and the value never appears in your version-controlled files.
-
-[PAUSE]
 
 ---
 
@@ -462,8 +438,6 @@ export TF_VAR_db_password="$SECRET_FROM_VAULT"
 terraform apply -var-file="prod.tfvars"
 ```
 
-[PAUSE]
-
 ---
 
 ## Summary and Exam Tips (20:00 – 22:00)
@@ -483,8 +457,6 @@ Let's recap what we covered:
 - `sensitive = true` does NOT encrypt the state file
 - `terraform output -json` for programmatic consumption
 - `TF_VAR_` prefix is case-sensitive and matches the variable name exactly
-
-[PAUSE]
 
 ---
 

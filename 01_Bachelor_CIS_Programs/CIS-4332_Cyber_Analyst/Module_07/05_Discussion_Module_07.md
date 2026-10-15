@@ -20,7 +20,7 @@ Peer Responses: Due Sunday at 11:59 PM (minimum two responses)
 
 ## Scenario A: The Packed Sample Problem
 
-A SOC analyst receives a suspicious file hash from a threat intelligence feed. The file is an executable flagged as associated with a known APT group's toolset. The analyst downloads the sample to an isolated analysis workstation and runs standard static analysis: strings extraction, PE header review, and import table inspection. The strings output contains almost no readable content. The import table contains only five functions: LoadLibraryA, GetProcAddress, VirtualAlloc, CreateThread, and ExitProcess. The PE has two sections: one with normal entropy and one with entropy of 7.97. The analyst concludes: "Static analysis shows this sample has minimal capabilities — only basic library loading functions. I don't see enough indicators to escalate this."
+A SOC analyst receives a suspicious file hash from a threat intelligence feed. The file is an executable flagged as associated with a known APT group's toolset. The analyst downloads the sample to an isolated analysis workstation and runs standard static analysis: strings extraction, PE header review, and import table inspection. The strings output contains almost no readable content. The import table contains only five functions: LoadLibraryA, GetProcAddress, VirtualAlloc, CreateThread, and ExitProcess. The PE has two sections: one with normal entropy and one with entropy of 7.97. The analyst concludes: "Static analysis shows this sample has minimal capabilities — only basic library loading functions. I don't see enough indicators to escalate this.
 
 In 175-225 words, address all three of the following points:
 
@@ -34,7 +34,7 @@ In 175-225 words, address all three of the following points:
 
 Your threat intelligence team has just completed sandbox analysis of a malware sample. The sandbox report produced the following indicators: a SHA-256 file hash, a C2 IP address on port 443, a C2 domain name using a subdomain pattern consistent with domain generation algorithm output, a mutex name, a registry run key path and value name, and a scheduled task name. Your team has time to implement exactly three detection rules before the shift ends.
 
-Your manager asks: "Which three IOCs give us the best immediate detection coverage for the lowest false positive risk?"
+Your manager asks: "Which three IOCs give us the best immediate detection coverage for the lowest false positive risk?
 
 In 175-225 words, address all three of the following points:
 

@@ -14,7 +14,7 @@ This lab develops your ability to map HR business scenarios to SuccessFactors mo
 
 **Estimated Time:** 90 minutes
 
-**Submission:** Upload to Canvas under "Lab 08 -- Human Capital Management Modules."
+**Submission:** Upload to Canvas under "Lab 08 -- Human Capital Management Modules.
 
 ---
 
@@ -64,7 +64,7 @@ For each business event at Lakewood, identify the correct SuccessFactors module 
 
 ### A-2: System of Record Analysis
 
-The CHRO asks: "We have Employee Central, a legacy payroll system we are sunsetting, and an old on-premise SAP HR module that HR still uses for reporting. Which system should be our authoritative source of truth for employee data going forward?"
+The CHRO asks: "We have Employee Central, a legacy payroll system we are sunsetting, and an old on-premise SAP HR module that HR still uses for reporting. Which system should be our authoritative source of truth for employee data going forward?
 
 In 100-150 words, explain the concept of a system of record and why Employee Central should be designated as Lakewood's authoritative HR data source. What risks arise when multiple systems hold partially overlapping employee data without a clear system of record?
 
@@ -191,7 +191,7 @@ In 100-150 words, explain why maintaining parallel systems during transition cre
 
 1. Compile all responses into a single document.
 2. Name your file: `Lab08_LastName_FirstName.pdf`
-3. Upload to Canvas under "Lab 08 -- Human Capital Management Modules."
+3. Upload to Canvas under "Lab 08 -- Human Capital Management Modules.
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
 
 ---

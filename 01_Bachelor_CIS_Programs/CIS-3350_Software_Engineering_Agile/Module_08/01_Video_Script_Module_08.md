@@ -1,5 +1,23 @@
 # Video Script: Module 08 – Estimation: Story Points and Planning Poker
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture &bull; Module 08</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=LzMnsfqjzkA" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/LzMnsfqjzkA" title="freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Estimated Duration:** 21 minutes
@@ -7,9 +25,8 @@
 
 ---
 
-## Section 1 — Welcome and Why We Estimate [00:00–03:30]
-
-"Welcome to Module 8. We have covered how to write good user stories. Today we tackle the question every team faces when they look at a list of user stories: how much work is this?
+## Section 1 — Welcome and Why We Estimate
+Welcome to Module 8. We have covered how to write good user stories. Today we tackle the question every team faces when they look at a list of user stories: how much work is this?
 
 Estimation in Agile is fundamentally different from estimation in Waterfall. In Waterfall, estimates are used to create project schedules — to predict with precision when specific features will be complete. The problem is that software estimation is notoriously inaccurate when predicting absolute durations. Studies have consistently shown that developers and project managers overestimate their accuracy when predicting how long software work will take.
 
@@ -21,15 +38,12 @@ By the end of this module you will be able to:
 - Facilitate a Planning Poker estimation session
 - Use the Fibonacci sequence as an estimation scale
 - Understand velocity and use it for Sprint capacity planning
-- Avoid the most common estimation mistakes in Agile teams"
+- Avoid the most common estimation mistakes in Agile teams
 
 ---
 
-## Section 2 — Story Points vs. Hour Estimates [03:30–09:00]
-
-"Story points are units of measure for expressing an estimate of the overall effort required to fully implement a Product Backlog item or any other piece of work. The key word is 'relative.' Story points measure size relative to other stories — not absolute duration.
-
-[SHOW DIAGRAM: T-shirt size comparison — Small = 1 pt, Medium = 3 pts, Large = 8 pts, Extra Large = 13 pts — showing relative sizes visually]
+## Section 2 — Story Points vs. Hour Estimates
+Story points are units of measure for expressing an estimate of the overall effort required to fully implement a Product Backlog item or any other piece of work. The key word is 'relative.' Story points measure size relative to other stories — not absolute duration.
 
 Let me explain why relative estimation works better than absolute estimation for software development.
 
@@ -43,15 +57,12 @@ Story points capture this relative complexity, effort, and uncertainty. A 5-poin
 
 PSM I Exam Tip: The Scrum Guide does not mandate story points. The Guide says Developers add size estimates to Product Backlog items but does not specify the unit. Story points are widely used in practice, but teams also use T-shirt sizes, ideal days, or any other relative scale. Questions about story points test your understanding of the concept, not the Scrum Guide's requirement.
 
-Why the Fibonacci sequence? The most common story point scale uses Fibonacci numbers: 1, 2, 3, 5, 8, 13, 21. There is a practical reason for this. When the gap between consecutive estimates grows, it forces an honest conversation about uncertainty. If you are choosing between 8 and 13, that 5-point gap reflects significant uncertainty about the work. If you were using a 1–10 scale, the choice between 8 and 9 would create false precision. The Fibonacci sequence's growing gaps prevent false precision in high-complexity estimates."
+Why the Fibonacci sequence? The most common story point scale uses Fibonacci numbers: 1, 2, 3, 5, 8, 13, 21. There is a practical reason for this. When the gap between consecutive estimates grows, it forces an honest conversation about uncertainty. If you are choosing between 8 and 13, that 5-point gap reflects significant uncertainty about the work. If you were using a 1–10 scale, the choice between 8 and 9 would create false precision. The Fibonacci sequence's growing gaps prevent false precision in high-complexity estimates.
 
 ---
 
-## Section 3 — Planning Poker: The Process [09:00–15:00]
-
-"Planning Poker is the most common technique for generating story point estimates in Agile teams. It combines the wisdom of the crowd with a structured process that prevents anchoring bias.
-
-[SHOW DIAGRAM: Planning Poker session — Product Owner at whiteboard, 6 Developers each holding a card face-down, with a user story visible]
+## Section 3 — Planning Poker: The Process
+Planning Poker is the most common technique for generating story point estimates in Agile teams. It combines the wisdom of the crowd with a structured process that prevents anchoring bias.
 
 Here is how Planning Poker works step by step.
 
@@ -67,15 +78,12 @@ PSM I Exam Tip: The most valuable part of Planning Poker is the discussion that 
 
 Step 5: After discussing the outliers, all Developers re-estimate with a new card. This continues until the team reaches consensus or an acceptable range.
 
-The goal is not to achieve perfect consensus — it is to achieve a shared understanding of the work that is good enough for Sprint Planning decisions. Planning Poker should be productive and time-boxed; it is not a mechanism for endless debate."
+The goal is not to achieve perfect consensus — it is to achieve a shared understanding of the work that is good enough for Sprint Planning decisions. Planning Poker should be productive and time-boxed; it is not a mechanism for endless debate.
 
 ---
 
-## Section 4 — Velocity and Capacity Planning [15:00–19:00]
-
-"Velocity is the sum of story points completed — meeting the Definition of Done — across a Sprint. It is a measure of how much work a specific team can accomplish in a Sprint of a given length.
-
-[SHOW DIAGRAM: Bar chart showing Sprint velocity over 8 Sprints — values varying from 28 to 38 points with an average trendline around 33]
+## Section 4 — Velocity and Capacity Planning
+Velocity is the sum of story points completed — meeting the Definition of Done — across a Sprint. It is a measure of how much work a specific team can accomplish in a Sprint of a given length.
 
 Velocity is used for Sprint capacity planning: if a team's average velocity over the last three Sprints is 32 story points, Sprint Planning can use 32 as a rough guide for how many story points to select.
 
@@ -89,13 +97,12 @@ Third, velocity should not be used as a performance metric. If a team's velocity
 
 Fourth, the Scrum Guide does not use the word 'velocity.' This is a commonly used Agile practice term, not a Scrum framework element. On the PSM I exam, questions about velocity fall under the category of 'useful practices' rather than Scrum rules.
 
-PSM I Exam Tip: When a manager demands that a team increase their velocity, the Scrum-aligned response is to explain that velocity is not a target — it is a historical measurement. The way to increase team output is to address impediments, improve quality (technical debt reduction), and allow the team to build sustainable capacity over time."
+PSM I Exam Tip: When a manager demands that a team increase their velocity, the Scrum-aligned response is to explain that velocity is not a target — it is a historical measurement. The way to increase team output is to address impediments, improve quality (technical debt reduction), and allow the team to build sustainable capacity over time.
 
 ---
 
-## Section 5 — Estimation Anti-Patterns [19:00–21:00]
-
-"Let me close with the most common estimation mistakes that undermine the value of story points and Planning Poker.
+## Section 5 — Estimation Anti-Patterns
+Let me close with the most common estimation mistakes that undermine the value of story points and Planning Poker.
 
 Anti-pattern 1: Anchoring. One person announces their estimate before everyone else decides. Everyone converges on that number rather than estimating independently. Simultaneous reveal in Planning Poker prevents this.
 
@@ -107,7 +114,7 @@ Anti-pattern 4: Estimating without understanding. Teams that estimate quickly wi
 
 Anti-pattern 5: Using velocity as a productivity metric. If velocity becomes a goal rather than a measurement, it loses its diagnostic value. Teams should be encouraged to refine their estimation accuracy, not to maximize velocity.
 
-In Module 9 we shift from Scrum-specific practices to Kanban and Lean principles — the broader family of Agile approaches. See you there."
+In Module 9 we shift from Scrum-specific practices to Kanban and Lean principles — the broader family of Agile approaches. See you there.
 
 ---
 

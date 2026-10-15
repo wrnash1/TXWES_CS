@@ -239,7 +239,7 @@ In an AVL tree, the balance factor of a node is defined as `height(right_subtree
 - *Why A is incorrect:* A balance factor of ±2 indicates an imbalance that triggers a rotation. In a valid (post-operation) AVL tree, balance factors of ±2 do not persist — they trigger immediate rebalancing.
 - *Why B is incorrect:* This range excludes negative balance factors. A left-heavy node (more nodes in the left subtree) has a negative balance factor, which is perfectly valid in an AVL tree as long as the magnitude is at most 1.
 - *Why C is correct:* The AVL invariant requires that every node's balance factor is in {−1, 0, +1}. −1 means left-heavy by one level; 0 means equal height; +1 means right-heavy by one level. Any balance factor with magnitude ≥ 2 triggers a rotation to restore the invariant.
-- *Why D is incorrect:* Requiring balance factor 0 for all nodes would mean every subtree must have perfectly equal height — this is only achievable for trees with 2ⁿ − 1 nodes. AVL trees allow ±1 imbalance at every node, which is why they are called "height-balanced" rather than "perfectly balanced."
+- *Why D is incorrect:* Requiring balance factor 0 for all nodes would mean every subtree must have perfectly equal height — this is only achievable for trees with 2ⁿ − 1 nodes. AVL trees allow ±1 imbalance at every node, which is why they are called "height-balanced" rather than "perfectly balanced.
 
 ---
 

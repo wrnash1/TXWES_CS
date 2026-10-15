@@ -25,14 +25,10 @@
 ---
 
 ### Pre-Roll Slide
-[SHOW SLIDE: "CSC-6361 — Module 02 Part 1: Campus Network Design — VLANs & Spanning Tree | Texas Wesleyan University | Graduate Level"]
 
 ---
 
 ### Section 1: Welcome & Module Context
-
-[00:00 – 02:00]
-[SHOW SLIDE: Professor Nash on camera, campus network hierarchy diagram visible.]
 
 Welcome back to CSC-6361. In Module 01 we operated at Layer 3 — routing protocols, OSPF, EIGRP, redistribution. This week we descend one layer and focus on the **campus switching infrastructure** that sits beneath all of that routing.
 
@@ -41,9 +37,6 @@ In a real enterprise, no matter how elegantly your routing is designed, if the u
 ---
 
 ### Section 2: The Three-Tier Campus Architecture
-
-[02:00 – 05:00]
-[SHOW DIAGRAM: Three-tier hierarchy — Core layer (redundant L3 switches) → Distribution layer (L3 switches) → Access layer (L2 switches/APs)]
 
 [Alt-text: A hierarchical diagram with three rows. Top row labeled "Core Layer" shows two switches connected to each other. Middle row labeled "Distribution Layer" shows four switches, each connected to both core switches. Bottom row labeled "Access Layer" shows eight switches, each connected upward to two distribution switches. End devices (PCs, IP phones, APs) connect at the bottom.]
 
@@ -73,9 +66,6 @@ The classic campus network model uses a **three-tier hierarchy**:
 ---
 
 ### Section 3: VLANs — Beyond the Basics
-
-[05:00 – 09:30]
-[SHOW DIAGRAM: Multi-VLAN campus with 802.1Q trunks, SVIs, and a DHCP server]
 
 You already know what a VLAN is. At CCNP level, the questions are about **design, scaling, and troubleshooting**.
 
@@ -117,9 +107,6 @@ interface Vlan10
 ---
 
 ### Section 4: Spanning Tree Protocol Deep Dive
-
-[09:30 – 14:30]
-[SHOW DIAGRAM: STP topology — root bridge, root ports, designated ports, blocked port]
 
 [Alt-text: A network diagram showing four switches. Switch A is labeled "Root Bridge (Bridge Priority 0, VLAN 10)." Switch B connects to Switch A with a port labeled "Root Port." Switch C connects to Switch A with a port labeled "Root Port." Switch D connects to both B and C. The link between Switch D and Switch C is labeled "Blocked Port (Alternate Port in RSTP)."]
 
@@ -195,9 +182,6 @@ interface GigabitEthernet0/1
 ---
 
 ### Section 5: Part 1 Summary
-
-[14:30 – 16:00]
-[SHOW SLIDE: Summary slide]
 
 In Part 1 you learned:
 - The **three-tier campus hierarchy** and design rationale at each layer.

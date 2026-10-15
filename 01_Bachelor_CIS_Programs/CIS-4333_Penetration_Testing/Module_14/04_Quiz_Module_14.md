@@ -115,7 +115,7 @@ reviewer marks this title as deficient. What is the primary deficiency?
 - C) The title is too long — professional report titles must be under five words to fit
   report templates
 - D) The title incorrectly names SQL injection; the correct term is "database query
-  manipulation vulnerability"
+  manipulation vulnerability
 
 **Correct Answer:** B) The title is too vague — it does not specify the location, affected
 asset, or consequence, making the finding unsearchable and uninformative to the reader
@@ -126,7 +126,7 @@ asset, or consequence, making the finding unsearchable and uninformative to the 
   and its consequence — before the reader opens the full finding. "SQL Injection Found on
   Web Server" omits the specific URL or endpoint, the affected application or host identifier,
   and the consequence (data extraction, authentication bypass, etc.). A better title:
-  "Unauthenticated SQL Injection in /login Endpoint Allows Full Database Extraction (CWE-89)."
+Unauthenticated SQL Injection in /login Endpoint Allows Full Database Extraction (CWE-89).
 - *Why A is incorrect:* CVE numbers are appropriate in finding titles when a known CVE
   applies. CWE numbers describe vulnerability classes. Using either or both is acceptable and
   encouraged — there is no rule prohibiting CVE references in finding titles.
@@ -372,7 +372,7 @@ any details derived from the engagement in the presentation
   weaknesses, and findings — not just IP addresses. A client could still identify their own
   environment from sanitized technical details.
 - *Why D is incorrect:* NDAs routinely cover technical content, not just the client's name.
-  Standard NDA language covers "all confidential information disclosed during the engagement,"
+  Standard NDA language covers "all confidential information disclosed during the engagement,
   which typically includes vulnerability findings, system configurations, and assessment
   methodology applied to the client's environment.
 

@@ -408,7 +408,7 @@ sudo chage -d 0 testuser_lab
 sudo chage -l testuser_lab
 ```
 
-Note the "Last password change" field should now show "password must be changed."
+Note the "Last password change" field should now show "password must be changed.
 
 **Task 4.6 — Check PAM Password Quality**
 

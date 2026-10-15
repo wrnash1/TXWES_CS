@@ -40,15 +40,11 @@ This module covers two practices that work hand in hand:
 - **Change Enablement** — ensuring that modifications to services and infrastructure
   are authorized, tested, and deployed safely
 
-[SHOW DIAGRAM: Incident → Problem → Change cycle]
-
 These practices are among the top-tested areas on the ITIL 4 Foundation exam, and they
 are among the most misunderstood in real IT organizations. By the end of this module you
 will be able to distinguish reactive from proactive problem management, explain the known
 error database, describe root cause analysis techniques, classify the three change types,
 explain the CAB, and describe how the change schedule works.
-
-[PAUSE]
 
 ---
 
@@ -59,8 +55,6 @@ explain the CAB, and describe how the change schedule works.
 ITIL 4 defines a **problem** as a cause, or potential cause, of one or more incidents.
 Read that carefully: the cause OR POTENTIAL cause. Problems can be identified reactively
 after incidents occur, or proactively before any incident happens.
-
-[SHOW DIAGRAM: Problem as root cause feeding multiple incidents]
 
 The key distinction from incidents:
 
@@ -88,8 +82,6 @@ It is driven by:
 - Vendor security bulletins and known vulnerabilities
 - Architecture reviews that identify single points of failure
 
-[PAUSE]
-
 Proactive problem management is harder to prioritize — there is no burning fire demanding
 attention. But it delivers the highest value by preventing incidents that would have
 otherwise occurred.
@@ -99,8 +91,6 @@ otherwise occurred.
 ## Section 2: The Problem Lifecycle (5:00–9:00)
 
 ### Problem Lifecycle Stages
-
-[SHOW DIAGRAM: Problem lifecycle — Problem Identification → Categorization → Prioritization → Investigation → Known Error → Change/Resolution → Closure]
 
 1. **Problem Identification** — A problem record is created, either from an incident,
    a pattern, or proactive analysis. The problem is distinct from any individual incident.
@@ -125,15 +115,11 @@ otherwise occurred.
 7. **Problem Closure** — After resolution is confirmed, the problem record is closed.
    The KEDB entry is updated to reflect the permanent fix.
 
-[PAUSE]
-
 ### The Known Error Database (KEDB)
 
 The KEDB is a repository of known errors — problems where the root cause has been
 identified and a workaround is documented. It is one of the most valuable operational
 tools in IT service management.
-
-[SHOW DIAGRAM: KEDB structure — Problem ID, Description, Root Cause, Workaround, Status, Change Record link]
 
 When a service desk agent receives an incident, they check the KEDB first. If a known
 error matches, they can apply the documented workaround immediately — cutting resolution
@@ -141,7 +127,7 @@ time dramatically.
 
 Key point: a known error is not fixed yet. The workaround reduces impact, but the
 permanent fix still requires a change. The KEDB bridges the gap between "we know what's
-wrong" and "we've permanently fixed it."
+wrong" and "we've permanently fixed it.
 
 ---
 
@@ -150,8 +136,6 @@ wrong" and "we've permanently fixed it."
 Problem Management lives or dies on the quality of root cause analysis. ITIL 4 does not
 prescribe a specific RCA technique — organizations choose based on context. Here are the
 most important ones you need to know.
-
-[SHOW DIAGRAM: RCA techniques overview]
 
 ### The 5 Whys
 
@@ -168,15 +152,11 @@ Example:
 Root cause: absence of a change management process. The fix is not "clear the disk" —
 the fix is to implement change management and repair the cleanup job configuration.
 
-[PAUSE]
-
 ### Fishbone Diagram (Ishikawa)
 
 The fishbone diagram maps causes across multiple categories — People, Process, Technology,
 Environment — to the central problem effect. It is particularly useful when causes are
 complex and multidimensional.
-
-[SHOW DIAGRAM: Fishbone diagram with four cause categories]
 
 ### Fault Tree Analysis
 
@@ -197,8 +177,6 @@ where multiple changes or events contributed. The war room scribe's notes are in
 ITIL 4 defines a **change** as the addition, modification, or removal of anything that
 could have a direct or indirect effect on services.
 
-[SHOW DIAGRAM: Change scope — hardware, software, process, documentation, contracts, supplier agreements]
-
 The key word is "anything." A change is not just a server upgrade. Updating a firewall
 rule, modifying an SLA, replacing a supplier, changing a process document — these are
 all changes that require management.
@@ -206,8 +184,6 @@ all changes that require management.
 ### The Three Change Types
 
 ITIL 4 categorizes changes into three types:
-
-[SHOW DIAGRAM: Three change types — Standard, Normal, Emergency]
 
 **Standard Change:**
 
@@ -235,8 +211,6 @@ ITIL 4 categorizes changes into three types:
 - Examples: hotfix to restore a critical service, emergency firewall rule to block
   an active exploit
 
-[PAUSE]
-
 ---
 
 ## Section 5: The Change Advisory Board and Change Schedule (15:00–18:30)
@@ -246,8 +220,6 @@ ITIL 4 categorizes changes into three types:
 The CAB is a group that supports the authorization and planning of normal changes. It is
 not a bureaucratic gatekeeping body — its purpose is to bring diverse expertise together
 to assess risk and coordinate deployment.
-
-[SHOW DIAGRAM: CAB composition — IT, Business, Security, Operations, Applications, Supplier representatives]
 
 Typical CAB participants:
 
@@ -266,8 +238,6 @@ The CAB reviews change requests and assesses:
 - Deployment timing (does it conflict with business events, other changes?)
 - Testing evidence (has this been validated?)
 
-[PAUSE]
-
 ### Emergency CAB
 
 For emergency changes, the full CAB cannot be assembled quickly enough. The ECAB is a
@@ -285,8 +255,6 @@ timeline of all approved changes. Its purposes:
 - Coordinates maintenance windows across teams
 - Provides a historical record for post-incident correlation
 
-[SHOW DIAGRAM: Change schedule as a Gantt-style timeline with change windows marked]
-
 When a P1 incident occurs, one of the first questions in the war room is: "What changes
 were deployed in the last 48 hours?" The change schedule answers that question
 immediately.
@@ -296,8 +264,6 @@ immediately.
 ## Section 6: Problem and Change Working Together (18:30–20:00)
 
 Problem Management and Change Enablement have a direct handoff relationship:
-
-[SHOW DIAGRAM: Problem → Known Error → Change Request → Change Implementation → Problem Closure]
 
 1. Problem Management identifies root cause
 2. A permanent fix is designed
@@ -310,8 +276,6 @@ Problem Management and Change Enablement have a direct handoff relationship:
 Without Change Enablement, Problem Management cannot implement fixes safely. Without
 Problem Management, Change Enablement has no strategic driver — changes happen reactively
 without addressing systemic causes.
-
-[PAUSE]
 
 ---
 
@@ -329,8 +293,6 @@ Standard (pre-authorized), Normal (CAB review required), and Emergency (accelera
 authorization for urgent situations). The CAB assesses risk and coordinates timing. The
 change schedule prevents conflicts and enables planning.
 
-[SHOW DIAGRAM: Summary table — Problem Management lifecycle and Change type comparison]
-
 For the ITIL 4 Foundation exam:
 
 - Know the definition of a problem (cause or potential cause of incidents)
@@ -339,8 +301,6 @@ For the ITIL 4 Foundation exam:
 - Know the three change types and when each is used
 - Know the purpose of the CAB
 - Know that Emergency changes still require authorization (just accelerated)
-
-[PAUSE]
 
 Module 10 covers Service Level Management and SLAs — how IT makes and keeps promises to
 stakeholders. See you there.

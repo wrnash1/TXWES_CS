@@ -73,7 +73,7 @@ A Service Level Agreement, or SLA, is a contract between a service provider and 
 
 #### Availability
 
-Availability is the percentage of time a service is operational. Expressed as a percentage — typically called "nines."
+Availability is the percentage of time a service is operational. Expressed as a percentage — typically called "nines.
 
 | Availability | Annual Downtime |
 |---|---|

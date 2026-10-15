@@ -112,7 +112,7 @@ potentially regulatory scrutiny.
 
 Beyond legal exposure, leaving tools on client systems violates the fundamental professional
 promise of penetration testing: "We are here to help you find and fix vulnerabilities, not
-to create new ones."
+to create new ones.
 
 ---
 
@@ -280,11 +280,11 @@ They will have questions.
 Common follow-up questions include:
 
 - "Can you help us understand finding FIND-003 better? Our developers are not sure what
-  code change is needed."
+  code change is needed.
 - "The vendor for our firewall says this vulnerability is a false positive. Can you review
-  their response?"
+  their response?
 - "We are prioritizing which findings to fix first — can you walk us through your
-  recommended sequencing?"
+  recommended sequencing?
 
 Respond to these questions promptly and completely. Your value to the client does not end
 at report delivery.

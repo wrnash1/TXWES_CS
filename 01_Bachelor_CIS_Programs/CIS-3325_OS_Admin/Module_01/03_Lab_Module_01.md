@@ -148,7 +148,7 @@ Do not select any additional snaps. Press Done to proceed with a minimal install
 
 The installer will copy files and configure the system. This takes 5 to 15 minutes.
 
-When you see "Installation complete!" and the option to reboot, select "Reboot Now."
+When you see "Installation complete!" and the option to reboot, select "Reboot Now.
 
 When the reboot sequence starts, the installer will ask you to remove the installation medium.
 Press Enter. VirtualBox will automatically detach the ISO.

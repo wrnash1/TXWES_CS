@@ -542,8 +542,6 @@ The following open educational resources extend module content on BPMN and proce
 
 *Reading Guide — Module 09 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

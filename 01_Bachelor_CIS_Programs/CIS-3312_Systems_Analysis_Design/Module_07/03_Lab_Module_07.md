@@ -66,7 +66,7 @@ You are preparing to conduct a semi-structured interview with the Circulation Ma
 
 Write 10 interview questions for the Circulation Manager. Your questions must include:
 
-- At least four open-ended questions that begin with "Describe," "Tell me," or "Walk me through"
+- At least four open-ended questions that begin with "Describe," "Tell me," or "Walk me through
 - At least three probing follow-up questions (questions that probe a specific expected topic from a prior answer, formatted as: "You mentioned X — can you describe a situation where...")
 - At least two questions specifically designed to surface unstated or tacit requirements (questions about exceptions, failures, workarounds, or informal practices)
 - At least one question about success criteria ("How will you know the new system is working well?")
@@ -100,7 +100,7 @@ Finding 2: _______________
 
 ### Document 2: Workflow Procedures Manual (excerpt)
 
-The procedure for renewing an overdue item reads: "The circulation staff member must first verify the patron has no outstanding fines over $5.00. If fines are over $5.00, the renewal is denied. If fines are $5.00 or under, the item may be renewed for one standard loan period. Exception: Items with three or more holds may not be renewed regardless of fine balance. Staff must check the holds queue manually in a separate screen."
+The procedure for renewing an overdue item reads: "The circulation staff member must first verify the patron has no outstanding fines over $5.00. If fines are over $5.00, the renewal is denied. If fines are $5.00 or under, the item may be renewed for one standard loan period. Exception: Items with three or more holds may not be renewed regardless of fine balance. Staff must check the holds queue manually in a separate screen.
 
 **Extract from this document (at least two findings):**
 
@@ -110,7 +110,7 @@ Finding 2: _______________
 
 ### Document 3: Director's Strategic Plan (excerpt)
 
-The five-year strategic plan states: "RCPLS will expand digital equity access by providing card-free service options for patrons who may not have a physical library card. All patron-facing services will be accessible via mobile devices. RCPLS will comply with all applicable accessibility standards including WCAG 2.1 Level AA."
+The five-year strategic plan states: "RCPLS will expand digital equity access by providing card-free service options for patrons who may not have a physical library card. All patron-facing services will be accessible via mobile devices. RCPLS will comply with all applicable accessibility standards including WCAG 2.1 Level AA.
 
 **Extract from this document (at least two findings):**
 
@@ -132,11 +132,11 @@ Based on the information gathered from Exercises 1–3 and your knowledge of the
 
 Business requirements describe why the organization needs the new system — the goals and outcomes it must achieve.
 
-Write two business requirements using this format: "The new integrated library system must [enable/support/ensure] [business outcome] in order to [strategic goal]."
+Write two business requirements using this format: "The new integrated library system must [enable/support/ensure] [business outcome] in order to [strategic goal].
 
 ### Task 4b: Functional requirements (four required)
 
-Functional requirements describe what the system must do. Write four functional requirements using this format: "The system shall [action] [object/data] [condition/constraint]."
+Functional requirements describe what the system must do. Write four functional requirements using this format: "The system shall [action] [object/data] [condition/constraint].
 
 At least one of your four functional requirements must address:
 

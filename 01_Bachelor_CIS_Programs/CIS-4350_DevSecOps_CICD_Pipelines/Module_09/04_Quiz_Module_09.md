@@ -221,7 +221,7 @@ A pipeline uses AWS Secrets Manager to retrieve database credentials at deployme
 
 #### Q10 Correct Answer
 
-B — Least privilege requires granting only the permissions needed for the specific task. The `*` resource grant means a compromised pipeline job can retrieve every secret in the AWS account — production database passwords for other applications, third-party API keys, encryption keys. The blast radius of a pipeline compromise expands from "this application's secrets" to "every secret in the account."
+B — Least privilege requires granting only the permissions needed for the specific task. The `*` resource grant means a compromised pipeline job can retrieve every secret in the AWS account — production database passwords for other applications, third-party API keys, encryption keys. The blast radius of a pipeline compromise expands from "this application's secrets" to "every secret in the account.
 
 #### Q10 Distractor Analysis
 

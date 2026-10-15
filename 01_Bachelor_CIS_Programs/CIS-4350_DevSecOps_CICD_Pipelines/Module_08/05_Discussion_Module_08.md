@@ -14,7 +14,7 @@ This discussion applies Module 08 concepts — SCA mechanics, transitive depende
 
 ## Scenario A: The Quarterly Review Gap
 
-A mid-size financial services company manages a Python microservices platform with 14 services. Their security policy states that dependency reviews occur quarterly. A DevSecOps engineer proposes integrating `snyk test --severity-threshold=high` into the GitHub Actions pipeline so every PR triggers an SCA scan. The engineering director pushes back: "We already do quarterly reviews. Running Snyk on every PR will just slow the team down and fail builds for issues we already know about."
+A mid-size financial services company manages a Python microservices platform with 14 services. Their security policy states that dependency reviews occur quarterly. A DevSecOps engineer proposes integrating `snyk test --severity-threshold=high` into the GitHub Actions pipeline so every PR triggers an SCA scan. The engineering director pushes back: "We already do quarterly reviews. Running Snyk on every PR will just slow the team down and fail builds for issues we already know about.
 
 In 175-225 words, address the following: Identify two specific security weaknesses of the quarterly manual review approach compared to automated SCA in CI/CD. Then explain what happens in the window between quarterly reviews — use the Log4Shell timeline (CVE published December 9, 2021) as a concrete example to illustrate the risk. Finally, explain how adding `snyk monitor` to the pipeline alongside `snyk test` addresses a gap that `snyk test` alone cannot close, and respond to the director's velocity concern by proposing a configuration that balances security gating with development speed.
 
@@ -30,7 +30,7 @@ In 175-225 words, address the following: Explain precisely what a transitive dep
 
 ## Scenario C: The SBOM Compliance Request
 
-A healthcare software company is responding to a federal procurement requirement that mandates a CycloneDX SBOM for any software delivered to a government agency. The engineering team has never generated an SBOM before. A developer asks: "Can't we just send them our `requirements.txt`?" The compliance officer responds: "No — `requirements.txt` is not an SBOM."
+A healthcare software company is responding to a federal procurement requirement that mandates a CycloneDX SBOM for any software delivered to a government agency. The engineering team has never generated an SBOM before. A developer asks: "Can't we just send them our `requirements.txt`?" The compliance officer responds: "No — `requirements.txt` is not an SBOM.
 
 In 175-225 words, address the following: Explain precisely why `requirements.txt` is not an SBOM — what information does `requirements.txt` contain versus what a CycloneDX SBOM contains. Describe two specific ways an SBOM provides compliance value that a dependency manifest alone cannot. Provide the exact Snyk CLI command to generate a CycloneDX SBOM for a Python project (be precise about the flag and format argument). Finally, explain what reachability analysis is and discuss whether a CVE found in a transitive dependency that is unreachable in the application changes the urgency of remediation — and what documentation should be produced if the team defers the fix based on reachability.
 

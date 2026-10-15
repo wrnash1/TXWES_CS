@@ -281,7 +281,7 @@ ESD damage is:
 
 ### Common A+ Exam Trap
 
-> "The ESD wrist strap protects the technician from electrical shock."
+> "The ESD wrist strap protects the technician from electrical shock.
 
 **This is incorrect.** The wrist strap protects the PC components from ESD damage. The 1 MΩ resistor actually prevents dangerous current from flowing through the strap to the technician — but the strap's purpose is component protection, not personal safety. Never select "protects the user" on the A+ exam.
 
@@ -506,8 +506,6 @@ The following free, openly licensed resources extend your understanding of Modul
 5. **CompTIA A+ CertMike — Free Study Notes (OER)**
    URL: [https://www.certmike.com/](https://www.certmike.com/)
    Relevance: Free objective-by-objective study notes aligned to the 220-1101 exam blueprint. Useful as a rapid review tool before quizzes and as a cross-reference for any concept in the reading guide.
-
-
 
 ---
 

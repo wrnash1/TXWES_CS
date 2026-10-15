@@ -40,9 +40,9 @@ Discuss: What cost factors must be included in a multi-cloud cost analysis that 
 
 ## Sample Peer Response Starters
 
-- "Your acquisition integration plan is practical. One additional complexity you may face is..."
-- "I agree the lock file incident is a process failure. I would add that the risk of `-upgrade` is..."
-- "Your egress cost estimate is on target. Another cost factor that is often overlooked is..."
+- "Your acquisition integration plan is practical. One additional complexity you may face is...
+- "I agree the lock file incident is a process failure. I would add that the risk of `-upgrade` is...
+- "Your egress cost estimate is on target. Another cost factor that is often overlooked is...
 
 ---
 

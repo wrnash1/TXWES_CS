@@ -620,8 +620,6 @@ Explains PowerShell's structured error handling model: terminating vs. non-termi
 
 *Review all sections before beginning Lab 12, Quiz 12, and Discussion 12.*
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

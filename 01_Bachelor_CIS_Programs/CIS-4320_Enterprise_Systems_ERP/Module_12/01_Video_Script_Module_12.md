@@ -26,7 +26,7 @@
 
 ---
 
-## [00:00 – 02:00] Opening Hook
+## Opening Hook
 
 [PROFESSOR ON CAMERA]
 
@@ -44,13 +44,9 @@ This is the reality of data migration in enterprise systems. It is not a technic
 
 ---
 
-## [02:00 – 06:00] The ETL Framework
-
-[SHOW DIAGRAM: ETL Pipeline — Three boxes left to right: Extract, Transform, Load]
+## The ETL Framework
 
 Data migration projects follow the ETL framework: Extract, Transform, Load. Let me walk through each stage.
-
-[SHOW SLIDE: Extract]
 
 Extract means pulling data out of the source system. The source might be a legacy ERP, a spreadsheet, a flat file database, an old CRM, or multiple systems simultaneously. Extraction is usually done through SQL queries against the source database, API calls to the source system, or export functions built into the legacy application.
 
@@ -58,15 +54,11 @@ The extract should be a complete, unmodified snapshot of the source data as it e
 
 The extracted data typically lands in a staging area — a neutral location (often a staging database or set of CSV files) where the data can be inspected, cleaned, and transformed without touching either the source or the target system.
 
-[SHOW SLIDE: Transform]
-
 Transform is the most labor-intensive step and the one most commonly underestimated.
 
 Transform includes data cleansing — identifying and correcting errors, inconsistencies, and missing values. It includes deduplication — finding and merging or removing duplicate records. It includes format normalization — converting phone numbers, dates, addresses, and other fields from legacy formats to the target system's format. It includes code mapping — the source system may use code "1" for status "Active" while the target uses "ACT". And it includes field mapping — determining which source field maps to which target field, including cases where source fields must be split, combined, or derived to create target fields.
 
 Data profiling is the analysis work that happens at the start of the Transform phase. Before you can clean data, you need to understand what is wrong with it. Data profiling runs statistical analysis on the extracted data: how many null values in each field? How many distinct values in each field? What are the outliers? What format variations exist?
-
-[SHOW SLIDE: Load]
 
 Load means writing the transformed data into the target system.
 
@@ -78,9 +70,7 @@ The Load step includes post-load validation: comparing record counts between the
 
 ---
 
-## [06:00 – 10:00] Data Quality Dimensions
-
-[SHOW SLIDE: The Six Dimensions of Data Quality]
+## Data Quality Dimensions
 
 Data quality is not a single concept — it has multiple dimensions, and understanding them helps you build a comprehensive data cleansing plan.
 
@@ -96,29 +86,21 @@ Timeliness: is the data current? Contacts who left their companies three years a
 
 Validity: does the data conform to the rules of the target system? A date value of "February 30" is not a valid date.
 
-[SHOW DIAGRAM: Data Quality Assessment Matrix — rows are dimensions, columns are objects (Accounts, Contacts, Opportunities), cells show quality scores]
-
 During data profiling, the team scores each data object against each quality dimension. This analysis drives the cleansing work plan and estimates how long the Transform phase will take. Organizations that skip data profiling almost always discover major quality problems mid-transformation, which is why migrations take longer than planned.
 
 ---
 
-## [10:00 – 14:00] SAP Data Migration Architecture
-
-[SHOW SLIDE: SAP Migration Tools]
+## SAP Data Migration Architecture
 
 SAP provides specific tools for data migration, and these appear on SAP certification exams.
 
 LSMW — Legacy System Migration Workbench — is the older, widely used tool for migrating master data and transaction data into SAP ECC and S/4HANA. LSMW works through a series of steps: source structure definition, field mapping, data conversion, and batch input recording. LSMW can run in the foreground or background and produces detailed migration logs.
-
-[SHOW SLIDE: SAP Data Migration Cockpit (S/4HANA)]
 
 In S/4HANA, SAP's recommended tool is the Migration Cockpit, accessible in Fiori. The Migration Cockpit provides pre-delivered migration templates for common objects: vendor master, customer master, GL accounts, open items, material master, purchase orders. Each template specifies the exact fields and format the system expects. The migration team downloads the template, populates it with transformed source data, uploads the file, and runs the migration program. The Migration Cockpit generates a detailed log of successes and errors.
 
 [EXAM TIP ON SCREEN]
 
 For the SAP exam: LSMW is the legacy tool; Migration Cockpit is the S/4HANA tool. Both are used for initial data load from external systems. Know the distinction.
-
-[SHOW SLIDE: SAP Migration Object Sequencing]
 
 In SAP, the order in which objects are migrated matters. Dependent objects cannot be created before the objects they reference.
 
@@ -128,21 +110,13 @@ Within master data, organizational structure must exist before functional data. 
 
 ---
 
-## [14:00 – 18:00] Salesforce Data Migration Tools
-
-[SHOW SLIDE: Salesforce Data Migration Tools Comparison]
+## Salesforce Data Migration Tools
 
 Salesforce provides two primary tools for data migration, and choosing between them is an exam topic.
 
-[SHOW DIAGRAM: Data Import Wizard — screenshot showing the wizard interface]
-
 Data Import Wizard is the browser-based tool in Salesforce Setup. It supports standard objects (Accounts, Contacts, Leads, Solutions, Campaign Members) and custom objects. It handles files up to 50,000 records. It is easy to use and requires no installation. It is appropriate for small to medium migrations by administrators without developer skills.
 
-[SHOW DIAGRAM: Data Loader — screenshot showing the Data Loader desktop application]
-
 Data Loader is a downloadable desktop application. It supports all standard and custom objects, handles files of millions of records, and supports all five operations: insert, update, upsert, delete, and hard delete. Data Loader is the tool of choice for large migrations, complex upsert operations, and automated scheduled data loads.
-
-[SHOW SLIDE: Upsert and External ID]
 
 Upsert is a critical migration operation. An upsert inserts records that do not yet exist in Salesforce and updates records that do exist — in a single operation. This is essential for incremental migrations where the first full load runs, then subsequent smaller loads bring in new or updated records from the source system.
 
@@ -154,9 +128,7 @@ For the Salesforce exam: External ID fields enable upsert operations. Without an
 
 ---
 
-## [18:00 – 21:30] Migration Project Lifecycle
-
-[SHOW DIAGRAM: Migration Phase Timeline]
+## Migration Project Lifecycle
 
 A data migration project follows a lifecycle that parallels the broader ERP implementation.
 
@@ -174,17 +146,13 @@ Phase 6 — Production Cutover: execute the final migration against the producti
 
 Phase 7 — Post-Migration Validation: business users spot-check data in the new system. Compare totals (record counts, financial balances, open item amounts) between source and target. Document any discrepancies and resolve them.
 
-[SHOW SLIDE: Cutover Planning]
-
 The cutover weekend — the 48 or 72 hours when the actual production migration runs — requires detailed minute-by-minute planning. Every step must be timed: how long does the vendor master extract take? How long does the transformation job run? How long does the load take for 50,000 GL open items? If the total time exceeds the available cutover window, the plan must be revised.
 
 Every cutover plan must include a cutback plan — the documented procedure for reversing the migration and returning to the legacy system if critical issues are discovered after go-live. Having a cutback plan does not mean you expect to use it. It means you have thought through the worst-case scenario.
 
 ---
 
-## [21:30 – 23:30] Certification Exam Summary
-
-[SHOW SLIDE: Key Exam Points — Data Migration]
+## Certification Exam Summary
 
 ETL sequence: Extract (pull from source), Transform (clean, map, normalize), Load (write to target). Know which activities belong to each phase.
 
@@ -202,7 +170,7 @@ Mock cutover rehearsals reduce go-live risk. Every production cutover plan needs
 
 ---
 
-## [23:30 – 24:00] Closing and Assignments
+## Closing and Assignments
 
 [PROFESSOR ON CAMERA]
 

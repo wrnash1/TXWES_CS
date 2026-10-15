@@ -25,15 +25,9 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: Course banner — "CIS-3321 Network Administration | Module 04: IPv6 Addressing and Transition Technologies | Texas Wesleyan University"]
-
 ---
 
 ### Section 1: Introduction — Why IPv6?
-
-[00:00 – 01:30]
-
-[SHOW SLIDE: Professor Nash on camera with module title card]
 
 Welcome to Module 04. I'm Professor Nash. IPv4 has served the internet since the early 1980s, and it has done an incredible job. But there is one fundamental problem: 32-bit IPv4 addresses provide approximately 4.3 billion unique addresses. With smartphones, smart TVs, IoT devices, wearables, and billions of new internet users worldwide, we ran out of available IPv4 addresses. The Internet Assigned Numbers Authority exhausted its pool of unallocated IPv4 blocks in 2011.
 
@@ -44,10 +38,6 @@ In this module, Part 1 covers IPv6 address structure, notation rules, and the di
 ---
 
 ### Section 2: IPv6 Address Structure and Notation
-
-[01:30 – 05:00]
-
-[SHOW DIAGRAM: A full IPv6 address displayed in groups. Address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334. Eight groups of four hexadecimal digits, separated by colons. A label shows "128 bits total, 8 groups of 16 bits each."]
 
 [Alt-text: An IPv6 address 2001:0db8:85a3:0000:0000:8a2e:0370:7334 displayed in large text. The eight groups of four hexadecimal digits are separated by colons. A bracket below shows the total is 128 bits, with each group representing 16 bits.]
 
@@ -77,10 +67,6 @@ The two consecutive all-zero groups become "::". The abbreviated address is much
 
 ### Section 3: IPv6 Address Types
 
-[05:00 – 09:00]
-
-[SHOW DIAGRAM: A table with three columns — Address Type, Prefix, and Description. Six rows: Global Unicast (2000::/3, starts with 2 or 3), Link-Local (fe80::/10), Loopback (::1/128), Unique Local (fc00::/7, typically fd00::/8), Multicast (ff00::/8), Anycast (from unicast space, assigned to multiple interfaces).]
-
 [Alt-text: A six-row table with columns Address Type, Prefix, and Description. Row 1: Global Unicast, prefix 2000::/3 (addresses starting with 2 or 3), described as globally routable IPv6 addresses equivalent to public IPv4. Row 2: Link-Local, prefix fe80::/10, described as auto-generated on every interface, not routable beyond the local segment. Row 3: Loopback, prefix ::1/128, described as equivalent to 127.0.0.1, tests local stack. Row 4: Unique Local, prefix fc00::/7 (fd00::/8 in practice), described as equivalent to RFC 1918, used for private internal networks. Row 5: Multicast, prefix ff00::/8, described as replaces broadcast, delivers packets to group members. Row 6: Anycast, shared from unicast space, described as assigned to multiple interfaces, packets reach the nearest one.]
 
 IPv6 defines several distinct address types. Knowing the prefix for each type is essential for the exam.
@@ -101,10 +87,6 @@ IPv6 defines several distinct address types. Knowing the prefix for each type is
 
 ### Section 4: NDP — Neighbor Discovery Protocol
 
-[09:00 – 11:00]
-
-[SHOW DIAGRAM: A comparison table showing IPv4 ARP versus IPv6 NDP. Left column: ARP — resolves IP to MAC on local segment, uses broadcast. Right column: NDP (ICMPv6) — resolves IPv6 address to MAC, uses multicast, also handles router discovery and Duplicate Address Detection.]
-
 [Alt-text: A two-column comparison table. Left column header is ARP (IPv4). Right column header is NDP (IPv6). Row 1: ARP resolves IPv4 address to MAC address versus NDP resolves IPv6 address to link-layer address. Row 2: ARP uses broadcast versus NDP uses multicast (Neighbor Solicitation / Neighbor Advertisement). Row 3: ARP has no equivalent versus NDP includes Router Discovery and Duplicate Address Detection (DAD).]
 
 IPv6 replaces ARP with NDP — the Neighbor Discovery Protocol. NDP uses ICMPv6 messages to handle the functions that ARP and several other IPv4 protocols performed.
@@ -122,10 +104,6 @@ Duplicate Address Detection (DAD) — Before a host uses an IPv6 address, it sen
 ---
 
 ### Section 5: Part 1 Summary
-
-[11:00 – 13:00]
-
-[SHOW SLIDE: Summary bullet list]
 
 In Part 1, we covered the IPv6 address structure — 128 bits in eight groups of four hex digits. We practiced the two abbreviation rules — drop leading zeros, use "::" once for consecutive all-zero groups. We examined the six IPv6 address types — Global Unicast, Link-Local, Loopback, Unique Local, Multicast, and Anycast — and their prefixes. We compared NDP to ARP and explained the three NDP functions.
 

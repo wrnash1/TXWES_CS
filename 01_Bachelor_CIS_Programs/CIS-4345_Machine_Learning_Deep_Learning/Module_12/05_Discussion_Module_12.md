@@ -38,7 +38,7 @@ The data scientist's suggestion is interesting but I would not run both strategi
 
 A medical device company has deployed a retinal disease screening model on a tablet used by ophthalmologists in low-resource clinics. The original float32 Keras model achieves 95.2% sensitivity and 93.8% specificity on their test set. After dynamic range quantization and TFLite conversion for the tablet's ARM processor, sensitivity drops to 91.4% — a 3.8 percentage point loss.
 
-The regulatory affairs team flags this as a potential issue: the device is classified as a Class II medical device, and the submitted accuracy data was based on the float32 model. The engineering team argues: "3.8% is acceptable — the model is still clinically useful." The clinical team disagrees: "In retinal screening, missed diagnoses have serious consequences. 3.8% degradation is not acceptable."
+The regulatory affairs team flags this as a potential issue: the device is classified as a Class II medical device, and the submitted accuracy data was based on the float32 model. The engineering team argues: "3.8% is acceptable — the model is still clinically useful." The clinical team disagrees: "In retinal screening, missed diagnoses have serious consequences. 3.8% degradation is not acceptable.
 
 Respond to the following: Who is right, and what technical options exist to recover the lost sensitivity? What is quantization-aware training and how would it help here? Should the company re-submit regulatory documentation for the quantized model? What is the correct order of technical steps to address the degradation before considering a re-submission?
 
@@ -56,7 +56,7 @@ On the regulatory question: yes, if the deployed device uses the quantized model
 
 A retail company runs a product recommendation engine that currently requires a data scientist to manually retrain the model each month. The process involves downloading a CSV of new user interaction data, running a Jupyter notebook to retrain, evaluating metrics manually, and uploading the new model file to the serving API. The team has grown and the manual process takes 2–3 days per retraining cycle and has produced two incidents where a worse model was deployed because evaluation was skipped under time pressure.
 
-The engineering team proposes building a TFX pipeline to automate the workflow. A skeptical VP of Engineering asks: "What does TFX actually give us that we can't get from a well-written Python script? Why add this complexity?"
+The engineering team proposes building a TFX pipeline to automate the workflow. A skeptical VP of Engineering asks: "What does TFX actually give us that we can't get from a well-written Python script? Why add this complexity?
 
 Respond to the following: How would you answer the VP's question — what does TFX provide that a script cannot? Map each TFX component (ExampleGen, StatisticsGen, SchemaGen, ExampleValidator, Transform, Trainer, Evaluator, Pusher) to the specific pain point it addresses in the current manual workflow. What is the most important single component for preventing the "deployed a worse model" incident, and why? What would you tell the team about the learning curve cost vs. long-term benefit?
 
@@ -100,7 +100,7 @@ Scenario A surfaces the tension between systematic automated search and practica
 
 Scenario B is one I have thought about carefully — the intersection of quantization, accuracy, and regulated industries is genuinely difficult. The engineering team and the clinical team are both right within their own framing. The question is which framing governs, and in a regulated medical device context, the clinical and regulatory framing must win.
 
-Scenario C reflects a real conversation that happens in many data engineering organizations. The VP's skepticism is not unreasonable — TFX is complex and the ramp-up time is real. Strong responses will acknowledge that cost honestly while making the case based on the specific pain points described, not on a generic argument that "pipelines are better than scripts."
+Scenario C reflects a real conversation that happens in many data engineering organizations. The VP's skepticism is not unreasonable — TFX is complex and the ramp-up time is real. Strong responses will acknowledge that cost honestly while making the case based on the specific pain points described, not on a generic argument that "pipelines are better than scripts.
 
 ---
 

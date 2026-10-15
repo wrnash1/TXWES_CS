@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 – 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -35,9 +35,7 @@ This module is essential for the Foundation exam. The exam will ask questions at
 
 ---
 
-## [01:30 – 04:30] The Service Value Chain — Architecture Review
-
-[SHOW DIAGRAM]
+## The Service Value Chain — Architecture Review
 
 Before we go into each activity, let us review the overall architecture.
 
@@ -51,7 +49,7 @@ The SVC does not have a front door and a back door. It has six interconnected ac
 
 ---
 
-## [04:30 – 07:00] Activity 1: Plan
+## Activity 1: Plan
 
 The Plan activity ensures a shared understanding of the vision, current status, and improvement direction for all four dimensions and all products and services across the organization.
 
@@ -65,7 +63,7 @@ A critical exam point about Plan: it is not a one-time activity that happens at 
 
 ---
 
-## [07:00 – 09:30] Activity 2: Improve
+## Activity 2: Improve
 
 The Improve activity ensures continual improvement of products, services, and practices across all value chain activities and across the four dimensions of service management. It is unique among the six activities because it connects to all of the others simultaneously.
 
@@ -77,7 +75,7 @@ For the exam: every SVC activity has a bidirectional relationship with Improve. 
 
 ---
 
-## [09:30 – 12:30] Activity 3: Engage
+## Activity 3: Engage
 
 The Engage activity provides a good understanding of stakeholder needs, sets the direction for service delivery and continuous engagement, and establishes good relationships with all stakeholders.
 
@@ -93,7 +91,7 @@ For the exam: when a scenario describes collecting stakeholder requirements, com
 
 ---
 
-## [12:30 – 15:30] Activities 4 and 5: Design and Transition, Obtain/Build
+## Activities 4 and 5: Design and Transition, Obtain/Build
 
 The Design and Transition activity ensures that products and services continually meet stakeholder expectations for quality, costs, and time to market. This is where new or changed services are designed, tested, and handed off to operational teams.
 
@@ -107,7 +105,7 @@ Obtain/Build is where the actual work of acquiring or creating service component
 
 ---
 
-## [15:30 – 18:30] Activity 6: Deliver and Support
+## Activity 6: Deliver and Support
 
 The Deliver and Support activity ensures that services are delivered and supported according to agreed specifications and stakeholders' expectations. This is where day-to-day service operation happens.
 
@@ -121,7 +119,7 @@ The Deliver and Support activity depends on a strong set of practices: Incident 
 
 ---
 
-## [18:30 – 21:00] Value Streams in Action
+## Value Streams in Action
 
 Let us look at how these six activities combine into value streams for specific types of work.
 
@@ -137,7 +135,7 @@ The exam may present a scenario and ask which SVC activities are involved. Pract
 
 ---
 
-## [21:00 – 23:00] Connecting Practices to SVC Activities
+## Connecting Practices to SVC Activities
 
 Practices do not map one-to-one to SVC activities, but there are strong associations.
 
@@ -147,7 +145,7 @@ The word "primarily" is important here. Most practices contribute to multiple SV
 
 ---
 
-## [23:00 – 24:00] Module Summary and What Is Next
+## Module Summary and What Is Next
 
 The six SVC activities are Plan, Improve, Engage, Design and Transition, Obtain/Build, and Deliver and Support. Each has a defined purpose, specific inputs, and specific outputs. They connect to each other and to the Improve activity in flexible patterns called value streams.
 

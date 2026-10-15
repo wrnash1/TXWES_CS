@@ -287,7 +287,7 @@ Fifth, decide — compare the cost of a proposed control against the reduction i
 
 ### 5.4 FAIR in Executive Communication
 
-FAIR's financial output transforms cybersecurity discussions. Instead of presenting a "Medium" risk to the board, a CISO can present: "This unpatched vulnerability has an expected annual loss exposure between $1.2M and $4.7M, with a 90th-percentile outcome of $6.3M. The proposed control costs $280,000 per year and would reduce expected annual loss by $2.1M."
+FAIR's financial output transforms cybersecurity discussions. Instead of presenting a "Medium" risk to the board, a CISO can present: "This unpatched vulnerability has an expected annual loss exposure between $1.2M and $4.7M, with a 90th-percentile outcome of $6.3M. The proposed control costs $280,000 per year and would reduce expected annual loss by $2.1M.
 
 This financial framing enables the same cost-benefit analysis the organization applies to every other business investment.
 
@@ -495,8 +495,6 @@ Description: The FAIR Institute's free introductory resource explaining the Fact
 **ISO 31000:2018 — Risk Management Guidelines Overview**
 URL: https://www.iso.org/iso-31000-risk-management.html
 Description: The official ISO page for ISO 31000:2018, including a free overview of the standard's principles, framework, and process. The standard itself requires purchase, but the overview and accompanying guidance documents explain the principles-based approach and universal applicability across domains and organization sizes.
-
-
 
 ---
 

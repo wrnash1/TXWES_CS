@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Learning Objectives
+## Opening and Learning Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -27,8 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-**[INSTRUCTOR ON CAMERA — title card: "Module 03: Azure Virtual Machines and Scale Sets"]**
-
 Welcome to Module 03. I'm Professor Nash. Today we get hands-on with the most fundamental Azure compute service: Azure Virtual Machines. This is the IaaS workhorse — the service that gives you a full virtual server in Azure that you control from the OS up.
 
 We are also going to cover VM Scale Sets, which are how Azure handles automatic horizontal scaling for VM-based workloads. Both are heavily tested on AZ-900, and both are required for the lab today where you will actually deploy, manage, and deallocate VMs using Azure CLI commands.
@@ -44,7 +42,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 05:30] Azure Virtual Machines — Core Concepts
+## Azure Virtual Machines — Core Concepts
 
 **[SLIDE: "Azure Virtual Machines"]**
 
@@ -87,7 +85,7 @@ So `Standard_D4s_v3` is a General Purpose VM with 4 vCPUs, Premium SSD support, 
 
 ---
 
-## [05:30 - 10:00] Deploying a VM with Azure CLI
+## Deploying a VM with Azure CLI
 
 **[SHOW CODE — Azure CLI commands]**
 
@@ -162,7 +160,7 @@ In student subscriptions and lab environments, always **deallocate** VMs when yo
 
 ---
 
-## [10:00 - 14:00] VM Disks and Storage
+## VM Disks and Storage
 
 **[SLIDE: "VM Disk Types"]**
 
@@ -187,7 +185,7 @@ For AZ-900, know that Premium SSD requires a VM size with the `s` designation (l
 
 ---
 
-## [14:00 - 18:00] VM Scale Sets
+## VM Scale Sets
 
 **[SLIDE: "The Scaling Problem"]**
 
@@ -225,7 +223,7 @@ Here in the Portal you can see the Scale Set scaling configuration. The horizont
 
 ---
 
-## [18:00 - 21:00] Availability Options for VMs
+## Availability Options for VMs
 
 **[SLIDE: "VM Availability Options"]**
 
@@ -245,7 +243,7 @@ One pricing concept that appears on AZ-900: Azure Spot VMs use unused Azure comp
 
 ---
 
-## [21:00 - 23:00] Lab Preview
+## Lab Preview
 
 **[SLIDE: "Module 03 Lab"]**
 
@@ -263,9 +261,7 @@ These are exactly the CLI commands tested on the AZ-900 practical knowledge item
 
 ---
 
-## [23:00 - 24:00] Closing
-
-**[INSTRUCTOR ON CAMERA]**
+## Closing
 
 You now understand Azure Virtual Machines — how to size them, deploy them, manage their lifecycle, and scale them with VM Scale Sets. The stop-versus-deallocate distinction is critically important for your student subscription budget — please use `az vm deallocate`, not `az vm stop`, when you are finished with lab VMs.
 

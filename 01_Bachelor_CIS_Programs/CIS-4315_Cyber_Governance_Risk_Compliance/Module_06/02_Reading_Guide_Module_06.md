@@ -115,9 +115,9 @@ The charter is not a policy, not a procedure, and not a standards document. It i
 
 A common exam trap is confusing the charter with a security policy. The distinction is fundamental.
 
-The **charter** answers: "What is the security program empowered to do, and who authorized it?"
+The **charter** answers: "What is the security program empowered to do, and who authorized it?
 
-A **policy** answers: "What are employees required to do?"
+A **policy** answers: "What are employees required to do?
 
 The charter enables policies. Policies derive their enforceability from the authority granted in the charter. An organization can have excellent policies but no enforcement mechanism if the charter is absent or weak.
 
@@ -359,9 +359,6 @@ The following concepts are high-frequency exam topics from Domain 3.
 
 ---
 
-
----
-
 ## Deep Theoretical Foundations & Conceptual Architecture
 
 ### 1. Epistemological Framework & First Principles
@@ -444,7 +441,6 @@ Before proceeding to this module's laboratory exercises, synthesize concise, rig
 1. **First-Principles Invariant Defense:** How does the theoretical model in this module ensure state correctness under adverse operating conditions? What mathematical proof or telemetry metric validates this behavior?
 2. **Architectural Trade-Off Analysis:** If forced to reduce execution latency by 50%, what specific compromises in consistency, redundancy, or capital expenditure would your architecture be forced to accept?
 3. **Failure Mode Pathology:** Explain the exact mechanistic chain of events that occurs when this module's primary subsystem experiences an unhandled resource starvation condition.
-
 
 ## 8. Study Checklist
 

@@ -398,11 +398,11 @@ Total Forecast = Sum of (Amount x Probability) for all open Opportunities
 Complete before attempting the quiz:
 
 - **Salesforce Trailhead -- Salesforce Associate Certification Prep**
-  URL: trailhead.salesforce.com -- search "Salesforce Associate Certification Prep"
+  URL: trailhead.salesforce.com -- search "Salesforce Associate Certification Prep
   Covers all Salesforce Associate exam domains including the data model and platform features.
 
 - **Salesforce Trailhead -- CRM for Lightning Experience**
-  URL: trailhead.salesforce.com -- search "CRM for Lightning Experience"
+  URL: trailhead.salesforce.com -- search "CRM for Lightning Experience
   Practical walkthrough of Leads, Accounts, Contacts, and Opportunities in the Lightning UI.
 
 ---
@@ -548,8 +548,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

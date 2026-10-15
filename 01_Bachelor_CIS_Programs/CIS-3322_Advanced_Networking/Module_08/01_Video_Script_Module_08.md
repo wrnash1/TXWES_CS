@@ -1,5 +1,23 @@
 # Video Script: Module 08 - OSPFv2 Routing Concepts and Setup
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course &bull; Module 08</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" title="Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 3: IP Connectivity - 25%)
 **Estimated Duration:** 23 minutes
@@ -7,13 +25,10 @@
 
 ---
 
-## Section 1: Why Dynamic Routing and What Is OSPF [00:00 - 04:00]
-
+## Section 1: Why Dynamic Routing and What Is OSPF
 Welcome to Module 08. I am Professor Nash. Until now we have worked with static routes — routes you manually configure. Static routing works fine in small networks, but it does not scale. When a new subnet is added, every router in the network must be updated manually. When a link fails, static routes do not adapt. Dynamic routing protocols solve both problems.
 
 OSPFv2 — Open Shortest Path First version 2 — is the dynamic routing protocol tested most heavily on the CCNA 200-301 exam. It is a link-state protocol, which means every router builds a complete map of the network topology and independently calculates the best path.
-
-[SHOW DIAGRAM: Three routers in a triangle. Each router is labeled R1, R2, R3. Arrows indicate that each router sends LSAs to all others. All three routers then independently compute shortest-path routes to all destinations]
 
 OSPF belongs to the link-state family. Compare this to RIP, which is distance-vector: a distance-vector router only knows what its neighbors tell it. A link-state router knows the entire topology. The result is faster convergence and loop-free routing.
 
@@ -25,9 +40,7 @@ Key terms you will use throughout this module:
 
 ---
 
-## Section 2: OSPF Areas and the Backbone [04:00 - 09:00]
-
-[SHOW DIAGRAM: A larger OSPF topology showing Area 0 (backbone) in the center, with Area 1 and Area 2 connecting to Area 0 through ABRs. Labels identify each router type: internal router, ABR, ASBR]
+## Section 2: OSPF Areas and the Backbone
 
 OSPF organizes routers into areas to limit the scope of LSA flooding and reduce LSDB size. Every OSPF network must have Area 0, called the backbone area. All other areas must connect to Area 0 either directly or through virtual links.
 
@@ -44,9 +57,7 @@ CCNA Exam Tip: All OSPF areas must be connected to Area 0. A non-zero area that 
 
 ---
 
-## Section 3: OSPF Neighbor States and Adjacency [09:00 - 14:00]
-
-[SHOW DIAGRAM: A state machine diagram showing the seven OSPF neighbor states in sequence: Down → Init → 2-Way → Exstart → Exchange → Loading → Full. Arrows between states labeled with the event that causes each transition]
+## Section 3: OSPF Neighbor States and Adjacency
 
 Before OSPF routers can exchange routing information, they must form a neighbor relationship. The process goes through seven states:
 
@@ -73,9 +84,7 @@ A priority of 0 means the router will never become DR or BDR.
 
 ---
 
-## Section 4: OSPFv2 Configuration Walkthrough [14:00 - 19:30]
-
-[SHOW DIAGRAM: Two routers R1 and R2 connected via a serial link (10.0.0.0/30). R1 has Loopback0 1.1.1.1/32. R2 has Loopback0 2.2.2.2/32. Both are in Area 0]
+## Section 4: OSPFv2 Configuration Walkthrough
 
 ### Router ID Configuration
 
@@ -133,8 +142,7 @@ CCNA Exam Tip: Passive interface prevents OSPF hellos from being sent out the in
 
 ---
 
-## Section 5: Verification and Troubleshooting [19:30 - 23:00]
-
+## Section 5: Verification and Troubleshooting
 Key verification commands:
 
 ```ios

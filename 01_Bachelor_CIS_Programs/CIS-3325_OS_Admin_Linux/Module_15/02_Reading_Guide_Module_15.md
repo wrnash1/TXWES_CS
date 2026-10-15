@@ -589,8 +589,6 @@ The official Lynis documentation for the open-source security auditing and harde
 **3. [fail2ban Documentation — fail2ban.readthedocs.io](https://fail2ban.readthedocs.io/en/latest/)**
 The official fail2ban documentation. Covers the architecture (jail → filter → action), writing custom filters using regular expressions, defining custom actions beyond firewall bans (email notifications, database logging), the `fail2ban-client` management interface, and testing filters with `fail2ban-regex`. Understanding how to write custom filters is the key skill for applying fail2ban to non-standard application logs.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

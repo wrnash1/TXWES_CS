@@ -25,15 +25,9 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: Course banner — "CIS-3321 Network Administration | Module 03: IP Addressing — IPv4, Subnetting, and CIDR | Texas Wesleyan University"]
-
 ---
 
 ### Section 1: Introduction
-
-[00:00 – 01:15]
-
-[SHOW SLIDE: Professor Nash on camera with module title card]
 
 Welcome to Module 03. I'm Professor Nash, and this module covers the topic that students both fear and find most rewarding when they master it: IPv4 addressing and subnetting. I want to tell you upfront — subnetting is math, but it is not complicated math. It requires binary arithmetic, a clear process, and practice. By the end of this module, you will be able to look at any IP address with any subnet mask and immediately determine the network address, broadcast address, usable host range, and number of hosts.
 
@@ -42,9 +36,6 @@ Part 1 covers IPv4 address structure, classful addressing, private address range
 ---
 
 ### Section 2: IPv4 Address Structure
-
-[01:15 – 04:00]
-
 <div style="text-align: center; margin: 24px 0;">
 <svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
   <rect width="100%" height="45" fill="#1b365d"/>
@@ -116,8 +107,6 @@ Part 1 covers IPv4 address structure, classful addressing, private address range
 </svg>
 </div>
 
-[SHOW DIAGRAM: The IPv4 address 192.168.1.50 displayed in large text. Below it, the binary representation: 11000000.10101000.00000001.00110010. Each of the four octets is labeled. A note shows "32 total bits, 4 octets of 8 bits each."]
-
 [Alt-text: The IPv4 address 192.168.1.50 displayed in large text. Directly below it is the binary representation: 11000000 dot 10101000 dot 00000001 dot 00110010. The four binary groups are separated by dots, and each group is labeled "octet." Text beneath reads "32 total bits divided into 4 octets of 8 bits each."]
 
 An IPv4 address is a 32-bit number. To make it readable, we write it in dotted-decimal notation — four decimal numbers separated by dots, each representing 8 binary bits. Each group of 8 bits is called an octet.
@@ -131,10 +120,6 @@ When the subnet mask bits are 1, those bits belong to the network. When the subn
 ---
 
 ### Section 3: Classful Addressing
-
-[04:00 – 07:00]
-
-[SHOW DIAGRAM: A table showing the five IP address classes. Class A: first octet 1–126, default mask /8, hosts per network approximately 16 million. Class B: first octet 128–191, default mask /16, hosts per network approximately 65,000. Class C: first octet 192–223, default mask /24, hosts per network 254. Class D: first octet 224–239, multicast. Class E: first octet 240–255, experimental/reserved.]
 
 [Alt-text: A five-row table. Row 1: Class A, range 1.0.0.0 to 126.255.255.255, default subnet mask slash 8, maximum hosts approximately 16 million per network. Row 2: Class B, range 128.0.0.0 to 191.255.255.255, default mask slash 16, approximately 65,534 hosts per network. Row 3: Class C, range 192.0.0.0 to 223.255.255.255, default mask slash 24, 254 hosts per network. Row 4: Class D, range 224.0.0.0 to 239.255.255.255, multicast use only. Row 5: Class E, range 240.0.0.0 to 255.255.255.255, experimental/reserved.]
 
@@ -156,10 +141,6 @@ One critical address to remember: 127.x.x.x is the loopback range. The specific 
 
 ### Section 4: Private IP Address Ranges (RFC 1918)
 
-[07:00 – 09:00]
-
-[SHOW DIAGRAM: A table showing the three RFC 1918 private address ranges. Row 1: Class A private — 10.0.0.0/8, range 10.0.0.0 to 10.255.255.255. Row 2: Class B private — 172.16.0.0/12, range 172.16.0.0 to 172.31.255.255. Row 3: Class C private — 192.168.0.0/16, range 192.168.0.0 to 192.168.255.255.]
-
 [Alt-text: A three-row table titled RFC 1918 Private Address Ranges. Row 1: Class A private range, 10.0.0.0 slash 8, spanning 10.0.0.0 through 10.255.255.255. Row 2: Class B private range, 172.16.0.0 slash 12, spanning 172.16.0.0 through 172.31.255.255. Row 3: Class C private range, 192.168.0.0 slash 16, spanning 192.168.0.0 through 192.168.255.255.]
 
 RFC 1918 defines three address ranges that are reserved for private use and are not routed on the public internet. Every internal network — your home network, your office LAN, a campus network — uses addresses from these ranges. NAT (Network Address Translation) is used to translate private addresses to public addresses when traffic needs to reach the internet.
@@ -177,10 +158,6 @@ Also memorize: APIPA range is 169.254.0.0/16. This is the self-assigned address 
 ---
 
 ### Section 5: Binary-to-Decimal Conversion
-
-[09:00 – 11:30]
-
-[SHOW DIAGRAM: A binary conversion chart. Eight columns labeled with powers of 2 from left to right: 128, 64, 32, 16, 8, 4, 2, 1. A row below shows the binary digit 1 in each column. A sum shows 128+64+32+16+8+4+2+1 = 255. A second example row shows 11000000 with 128+64 = 192.]
 
 [Alt-text: A binary conversion table. The top row labels eight columns with values 128, 64, 32, 16, 8, 4, 2, and 1, representing decreasing powers of 2. A first data row shows all 1s in every column, with the sum 255 shown at the right. A second data row shows 1 in the 128 and 64 columns and 0 in all others, with the sum 192 shown at the right.]
 
@@ -201,10 +178,6 @@ Practice these conversions until you can do them in your head. For the Network+ 
 ---
 
 ### Section 6: Part 1 Summary
-
-[11:30 – 13:30]
-
-[SHOW SLIDE: Summary bullet list]
 
 In Part 1, we covered IPv4 address structure — 32 bits in four octets, network portion versus host portion. We reviewed the classful addressing system — A, B, C, D, E. We memorized the RFC 1918 private address ranges. And we practiced binary-to-decimal conversion, which is the foundation of all subnet calculations.
 

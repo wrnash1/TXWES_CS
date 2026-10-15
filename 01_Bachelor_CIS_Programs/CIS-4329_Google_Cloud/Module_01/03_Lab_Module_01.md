@@ -44,7 +44,7 @@ By the end of this lab you will be able to:
 ### Step 1.2 — Create a New Project
 
 1. Click the project selector dropdown in the top navigation bar. It may show
-   "Select a project" or an existing project name.
+   Select a project" or an existing project name.
 2. Click **New Project** in the top-right of the dialog.
 3. Fill in the following fields:
    - **Project name**: `cis4329-lab01-yourname` (replace `yourname` with your

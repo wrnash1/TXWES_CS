@@ -147,7 +147,7 @@ The following scenario describes fifteen data activities performed during a quar
 ### Activities
 
 1. A Python script queries the company's SQL Server OLTP database and retrieves all order records from the past 90 days.
-2. A data engineer writes logic to replace all NULL values in the REGION column with "Unknown."
+2. A data engineer writes logic to replace all NULL values in the REGION column with "Unknown.
 3. The cleaned dataset is written to the company's Snowflake data warehouse using a bulk COPY command.
 4. An analyst pulls a JSON export from the company's CRM system via its REST API.
 5. A script parses the JSON response and converts each record to a flat row with consistent column names.
@@ -155,7 +155,7 @@ The following scenario describes fifteen data activities performed during a quar
 7. The deduplicated records are appended to the ORDERS_FACT table in the data warehouse.
 8. A developer downloads a CSV of product catalog updates from an external supplier's SFTP server.
 9. The product catalog CSV is parsed, and the UNIT_PRICE column is converted from string to decimal type.
-10. A new column called REVENUE_CATEGORY is computed by applying a business rule: orders over $500 are "High Value," orders $100–$500 are "Standard," orders under $100 are "Low Value."
+10. A new column called REVENUE_CATEGORY is computed by applying a business rule: orders over $500 are "High Value," orders $100–$500 are "Standard," orders under $100 are "Low Value.
 11. The enriched product records are merged into the PRODUCTS_DIM dimension table in the warehouse.
 12. A data engineer queries the company's web analytics platform API to retrieve weekly session counts.
 13. Session counts are joined to the order data using the DATE column to create a combined marketing dataset.

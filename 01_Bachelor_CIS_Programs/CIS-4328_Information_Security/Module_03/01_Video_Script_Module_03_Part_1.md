@@ -28,8 +28,6 @@
 
 ## Opening
 
-**[INSTRUCTOR ON CAMERA]**
-
 Welcome to Module 03 — Application Attacks and Software Vulnerabilities. I'm Professor Nash.
 
 If Module 01 taught you the vocabulary of threats and Module 02 taught you about attacking humans, this module teaches you how attackers target the software itself. Web applications are among the most targeted assets in modern enterprise environments — they are internet-facing, they process sensitive data, and they were often written before security was a priority.
@@ -39,8 +37,6 @@ The SY0-701 exam covers application attacks primarily in Domain 2. You will see 
 ---
 
 ## Section 1 — Injection Attacks
-
-**[SHOW DIAGRAM: Web application flow diagram. User browser on left sends HTTP request with input field containing a SQL injection payload. Arrow points to Web Application Server. Arrow continues to Database Server. The database executes the injected SQL and returns unauthorized data back to the browser. Label: SQL Injection Attack Flow.]**
 
 **[Alt-text: Horizontal flow diagram. Left: User Browser sends HTTP POST request with login form containing SQL payload in the password field. Center: Web Application Server receives the request and passes it to the database. Right: Database Server executes the malicious SQL and returns all records. Return arrow shows unauthorized data flowing back to the browser. Top label: SQL Injection Attack Flow.]**
 
@@ -68,8 +64,6 @@ The fundamental cause is insufficient input validation. The developer trusted us
 
 ## Section 2 — Cross-Site Scripting (XSS)
 
-**[SHOW DIAGRAM: Three-party XSS attack flow. Left: Attacker injects malicious script into a web application's comment or input field. Center: Vulnerable web server stores or reflects the script. Right: Victim user's browser loads the page and the script executes in the victim's browser context. Arrow from attacker's script execution in victim browser leads to stolen session cookie being sent to attacker's server.]**
-
 **[Alt-text: Three-party diagram. Left box: Attacker — injects malicious JavaScript into web application input field. Center box: Vulnerable Web Server — stores injected script in database (stored XSS) or reflects it in response (reflected XSS). Right box: Victim Browser — loads page containing attacker script, which executes with victim's browser permissions. Arrow from victim browser to Attacker Server: stolen session cookie transmitted.]**
 
 **Cross-Site Scripting (XSS)** occurs when an attacker injects malicious client-side script — typically JavaScript — into a web page that is then rendered by other users' browsers. Unlike SQL injection which targets the server, XSS targets the user's browser.
@@ -93,8 +87,6 @@ Common XSS payloads steal session cookies, redirect users to phishing pages, cap
 
 ## Section 3 — Cross-Site Request Forgery (CSRF)
 
-**[SHOW DIAGRAM: CSRF attack flow. Step 1: Victim logs into bank website and holds active session cookie. Step 2: Victim visits attacker-controlled page while still logged in. Step 3: Attacker's page sends a hidden HTTP request to the bank using the victim's active session cookie. Step 4: Bank processes the request as if the victim initiated it.]**
-
 **[Alt-text: Four-step sequence diagram. Step 1: Victim authenticates to bank website, browser stores session cookie. Step 2: Victim navigates to attacker's malicious web page in the same browser. Step 3: Hidden form or image tag on attacker's page sends POST request to bank URL, browser automatically attaches victim's session cookie. Step 4: Bank receives authenticated request, processes the transaction. Victim did not intend this action.]**
 
 **Cross-Site Request Forgery (CSRF)** — pronounced "sea surf" — tricks an authenticated user's browser into sending an unintended request to a web application where the user is currently logged in. The browser automatically includes session cookies with requests to the target domain, so the forged request appears authentic.
@@ -112,8 +104,6 @@ CSRF differs from XSS in a key way: XSS injects malicious script that runs in th
 ---
 
 ## Section 4 — Memory Exploitation
-
-**[SHOW DIAGRAM: Memory layout diagram for a running process. Stack grows downward from high addresses. Heap grows upward from low addresses. Segments labeled: Text (code), Data, Heap, Stack. Arrow from buffer region in Stack points past the buffer boundary into the Return Address area. Label: Buffer Overflow — overwriting the return address to redirect execution.]**
 
 **[Alt-text: Vertical memory layout diagram. Top (high addresses): Stack — contains function call frames including local variables, saved registers, and return address. Bottom (low addresses): Text segment — compiled code. Data segment — global variables. Heap — dynamically allocated memory growing upward. A red arrow shows data written past the end of a local buffer in the stack, overwriting the return address stored above it. Caption: Buffer Overflow — overwriting return address to redirect code execution.]**
 
@@ -138,8 +128,6 @@ CSRF differs from XSS in a key way: XSS injects malicious script that runs in th
 
 ## Section 5 — Directory Traversal and Other Application Attacks
 
-**[SHOW DIAGRAM: Directory traversal attack. Web application accepts a file parameter in the URL. Attacker modifies the parameter to include path traversal sequences. Dashed arrow shows navigation from the web root directory upward through the file system to reach system configuration files outside the web root.]**
-
 **[Alt-text: Diagram showing web server file system. Web root directory is shown at mid-level. A URL parameter points to a file within the web root. Below the parameter, the attacker's modified version adds dot-dot-slash sequences to navigate upward out of the web root and into the operating system directory, reaching sensitive files like password or configuration files. Caption: Directory Traversal Attack Path.]**
 
 **Directory Traversal** — also called path traversal — occurs when an application uses user-supplied input to construct file paths without validation, allowing an attacker to navigate outside the intended directory. An attacker can potentially read configuration files, password hashes, or any readable file on the server.
@@ -155,8 +143,6 @@ CSRF differs from XSS in a key way: XSS injects malicious script that runs in th
 ---
 
 ## Closing — Part 1
-
-**[INSTRUCTOR ON CAMERA]**
 
 In Part 1 we covered injection attacks including SQL injection, XSS, CSRF, memory exploitation including buffer overflow, and directory traversal and SSRF. In Part 2 we will cover secure coding principles, the OWASP Top 10 context, and exam scenario walkthroughs.
 

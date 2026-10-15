@@ -1,5 +1,23 @@
 # Video Script: Module 08 - Server-Side Routing & Middleware
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Full Stack Web Development for Beginners &bull; Module 08</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=nu_pCVPKzTk" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/nu_pCVPKzTk" title="freeCodeCamp &bull; Full Stack Web Development for Beginners" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Full Stack Web Development for Beginners</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3340 Full Stack Web Development
 **Estimated Duration:** 21 minutes
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
@@ -7,8 +25,7 @@
 
 ---
 
-## Section 1: Introduction - From One File to Many [00:00 - 03:30]
-
+## Section 1: Introduction - From One File to Many
 Welcome to Module 08. I am Professor Nash. Last module you built a working Express server — all routes and middleware in a single `index.js` file. That works fine for five routes. It does not work for fifty.
 
 This module is about organization. We will learn two things: how to use Express Router to split routes into separate files, and how to build reusable custom middleware. These are the patterns that production Node.js applications actually use.
@@ -23,8 +40,7 @@ The solution is Express Router. Each resource gets its own file. `index.js` beco
 
 ---
 
-## Section 2: Express Router [03:30 - 09:00]
-
+## Section 2: Express Router
 [SHOW CODE]
 
 `express.Router()` creates a mini-application capable of handling routes and middleware. Think of it as a sub-application that you mount at a path prefix.
@@ -115,8 +131,7 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 ---
 
-## Section 3: Custom Middleware [09:00 - 14:00]
-
+## Section 3: Custom Middleware
 [SHOW CODE]
 
 Custom middleware functions are regular JavaScript functions registered with `app.use()`. They follow the three-parameter signature `(req, res, next)`.
@@ -189,8 +204,7 @@ By placing the validation middleware in the route definition as a second argumen
 
 ---
 
-## Section 4: CORS Middleware [14:00 - 17:30]
-
+## Section 4: CORS Middleware
 [SHOW BROWSER]
 
 When your React front-end on `http://localhost:3000` sends a fetch request to your Express API on `http://localhost:5000`, the browser blocks it. This is the Same-Origin Policy — a browser security mechanism. The server must explicitly permit cross-origin requests by sending CORS headers.
@@ -228,8 +242,7 @@ The preflight request: browsers send an `OPTIONS` request before a cross-origin 
 
 ---
 
-## Section 5: Route Parameters and Lab Preview [17:30 - 21:00]
-
+## Section 5: Route Parameters and Lab Preview
 [SHOW CODE]
 
 A quick look at nested routes and query parameter filtering — two patterns the lab uses.

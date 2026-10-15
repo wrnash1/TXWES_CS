@@ -44,7 +44,7 @@ Welcome to Module 06. I am Professor Nash. Active Directory cannot function with
 
 In Module 02 we referenced DNS SRV records constantly. In Module 03 we set our DNS client to point to the DC before promotion. Every module has touched DNS. Now we are going to build a complete understanding of how Windows DNS works, how to deploy and configure DHCP, and how these services integrate with Active Directory.
 
-This module maps to AZ-800 objectives: "Implement and manage DNS" and "Implement and manage DHCP."
+This module maps to AZ-800 objectives: "Implement and manage DNS" and "Implement and manage DHCP.
 
 ---
 

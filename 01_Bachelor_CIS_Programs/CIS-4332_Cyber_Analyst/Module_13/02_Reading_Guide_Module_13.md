@@ -447,8 +447,6 @@ CISA's voluntary baseline security practices for critical infrastructure, cross-
 - CompTIA CySA+ CS0-003 Exam Objectives — Domains 2 and 3
 - Module 13 Video Lecture (Professor Nash)
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

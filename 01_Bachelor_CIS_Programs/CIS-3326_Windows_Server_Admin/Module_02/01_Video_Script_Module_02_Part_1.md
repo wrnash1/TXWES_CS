@@ -46,7 +46,7 @@ If Module 01 was about getting a server running, Module 02 is about understandin
 
 This module covers the conceptual architecture of AD DS: the logical hierarchy from forests down to objects, the role of Domain Controllers, the five FSMO roles, Kerberos authentication, and trust relationships between domains. Part 2 will walk through the demonstration in Active Directory Users and Computers and the PowerShell equivalents.
 
-This content maps to AZ-800 objective area: "Plan and implement an on-premises Active Directory Domain Services infrastructure."
+This content maps to AZ-800 objective area: "Plan and implement an on-premises Active Directory Domain Services infrastructure.
 
 ---
 

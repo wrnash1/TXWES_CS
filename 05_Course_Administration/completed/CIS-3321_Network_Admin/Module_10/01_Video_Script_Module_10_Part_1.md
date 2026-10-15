@@ -63,7 +63,7 @@ DHCP uses UDP port 67 on the server side and UDP port 68 on the client side. All
 
 The DHCP address assignment process follows four steps, remembered by the acronym **DORA**:
 
-**D — DHCP Discover**: The client broadcasts a DHCP Discover message to destination IP 255.255.255.255 (limited broadcast) and destination MAC ff:ff:ff:ff:ff:ff. The source IP is 0.0.0.0 because the client has no address yet. The message says: "I need an IP address — is there a DHCP server available?"
+**D — DHCP Discover**: The client broadcasts a DHCP Discover message to destination IP 255.255.255.255 (limited broadcast) and destination MAC ff:ff:ff:ff:ff:ff. The source IP is 0.0.0.0 because the client has no address yet. The message says: "I need an IP address — is there a DHCP server available?
 
 **O — DHCP Offer**: One or more DHCP servers on the network receive the Discover and respond with a DHCP Offer. The Offer includes a proposed IP address, subnet mask, gateway, DNS server, and lease duration. If multiple DHCP servers respond, the client receives multiple Offers.
 
@@ -214,7 +214,7 @@ Let's walk through exactly what happens when your browser navigates to txwes.edu
 
 4. The resolver checks its own cache. If the answer is cached and the TTL has not expired, it returns the cached answer immediately (non-authoritative answer).
 
-5. If not cached, the resolver sends an iterative query to a root name server: "Who is authoritative for .edu?"
+5. If not cached, the resolver sends an iterative query to a root name server: "Who is authoritative for .edu?
 
 6. The root server responds with the addresses of the .edu TLD servers.
 

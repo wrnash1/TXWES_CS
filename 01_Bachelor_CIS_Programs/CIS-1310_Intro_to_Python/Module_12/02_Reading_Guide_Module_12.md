@@ -415,7 +415,7 @@ raise ValueError('message')   # BEST — raises instance with informative messag
 `try` runs → exception? `except` runs → no exception? `else` runs → either way `finally` runs. The PCAP exam will show a try-except-else-finally block and ask which print statements execute.
 
 **Tip 2 — `else` is skipped whenever any exception is raised.**
-Even if the exception is caught by an `except` clause, `else` is still skipped. `else` means "the try block succeeded completely."
+Even if the exception is caught by an `except` clause, `else` is still skipped. `else` means "the try block succeeded completely.
 
 **Tip 3 — `finally` runs before a `return` value is delivered.**
 `try: return 42` with a `finally: print('x')` — the print happens before the caller receives 42. This is one of the most commonly tested PCAP exam questions.
@@ -481,9 +481,6 @@ A comprehensive free article covering the exception hierarchy, `try/except/else/
 **5. Real Python — Python's assert: Debug and Test Your Code**
 [https://realpython.com/python-assert-statement/](https://realpython.com/python-assert-statement/)
 A focused article on Python's `assert` statement — when to use it, `AssertionError`, and how it relates to testing. Includes important warnings about relying on `assert` for input validation in production code (assert statements are disabled when Python runs with optimization flags).
-
----
-
 
 ---
 
@@ -569,7 +566,6 @@ Before proceeding to this module's laboratory exercises, synthesize concise, rig
 1. **First-Principles Invariant Defense:** How does the theoretical model in this module ensure state correctness under adverse operating conditions? What mathematical proof or telemetry metric validates this behavior?
 2. **Architectural Trade-Off Analysis:** If forced to reduce execution latency by 50%, what specific compromises in consistency, redundancy, or capital expenditure would your architecture be forced to accept?
 3. **Failure Mode Pathology:** Explain the exact mechanistic chain of events that occurs when this module's primary subsystem experiences an unhandled resource starvation condition.
-
 
 ## 8. Study Checklist
 

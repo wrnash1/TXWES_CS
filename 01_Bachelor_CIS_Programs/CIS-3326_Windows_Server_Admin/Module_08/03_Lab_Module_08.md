@@ -202,7 +202,7 @@ MinPasswordLength: 12 and LockoutThreshold: 5.
 
 6. Double-click **Prevent access to the command prompt**.
 
-7. Set to **Enabled**, set "Disable the command prompt script processing also"
+7. Set to **Enabled**, set "Disable the command prompt script processing also
    to **Yes**, and click OK.
 
 ### Step 4.2 — Set Registry Values via PowerShell
@@ -414,7 +414,7 @@ Loopback Processing is critical for kiosk and lab computer environments. Configu
        -ValueName "UserPolicyMode" -Type DWord -Value 2
    ```
 
-   Note: Value 2 = Replace mode, Value 1 = Merge mode. Confirm this by checking the Group Policy Administrative Template path: Computer Configuration > Policies > Administrative Templates > System > Group Policy > "Configure user Group Policy loopback processing mode."
+   Note: Value 2 = Replace mode, Value 1 = Merge mode. Confirm this by checking the Group Policy Administrative Template path: Computer Configuration > Policies > Administrative Templates > System > Group Policy > "Configure user Group Policy loopback processing mode.
 
 2. Link the GPO to the Kiosks OU:
 

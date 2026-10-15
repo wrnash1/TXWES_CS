@@ -1,15 +1,32 @@
 # Video Script: Module 08 - Custom PC Configurations
 
 ## Course: CIS-2320 Hardware Fundamentals | Texas Wesleyan University
+
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course &bull; Module 08</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLG49S3nxzAnlGHY8ObL8DiyP3AIu9vdnH" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLG49S3nxzAnlGHY8ObL8DiyP3AIu9vdnH" title="Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Estimated Duration:** 22-24 minutes
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — Domain 3.4: Given a scenario, select and configure appropriate components for a custom PC
 **Recorded by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-## [00:00 - 02:30] Introduction and Module Overview
-
-[SHOW SLIDE: Title card — "Module 08: Custom PC Configurations"]
+## Introduction and Module Overview
 
 Hello, class. Welcome to Module 08. I am Professor Nash, and today we are covering one of my favorite topics in the entire A+ curriculum: Custom PC Configurations.
 
@@ -23,9 +40,7 @@ By the end of this video, you will be able to identify the correct build type fo
 
 ---
 
-## [02:30 - 08:00] Section 1 — CAD Workstations and Professional Video Editing
-
-[SHOW SLIDE: "CAD/Workstation Build — Component Priorities"]
+## Section 1 — CAD Workstations and Professional Video Editing
 
 [SHOW COMPONENT: Professional GPU or spec sheet]
 
@@ -34,8 +49,6 @@ Our first build type is the CAD workstation or professional content creation mac
 Let's break down the four major components for a CAD workstation.
 
 First: the GPU. This is the most critical distinction from a gaming PC. CAD workstations require a professional-grade GPU — the NVIDIA RTX A-series (formerly Quadro) or the AMD Radeon Pro line. Why not a gaming GPU? Two reasons. One: professional GPUs use certified, validated drivers tested specifically against CAD and 3D modeling software. When a geometry calculation is performed in SolidWorks or the rendering pipeline runs in Revit, the professional GPU driver is guaranteed to produce accurate results. Consumer gaming drivers optimize for frame rates and visual effects, not mathematical precision. A geometry error in a structural design file is not a cosmetic problem — it is potentially a safety problem. Two: professional GPUs support features like ECC VRAM, which detects and corrects memory bit errors in the GPU's own video memory.
-
-[SHOW SLIDE: CAD workstation specs table]
 
 Second: CPU. CAD and video rendering are highly multithreaded workloads. You want a high core count — minimum 8 cores for light use, 16 or more cores for heavy rendering. Clock speed matters too, but when rendering complex scenes, the renderer can distribute work across all available cores simultaneously. More cores equals faster renders.
 
@@ -49,17 +62,13 @@ Fourth: Storage. Fast NVMe SSD is the standard. CAD file load times and scratch 
 
 ---
 
-## [08:00 - 13:00] Section 2 — Virtualization Hosts and Gaming PCs
-
-[SHOW SLIDE: "Virtualization Host — Core Count and RAM Math"]
+## Section 2 — Virtualization Hosts and Gaming PCs
 
 Our second build type is the virtualization host. This is a physical machine that runs a hypervisor — software like VMware ESXi, Microsoft Hyper-V, or VirtualBox — which divides the physical hardware into multiple isolated virtual machines, or VMs. Each VM runs its own operating system and applications independently.
 
 The key hardware requirement for virtualization is simple: maximum CPU core count and maximum RAM capacity.
 
 Here is the math. If you need to run 8 virtual machines simultaneously, and each VM is allocated 2 virtual CPUs and 8 GB of RAM, you need at minimum 16 logical CPU cores and 64 GB of RAM — just for the VMs — before you account for the host operating system's own overhead. The host OS and hypervisor itself will consume additional cores and RAM on top of that.
-
-[SHOW SLIDE: Virtualization host requirements]
 
 Storage for virtualization hosts should be fast — NVMe SSDs or RAID arrays reduce VM disk I/O latency when multiple VMs are reading and writing simultaneously. Each VM's disk is stored as a virtual disk file on the host's physical storage.
 
@@ -68,8 +77,6 @@ Now here is the critical exam trap for virtualization: GPU. Virtualization hosts
 [PAUSE — 2 seconds]
 
 **A+ Exam Tip:** If the exam offers a virtualization host scenario and one of the answer choices is a high-end gaming GPU, that answer is almost certainly wrong. The correct answer for virtualization is always maximum cores and maximum RAM.
-
-[SHOW SLIDE: "Gaming PC — GPU Tier by Resolution"]
 
 Our third build type is the gaming PC. This one is simpler in concept but has important nuances. The GPU is the primary performance component for gaming. The GPU renders the game world frame by frame and outputs those frames to the display. If the GPU cannot render frames fast enough, the game stutters.
 
@@ -85,9 +92,7 @@ Storage for gaming: NVMe SSD dramatically reduces game asset loading times compa
 
 ---
 
-## [13:00 - 18:30] Section 3 — NAS and Home Servers
-
-[SHOW SLIDE: "NAS/Home Server — RAID Comparison Table"]
+## Section 3 — NAS and Home Servers
 
 [SHOW COMPONENT: Multiple HDDs representing NAS drives]
 
@@ -115,9 +120,7 @@ For the CPU and RAM in a NAS build: a low-TDP CPU (low power consumption) is suf
 
 ---
 
-## [18:30 - 21:00] Section 4 — Build Type Decision Framework and Exam Strategy
-
-[SHOW SLIDE: "A+ Exam Scenario Decision Tree"]
+## Section 4 — Build Type Decision Framework and Exam Strategy
 
 Let's put together a decision framework you can use on exam day. When you see a custom PC scenario on the A+ exam, ask yourself four questions.
 
@@ -135,9 +138,7 @@ Practice this framework with the five questions in the module quiz. Each questio
 
 ---
 
-## [21:00 - 22:30] Closing and Lab Preview
-
-[SHOW SLIDE: End card]
+## Closing and Lab Preview
 
 Here is your lab assignment for this module. You will receive five real-world workload scenarios, and for each one you will select the correct build type, identify the primary hardware requirement, and complete a bill-of-materials table with specific component recommendations and justifications.
 

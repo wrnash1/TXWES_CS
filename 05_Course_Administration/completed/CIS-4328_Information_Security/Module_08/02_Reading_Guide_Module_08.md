@@ -76,7 +76,7 @@ Read: The introduction and methodology, then browse any 10 entries to understand
 
 Focus areas:
 
-- How CISA classifies vulnerabilities as "known exploited."
+- How CISA classifies vulnerabilities as "known exploited.
 
 - The remediation deadlines CISA sets for federal agencies and the rationale for those timelines.
 

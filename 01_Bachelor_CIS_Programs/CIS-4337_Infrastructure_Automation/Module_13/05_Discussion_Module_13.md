@@ -40,9 +40,9 @@ Discuss: How would you approach this migration systematically? What tooling woul
 
 ## Sample Peer Response Starters
 
-- "Your remediation priority order makes sense. I would also add that..."
-- "I agree that Vault's dynamic secrets are valuable, but I think the threshold for adoption is actually lower because..."
-- "Your migration plan is thorough. One risk in the 90-day window is..."
+- "Your remediation priority order makes sense. I would also add that...
+- "I agree that Vault's dynamic secrets are valuable, but I think the threshold for adoption is actually lower because...
+- "Your migration plan is thorough. One risk in the 90-day window is...
 
 ---
 

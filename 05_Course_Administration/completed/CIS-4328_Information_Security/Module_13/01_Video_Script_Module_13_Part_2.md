@@ -30,21 +30,15 @@
 
 ## Pre-Roll Slate
 
-**[SHOW SLIDE: Course title card — "CIS-4328 Information Security | Module 13 | Texas Wesleyan University"]**
-
 ---
 
 ## Opening — Part 2
-
-**[INSTRUCTOR ON CAMERA]**
 
 Welcome back to Module 13. In Part 1 we built the risk vocabulary and covered qualitative and quantitative analysis. In Part 2 we cover what you do with the analysis: risk response strategies, the risk register, and Business Impact Analysis.
 
 ---
 
 ## Section 1 — Risk Response Strategies
-
-**[SHOW SLIDE: Four risk response strategies — quadrant diagram]**
 
 Once you have identified and analyzed a risk, you must decide what to do about it. The Security+ exam tests four risk response strategies, and you need to be able to identify which strategy is being described in a scenario question.
 
@@ -80,8 +74,6 @@ A special form of acceptance is **risk ignorance** — the organization is unawa
 
 ## Section 2 — Residual Risk and Control Risk
 
-**[SHOW SLIDE: Risk reduction layers diagram]**
-
 After applying controls, some risk remains. This is called **residual risk**. No control eliminates risk completely. The security program's goal is to reduce risk to within the organization's risk tolerance through a combination of avoidance, transference, and mitigation, with formal acceptance of whatever remains.
 
 **Inherent risk** is the risk that exists before any controls are applied. A company with an internet-facing database has inherent risk of SQL injection. After implementing a WAF, parameterized queries, and least-privilege database accounts, the residual risk is much lower.
@@ -91,8 +83,6 @@ After applying controls, some risk remains. This is called **residual risk**. No
 ---
 
 ## Section 3 — The Risk Register
-
-**[SHOW SLIDE: Sample risk register table]**
 
 A risk register is the central document of the risk management program. It is a structured record of all identified risks, their analysis, their assigned owners, and their treatment status.
 
@@ -119,8 +109,6 @@ The risk register is reviewed and updated on a regular cycle — quarterly for m
 ---
 
 ## Section 4 — Business Impact Analysis
-
-**[SHOW SLIDE: BIA process diagram — criticality and dependency mapping]**
 
 A Business Impact Analysis (BIA) identifies the critical business functions and processes that must be maintained during a disruption, and determines the impact if those functions are unavailable.
 
@@ -152,8 +140,6 @@ The BIA outputs feed directly into continuity and recovery planning:
 
 ## Section 5 — Privacy and Data Classification
 
-**[SHOW SLIDE: Data classification levels — Confidential, Internal, Public]**
-
 Risk management in security extends to data governance. Data classification is the process of categorizing data by sensitivity and assigning handling requirements.
 
 Common classification levels in government: Top Secret, Secret, Confidential, Unclassified.
@@ -165,8 +151,6 @@ Data classification drives risk decisions: confidential data requires stronger a
 ---
 
 ## Section 6 — Third-Party Risk
-
-**[SHOW SLIDE: Supply chain risk diagram — vendor, contractor, partner connections]**
 
 Third-party risk is risk arising from the organization's relationships with vendors, partners, contractors, and service providers. Supply chain attacks — which we discussed in Module 10 — exploit this risk.
 
@@ -182,8 +166,6 @@ The Security+ exam tests third-party risk in the context of supply chain securit
 ---
 
 ## Closing
-
-**[INSTRUCTOR ON CAMERA]**
 
 Risk management is the language that connects technical security to business decision-making. Threats and vulnerabilities are technical realities — but their business significance is measured in likelihood, impact, ALE, and risk tolerance.
 

@@ -325,7 +325,7 @@ find /var/log -name "*.log" 2>/dev/null | head -5 | xargs wc -l
 
 ### Narration
 
-Let's tie everything together with a realistic scenario. Your manager asks: "Which IP addresses are generating the most authentication failures, and how many failures per IP?"
+Let's tie everything together with a realistic scenario. Your manager asks: "Which IP addresses are generating the most authentication failures, and how many failures per IP?
 
 ### On-Screen Demo
 

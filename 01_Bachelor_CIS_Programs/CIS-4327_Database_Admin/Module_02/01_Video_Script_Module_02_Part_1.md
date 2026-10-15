@@ -28,8 +28,6 @@
 
 ### Opening
 
-**[SHOW SLIDE: Module 02 — Database Design: Normalization and ERDs]**
-
 Hello, and welcome back to CIS-4327. I am Professor Nash. This is Module 02: Database Design — Normalization and Entity-Relationship Diagrams.
 
 In Module 01 we built the SQL foundation. Now we are going to use that foundation to design databases that are correct by construction. Poor schema design is one of the most expensive problems in enterprise systems — it causes data anomalies, duplicated records, failed migrations, and query performance problems that are nearly impossible to fix after a system is in production.
@@ -39,8 +37,6 @@ In Part 1 we cover functional dependencies, the three primary normal forms, and 
 ---
 
 ### Section 1 — Why Normalization Matters
-
-**[SHOW SLIDE: Unnormalized flat table with customer info duplicated across every order row]**
 
 Consider a table that stores everything in one place: customer name, customer email, order date, product name, product price, and quantity — all in a single flat table. This design has three serious failure modes.
 
@@ -55,8 +51,6 @@ Normalization eliminates these problems by organizing data so that each fact is 
 ---
 
 ### Section 2 — Functional Dependencies
-
-**[SHOW SLIDE: Dependency notation — X → Y means knowing X determines Y]**
 
 The mathematical foundation of normalization is the functional dependency. We say that attribute X functionally determines attribute Y — written X → Y — if knowing the value of X always and uniquely identifies the value of Y.
 
@@ -78,8 +72,6 @@ Understanding these dependency types is required for all three normal forms.
 
 ### Section 3 — First Normal Form
 
-**[SHOW SLIDE: Unnormalized table with multi-valued cells vs. 1NF table with atomic values]**
-
 A table is in First Normal Form when four conditions are met.
 
 First: every column contains atomic values — values that cannot be broken down further into meaningful sub-components. A cell containing "Alice; Bob; Carol" as a delimited list violates 1NF because the value is not atomic.
@@ -90,21 +82,15 @@ Third: every row is uniquely identifiable. A primary key must exist.
 
 Fourth: there are no repeating column groups. A design with columns phone_1, phone_2, phone_3 has a repeating group that violates 1NF.
 
-**[SHOW SLIDE: Before — customers table with phone_1, phone_2, phone_3; After — separate customer_phones table]**
-
 The classic 1NF fix for repeating column groups is to create a child table. Instead of storing multiple phone numbers in the same row of the customers table, create a customer_phones table with its own row for each phone number and a foreign key back to customers. The number of phone numbers a customer can have is now unlimited, and the schema stays clean.
 
 ---
 
 ### Section 4 — Second Normal Form
 
-**[SHOW SLIDE: Composite PK table with order_id and product_id — product_name depending only on product_id highlighted]**
-
 A table is in Second Normal Form when it satisfies 1NF and every non-key attribute is fully functionally dependent on the entire primary key — not just part of it.
 
 2NF is only relevant for tables with composite primary keys. If your table has a single-column primary key, satisfying 1NF automatically satisfies 2NF.
-
-**[SHOW SLIDE: Split into order_items and products tables]**
 
 Here is a concrete example. Suppose we have an order_line_items table with composite primary key (order_id, product_id) and columns: quantity, product_name, and unit_price.
 
@@ -120,13 +106,9 @@ After the fix, if a product price changes, you update one row in the products ta
 
 ### Section 5 — Third Normal Form
 
-**[SHOW SLIDE: employees table — employee_id → department_id → department_name transitive chain highlighted]**
-
 A table is in Third Normal Form when it satisfies 2NF and no non-key attribute transitively depends on the primary key through another non-key attribute.
 
 The informal mnemonic for 3NF is: every non-key attribute must depend on the key, the whole key, and nothing but the key.
-
-**[SHOW SLIDE: employees split into employees and departments tables]**
 
 Concrete example. An employees table stores employee_id, employee_name, department_id, and department_name. Primary key is employee_id.
 
@@ -141,8 +123,6 @@ After this fix, if the IT department renames itself to Information Technology, y
 ---
 
 ### Section 6 — Worked Normalization Example
-
-**[SHOW SLIDE: Unnormalized student_courses flat table]**
 
 Let me walk through a complete normalization from an unnormalized table to 3NF.
 
@@ -197,8 +177,6 @@ Each fact is stored in exactly one place. No update, insertion, or deletion anom
 
 ### Section 7 — Denormalization and When to Use It
 
-**[SHOW SLIDE: OLTP normalized schema vs. OLAP denormalized flat table]**
-
 Normalization is the correct default for transactional (OLTP) databases like those you run on Cloud SQL or Cloud Spanner. But there are legitimate cases where you intentionally introduce controlled redundancy to improve read performance.
 
 In analytical systems like BigQuery, data is often stored in wide, flat, denormalized tables or nested repeated fields. Joining ten tables in a query over billions of rows in a data warehouse is expensive. Pre-joining related data into a single wide table eliminates that join cost at query time.
@@ -210,8 +188,6 @@ For your GCP exam: Cloud SQL and Cloud Spanner are used for normalized OLTP sche
 ---
 
 ### Closing — Part 1 Summary
-
-**[SHOW SLIDE: Normal forms summary table]**
 
 In Part 1 we covered functional dependencies and the three normal forms.
 

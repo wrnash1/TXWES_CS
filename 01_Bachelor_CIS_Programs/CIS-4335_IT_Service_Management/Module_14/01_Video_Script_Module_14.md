@@ -28,11 +28,8 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 - 02:30]
-
+## Section 1: Welcome and Module Overview
 Welcome to Module 14. I am Professor Nash. Today we are covering Risk and Compliance in ITSM — the practice of identifying, assessing, and managing risk within the IT service environment, and the frameworks that translate legal and regulatory obligations into actionable IT controls.
-
-[SHOW DIAGRAM: Title slide — "Module 14: Risk and Compliance in ITSM" with ITIL 4 SVS label and ITIL 4 Foundation certification badge]
 
 Risk and compliance are often treated as separate concerns — risk feels like a technical discipline, compliance feels like a legal one. In practice, they are deeply connected. An organization's compliance obligations define a floor of required controls. Risk management identifies the threats and vulnerabilities that those controls must address. Together they shape what IT does to protect the organization's people, data, and services.
 
@@ -40,9 +37,7 @@ By the end of this module you will be able to: explain how risk registers are us
 
 ---
 
-## Section 2: Risk Management in ITSM [02:30 - 07:30]
-
-[SHOW DIAGRAM: Risk management cycle — Risk Identification → Risk Assessment (Likelihood × Impact) → Risk Response (Avoid/Mitigate/Transfer/Accept) → Monitor and Review → back to Identification]
+## Section 2: Risk Management in ITSM
 
 ### What Is Risk?
 
@@ -51,8 +46,6 @@ ITIL 4 defines risk as a possible event that could cause harm or loss, or affect
 ### The Risk Register
 
 A risk register is a documented record of identified risks, their assessments, and the responses that have been selected to manage them. In ITSM, risk registers are maintained at multiple levels: project-level risk registers for individual initiatives, service-level risk registers for ongoing services, and organizational-level risk registers for enterprise-wide concerns.
-
-[PAUSE]
 
 Each entry in a risk register typically contains:
 
@@ -72,9 +65,7 @@ ITIL 4 integrates risk thinking throughout the Service Value System. The SVS gui
 
 ---
 
-## Section 3: ISO 27001 Alignment [07:30 - 12:00]
-
-[SHOW DIAGRAM: ISO 27001 PDCA cycle — Plan (establish ISMS), Do (implement controls), Check (audit and review), Act (improve) — with the 14 Annex A control domains listed around the outside]
+## Section 3: ISO 27001 Alignment
 
 ### What Is ISO 27001?
 
@@ -83,8 +74,6 @@ ISO 27001 is the international standard for Information Security Management Syst
 ### The ISMS
 
 An Information Security Management System is not a product or technology — it is a management framework. It defines how an organization identifies information security risks, selects controls to address them, and monitors the effectiveness of those controls. The ISMS encompasses people, processes, and technology.
-
-[PAUSE]
 
 ### Annex A Controls
 
@@ -106,9 +95,7 @@ ISO 27001 requires a formal risk assessment process. The organization must ident
 
 ---
 
-## Section 4: SOC 2 [12:00 - 15:30]
-
-[SHOW DIAGRAM: SOC 2 Trust Services Criteria — five categories in boxes: Security (Security is mandatory), Availability, Processing Integrity, Confidentiality, Privacy — with "Type I" and "Type II" labels explained below]
+## Section 4: SOC 2
 
 ### What Is SOC 2?
 
@@ -116,13 +103,11 @@ SOC 2 — System and Organization Controls 2 — is an auditing framework develo
 
 ### Type I vs. Type II
 
-A SOC 2 Type I report evaluates whether controls are suitably designed at a specific point in time. It answers: "Are the right controls in place today?"
+A SOC 2 Type I report evaluates whether controls are suitably designed at a specific point in time. It answers: "Are the right controls in place today?
 
-A SOC 2 Type II report evaluates whether those controls operated effectively over a period of time — typically six to twelve months. It answers: "Did those controls actually work consistently over this period?"
+A SOC 2 Type II report evaluates whether those controls operated effectively over a period of time — typically six to twelve months. It answers: "Did those controls actually work consistently over this period?
 
 Type II reports are more valuable to customers and business partners because they demonstrate sustained operational effectiveness, not just design adequacy.
-
-[PAUSE]
 
 ### SOC 2 and ITSM
 
@@ -132,9 +117,7 @@ Organizations pursuing SOC 2 Type II certification find that mature ITSM practic
 
 ---
 
-## Section 5: Audit Evidence Collection [15:30 - 18:30]
-
-[SHOW DIAGRAM: Audit evidence types — four boxes: System-generated logs (change records, access logs), Policy documents (approved policies and procedures), Configuration exports (firewall rules, user access lists), Interview records (notes from auditor discussions with staff)]
+## Section 5: Audit Evidence Collection
 
 An audit is an independent review that assesses whether an organization's controls meet a defined standard. Audit evidence is the documentation that supports the auditor's findings. Collecting audit evidence is an operational discipline that ITSM teams must practice continuously, not just when an audit is scheduled.
 
@@ -154,15 +137,12 @@ Organizations with mature compliance programs maintain evidence continuously. Wh
 
 ---
 
-## Section 6: Gap Analysis and Compliance Dashboards [18:30 - 21:00]
-
+## Section 6: Gap Analysis and Compliance Dashboards
 ### Gap Analysis
 
 A gap analysis compares the organization's current state of controls against a required standard. The output is a list of identified gaps — areas where required controls are absent, inadequate, or not demonstrably operating.
 
 Gap analysis is the starting point for compliance roadmaps. An organization pursuing ISO 27001 certification will typically conduct a gap analysis against Annex A to identify which controls must be implemented before the certification audit.
-
-[PAUSE]
 
 ### Compliance Dashboards
 

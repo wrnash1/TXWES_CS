@@ -215,7 +215,7 @@ This part does not require resource deployment. Answer the scenario questions us
 
 Contoso Corporation has the following Azure governance structure:
 
-- Root Management Group: "Contoso Root"
+- Root Management Group: "Contoso Root
 - Child Management Group: "Contoso Production" (under Contoso Root)
 - Child Management Group: "Contoso Development" (under Contoso Root)
 - Subscription A: "Prod-Finance" (under Contoso Production)

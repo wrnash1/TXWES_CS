@@ -44,7 +44,7 @@ A mid-size electronics manufacturer runs MRP weekly using SAP transaction MD01. 
 
 ### Scenario B: The Valuation Mismatch
 
-A building materials distributor implemented SAP with Moving Average Price (MAP) for all inventory. Six months in, the company acquires a large lot of lumber at a price 35% below their current MAP because of a distressed seller. After the goods receipt is posted in MIGO, the MAP drops sharply. The CFO receives the monthly balance sheet and is alarmed that inventory values fell significantly even though the physical quantity increased. He asks the controller to "fix the inventory value back to where it was."
+A building materials distributor implemented SAP with Moving Average Price (MAP) for all inventory. Six months in, the company acquires a large lot of lumber at a price 35% below their current MAP because of a distressed seller. After the goods receipt is posted in MIGO, the MAP drops sharply. The CFO receives the monthly balance sheet and is alarmed that inventory values fell significantly even though the physical quantity increased. He asks the controller to "fix the inventory value back to where it was.
 
 **Your task:** Explain why the MAP drop is not an error — it is the correct behavior of the Moving Average Price method. What journal entry did SAP post when the goods receipt was recorded? Why would "correcting" the MAP back to the prior value misrepresent the actual cost of the inventory? Under what circumstances would Standard Price have been the better valuation choice for this company, and what would have happened differently at the time of the low-price receipt?
 

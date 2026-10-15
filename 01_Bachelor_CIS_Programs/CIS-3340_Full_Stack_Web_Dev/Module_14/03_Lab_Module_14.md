@@ -108,7 +108,7 @@ Replace `<your-initials>` with your actual initials. Save.
 In the bucket → Objects → Upload:
 
 - Click "Add files" and select everything inside `dist/` (not the `dist/` folder itself)
-- Also add the `assets/` folder using "Add folder"
+- Also add the `assets/` folder using "Add folder
 - Upload
 
 ### Step 7 — Create the CloudFront distribution
@@ -344,7 +344,7 @@ Submit to Canvas:
 
 1. Screenshot: S3 bucket static website hosting settings (index.html for both documents)
 2. Screenshot: CloudFront distribution deployed with your domain name visible
-3. Screenshot: Elastic Beanstalk environment showing "Health: Ok"
+3. Screenshot: Elastic Beanstalk environment showing "Health: Ok
 4. Screenshot: RDS instance showing "Available" status
 5. Screenshot: psql output confirming all three tables created on RDS
 6. Screenshot: deployed application at the CloudFront URL showing a book loaded from RDS
@@ -430,7 +430,7 @@ chmod +x deploy.sh
 
 Configure a custom subdomain for the bookstore using AWS Certificate Manager and Route 53.
 
-1. In the AWS Certificate Manager console (us-east-1 — ACM certificates for CloudFront must be in us-east-1), request a public certificate for `bookstore.<your-domain>.com`. Choose DNS validation, then add the CNAME validation record to your domain's DNS. Wait for the status to show "Issued."
+1. In the AWS Certificate Manager console (us-east-1 — ACM certificates for CloudFront must be in us-east-1), request a public certificate for `bookstore.<your-domain>.com`. Choose DNS validation, then add the CNAME validation record to your domain's DNS. Wait for the status to show "Issued.
 
 1. In the CloudFront distribution → General → Edit, add the alternate domain name `bookstore.<your-domain>.com` and select the ACM certificate you just created. Save.
 

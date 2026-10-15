@@ -127,7 +127,7 @@ ITIL 4 (2019) was a deliberate redesign addressing these criticisms:
 - The guiding principles were articulated in ways that resonate with Agile and DevOps practitioners.
 - ITIL 4's guidance explicitly states that the framework should be integrated with other approaches including Lean, DevOps, and Agile.
 
-**Key quote from ITIL 4:** "ITIL 4 provides the guidance needed to address the new service management challenges and make use of the potential offered by technology. It has been created to align with the ways of working in modern organizations and include perspectives that are relevant for businesses in the digital age, such as Lean, Agile, DevOps, and digital transformation."
+**Key quote from ITIL 4:** "ITIL 4 provides the guidance needed to address the new service management challenges and make use of the potential offered by technology. It has been created to align with the ways of working in modern organizations and include perspectives that are relevant for businesses in the digital age, such as Lean, Agile, DevOps, and digital transformation.
 
 ---
 
@@ -276,9 +276,9 @@ These three related terms are often confused:
 
 **SLI (Service Level Indicator):** A quantitative measurement of a service dimension. Example: "request success rate" = percentage of HTTP requests that return a 2xx or 3xx response code.
 
-**SLO (Service Level Objective):** A target value or range for an SLI. Example: "Request success rate SLO = 99.9% over a rolling 28-day window."
+**SLO (Service Level Objective):** A target value or range for an SLI. Example: "Request success rate SLO = 99.9% over a rolling 28-day window.
 
-**SLA (Service Level Agreement):** A contractual commitment to a customer about service performance, with financial or other consequences for violation. Example: "We guarantee 99.5% monthly availability; failure results in service credits."
+**SLA (Service Level Agreement):** A contractual commitment to a customer about service performance, with financial or other consequences for violation. Example: "We guarantee 99.5% monthly availability; failure results in service credits.
 
 The relationship: SLIs are measured → compared against SLOs (internal targets, stricter) → SLAs are the customer-facing commitments (looser, with buffer).
 
@@ -300,7 +300,7 @@ The error budget transforms the development-vs-operations conflict into a shared
 - If the error budget is nearly consumed (close to 43.2 minutes of downtime), feature deployments pause and reliability work takes priority.
 - If the error budget is gone (exceeded 43.2 minutes), a deployment freeze is enforced until the budget resets.
 
-This replaces "development wants to move fast / operations wants stability" with "both teams want to maximize the error budget's utility."
+This replaces "development wants to move fast / operations wants stability" with "both teams want to maximize the error budget's utility.
 
 ### 5.4 Blameless Postmortems
 
@@ -484,8 +484,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

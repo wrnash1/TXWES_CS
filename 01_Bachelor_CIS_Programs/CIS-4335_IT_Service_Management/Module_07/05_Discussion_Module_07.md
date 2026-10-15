@@ -30,7 +30,7 @@ resolves tickets without feeding patterns back to the infrastructure team; and t
 project management office launches new systems without coordinating with operations.
 
 Each team is working hard, but the university's IT experience remains poor and users
-frequently complain that "IT doesn't communicate."
+frequently complain that "IT doesn't communicate.
 
 Using the ITIL 4 Service Value Chain model, explain what is happening in structural
 terms. Which SVC activities appear to be disconnected? Which activity, if strengthened,
@@ -48,9 +48,9 @@ A large hospital system's IT department tracks the following monthly metrics: 4,
 service desk contacts, 98% ticket closure rate, 94% first-call resolution, and an
 average resolution time of 8 minutes.
 
-The CIO reviews these numbers and says, "Our IT team is delivering tremendous value."
+The CIO reviews these numbers and says, "Our IT team is delivering tremendous value.
 A patient safety officer reviews the same numbers and says, "I still don't know if
-IT is actually helping our nurses and doctors do their jobs better."
+IT is actually helping our nurses and doctors do their jobs better.
 
 Both statements reference the word "value," but they are not describing the same thing.
 

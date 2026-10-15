@@ -332,7 +332,7 @@ Azure Traffic Manager differs from Azure Load Balancer in which fundamental way?
 - **Correct Answer:** B
 - **Distractor Analysis:**
   - *Why B is correct:* Traffic Manager is a DNS-level service that returns the IP address of the best endpoint (based on routing method: performance, priority, weighted, geographic) when a client performs a DNS lookup. The client then connects directly to that endpoint. Load Balancer operates within a single region, distributing actual network traffic packets across backend VMs in a pool. They solve different problems at different scales.
-  - *Why A is incorrect:* That describes the difference between Application Gateway (Layer 7) and Load Balancer (Layer 4), not Traffic Manager vs. Load Balancer. Traffic Manager is DNS-based, which is not accurately described as "Layer 7 HTTP/HTTPS."
+  - *Why A is incorrect:* That describes the difference between Application Gateway (Layer 7) and Load Balancer (Layer 4), not Traffic Manager vs. Load Balancer. Traffic Manager is DNS-based, which is not accurately described as "Layer 7 HTTP/HTTPS.
   - *Why C is incorrect:* Traffic Manager does not require Application Gateway in each region. Traffic Manager simply points DNS to whatever endpoint you configure — VMs, App Services, load balancers, or any IP/hostname.
   - *Why D is incorrect:* Traffic Manager does not provide lower latency through Anycast routing. In fact, Traffic Manager adds a DNS lookup step. Its performance routing method selects the endpoint with the lowest latency based on DNS probe data, but the service itself is not Anycast-based.
 

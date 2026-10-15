@@ -359,13 +359,13 @@ Standard-IA and One Zone-IA have a 30-day minimum. Glacier Instant and Flexible 
 One Zone-IA is never appropriate for compliance data, unique data, or disaster recovery purposes. It is appropriate for thumbnails, derived files, and on-premises backup replicas.
 
 **Exam Tip 3 — CRR vs. SRR by scope:**
-"Different region" always means CRR. "Same region, different account" or "same region log aggregation" means SRR.
+Different region" always means CRR. "Same region, different account" or "same region log aggregation" means SRR.
 
 **Exam Tip 4 — Replication does not copy existing objects:**
 S3 replication only applies to objects written after the rule is configured. S3 Batch Operations is required for pre-existing objects.
 
 **Exam Tip 5 — gp3 default, io2 for highest IOPS:**
-"High IOPS," "sub-millisecond," "mission-critical database" → io2. "Boot volume," "general workload" → gp3. "Sequential big data" → st1. "Lowest cost cold" → sc1.
+High IOPS," "sub-millisecond," "mission-critical database" → io2. "Boot volume," "general workload" → gp3. "Sequential big data" → st1. "Lowest cost cold" → sc1.
 
 **Exam Tip 6 — EFS for shared concurrent Linux access:**
 Multiple EC2 instances needing simultaneous shared file access → EFS (Linux) or FSx for Windows File Server (Windows). EBS cannot be shared across instances without Multi-Attach limitations.
@@ -585,8 +585,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

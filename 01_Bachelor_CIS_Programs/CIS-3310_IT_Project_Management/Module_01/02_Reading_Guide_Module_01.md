@@ -106,7 +106,7 @@ A 5-year infrastructure modernization program is still a project because it has 
 
 ### Operations
 
-**Operations** are ongoing, repetitive business activities with no defined end date. They sustain the organization rather than change it. Examples include running a help desk, processing payroll, applying routine patches, and managing network uptime. The key distinguishing phrase on the exam is "ongoing and repetitive."
+**Operations** are ongoing, repetitive business activities with no defined end date. They sustain the organization rather than change it. Examples include running a help desk, processing payroll, applying routine patches, and managing network uptime. The key distinguishing phrase on the exam is "ongoing and repetitive.
 
 ### Triple Constraint (Iron Triangle)
 
@@ -264,9 +264,6 @@ Complete the following before attempting the lab and quiz:
 
 ---
 
-
----
-
 ## Deep Theoretical Foundations & Conceptual Architecture
 
 ### 1. Epistemological Framework & First Principles
@@ -349,7 +346,6 @@ Before proceeding to this module's laboratory exercises, synthesize concise, rig
 1. **First-Principles Invariant Defense:** How does the theoretical model in this module ensure state correctness under adverse operating conditions? What mathematical proof or telemetry metric validates this behavior?
 2. **Architectural Trade-Off Analysis:** If forced to reduce execution latency by 50%, what specific compromises in consistency, redundancy, or capital expenditure would your architecture be forced to accept?
 3. **Failure Mode Pathology:** Explain the exact mechanistic chain of events that occurs when this module's primary subsystem experiences an unhandled resource starvation condition.
-
 
 ## 8. Study Checklist
 

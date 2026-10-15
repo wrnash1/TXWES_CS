@@ -1,5 +1,23 @@
 # Video Script: Module 09 – Risk Management: Identification and Response
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Google Career Certificates &bull; IT Project Management &bull; Module 09</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" title="Google Career Certificates &bull; IT Project Management" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Google Career Certificates &bull; IT Project Management</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3310 IT Project Management
 **Estimated Duration:** 23 minutes
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
@@ -7,19 +25,17 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 – 03:30]
-
+## Section 1: Welcome and Module Overview
 Welcome back to CIS-3310. I am Professor Nash, and this is Module 09: Risk Management — Identification and Response. Risk management is one of the most heavily tested knowledge areas on both the CompTIA Project+ exam and the PMI exams, and for good reason. Every project faces uncertainty — things that might happen, might not happen, or might happen differently than planned. The project manager's job is not to eliminate risk; it is to identify, analyze, and respond to risk systematically so that the team is never completely surprised.
 
-[SHOW SLIDE] Module 09 title: "Risk Management: Identification and Response"
+ Module 09 title: "Risk Management: Identification and Response
 
 Today we cover: the risk management process flow; key risk concepts including probability, impact, and risk score; qualitative risk analysis; quantitative risk analysis; risk response strategies for both threats and opportunities; and the Risk Register as the primary risk management tool.
 
 ---
 
-## Section 2: Risk Management Concepts and Process Flow [03:30 – 08:00]
-
-[SHOW SLIDE] Risk management process chain
+## Section 2: Risk Management Concepts and Process Flow
+ Risk management process chain
 
 PMI defines six processes in Risk Management.
 
@@ -41,9 +57,8 @@ Monitor Risks tracks identified risks, monitors residual and secondary risks, ev
 
 ---
 
-## Section 3: Probability, Impact, and Risk Scoring [08:00 – 13:00]
-
-[SHOW SLIDE] Probability × Impact matrix with risk scoring
+## Section 3: Probability, Impact, and Risk Scoring
+ Probability × Impact matrix with risk scoring
 
 Risk analysis relies on two core attributes: probability and impact.
 
@@ -61,9 +76,8 @@ An important concept: PMI defines risk as any uncertain event or condition that,
 
 ---
 
-## Section 4: Risk Response Strategies [13:00 – 19:00]
-
-[SHOW SLIDE] Threat response strategies vs. Opportunity response strategies side-by-side
+## Section 4: Risk Response Strategies
+ Threat response strategies vs. Opportunity response strategies side-by-side
 
 PMI defines five response strategies for threats and four for opportunities. These are the most exam-tested concepts in risk management.
 
@@ -93,9 +107,8 @@ Accept: Acknowledge the opportunity but take no active steps to pursue it.
 
 ---
 
-## Section 5: The Risk Register [19:00 – 22:30]
-
-[SHOW SLIDE] Risk Register sample with all required fields
+## Section 5: The Risk Register
+ Risk Register sample with all required fields
 
 The Risk Register is the primary output of Identify Risks and the central repository for all risk management activities. It is updated throughout the project as risks are analyzed, responded to, and monitored.
 
@@ -127,8 +140,7 @@ The Risk Register is a living document. Risks are added as new ones are identifi
 
 ---
 
-## End Card [22:30 – 23:00]
-
+## End Card
 Module 09 is complete. Complete the Reading Guide, complete the Lab where you will build a Risk Register and develop risk responses for a realistic project scenario, take the Quiz, and post your Discussion by Wednesday.
 
 Module 10 covers Procurement Management — the processes for planning, conducting, and controlling contracts with external vendors and suppliers. See you there.

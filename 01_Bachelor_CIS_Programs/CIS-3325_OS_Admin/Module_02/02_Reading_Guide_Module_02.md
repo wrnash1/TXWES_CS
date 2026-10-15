@@ -289,7 +289,7 @@ grep -r searches recursively. grep -i is case-insensitive. Know all of these fla
 
 **Exam Tip 7:** find -type f finds regular files. find -type d finds directories. find -type l
 finds symbolic links. find -mtime -1 means "within the last day." find -size +1M means "larger
-than 1 megabyte."
+than 1 megabyte.
 
 **Exam Tip 8:** mkdir -p creates parent directories as needed. Without -p, if you try
 mkdir /a/b/c and /a/b does not exist, the command fails.
@@ -463,8 +463,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

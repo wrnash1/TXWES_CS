@@ -189,7 +189,7 @@ The secret value is returned. In a real application, this CLI pattern would be r
 
 1. In the Azure Portal, navigate to your Key Vault (lab11kv[initials])
 2. Under **Objects**, click **Secrets**
-3. Click on "DatabaseConnectionString"
+3. Click on "DatabaseConnectionString
 4. Click on the current version
 5. Click **Show Secret Value** — note that accessing the secret value here is an audited operation
 

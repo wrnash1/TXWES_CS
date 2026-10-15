@@ -115,7 +115,7 @@ git config --global commit.gpgsign true
 git commit -S -m "Add signed commit example"
 ```
 
-Once you paste your public key into GitHub at Settings > SSH and GPG Keys, every signed commit will show the "Verified" badge. Unsigned commits will show "Unverified."
+Once you paste your public key into GitHub at Settings > SSH and GPG Keys, every signed commit will show the "Verified" badge. Unsigned commits will show "Unverified.
 
 For organizations, the next step is requiring signed commits via branch protection rules. When required signing is enabled, any push containing unsigned commits is rejected by GitHub, regardless of the branch protection bypass permissions.
 

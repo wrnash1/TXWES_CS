@@ -99,7 +99,7 @@ In 175–225 words, respond to the following:
 
 ## Tips for a Strong Post
 
-**Be specific about what makes loops powerful.** Instead of "loops are useful for repetition," write "the accumulator pattern lets the same three-line code compute the average of 7 or 7 million values without modification — the loop handles the scale."
+**Be specific about what makes loops powerful.** Instead of "loops are useful for repetition," write "the accumulator pattern lets the same three-line code compute the average of 7 or 7 million values without modification — the loop handles the scale.
 
 **Connect to real systems.** Scenario A and B ask you to think about software beyond the classroom. Web servers, games, ATMs, thermostats, and file processors all use loops in ways that directly affect how those systems behave.
 

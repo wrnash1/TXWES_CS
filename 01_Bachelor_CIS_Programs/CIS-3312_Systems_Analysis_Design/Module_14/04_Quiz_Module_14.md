@@ -29,7 +29,7 @@ D. The requirement cannot be linked to a functional test case because it is non-
 
 **Correct answer: B**
 
-"Good user experience" is a subjective qualifier with no agreed measurement. A tester cannot determine objectively whether it passes or fails. The requirement must be rewritten with specific, measurable criteria before a valid test case can be written.
+Good user experience" is a subjective qualifier with no agreed measurement. A tester cannot determine objectively whether it passes or fails. The requirement must be rewritten with specific, measurable criteria before a valid test case can be written.
 
 **Why A is wrong:** Whether a requirement is in scope for system testing is a planning decision, not the reason to flag it. The problem is testability, not scope.
 
@@ -66,10 +66,10 @@ Test cases without corresponding requirements are "test orphans." They may indic
 
 A test case for a customer registration form includes the expected result: "The account is created." A QA manager asks the BA to revise this expected result. What is the most appropriate revised version?
 
-A. "The account is created successfully without errors."
-B. "A confirmation message displays stating 'Account created for [entered email address]' and a welcome email is sent to the entered email address within 2 minutes."
-C. "The user is redirected to the dashboard and the system does not display any error messages."
-D. "The registration process completes and the user can log in."
+A. "The account is created successfully without errors.
+B. "A confirmation message displays stating 'Account created for [entered email address]' and a welcome email is sent to the entered email address within 2 minutes.
+C. "The user is redirected to the dashboard and the system does not display any error messages.
+D. "The registration process completes and the user can log in.
 
 ### Distractor Analysis — Question 3
 
@@ -213,7 +213,7 @@ D. UAT should not require stakeholder sign-off — that is the sponsor's respons
 
 **Correct answer: B**
 
-"Feel comfortable" has no measurable definition. Different stakeholders will have different thresholds, and the standard cannot be audited or defended objectively. Sign-off criteria must be specific and measurable so that the go/no-go decision is rational and defensible.
+Feel comfortable" has no measurable definition. Different stakeholders will have different thresholds, and the standard cannot be audited or defended objectively. Sign-off criteria must be specific and measurable so that the go/no-go decision is rational and defensible.
 
 **Why A is wrong:** Stakeholder confidence is genuinely relevant to release readiness — but it must be expressed as a measurable condition (e.g., all designated stakeholders have signed the UAT sign-off document), not a vague sentiment.
 
@@ -271,11 +271,11 @@ D. The criterion should be combined with other error-related criteria into a sin
 
 **Correct answer: B**
 
-"Gracefully" is a subjective term. Two testers would disagree on whether a given error
+Gracefully" is a subjective term. Two testers would disagree on whether a given error
 message is "graceful" or not. The criterion cannot produce an objective, auditable
 pass/fail result. It must be rewritten with specific, observable outcomes such as: "When
 an invalid input is submitted, the system shall display an error message within 1 second
-identifying the specific field and the required format."
+identifying the specific field and the required format.
 
 **Why A is wrong:** BAs routinely write and review acceptance criteria. Requiring QA
 authorship misrepresents the standard role division on most project teams.
@@ -411,16 +411,16 @@ may need resolution before go-live.
 A test case has the following expected result: "The system processes the transaction." A
 QA manager asks the BA to revise it. Which revised expected result is most appropriate?
 
-A. "The system processes the transaction successfully and without errors."
+A. "The system processes the transaction successfully and without errors.
 
-B. "The transaction is saved to the database."
+B. "The transaction is saved to the database.
 
 C. "A confirmation message reading 'Transaction TXN-[ID] completed. Amount: $[entered
    amount] transferred to [destination account]' is displayed within 3 seconds, and a
    corresponding entry appears in the account transaction history with the correct amount
-   and timestamp."
+   and timestamp.
 
-D. "The user sees a confirmation screen."
+D. "The user sees a confirmation screen.
 
 ### Distractor Analysis — Question 15
 

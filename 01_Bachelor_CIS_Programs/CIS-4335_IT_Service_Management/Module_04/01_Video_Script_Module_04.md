@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 – 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -37,7 +37,7 @@ Let us go through them one by one, and then we will look at how they interact.
 
 ---
 
-## [01:30 – 03:30] What Are the Guiding Principles?
+## What Are the Guiding Principles?
 
 The Guiding Principles are recommendations that guide an organization in all circumstances, regardless of changes in its goals, strategies, type of work, or management structure. ITIL 4 calls them "universal" for two reasons.
 
@@ -49,7 +49,7 @@ The Guiding Principles are not rules. You cannot violate them and be penalized. 
 
 ---
 
-## [03:30 – 06:00] Principle 1: Focus on Value
+## Principle 1: Focus on Value
 
 The first Guiding Principle is Focus on Value. Everything the organization does should directly or indirectly create value for the organization, its customers, and other stakeholders.
 
@@ -61,7 +61,7 @@ For the exam: when a scenario describes an organization eliminating unnecessary 
 
 ---
 
-## [06:00 – 08:30] Principle 2: Start Where You Are
+## Principle 2: Start Where You Are
 
 The second Guiding Principle is Start Where You Are. Do not start from scratch and build something new without first considering what is already available to be leveraged.
 
@@ -73,7 +73,7 @@ For the exam: when a scenario describes an organization assessing its current ca
 
 ---
 
-## [08:30 – 11:00] Principles 3 and 4: Progress Iteratively and Collaborate
+## Principles 3 and 4: Progress Iteratively and Collaborate
 
 Principle 3 is Progress Iteratively with Feedback. Do not attempt to do everything at once. Organize work into smaller, manageable sections that can be executed and completed in a timely manner.
 
@@ -89,7 +89,7 @@ For the exam: when a scenario describes an organization piloting a new practice 
 
 ---
 
-## [11:00 – 13:30] Principle 5: Think and Work Holistically
+## Principle 5: Think and Work Holistically
 
 The fifth Guiding Principle is Think and Work Holistically. No service, practice, process, department, or supplier stands alone. All the elements of a service management environment work together in an integrated system, and each element affects and is affected by the others.
 
@@ -101,7 +101,7 @@ For the exam: when a scenario describes an organization failing to consider the 
 
 ---
 
-## [13:30 – 16:30] Principles 6 and 7: Keep It Simple and Optimize and Automate
+## Principles 6 and 7: Keep It Simple and Optimize and Automate
 
 Principle 6 is Keep It Simple and Practical. If a process, service, action, or metric fails to provide value or produce a useful outcome, eliminate it. Use the minimum number of steps necessary to accomplish an objective.
 
@@ -117,7 +117,7 @@ For the exam: when a scenario describes eliminating unnecessary process steps, c
 
 ---
 
-## [16:30 – 19:30] How the Principles Interact
+## How the Principles Interact
 
 The Guiding Principles are not independent. They work together and reinforce each other. Let us walk through a scenario to see this in action.
 
@@ -141,7 +141,7 @@ Notice how the principles layer on top of each other. In real implementations, y
 
 ---
 
-## [19:30 – 22:00] Principles in Practice: Two Contrasting Organizations
+## Principles in Practice: Two Contrasting Organizations
 
 Let me give you two contrasting examples to anchor your intuition for the exam.
 
@@ -155,7 +155,7 @@ Same objective. Dramatically different outcomes. The Guiding Principles are the 
 
 ---
 
-## [22:00 – 24:00] Module Summary and What Is Next
+## Module Summary and What Is Next
 
 Let us recap Module 04.
 

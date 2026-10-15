@@ -40,8 +40,6 @@ By the end of this video you will be able to:
 
 ## Section 1: Introduction — Why Cloud Governance Matters (0:00-2:00)
 
-[INSTRUCTOR ON CAMERA]
-
 Imagine you are the cloud administrator for a company that has 500 employees using Azure. You have 30 subscriptions across multiple departments. Each department creates their own resources. Some of those resources are misconfigured — databases without encryption, storage accounts with public access, virtual machines in regions that violate your data residency policy.
 
 You didn't know about any of these misconfigurations because there was no systematic enforcement. Resources were created freely, and each team made their own configuration decisions.
@@ -65,8 +63,6 @@ Today we cover three governance tools: Azure Policy, Management Groups, and Micr
 ## Section 2: Azure Policy (2:00-8:00)
 
 [SLIDE: "What Is Azure Policy?"]
-
-[INSTRUCTOR ON CAMERA]
 
 Azure Policy is Azure's configuration governance service. It allows you to define rules about what Azure resources can be created, where they can be created, and how they must be configured.
 
@@ -100,13 +96,13 @@ Modify — Changes properties of an existing resource to bring it into complianc
 
 Let me walk through four common policy scenarios.
 
-"All resources must be created in East US or West US 2 only." Effect: Deny. If someone tries to create a resource in Brazil South, the deployment fails with a policy violation.
+All resources must be created in East US or West US 2 only." Effect: Deny. If someone tries to create a resource in Brazil South, the deployment fails with a policy violation.
 
-"All storage accounts must use HTTPS-only transfers." Effect: Deny. Any storage account created without HTTPS-only enabled is blocked.
+All storage accounts must use HTTPS-only transfers." Effect: Deny. Any storage account created without HTTPS-only enabled is blocked.
 
-"All Azure SQL Databases must have Transparent Data Encryption enabled." Effect: Audit initially, then DeployIfNotExists for automated remediation.
+All Azure SQL Databases must have Transparent Data Encryption enabled." Effect: Audit initially, then DeployIfNotExists for automated remediation.
 
-"All resources must have a CostCenter tag." Effect: Deny or Append, depending on whether you want to force the creator to add it or have the policy add it automatically.
+All resources must have a CostCenter tag." Effect: Deny or Append, depending on whether you want to force the creator to add it or have the policy add it automatically.
 
 [SHOW PORTAL: Azure Policy > Definitions — show built-in policy list, search for "allowed locations"]
 
@@ -125,8 +121,6 @@ Important note: unlike RBAC, you cannot override a policy assigned at a higher s
 ## Section 3: Management Groups (8:00-12:00)
 
 [SLIDE: "What Are Management Groups?"]
-
-[INSTRUCTOR ON CAMERA]
 
 Management Groups are containers that organize subscriptions into a hierarchical structure for governance at enterprise scale.
 
@@ -166,8 +160,6 @@ Azure Policy can have exceptions — you can exclude a specific subscription or 
 
 [SLIDE: "Policy vs. RBAC — The Clear Distinction"]
 
-[INSTRUCTOR ON CAMERA]
-
 This is one of the most commonly tested distinctions on AZ-900, and it's worth being very explicit.
 
 Azure RBAC defines what you are allowed to do. If you have the Contributor role on a subscription, you are allowed to create resources. If you don't have the Contributor role, you can't create resources. RBAC is identity-based authorization.
@@ -192,8 +184,6 @@ Here's a test-friendly way to remember the distinction. RBAC controls the actor.
 ## Section 5: Microsoft Purview (14:00-17:30)
 
 [SLIDE: "What Is Microsoft Purview?"]
-
-[INSTRUCTOR ON CAMERA]
 
 Microsoft Purview is Microsoft's unified data governance solution. Where Azure Policy governs Azure resource configurations, Purview governs data — what data you have, where it lives, who has access to it, and whether it complies with data privacy regulations.
 
@@ -231,8 +221,6 @@ Microsoft Purview is a unified data governance and compliance solution. It scans
 
 [SLIDE: "What Is Azure Blueprints?"]
 
-[INSTRUCTOR ON CAMERA]
-
 Azure Blueprints is a service that packages together the elements needed to create a compliant, governed Azure environment and deploys them as a unit. Think of it as an environment template that includes not just resources, but also policies, role assignments, and resource group structures.
 
 A blueprint can contain: ARM templates (resource definitions), Azure Policy assignments, RBAC role assignments, and resource group scaffolding. When you deploy a blueprint, all of these components are deployed together and tracked as a single managed package.
@@ -255,8 +243,6 @@ For the AZ-900 exam, you should understand what Blueprints was designed to do �
 
 [SLIDE: "The Azure Governance Stack"]
 
-[INSTRUCTOR ON CAMERA]
-
 Let me summarize how these tools work together in a real enterprise.
 
 The Management Group hierarchy provides the organizational structure. Your subscriptions are organized into a tree: Production under one group, Development under another, Shared Services under a third.
@@ -273,19 +259,17 @@ And Defender for Cloud sits on top of all of it — assessing whether your Polic
 
 Let me test your governance service selection with a quick scenario.
 
-Scenario: "A financial services company with 40 Azure subscriptions wants to ensure that no resources outside of the United States are ever provisioned in any subscription, and wants to apply this rule once rather than 40 times."
+Scenario: "A financial services company with 40 Azure subscriptions wants to ensure that no resources outside of the United States are ever provisioned in any subscription, and wants to apply this rule once rather than 40 times.
 
 The answer is: Azure Policy with an "Allowed locations" policy definition assigned at the Root Management Group or a company-level management group. Policy + Management Group = single assignment covers all subscriptions through inheritance.
 
-Scenario: "A healthcare company wants to find all the data stores in their Azure environment that contain patient health information to prepare for a HIPAA compliance audit."
+Scenario: "A healthcare company wants to find all the data stores in their Azure environment that contain patient health information to prepare for a HIPAA compliance audit.
 
 The answer is: Microsoft Purview. Purview scans data sources and uses classification rules to identify protected health information, giving the compliance team the inventory they need.
 
 ---
 
 ## Section 8: Closing (23:00-24:00)
-
-[INSTRUCTOR ON CAMERA]
 
 Let's recap. Azure Policy defines configuration rules that enforce governance — what resources can be created, where, and with what settings. Policy effects include Deny, Audit, and DeployIfNotExists. Initiatives group related policies for scale. Assignments connect policies to scopes.
 

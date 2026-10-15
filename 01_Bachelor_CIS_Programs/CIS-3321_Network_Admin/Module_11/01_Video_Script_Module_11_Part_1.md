@@ -36,8 +36,6 @@ These are topics that appear heavily on the CompTIA Network+ exam, and they are 
 
 ### [SECTION 1: HOW SWITCHES WORK — LAYER 2 FORWARDING]
 
-[SHOW DIAGRAM: A switch with four connected PCs, a MAC address table showing entries for each port]
-
 A switch is a Layer 2 device. That means it makes forwarding decisions based on MAC addresses — the hardware addresses burned into every network interface card.
 
 When a frame arrives on a switch port, the switch does three things in sequence:
@@ -48,8 +46,6 @@ Second, it looks at the destination MAC address. If that destination MAC is alre
 
 Third, if the destination MAC is not in the table — or if the destination is the broadcast address (FF:FF:FF:FF:FF:FF) — the switch floods the frame out all ports except the one it arrived on. This is called flooding.
 
-[SHOW DIAGRAM: MAC address table with columns: Port, MAC Address, VLAN, Age]
-
 Over time the MAC address table fills in as devices communicate. Entries age out (default 300 seconds on Cisco) to handle devices that are disconnected or moved.
 
 This flooding and learning process is why switches are more efficient than hubs — a hub sends every frame to every port always. A switch sends traffic only to the relevant destination once it has learned the topology.
@@ -57,8 +53,6 @@ This flooding and learning process is why switches are more efficient than hubs 
 ---
 
 ### [SECTION 2: THE PROBLEM THAT VLANS SOLVE]
-
-[SHOW DIAGRAM: A building with three departments — Finance, HR, Engineering — all on one switch, all on one subnet]
 
 In the early days of switched networks, all devices on a switch shared a single broadcast domain. Every broadcast — DHCP Discovers, ARP requests, routing protocol hellos — went to every device on every port of that switch.
 
@@ -76,8 +70,6 @@ VLANs solve all three problems.
 
 ### [SECTION 3: VLANS — VIRTUAL LOCAL AREA NETWORKS]
 
-[SHOW DIAGRAM: Same switch, now divided into VLAN 10 (Finance), VLAN 20 (HR), VLAN 30 (Engineering) — each VLAN shown as a separate color]
-
 A VLAN (Virtual Local Area Network) creates a logically separate broadcast domain on a physical switch. Devices in VLAN 10 cannot receive broadcasts from VLAN 20, and cannot communicate with VLAN 20 at Layer 2 — even if they are physically connected to the same switch.
 
 Think of it this way: a 48-port switch with three VLANs behaves like three separate physical switches for broadcast purposes.
@@ -93,8 +85,6 @@ Trunk port — A switch port that carries traffic for multiple VLANs simultaneou
 ---
 
 ### [SECTION 4: 802.1Q TAGGING]
-
-[SHOW DIAGRAM: Ethernet frame showing standard fields plus the 802.1Q 4-byte tag inserted between the source MAC and EtherType fields]
 
 When a frame is forwarded on a trunk port, the switch inserts a 4-byte 802.1Q tag into the Ethernet frame header. This tag contains the VLAN ID so the receiving switch knows which VLAN the frame belongs to.
 
@@ -112,8 +102,6 @@ Native VLAN — One VLAN on a trunk port is designated the native VLAN. Frames i
 
 ### [SECTION 5: INTER-VLAN ROUTING]
 
-[SHOW DIAGRAM: Router-on-a-Stick — one physical router interface connected to a switch trunk port, with subinterfaces for VLAN 10, 20, and 30]
-
 VLANs segment traffic at Layer 2. But users in different VLANs often need to communicate. That requires Layer 3 routing.
 
 Two methods:
@@ -125,8 +113,6 @@ Method 2 — Layer 3 Switch (Multi-Layer Switch). A switch with built-in routing
 ---
 
 ### [SECTION 6: VLAN HOPPING ATTACKS]
-
-[SHOW DIAGRAM: Attacker sending double-tagged 802.1Q frames to hop from VLAN 10 to VLAN 20]
 
 VLAN hopping is an attack that allows traffic from one VLAN to reach another VLAN without going through a router. Two methods:
 
@@ -144,8 +130,6 @@ Prevention:
 
 ### [SECTION 7: SPANNING TREE PROTOCOL — WHY IT EXISTS]
 
-[SHOW DIAGRAM: Two switches with two physical links between them, creating a loop — circular arrows showing a broadcast storm saturating the network]
-
 Spanning Tree Protocol exists to solve one problem: loops in switched networks.
 
 Without STP, redundant links create Layer 2 loops. What happens?
@@ -160,8 +144,6 @@ STP prevents loops by blocking redundant paths while keeping them available as b
 
 ### [SECTION 8: STP ROOT BRIDGE ELECTION]
 
-[SHOW DIAGRAM: Three switches — center switch elected Root Bridge, ports labeled Root Port, Designated Port, Blocking Port]
-
 STP operates in four steps:
 
 Step 1 — Root Bridge election. Every switch has a Bridge ID — a combination of a configurable priority value (default 32768) and the switch's MAC address. The switch with the lowest Bridge ID becomes the Root Bridge. If priorities are equal, the switch with the lowest MAC address wins. The Root Bridge is the reference point for all path calculations.
@@ -175,8 +157,6 @@ Step 4 — Blocking. Any port that is not a Root Port or Designated Port is plac
 ---
 
 ### [SECTION 9: STP PORT STATES AND CONVERGENCE]
-
-[SHOW DIAGRAM: State transition diagram — Blocking → Listening → Learning → Forwarding with timer durations shown]
 
 Classic 802.1D STP port states:
 
@@ -193,8 +173,6 @@ Total convergence time with classic STP: up to 50 seconds. This is why RSTP was 
 ---
 
 ### [SECTION 10: RSTP AND PORTFAST]
-
-[SHOW DIAGRAM: RSTP convergence compared to 802.1D — RSTP converges in under 1 second via direct negotiation]
 
 Rapid Spanning Tree Protocol (RSTP, IEEE 802.1w) replaces classic STP. RSTP converges in under one second by negotiating port states directly between switches rather than waiting for timers.
 

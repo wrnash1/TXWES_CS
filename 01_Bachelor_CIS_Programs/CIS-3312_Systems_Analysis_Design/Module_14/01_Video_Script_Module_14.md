@@ -85,11 +85,11 @@ A well-written test case contains seven components.
 
 **Test Objective:** One sentence describing what the test is designed to verify.
 
-**Preconditions:** The state the system must be in before the test begins. "User must be logged in." "Account balance must be greater than zero."
+**Preconditions:** The state the system must be in before the test begins. "User must be logged in." "Account balance must be greater than zero.
 
-**Test Steps:** Numbered, specific actions the tester performs. Not "navigate to transfers." Instead: "1. Click the Transfers menu item. 2. Select 'External Transfer' from the dropdown."
+**Test Steps:** Numbered, specific actions the tester performs. Not "navigate to transfers." Instead: "1. Click the Transfers menu item. 2. Select 'External Transfer' from the dropdown.
 
-**Expected Results:** The specific, observable outcome that indicates the requirement is met. Not "the transfer works." Instead: "A confirmation message displays 'Transfer of $500.00 scheduled for 03/15/2026' and an email confirmation is sent to the registered email address within two minutes."
+**Expected Results:** The specific, observable outcome that indicates the requirement is met. Not "the transfer works." Instead: "A confirmation message displays 'Transfer of $500.00 scheduled for 03/15/2026' and an email confirmation is sent to the registered email address within two minutes.
 
 **Actual Results and Pass/Fail:** Recorded during execution.
 

@@ -30,14 +30,9 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: Course banner — "CSC-6361 Advanced Computer Networks | Module 07 Part 2: Capstone Lab Preview & CCNP ENCOR Exam Strategy | Texas Wesleyan University | Graduate Level"]
-
 ---
 
 ### Section 1: Welcome to Part 2
-
-[00:00 – 01:30]
-[SHOW SLIDE: Professor Nash on camera, multi-topology capstone diagram visible behind.]
 
 Welcome back. In Part 1 we built the troubleshooting methodology: OSI layer-by-layer, divide and conquer, and follow-the-path — and we applied it to OSPF, EIGRP, and BGP failure scenarios. In Part 2 we do two things.
 
@@ -48,9 +43,6 @@ Let's start with the capstone.
 ---
 
 ### Section 2: Capstone Lab Preview — Integrating All Seven Modules
-
-[01:30 – 07:00]
-[SHOW DIAGRAM: Capstone topology — multi-router network with OSPF multi-area, VLAN/STP, GRE overlay, QoS, ACLs, and BGP routing. Full topology with all device labels and interface connections visible.]
 
 [Alt-text: A network diagram containing: R1-HQ and R2-Core routers in OSPF Area 0 (backbone), connected by a 10.0.0.0/30 link. R3-ABR connects Area 0 to Area 1, which contains R4-Branch. SW1 (core switch) connects to SW2 (access switch) in a two-switch STP topology. R5-Edge connects R1-HQ to an eBGP peer R6-ISP. A GRE tunnel (Tunnel0) runs from R1-HQ to R4-Branch over the OSPF underlay. QoS policy is configured on R1-HQ's WAN-facing interface. An ACL is applied on R3-ABR filtering inter-area traffic.]
 
@@ -97,9 +89,6 @@ R5-Edge has an eBGP session to R6-ISP (AS 65200). R5 also redistributes OSPF rou
 
 ### Section 3: The Five Break Scenarios — What to Expect
 
-[07:00 – 10:30]
-[SHOW SLIDE: Five break scenarios listed — OSPF area, STP priority, route-map, QoS DSCP, ACL return traffic]
-
 In Phase 2 of the capstone lab, the following five specific breaks are injected into the baseline topology. You will not be told which five have been introduced when you open the lab — you must discover them by observing symptoms and verifying with `show` commands.
 
 The five breaks are:
@@ -117,9 +106,6 @@ The five breaks are:
 ---
 
 ### Section 4: CCNP ENCOR 350-401 Exam Overview
-
-[10:30 – 14:30]
-[SHOW SLIDE: CCNP ENCOR 350-401 exam domains and weights]
 
 The CCNP Enterprise Core (ENCOR) 350-401 exam is the concentration-independent core exam required for any CCNP Enterprise certification track. Passing it, combined with one concentration exam, earns you the CCNP Enterprise certification.
 
@@ -165,9 +151,6 @@ The simlet questions directly reward the troubleshooting methodology from Part 1
 
 ### Section 5: Final Exam Preparation Strategy
 
-[14:30 – 17:00]
-[SHOW SLIDE: 4-week CCNP ENCOR preparation plan]
-
 If you are planning to sit the CCNP ENCOR exam after completing this course, here is a structured preparation approach.
 
 #### Weeks 1–2: Domain Review and Gap Analysis
@@ -192,9 +175,6 @@ If you are planning to sit the CCNP ENCOR exam after completing this course, her
 ---
 
 ### Section 6: Course Closing
-
-[17:00 – 18:30]
-[SHOW SLIDE: Professor Nash on camera, course summary slide]
 
 This brings us to the end of CSC-6361 Advanced Computer Networks. Over seven modules you have worked through multi-area OSPF and EIGRP, switched network design with STP and VLANs, BGP and MPLS, QoS, network security, SD-WAN with VXLAN and EVPN, cloud connectivity with Direct Connect and ExpressRoute, and structured troubleshooting methodology. That is the CCNP ENCOR blueprint — and you have covered it at graduate depth.
 

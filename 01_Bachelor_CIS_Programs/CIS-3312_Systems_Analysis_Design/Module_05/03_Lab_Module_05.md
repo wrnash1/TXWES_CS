@@ -35,7 +35,7 @@ Draw a use case diagram for the Pinecrest Mobile Banking Application based on th
 
 Your diagram must include:
 
-- A system boundary rectangle labeled "Pinecrest Mobile Banking App"
+- A system boundary rectangle labeled "Pinecrest Mobile Banking App
 - All actors identified from the case study (minimum 3, including at least one non-human actor)
 - At least seven use cases derived from the case study
 - Associations between each actor and the use cases they participate in
@@ -96,7 +96,7 @@ Part 2 Total: 35 points
 
 ### Part 3 Instructions
 
-Write three user stories for the Pinecrest Mobile Banking Application based on the case study. Each story must use the standard format: "As a [role], I want [goal] so that [value]."
+Write three user stories for the Pinecrest Mobile Banking Application based on the case study. Each story must use the standard format: "As a [role], I want [goal] so that [value].
 
 For each user story, write two acceptance criteria in Given/When/Then format.
 

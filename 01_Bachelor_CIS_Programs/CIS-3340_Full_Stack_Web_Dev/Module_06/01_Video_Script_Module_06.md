@@ -1,5 +1,23 @@
 # Video Script: Module 06 - RESTful API Principles
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Full Stack Web Development for Beginners &bull; Module 06</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=nu_pCVPKzTk" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/nu_pCVPKzTk" title="freeCodeCamp &bull; Full Stack Web Development for Beginners" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Full Stack Web Development for Beginners</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3340 Full Stack Web Development
 **Estimated Duration:** 22 minutes
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
@@ -7,8 +25,7 @@
 
 ---
 
-## Section 1: Introduction - What is REST? [00:00 - 04:00]
-
+## Section 1: Introduction - What is REST?
 Welcome to Module 06. I am Professor Nash. This is where we shift from front-end development to back-end design. For the last five modules we have been consumers of APIs — fetching data with `fetch()` and displaying it in the DOM. Starting today, we learn to design and build the APIs that those fetch calls talk to.
 
 REST stands for Representational State Transfer. It is an architectural style — not a protocol — defined by Roy Fielding in his 2000 doctoral dissertation. REST describes how distributed systems should be structured to be scalable, maintainable, and interoperable. When developers talk about a "REST API" or a "RESTful endpoint," they mean a web API that follows these principles.
@@ -23,8 +40,7 @@ Let me open Postman and show you what a well-designed REST API looks like from t
 
 ---
 
-## Section 2: Resources and URL Design [04:00 - 09:00]
-
+## Section 2: Resources and URL Design
 [SHOW CODE]
 
 The fundamental concept in REST is the resource. A resource is any named concept the API exposes: users, products, orders, articles, comments. Resources are represented as nouns in URL paths.
@@ -68,8 +84,7 @@ Let me demonstrate the difference in Postman. I will call `GET /users` (returns 
 
 ---
 
-## Section 3: HTTP Methods and Their Semantics [09:00 - 14:30]
-
+## Section 3: HTTP Methods and Their Semantics
 [SHOW CODE]
 
 Each HTTP method has a defined semantic meaning. Understanding these semantics is critical for API design.
@@ -101,8 +116,7 @@ When a Lambda function behind API Gateway is called three times due to network r
 
 ---
 
-## Section 4: HTTP Status Codes [14:30 - 18:30]
-
+## Section 4: HTTP Status Codes
 [SHOW CODE]
 
 Status codes communicate the outcome of every HTTP request. A well-designed API uses the right code every time.
@@ -140,8 +154,7 @@ Let me demonstrate in Postman. I will make a `GET /api/users/9999` request to a 
 
 ---
 
-## Section 5: REST Constraints and Lab Preview [18:30 - 22:00]
-
+## Section 5: REST Constraints and Lab Preview
 [SHOW CODE]
 
 The six architectural constraints that define REST (Fielding, 2000):

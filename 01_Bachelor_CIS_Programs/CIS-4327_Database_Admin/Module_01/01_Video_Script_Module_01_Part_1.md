@@ -28,8 +28,6 @@
 
 ### Opening — Welcome and Course Context
 
-**[SHOW SLIDE: Texas Wesleyan University wordmark, course title CIS-4327 Database Administration, Module 01]**
-
 Hello, and welcome to CIS-4327 Database Administration. I am Professor Nash, and this is Module 01: Relational Database Fundamentals and SQL Review.
 
 Before we touch a single Google Cloud service, we need to make sure your relational database foundation is solid. Every GCP database product you will work with this semester — Cloud SQL, Cloud Spanner, AlloyDB, BigQuery — either builds directly on the relational model or requires you to understand it as a reference point. The Google Cloud Professional Cloud Database Engineer exam tests these foundations explicitly.
@@ -42,13 +40,9 @@ Let us get started.
 
 ### Section 1 — What Is a Relational Database?
 
-**[SHOW SLIDE: Table diagram — rows and columns, primary key column highlighted]**
-
 A relational database organizes data into tables. Each table is formally called a relation. A table has columns, which define attributes, and rows, which are individual data records called tuples.
 
 The critical concept is the primary key. A primary key is one column — or a combination of columns — whose value uniquely identifies every row in the table. No two rows can share the same primary key value, and a primary key column can never contain NULL.
-
-**[SHOW SLIDE: Two tables — customers and orders — with a connecting arrow labeled foreign key]**
 
 A foreign key in one table references the primary key of another table. This relationship is how the relational model links data across tables without duplicating it. If you have a customers table with a customer_id primary key, and an orders table with a customer_id foreign key, the database engine enforces that every order must belong to a real customer. Attempting to insert an order for a customer_id that does not exist will fail with a referential integrity violation.
 
@@ -57,8 +51,6 @@ This enforcement is not optional decoration — it is a core guarantee of the re
 ---
 
 ### Section 2 — ACID Properties
-
-**[SHOW SLIDE: Four tiles — Atomicity, Consistency, Isolation, Durability]**
 
 ACID is the most tested concept in the foundational domain of the GCP Database Engineer exam. Let me define each property with a concrete example.
 
@@ -69,8 +61,6 @@ Consistency means that a transaction can only bring the database from one valid 
 Isolation means that concurrent transactions do not interfere with each other. If two users are updating the same row at the same time, isolation prevents one transaction from reading an intermediate, incomplete state written by the other.
 
 Durability means that once a transaction is committed, it is permanent. Even if the server crashes one millisecond after the commit acknowledgment, the data is preserved. This is typically implemented through write-ahead logging — the database writes a log record before applying changes to data pages.
-
-**[SHOW SLIDE: GCP service ACID matrix]**
 
 | GCP Service | ACID Support | Notes |
 |---|---|---|
@@ -86,8 +76,6 @@ For the exam, you must know which GCP services provide full ACID compliance. Clo
 ---
 
 ### Section 3 — SQL Data Definition Language
-
-**[SHOW SLIDE: SQL DDL command categories — CREATE, ALTER, DROP, TRUNCATE]**
 
 SQL is divided into sublanguages. The Data Definition Language, or DDL, is the set of commands that define and modify the structure of your database objects.
 
@@ -155,8 +143,6 @@ CREATE INDEX builds a B-tree index by default. An index on the email column mean
 
 ### Section 4 — Data Integrity Constraints Summary
 
-**[SHOW SLIDE: Constraint reference table]**
-
 | Constraint | Purpose | Behavior on Violation |
 |---|---|---|
 | PRIMARY KEY | Unique row identifier, never NULL | INSERT or UPDATE fails |
@@ -170,8 +156,6 @@ Each of these constraints is enforced by the database engine, not by the applica
 ---
 
 ### Section 5 — Relational Model vs. NoSQL — Choosing the Right GCP Service
-
-**[SHOW SLIDE: Decision flowchart — structured schema, global distribution, document storage, analytical queries]**
 
 One of the most frequently tested skills on the GCP Database Engineer exam is service selection. Given a workload description, you must pick the right database service. Here is the framework.
 
@@ -190,8 +174,6 @@ We will cover each of these services in dedicated modules. What I want you to ta
 ---
 
 ### Closing — Part 1 Summary
-
-**[SHOW SLIDE: Module 01 Part 1 Key Concepts recap]**
 
 In Part 1 we covered the following.
 

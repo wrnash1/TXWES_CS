@@ -158,11 +158,11 @@ Distractor Analysis:
 A script needs to accept a directory path as $1 but should use /var/backups as the default if no argument is provided. Which variable assignment correctly implements this default value?
 
 - A) BACKUP_DIR=$1 || /var/backups
-- B) BACKUP_DIR="${1:-/var/backups}"
+- B) BACKUP_DIR="${1:-/var/backups}
 - C) BACKUP_DIR=$(if [ -z $1 ]; then echo /var/backups; fi)
 - D) BACKUP_DIR="$1" -d /var/backups
 
-Correct Answer: B) BACKUP_DIR="${1:-/var/backups}"
+Correct Answer: B) BACKUP_DIR="${1:-/var/backups}
 
 Distractor Analysis:
 

@@ -52,9 +52,9 @@ Governance operates at multiple layers. At the top is the **board and executive 
 
 The Security+ exam will test you on the hierarchy of governance documents:
 
-- **Policy** — high-level, mandatory statement of intent. Example: "All sensitive data must be encrypted at rest."
-- **Standard** — specific, measurable requirement that supports a policy. Example: "AES-256 must be used for data at rest."
-- **Procedure** — step-by-step instructions. Example: "To encrypt a database volume, follow these twelve steps…"
+- **Policy** — high-level, mandatory statement of intent. Example: "All sensitive data must be encrypted at rest.
+- **Standard** — specific, measurable requirement that supports a policy. Example: "AES-256 must be used for data at rest.
+- **Procedure** — step-by-step instructions. Example: "To encrypt a database volume, follow these twelve steps…
 - **Guideline** — recommended, non-mandatory best practice.
 
 Know that hierarchy cold. It appears frequently on the exam in scenario questions.

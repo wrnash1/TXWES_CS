@@ -1,5 +1,23 @@
 # Video Script: Module 03 – Scrum Framework: Roles, Events, Artifacts
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture &bull; Module 03</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=LzMnsfqjzkA" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/LzMnsfqjzkA" title="freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Estimated Duration:** 23 minutes
@@ -7,9 +25,8 @@
 
 ---
 
-## Section 1 — Welcome and Module Purpose [00:00–03:00]
-
-"Welcome to Module 3 — the heart of this course. If Modules 1 and 2 built the philosophical case for Agile, this module gives you the actual blueprint. The Scrum framework is specific, intentional, and elegantly minimal. It contains exactly what you need to manage complex work — and nothing you do not.
+## Section 1 — Welcome and Module Purpose
+Welcome to Module 3 — the heart of this course. If Modules 1 and 2 built the philosophical case for Agile, this module gives you the actual blueprint. The Scrum framework is specific, intentional, and elegantly minimal. It contains exactly what you need to manage complex work — and nothing you do not.
 
 By the end of this module you will be able to:
 
@@ -21,17 +38,12 @@ By the end of this module you will be able to:
 
 That last point is critical for the PSM I exam. Questions will frequently ask 'why' rather than 'what.' Knowing the framework is not enough — you must understand its purpose.
 
-[SHOW DIAGRAM: Complete Scrum framework diagram — Product Backlog on the left feeding into a Sprint cycle (Sprint Planning, Daily Scrum, Sprint Review, Retrospective), with the Increment as output, and the three accountabilities (Product Owner, Scrum Master, Developers) labeled]
-
-Let's build this diagram piece by piece."
+Let's build this diagram piece by piece.
 
 ---
 
-## Section 2 — The Scrum Team and Three Accountabilities [03:00–09:00]
-
-"The Scrum Guide uses the word 'accountabilities' rather than 'roles' for an important reason. Accountability implies ownership of outcomes, not just execution of tasks. Let me describe each accountability.
-
-[SHOW DIAGRAM: Three interlocking circles — Product Owner, Scrum Master, Developers — with key responsibilities listed in each]
+## Section 2 — The Scrum Team and Three Accountabilities
+The Scrum Guide uses the word 'accountabilities' rather than 'roles' for an important reason. Accountability implies ownership of outcomes, not just execution of tasks. Let me describe each accountability.
 
 The Product Owner is accountable for maximizing the value of the product. The Product Owner is one person — not a committee — and their decisions must be respected by the entire organization. The Product Owner manages the Product Backlog, which means ordering it, ensuring items are clear and understood, and making trade-off decisions about what to build and when. The Product Owner is the bridge between the Scrum Team and stakeholders.
 
@@ -45,15 +57,12 @@ The Developers are the people who create the Increment each Sprint. Notice that 
 
 PSM I Exam Tip: The Scrum Team — Product Owner plus Scrum Master plus Developers — is the unit of Scrum. The Scrum Guide says the optimal Scrum Team size is typically 10 or fewer people. Teams smaller than 3 lack diversity of skills; teams larger than 10 require too much coordination overhead.
 
-Now, the Scrum Team is cross-functional and self-managing. Cross-functional means the team collectively has all the skills needed to create value in each Sprint without depending on people outside the team. Self-managing means the team internally decides who does what, when, and how."
+Now, the Scrum Team is cross-functional and self-managing. Cross-functional means the team collectively has all the skills needed to create value in each Sprint without depending on people outside the team. Self-managing means the team internally decides who does what, when, and how.
 
 ---
 
-## Section 3 — The Five Scrum Events [09:00–16:00]
-
-"Scrum has five events. Every event is timeboxed — it has a maximum duration. Timeboxing is not arbitrary bureaucracy; it forces teams to focus, prioritize, and make decisions with urgency.
-
-[SHOW DIAGRAM: Sprint timeline — Sprint Planning at start, Daily Scrum each day, Sprint Review near end, Sprint Retrospective at end, with timebox labels]
+## Section 3 — The Five Scrum Events
+Scrum has five events. Every event is timeboxed — it has a maximum duration. Timeboxing is not arbitrary bureaucracy; it forces teams to focus, prioritize, and make decisions with urgency.
 
 The Sprint is the container event — the heartbeat of Scrum. A Sprint is a fixed-length event of one month or less during which a 'Done' Increment is created. All the other events occur within the Sprint. Sprints have consistent lengths throughout a product's development. A new Sprint begins immediately after the previous Sprint ends. Sprints can be cancelled only if the Sprint Goal becomes obsolete — and only the Product Owner can cancel a Sprint.
 
@@ -71,15 +80,12 @@ PSM I Exam Tip: The Sprint Review is not a demo to get approval. It is an inspec
 
 The Sprint Retrospective concludes the Sprint. The Scrum Team inspects how the last Sprint went regarding individuals, interactions, processes, tools, and the Definition of Done. They create a plan for improvements. It is timeboxed to three hours for a one-month Sprint.
 
-[SHOW DIAGRAM: Timebox reference table — Sprint: up to 1 month; Sprint Planning: 8h max; Daily Scrum: 15 min; Sprint Review: 4h max; Retrospective: 3h max]"
+"
 
 ---
 
-## Section 4 — The Three Artifacts and Their Commitments [16:00–20:30]
-
-"Scrum has three artifacts. Each artifact has a commitment that gives it accountability and purpose.
-
-[SHOW DIAGRAM: Three artifact boxes — Product Backlog with Product Goal commitment, Sprint Backlog with Sprint Goal commitment, Increment with Definition of Done commitment]
+## Section 4 — The Three Artifacts and Their Commitments
+Scrum has three artifacts. Each artifact has a commitment that gives it accountability and purpose.
 
 The Product Backlog is an emergent, ordered list of everything that is known to be needed in the product. It is never complete — it grows and changes as the product and market evolve. The commitment for the Product Backlog is the Product Goal — a long-term objective for the Scrum Team. The Product Backlog lists all work needed to achieve the Product Goal.
 
@@ -87,15 +93,12 @@ The Sprint Backlog consists of three things: the Sprint Goal (why), the set of P
 
 The Increment is the concrete stepping stone toward the Product Goal. Each Increment is additive to all prior Increments and thoroughly verified, ensuring all Increments work together. The commitment for the Increment is the Definition of Done — a formal description of the state of the Increment when it meets the quality measures required for the product. If a Product Backlog item does not meet the Definition of Done, it cannot be released or even presented at the Sprint Review.
 
-PSM I Exam Tip: The Definition of Done is not a checklist that varies by feature — it applies to every Increment. If the Definition of Done requires automated testing and code review, then every Increment must have automated testing and code review. No exceptions."
+PSM I Exam Tip: The Definition of Done is not a checklist that varies by feature — it applies to every Increment. If the Definition of Done requires automated testing and code review, then every Increment must have automated testing and code review. No exceptions.
 
 ---
 
-## Section 5 — The Complete Picture [20:30–23:00]
-
-"Let me put it all together one final time.
-
-[SHOW DIAGRAM: Full Scrum framework — Product Owner managing Product Backlog, Sprint cycle with all five events, Increment output, Scrum Master serving the team, with Agile values at the base]
+## Section 5 — The Complete Picture
+Let me put it all together one final time.
 
 The Product Owner owns the Product Backlog and the Product Goal. They collaborate with stakeholders to maximize value. The Scrum Master ensures the framework is understood and enacted. The Developers build the Increment. Together, they form a self-managing, cross-functional Scrum Team.
 
@@ -105,7 +108,7 @@ This framework is intentionally simple. The Scrum Guide is 13 pages. That simpli
 
 PSM I Exam Tip: The Scrum Guide uses the word 'may' for things that are optional and 'must' or 'is' for things that are mandatory. When you read the Scrum Guide, pay close attention to this language. On the exam, wrong answers often make optional elements mandatory or vice versa.
 
-In Module 4 we go deep on Sprint Planning and the Daily Scrum — the first two Sprint events. See you there."
+In Module 4 we go deep on Sprint Planning and the Daily Scrum — the first two Sprint events. See you there.
 
 ---
 

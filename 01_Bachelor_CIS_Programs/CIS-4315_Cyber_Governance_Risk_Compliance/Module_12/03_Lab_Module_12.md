@@ -54,7 +54,7 @@ Write a 150–200 word paragraph justifying your collection priority order. Your
 
 ### Task 1C — Legal Hold Compliance Check
 
-Based on the scenario, identify two specific actions the security team must NOT take due to the active legal hold, and explain the legal consequence of each prohibited action. Format your response as a two-row table with columns "Prohibited Action" and "Legal Consequence."
+Based on the scenario, identify two specific actions the security team must NOT take due to the active legal hold, and explain the legal consequence of each prohibited action. Format your response as a two-row table with columns "Prohibited Action" and "Legal Consequence.
 
 ---
 

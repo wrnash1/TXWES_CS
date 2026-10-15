@@ -261,7 +261,7 @@ Wireshark display filters narrow traffic to relevant packets. Common filters:
 - `tcp.port == 443` — HTTPS traffic
 - `dns` — all DNS queries and responses
 - `http.request` — HTTP GET and POST requests
-- `tcp contains "password"` — TCP streams containing the string "password"
+- `tcp contains "password"` — TCP streams containing the string "password
 
 ### Following TCP Streams
 
@@ -459,8 +459,6 @@ A free single-page reference poster summarizing Windows forensic artifacts organ
 - NIST SP 800-86 — Guide to Integrating Forensic Techniques into IR (free: nvlpubs.nist.gov)
 - CompTIA CySA+ CS0-003 Exam Objectives — Domain 4
 - Module 12 Video Lecture (Professor Nash)
-
-
 
 ---
 

@@ -42,7 +42,7 @@ Sub-questions:
 
 ## Scenario C: The Prototype Trap
 
-A BA is working on a new insurance claims portal for internal claims adjusters. After two rounds of stakeholder interviews produced vague, contradictory requirements, the BA decided to create a low-fidelity paper prototype of the main claims entry screen to give stakeholders something concrete to react to. The approach worked well — stakeholders immediately identified 22 specific requirements they had been unable to articulate verbally. However, three weeks later, when the BA attempts to modify the prototype based on new feedback, the senior claims adjuster says: "Wait — I thought we already decided on this layout. Why are you changing it?"
+A BA is working on a new insurance claims portal for internal claims adjusters. After two rounds of stakeholder interviews produced vague, contradictory requirements, the BA decided to create a low-fidelity paper prototype of the main claims entry screen to give stakeholders something concrete to react to. The approach worked well — stakeholders immediately identified 22 specific requirements they had been unable to articulate verbally. However, three weeks later, when the BA attempts to modify the prototype based on new feedback, the senior claims adjuster says: "Wait — I thought we already decided on this layout. Why are you changing it?
 
 Sub-questions:
 

@@ -210,7 +210,7 @@ Discover is the initial requirements-gathering phase. The implementing team cond
 - Data migration scope and quality
 - User personas and adoption challenges
 
-The output is a requirements register and a prioritized feature list. In agile-influenced Salesforce implementations, requirements are often expressed as user stories: "As a sales rep, I want to see all of my open opportunities on a single dashboard so that I can prioritize my day."
+The output is a requirements register and a prioritized feature list. In agile-influenced Salesforce implementations, requirements are often expressed as user stories: "As a sales rep, I want to see all of my open opportunities on a single dashboard so that I can prioritize my day.
 
 ### 3.2 Define
 
@@ -275,7 +275,7 @@ Stakeholder analysis identifies all groups affected by the ERP implementation an
 
 - Executive leadership — need to understand ROI and strategic benefit; are the visible champions
 - Functional managers — need to understand how their team's processes change; often the most influential resistors or advocates
-- End users — need role-based training and clear answers to "what does this mean for my job"
+- End users — need role-based training and clear answers to "what does this mean for my job
 - IT staff — need technical training and clarity on ongoing support responsibilities
 - External parties (customers, suppliers) — if the ERP change affects how they interact with the organization, they need advance notice and communication
 
@@ -569,8 +569,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

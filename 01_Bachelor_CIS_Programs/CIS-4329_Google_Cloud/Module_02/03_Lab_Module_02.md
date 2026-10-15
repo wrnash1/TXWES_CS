@@ -386,7 +386,7 @@ Use the IAM Policy Analyzer to investigate permissions on your project.
 
 1. In the Cloud Console, navigate to **IAM & Admin > Policy Analyzer**.
 1. Create a new analysis query asking: "What roles does [your email] have on
-   this project?"
+   this project?
 1. Run the analysis and capture a screenshot of the results showing your
    effective permissions, including any inherited from folder or organization
    level.

@@ -15,7 +15,7 @@ Our curriculum is mapped to the **Google Cloud Professional Cloud Database Engin
 **Estimated Duration:** 3 minutes
 **Visual:** Instructor on camera.
 **Audio:** "Welcome to Cloud Database Administration. I'm Professor Nash. You already know how to write a simple SQL 'SELECT' statement. This class isn't about writing queries; it's about architecture, scale, and disaster recovery. 
-We will be using Google Cloud Platform to build highly available Cloud SQL instances, horizontally scalable Cloud Spanner databases, and blazing-fast NoSQL Firestore databases. We will learn how to migrate an entire corporate database to the cloud with zero downtime. This is a rigorous, professional-level course designed to prepare you for the Google Cloud Database Engineer certification. Claim your student credits, and let's get to work."
+We will be using Google Cloud Platform to build highly available Cloud SQL instances, horizontally scalable Cloud Spanner databases, and blazing-fast NoSQL Firestore databases. We will learn how to migrate an entire corporate database to the cloud with zero downtime. This is a rigorous, professional-level course designed to prepare you for the Google Cloud Database Engineer certification. Claim your student credits, and let's get to work.
 
 ---
 

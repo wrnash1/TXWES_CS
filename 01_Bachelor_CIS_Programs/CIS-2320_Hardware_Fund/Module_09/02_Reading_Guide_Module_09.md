@@ -307,7 +307,7 @@ Biometric scanners authenticate users based on unique physical characteristics. 
 
 **Trap 3 — KVM switch requires matching operating systems.** KVM switches are purely hardware signal switchers. They work regardless of what OS is running on connected computers. Any answer choice that restricts KVM functionality based on OS type is incorrect.
 
-**Trap 4 — Biometric is "something you have."** Biometrics — fingerprint, iris, face — represent "something you are," not "something you have." This is a frequently tested MFA categorization error. Physical objects (cards, tokens) are "something you have."
+**Trap 4 — Biometric is "something you have."** Biometrics — fingerprint, iris, face — represent "something you are," not "something you have." This is a frequently tested MFA categorization error. Physical objects (cards, tokens) are "something you have.
 
 **Trap 5 — Smart card reader performs biometric authentication.** A smart card reader reads a chip in a physical card. It does not read fingerprints or body characteristics. If the exam describes fingerprint verification, the answer is a biometric scanner, not a smart card reader.
 
@@ -475,8 +475,6 @@ The following free resources supplement Module 09 content on USB standards, peri
 1. **Plugable Technologies — Thunderbolt and USB-C Explained**
    URL: [https://plugable.com/blogs/news/thunderbolt-vs-usb-c-what-s-the-difference](https://plugable.com/blogs/news/thunderbolt-vs-usb-c-what-s-the-difference)
    Relevance: Free article clearly explaining the physical vs. protocol distinction between USB-C and Thunderbolt connectors — the most commonly tested trap on the A+ exam regarding peripheral interfaces. Includes cable identification tips and real-world compatibility scenarios.
-
-
 
 ---
 

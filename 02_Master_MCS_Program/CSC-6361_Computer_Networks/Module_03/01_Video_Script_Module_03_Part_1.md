@@ -25,14 +25,10 @@
 ---
 
 ### Pre-Roll Slide
-[SHOW SLIDE: "CSC-6361 — Module 03 Part 1: WAN Technologies — MPLS & Label Switching | Texas Wesleyan University | Graduate Level"]
 
 ---
 
 ### Section 1: The WAN Problem
-
-[00:00 – 02:00]
-[SHOW SLIDE: Enterprise WAN — headquarters + 10 branch offices connected over carrier network]
 
 Welcome to Module 03. We have built a routed campus (Module 01) and a switched campus (Module 02). Now we need to connect multiple campuses together across a **Wide Area Network (WAN)**. The WAN is the carrier-managed infrastructure between your sites.
 
@@ -41,9 +37,6 @@ At CCNP level, WAN knowledge means understanding three foundational technologies
 ---
 
 ### Section 2: MPLS — Multiprotocol Label Switching
-
-[02:00 – 08:00]
-[SHOW DIAGRAM: MPLS network — CE routers at customer sites, PE routers at provider edge, P routers in provider core]
 
 [Alt-text: A network diagram showing two customer sites. Site A has a router labeled "CE-A (Customer Edge)." Site B has a router labeled "CE-B." Between them is a cloud labeled "MPLS Provider Network" containing: two routers labeled "PE-A" and "PE-B" (Provider Edge) connected to the CE routers, and two interior routers labeled "P-1" and "P-2" (Provider core). Labels on packets are shown being added at PE-A and removed at PE-B.]
 
@@ -97,9 +90,6 @@ While RDs make routes unique, **Route Targets** control which routes are importe
 
 ### Section 3: MPLS Traffic Engineering (TE)
 
-[08:00 – 11:00]
-[SHOW DIAGRAM: MPLS TE tunnel bypassing congested path]
-
 Standard IP routing always uses the shortest path. **MPLS Traffic Engineering** allows you to route traffic along an explicitly specified path — even if that path is not the shortest — to avoid congestion or meet SLA requirements.
 
 MPLS TE uses **RSVP-TE** (Resource Reservation Protocol — Traffic Engineering) to signal the path and reserve bandwidth. A configured **TE tunnel** appears as a virtual interface and can be used with OSPF/IS-IS TE extensions for automatic path calculation.
@@ -112,9 +102,6 @@ MPLS TE uses **RSVP-TE** (Resource Reservation Protocol — Traffic Engineering)
 ---
 
 ### Section 4: Part 1 Summary
-
-[11:00 – 12:30]
-[SHOW SLIDE: MPLS key terms summary table]
 
 In Part 1 you learned:
 - **MPLS architecture:** CE, PE, P roles and label operations (push, swap, pop).

@@ -30,13 +30,9 @@
 
 ## Pre-Roll Slate
 
-**[SHOW SLIDE: Course title card — "CIS-4328 Information Security | Module 13 | Texas Wesleyan University"]**
-
 ---
 
 ## Opening
-
-**[INSTRUCTOR ON CAMERA]**
 
 Welcome to Module 13 — Risk Management.
 
@@ -51,8 +47,6 @@ In Part 1 we build the vocabulary and work through risk analysis — qualitative
 ---
 
 ## Section 1 — The Risk Vocabulary
-
-**[SHOW SLIDE: Risk vocabulary hierarchy diagram]**
 
 Before we can analyze risk, we need precise definitions. These terms are tested individually and in combination on Security+.
 
@@ -80,8 +74,6 @@ Some frameworks simplify to: **Risk = Likelihood × Impact**
 
 ## Section 2 — Qualitative Risk Analysis
 
-**[SHOW SLIDE: 5x5 risk matrix — likelihood vs. impact]**
-
 Risk analysis methods fall into two categories: qualitative and quantitative.
 
 **Qualitative analysis** uses descriptive scales rather than precise numbers. Likelihood might be rated as Low, Medium, or High. Impact might be rated as Minor, Moderate, Major, or Critical. The results are plotted on a risk matrix.
@@ -95,8 +87,6 @@ Its limitation is subjectivity — two people may rate the same risk differently
 ---
 
 ## Section 3 — Quantitative Risk Analysis
-
-**[SHOW SLIDE: Quantitative risk formula diagram — AV, EF, SLE, ARO, ALE]**
 
 **Quantitative analysis** expresses risk in financial terms. This gives organizations a basis for comparing the cost of a control to the cost of the risk it reduces. The Security+ exam tests specific formulas.
 
@@ -132,8 +122,6 @@ If the control costs $160,000 per year and only reduces ALE by $120,000, it is n
 
 ## Section 4 — Mean Time Metrics
 
-**[SHOW SLIDE: Mean time metrics diagram — MTBF, MTTF, MTTR, RTO, RPO]**
-
 Two mean time metrics appear on Security+ in the context of risk and availability.
 
 **MTBF (Mean Time Between Failures)**: For repairable systems, the average time between one failure and the next. A server with an MTBF of 8,760 hours is expected to fail once per year (8,760 hours = one year).
@@ -152,8 +140,6 @@ These metrics feed into availability calculations and business continuity planni
 
 ## Section 5 — Risk Appetite and Tolerance
 
-**[SHOW SLIDE: Risk appetite vs. risk tolerance diagram]**
-
 Two related terms define how much risk an organization is willing to accept.
 
 **Risk appetite**: The broad-level amount and type of risk an organization is willing to accept in pursuit of its objectives. Risk appetite is a strategic decision made by leadership. A startup may have high risk appetite in technology adoption to move fast. A bank may have very low risk appetite for data breaches due to regulatory consequences.
@@ -165,8 +151,6 @@ Two related terms define how much risk an organization is willing to accept.
 ---
 
 ## Closing — Part 1
-
-**[INSTRUCTOR ON CAMERA]**
 
 We have covered the foundational vocabulary — threat, vulnerability, exploit, risk, impact, likelihood — and the two analysis approaches: qualitative with the risk matrix and quantitative with the AV/EF/SLE/ARO/ALE formulas.
 

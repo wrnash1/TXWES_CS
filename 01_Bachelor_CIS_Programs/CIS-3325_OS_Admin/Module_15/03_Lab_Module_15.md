@@ -60,7 +60,7 @@ If you see output without a permission error, the group membership is active.
 docker run hello-world
 ```
 
-This pulls the `hello-world` image and runs a container that prints a success message. Confirm you see "Hello from Docker!"
+This pulls the `hello-world` image and runs a container that prints a success message. Confirm you see "Hello from Docker!
 
 ---
 

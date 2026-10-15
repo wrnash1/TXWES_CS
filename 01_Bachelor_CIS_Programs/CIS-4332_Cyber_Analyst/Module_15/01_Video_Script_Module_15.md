@@ -50,7 +50,7 @@ The average time between initial compromise and detection — called dwell time 
 
 Threat hunting follows an iterative cycle called the hunting loop:
 
-Step one: form a hypothesis. Based on threat intelligence, recent CVEs, known adversary TTPs, or analytical intuition, the hunter asks "what if an attacker is doing X in our environment right now?"
+Step one: form a hypothesis. Based on threat intelligence, recent CVEs, known adversary TTPs, or analytical intuition, the hunter asks "what if an attacker is doing X in our environment right now?
 
 Step two: investigate. Use available telemetry — endpoint logs, network logs, authentication logs — to search for evidence that would confirm or refute the hypothesis.
 
@@ -66,9 +66,9 @@ Then the loop begins again with a new hypothesis.
 
 A threat hunting hypothesis is a specific, testable statement about attacker activity. A vague hypothesis leads to unfocused hunting. A specific hypothesis leads to targeted investigation.
 
-Weak hypothesis: "Let us look for malware."
+Weak hypothesis: "Let us look for malware.
 
-Strong hypothesis: "Based on recent threat intelligence indicating that TA505 is targeting financial sector organizations with macro-enabled Excel files that spawn PowerShell to download Cobalt Strike beacons, we hypothesize that if this group has targeted our organization, we will see Excel spawning PowerShell with encoded command-line arguments in endpoint telemetry from our finance department workstations in the past 30 days."
+Strong hypothesis: "Based on recent threat intelligence indicating that TA505 is targeting financial sector organizations with macro-enabled Excel files that spawn PowerShell to download Cobalt Strike beacons, we hypothesize that if this group has targeted our organization, we will see Excel spawning PowerShell with encoded command-line arguments in endpoint telemetry from our finance department workstations in the past 30 days.
 
 Strong hypotheses are time-bounded, specific about the expected indicator, and tied to a credible threat source.
 

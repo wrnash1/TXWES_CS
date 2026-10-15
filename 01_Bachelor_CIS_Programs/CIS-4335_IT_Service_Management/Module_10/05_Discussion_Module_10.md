@@ -55,7 +55,7 @@ Every metric is green. The CIO presents these results proudly at the quarterly b
 However, a staff satisfaction survey conducted independently by HR reveals that 64% of
 clinical staff rate IT support as "poor" or "very poor." Common complaints include: "I
 always have to call multiple times," "No one tells me what's happening," and "The fix
-never lasts."
+never lasts.
 
 Using ITIL 4 concepts, explain the gap between the green dashboard and the 64% poor
 rating. What is technically happening, and what important dimension of service quality
@@ -77,7 +77,7 @@ as "99.5% excluding the database maintenance event on September 14" — technica
 reclassifying an unplanned outage as maintenance to avoid reporting a breach.
 
 Dominic refuses. His manager argues: "The client doesn't need to know every time we
-have a bad month. Building confidence matters more than perfect honesty."
+have a bad month. Building confidence matters more than perfect honesty.
 
 Using ITIL 4 guiding principles and Service Level Management best practices, construct
 Dominic's argument for why the breach must be reported honestly. Address specifically:

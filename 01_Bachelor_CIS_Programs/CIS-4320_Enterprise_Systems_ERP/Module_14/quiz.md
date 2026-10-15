@@ -202,13 +202,13 @@ D. Sales volume has decreased, causing fewer invoices to be outstanding.
 
 In Salesforce, which permission is required to create a new dashboard in a public shared folder (not your private folder)?
 
-A. "Create and Customize Reports"
+A. "Create and Customize Reports
 
-B. "View Reports in Public Folders"
+B. "View Reports in Public Folders
 
-C. "Manage Dashboards in Public Folders"
+C. "Manage Dashboards in Public Folders
 
-D. "Modify All Data"
+D. "Modify All Data
 
 **Correct Answer: C**
 

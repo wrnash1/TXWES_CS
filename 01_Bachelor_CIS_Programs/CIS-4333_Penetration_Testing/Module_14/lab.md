@@ -128,11 +128,11 @@ Review the following two fictional bug bounty policies and evaluate them against
 
 ### Policy Alpha (from "TechCorp" — fictional):
 
-"We welcome security researchers to help improve our security. Test our website and report any vulnerabilities you find to security@techcorp.example. We may pay rewards for significant findings. Do not attack our customers."
+We welcome security researchers to help improve our security. Test our website and report any vulnerabilities you find to security@techcorp.example. We may pay rewards for significant findings. Do not attack our customers.
 
 ### Policy Beta (from "SecureBank" — fictional):
 
-"SecureBank's vulnerability disclosure program covers the following assets: online banking portal (onlinebanking.securebank.example), mobile application (iOS and Android), and API (api.securebank.example).
+SecureBank's vulnerability disclosure program covers the following assets: online banking portal (onlinebanking.securebank.example), mobile application (iOS and Android), and API (api.securebank.example).
 
 Researchers may test for: authentication bypasses, SQL injection, XSS, IDOR, and other OWASP Top 10 vulnerability classes.
 
@@ -142,7 +142,7 @@ SecureBank will not pursue legal action against researchers who follow these gui
 
 Rewards: Critical ($5,000), High ($2,500), Medium ($500), Low ($100).
 
-Report to: security@securebank.example | PGP key available at securebank.example/security"
+Report to: security@securebank.example | PGP key available at securebank.example/security
 
 ### Step 3.1: Policy Comparison
 

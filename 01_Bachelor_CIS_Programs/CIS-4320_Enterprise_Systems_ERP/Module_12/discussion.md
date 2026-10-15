@@ -99,11 +99,11 @@ When replying to a classmate's post:
 
 ## Sample Strong Opening Lines (to inspire, not copy)
 
-For Scenario 1: "The silent failure mode of this point-to-point integration is a symptom of a deeper architectural problem: without a central monitoring layer, there is no single place to observe message flow or detect gaps..."
+For Scenario 1: "The silent failure mode of this point-to-point integration is a symptom of a deeper architectural problem: without a central monitoring layer, there is no single place to observe message flow or detect gaps...
 
-For Scenario 2: "The absence of a unique customer identifier is the highest-risk data quality problem in this migration, because without a stable key, the upsert operation cannot reliably distinguish between a new record and an update to an existing one..."
+For Scenario 2: "The absence of a unique customer identifier is the highest-risk data quality problem in this migration, because without a stable key, the upsert operation cannot reliably distinguish between a new record and an update to an existing one...
 
-For Scenario 3: "While MuleSoft's pre-built connectors would accelerate delivery, the first-year subscription cost for an enterprise MuleSoft license could consume a significant portion of the $200,000 budget before a single line of integration logic is written..."
+For Scenario 3: "While MuleSoft's pre-built connectors would accelerate delivery, the first-year subscription cost for an enterprise MuleSoft license could consume a significant portion of the $200,000 budget before a single line of integration logic is written...
 
 ---
 

@@ -164,7 +164,7 @@ AWS Config continuously records the configuration state of your AWS resources an
 
 **Configuration items** capture the state of a resource at a point in time — all attributes, relationships to other resources, and associated CloudTrail events.
 
-**Configuration history** lets you view how a resource's configuration changed over time. Answer questions like: "What was the security group configuration last Tuesday at 3 PM?"
+**Configuration history** lets you view how a resource's configuration changed over time. Answer questions like: "What was the security group configuration last Tuesday at 3 PM?
 
 **Config Rules** evaluate resource configurations against desired policies:
 

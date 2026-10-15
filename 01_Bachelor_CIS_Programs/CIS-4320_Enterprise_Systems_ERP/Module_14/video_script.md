@@ -28,8 +28,6 @@ Reporting in enterprise systems commonly fails for three reasons. First, the dat
 
 Today we cover four areas: Salesforce reports, dashboards, and Einstein Analytics; SAP Business Intelligence including BW/4HANA and Crystal Reports; KPI design principles; and executive dashboard best practices.
 
-[PAUSE]
-
 ---
 
 ## Segment 2: Salesforce Reporting (Lines 41–85)
@@ -54,7 +52,7 @@ Standard report types ship with Salesforce. Custom report types let administrato
 
 [SLIDE: Report filters and buckets]
 
-Reports can be filtered to show only relevant records. Standard filter conditions include field equals, contains, greater than, and many others. Cross-object filters allow filtering by the presence or absence of related records — for example, "Accounts with no open Opportunities in the past 90 days."
+Reports can be filtered to show only relevant records. Standard filter conditions include field equals, contains, greater than, and many others. Cross-object filters allow filtering by the presence or absence of related records — for example, "Accounts with no open Opportunities in the past 90 days.
 
 Bucket fields allow grouping numeric or text values into named categories directly in the report, without modifying the underlying data. For example, a bucket on Opportunity Amount might group values under $10,000 as "Small," $10,000–$100,000 as "Mid," and over $100,000 as "Large." This is powerful for ad-hoc segmentation.
 
@@ -106,13 +104,13 @@ Use CRM Analytics when: data volumes are very large (millions of records), you n
 
 Reporting-related permissions relevant to the Admin exam:
 
-"Create and Customize Dashboards" — needed to create dashboards.
+Create and Customize Dashboards" — needed to create dashboards.
 
-"Manage Dashboards in Public Folders" — needed to create or edit dashboards in public folders.
+Manage Dashboards in Public Folders" — needed to create or edit dashboards in public folders.
 
-"Create and Customize Reports" — needed to build reports.
+Create and Customize Reports" — needed to build reports.
 
-"Manage Reports in Public Folders" — needed to create or edit reports in public folders (different from your private folder).
+Manage Reports in Public Folders" — needed to create or edit reports in public folders (different from your private folder).
 
 [PAUSE — transition to SAP BI]
 
@@ -152,8 +150,6 @@ SAP distinguishes between operational reporting — real-time queries against th
 
 For operational reporting, SAP Fiori apps and embedded CDS (Core Data Services) views in S/4HANA provide real-time list views and analytical tiles. For strategic analytical reporting, BW/4HANA and SAP Analytics Cloud are used. Understanding this distinction helps you recommend the right tool for a given reporting need.
 
-[PAUSE]
-
 ---
 
 ## Segment 5: KPIs and Executive Dashboard Design (Lines 171–210)
@@ -162,7 +158,7 @@ For operational reporting, SAP Fiori apps and embedded CDS (Core Data Services) 
 
 A Key Performance Indicator is a measurable value that demonstrates how effectively an organization is achieving a key business objective. Not every metric is a KPI. Good KPIs share five characteristics — they are often described using the SMART framework: Specific, Measurable, Achievable, Relevant, and Time-bound.
 
-Poor example of a KPI: "track sales." Good KPI: "Closed Won Opportunity revenue in the current fiscal quarter compared to quota."
+Poor example of a KPI: "track sales." Good KPI: "Closed Won Opportunity revenue in the current fiscal quarter compared to quota.
 
 The difference is that a real KPI has a target, a time horizon, and a clear owner.
 
@@ -196,7 +192,7 @@ Designing an executive dashboard that actually gets used requires discipline. Th
 
 **Principle 3: Consistent time periods.** If one metric shows this quarter and another shows this month, the dashboard is confusing. Align all time periods, and make the current date visible on the dashboard.
 
-**Principle 4: Actionable alerts.** Color-coded indicators (green/yellow/red) should map to defined thresholds. "Red" should mean "something requires executive attention now," not just "below last quarter."
+**Principle 4: Actionable alerts.** Color-coded indicators (green/yellow/red) should map to defined thresholds. "Red" should mean "something requires executive attention now," not just "below last quarter.
 
 **Principle 5: Mobile-friendly.** Executives check dashboards on phones and tablets. Design for a small screen first.
 
@@ -205,8 +201,6 @@ Designing an executive dashboard that actually gets used requires discipline. Th
 No reporting architecture survives if users do not trust the data. The most common reasons executives stop using dashboards are: numbers that do not match what the ops team says, inconsistent definitions (does "revenue" mean booked or recognized?), and reports that are always slightly out of date.
 
 Building trust requires: agreed definitions in a data dictionary, a known refresh cadence, and a visible "last updated" timestamp on every dashboard.
-
-[PAUSE]
 
 ---
 

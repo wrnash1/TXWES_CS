@@ -58,8 +58,6 @@ Big data is defined by the **5 V's** — five dimensions that characterize datas
 
 [SHOW CHART — The 5 V's diagram with icons for each dimension]
 
-[PAUSE]
-
 When any one of these dimensions exceeds what your existing tools can handle, you have a big data problem — and you need a big data solution.
 
 ---
@@ -76,8 +74,6 @@ The core insight of Hadoop: instead of moving data to a powerful central compute
 
 HDFS is the storage layer of Hadoop. It splits large files into blocks — typically 128 MB each — and distributes those blocks across multiple nodes in a cluster. Each block is replicated, usually three times, on different nodes.
 
-[PAUSE]
-
 Key concepts:
 
 - **NameNode** — the master node that tracks where every block is stored. There is typically one active NameNode and one standby for high availability.
@@ -85,8 +81,6 @@ Key concepts:
 - **Replication factor** — typically 3 (one original plus two copies). If a DataNode fails, HDFS automatically re-replicates the lost blocks from surviving copies.
 
 HDFS is optimized for large sequential reads — perfect for batch analytics. It is not designed for frequent small random writes.
-
-[PAUSE]
 
 ### MapReduce
 
@@ -97,8 +91,6 @@ MapReduce is Hadoop's original processing framework. It breaks a computation int
 **Reduce phase:** The framework groups all values by key and sends them to Reducer nodes. The Reduce function aggregates the grouped values. In word count, it sums all the 1s for each word, producing `(word, total_count)`.
 
 [SHOW CHART — MapReduce diagram: Input → Split → Map → Shuffle/Sort → Reduce → Output]
-
-[PAUSE]
 
 MapReduce is reliable and fault-tolerant — if a node fails mid-job, the framework re-runs that task on another node. But it is slow: it writes intermediate results to disk between the Map and Reduce phases, adding significant I/O latency.
 
@@ -117,8 +109,6 @@ GROUP BY region
 ORDER BY order_count DESC;
 ```
 
-[PAUSE]
-
 Hive is optimized for batch analytics — large aggregation queries over historical data. It is not suitable for real-time queries or frequent updates.
 
 ### Apache Pig
@@ -126,8 +116,6 @@ Hive is optimized for batch analytics — large aggregation queries over histori
 Pig is a high-level scripting language (Pig Latin) for building MapReduce data pipelines. Where Hive is SQL-like, Pig is more procedural — you describe a sequence of data transformations step by step.
 
 Pig is commonly used for ETL workflows: cleaning and reshaping raw data before loading it into Hive tables for analysis.
-
-[PAUSE]
 
 ---
 
@@ -139,8 +127,6 @@ Where MapReduce writes intermediate results to disk between stages, Spark proces
 
 [SHOW CHART — Comparison: MapReduce disk I/O chain vs. Spark in-memory pipeline]
 
-[PAUSE]
-
 ### Resilient Distributed Datasets
 
 The core data structure in Spark is the **Resilient Distributed Dataset** (RDD) — an immutable, partitioned collection of data distributed across the cluster. RDDs are fault-tolerant: if a partition is lost, Spark reconstructs it from its lineage — the record of transformations applied to create it.
@@ -149,8 +135,6 @@ Spark operations on RDDs fall into two categories:
 
 - **Transformations** — lazy operations that define a new RDD (filter, map, join, groupBy). They are not executed immediately.
 - **Actions** — operations that trigger actual computation (collect, count, save). When an action is called, Spark builds and executes the full computation plan.
-
-[PAUSE]
 
 ### Spark Ecosystem Components
 
@@ -171,8 +155,6 @@ df = spark.read.csv("hdfs:///data/orders.csv", header=True, inferSchema=True)
 result = df.groupBy("region").count().orderBy("count", ascending=False)
 result.show()
 ```
-
-[PAUSE]
 
 ### Spark vs. MapReduce
 
@@ -204,8 +186,6 @@ Characteristics:
 - Expensive to store large volumes of unstructured data
 - Examples: Snowflake, Amazon Redshift, Google BigQuery, Azure Synapse Analytics
 
-[PAUSE]
-
 ### Data Lake
 
 A data lake stores **raw data in its native format** — structured, semi-structured, and unstructured — at massive scale. Structure is applied when the data is read, not when it is stored.
@@ -217,8 +197,6 @@ Characteristics:
 - Flexible — supports any data type
 - Risk of becoming a "data swamp" without governance
 - Examples: Amazon S3 plus Athena, HDFS plus Hive, Azure Data Lake Storage plus Synapse
-
-[PAUSE]
 
 ### Data Lakehouse
 
@@ -246,8 +224,6 @@ Best for:
 Advantages: efficient, simple to implement, optimized for throughput.
 Disadvantages: latency — results are only as fresh as the last batch run.
 
-[PAUSE]
-
 ### Streaming Processing
 
 Streaming processes data continuously as it arrives — within milliseconds to seconds.
@@ -263,8 +239,6 @@ Best for:
 
 [SHOW CHART — Timeline diagram: batch (bulk daily processing) vs. streaming (continuous micro-processing)]
 
-[PAUSE]
-
 ### Lambda and Kappa Architectures
 
 The **lambda architecture** combines batch and streaming: a batch layer processes historical data with high accuracy; a speed layer processes real-time streams; a serving layer merges both views.
@@ -276,8 +250,6 @@ The **kappa architecture** simplifies this by using only a streaming layer — t
 ## Segment 7: Module Summary (18:30–20:30)
 
 Let me pull everything together.
-
-[PAUSE]
 
 The 5 V's of big data: Volume, Velocity, Variety, Veracity, Value.
 

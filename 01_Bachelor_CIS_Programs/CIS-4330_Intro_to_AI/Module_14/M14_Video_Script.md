@@ -10,8 +10,6 @@
 
 ## SEGMENT 1 — Hook and Module Overview (Slides 1–3) [3 min]
 
-[ON CAMERA]
-
 Let me start with a story. In 2017, researchers at MIT demonstrated something that should have alarmed the AI community. They showed that by placing a small, carefully designed sticker on a stop sign, they could fool a state-of-the-art computer vision system into classifying it as a speed limit sign. The sticker was imperceptible to a human standing five feet away. To the AI, it was decisive.
 
 This is an adversarial attack. And it is not just an academic toy — this class of vulnerability applies to medical imaging AI, financial fraud models, voice assistants, and any other AI system you can name.

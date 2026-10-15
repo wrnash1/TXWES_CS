@@ -703,8 +703,6 @@ Complete DSC reference including the DSC resource model, configuration data, par
 
 *Review all sections before beginning Lab 15, Quiz 15, and Discussion 15.*
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

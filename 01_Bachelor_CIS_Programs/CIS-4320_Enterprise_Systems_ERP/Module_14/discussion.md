@@ -18,7 +18,7 @@ Respond to **one** of the three scenarios below. Your initial post must be 175�
 
 A regional distribution company launched a Salesforce executive dashboard six months ago. The IT team spent three weeks building it. It has 22 metrics displayed simultaneously, including last month's sales by product, year-to-date revenue by territory, open case age distribution, inventory reorder alerts, a count of contacts by state, and twelve other numbers — all shown as static text values with no trend indicators or color-coded thresholds.
 
-The executive team logged in to view it the day it launched, and nobody has opened it since. The VP of Operations sent an email saying "I still use the spreadsheet my assistant sends me on Monday mornings."
+The executive team logged in to view it the day it launched, and nobody has opened it since. The VP of Operations sent an email saying "I still use the spreadsheet my assistant sends me on Monday mornings.
 
 Address the following in your post:
 
@@ -95,11 +95,11 @@ When replying to a classmate's post:
 
 ## Sample Strong Opening Lines (to inspire, not copy)
 
-For Scenario 1: "The most fundamental mistake in this dashboard is that it was designed around available data rather than around the decisions the executives actually need to make — when you put 22 metrics in front of a busy executive, you are asking them to do the analyst's job of identifying what matters..."
+For Scenario 1: "The most fundamental mistake in this dashboard is that it was designed around available data rather than around the decisions the executives actually need to make — when you put 22 metrics in front of a busy executive, you are asking them to do the analyst's job of identifying what matters...
 
-For Scenario 2: "The $13 million discrepancy would have been manageable if discovered during development, but presenting it to a sales director during UAT has created something much harder to fix than a configuration error — a credibility problem that will follow this dashboard for years..."
+For Scenario 2: "The $13 million discrepancy would have been manageable if discovered during development, but presenting it to a sales director during UAT has created something much harder to fix than a configuration error — a credibility problem that will follow this dashboard for years...
 
-For Scenario 3: "The answer is almost never purely technical — Option B may be architecturally superior on paper, but if the company's entire analytics team lives in Salesforce and has no SAC experience, Option B's 'advantage' evaporates in the face of a six-month learning curve and significant consulting costs..."
+For Scenario 3: "The answer is almost never purely technical — Option B may be architecturally superior on paper, but if the company's entire analytics team lives in Salesforce and has no SAC experience, Option B's 'advantage' evaporates in the face of a six-month learning curve and significant consulting costs...
 
 ---
 

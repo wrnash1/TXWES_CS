@@ -117,10 +117,10 @@ algorithm recommended for new deployments. Which ssh-keygen command is correct?
 
 - A) ssh-keygen -t dsa -b 1024
 - B) ssh-keygen -t rsa -b 2048
-- C) ssh-keygen -t ed25519 -C "admin@server01"
+- C) ssh-keygen -t ed25519 -C "admin@server01
 - D) ssh-keygen -t ecdsa -b 256 --legacy
 
-Correct Answer: C) ssh-keygen -t ed25519 -C "admin@server01"
+Correct Answer: C) ssh-keygen -t ed25519 -C "admin@server01
 
 Distractor Analysis:
 
@@ -429,7 +429,7 @@ Correct Answer: B) scp -r backup01:/opt/backups/ /local/destination/
 
 Distractor Analysis:
 
-- Why A is incorrect: Without the -r flag, scp only copies individual files. Attempting to copy a directory without -r will fail with an error such as "not a regular file."
+- Why A is incorrect: Without the -r flag, scp only copies individual files. Attempting to copy a directory without -r will fail with an error such as "not a regular file.
 - Why C is incorrect: scp does not have a -R flag (capital R). The recursive flag is lowercase -r. This is a common mistake for users familiar with cp -R. Using an unrecognized flag would produce an error.
 - Why D is incorrect: scp does not support GNU-style long options like --recursive. The correct syntax uses short flags. This tests whether students know the actual scp flag syntax rather than assuming it matches other tools.
 

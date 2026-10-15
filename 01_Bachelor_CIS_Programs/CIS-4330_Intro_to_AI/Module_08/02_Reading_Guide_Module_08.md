@@ -102,7 +102,7 @@ Most NLP applications follow a processing pipeline that transforms raw text into
 
 **Normalization** standardizes tokens: lowercasing, removing punctuation, expanding contractions.
 
-**Stop word removal** filters out high-frequency words with low semantic value: "the," "is," "at."
+**Stop word removal** filters out high-frequency words with low semantic value: "the," "is," "at.
 
 **Part-of-speech tagging** assigns grammatical roles: noun, verb, adjective.
 
@@ -513,8 +513,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

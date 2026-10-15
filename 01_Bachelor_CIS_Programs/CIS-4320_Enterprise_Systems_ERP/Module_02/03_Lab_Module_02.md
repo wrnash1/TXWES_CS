@@ -14,7 +14,7 @@ This lab develops your BPMN process modeling skills and your ability to design T
 
 **Estimated Time:** 90 minutes
 
-**Submission:** Upload your completed lab document to Canvas under "Lab 02 — Business Process Management."
+**Submission:** Upload your completed lab document to Canvas under "Lab 02 — Business Process Management.
 
 ---
 
@@ -184,7 +184,7 @@ In 100-150 words, describe a real or hypothetical business process from a field 
 
 1. Compile responses into a single document. Include both BPMN diagrams as embedded images or clearly labeled sketches.
 2. Name your file: `Lab02_LastName_FirstName.pdf`
-3. Upload to Canvas under "Lab 02 — Business Process Management."
+3. Upload to Canvas under "Lab 02 — Business Process Management.
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day unless an extension is approved by Professor Nash in advance.
 
 ---

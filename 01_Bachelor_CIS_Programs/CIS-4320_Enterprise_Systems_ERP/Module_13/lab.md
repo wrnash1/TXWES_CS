@@ -83,7 +83,7 @@ Log in to your Salesforce Developer Edition org.
 
 Navigate to Setup > Profiles. You will create a new custom profile for Account Managers.
 
-1. Click "New Profile." Base it on the "Standard User" profile. Name it "Account Manager — Pinnacle."
+1. Click "New Profile." Base it on the "Standard User" profile. Name it "Account Manager — Pinnacle.
 
 2. After creation, locate the Object Settings for Opportunity. Adjust the permissions to match your matrix from Task 1.1 for the Account Manager role. Screenshot the Opportunity object permissions page showing your settings.
 
@@ -99,7 +99,7 @@ Navigate to Setup > Profiles. You will create a new custom profile for Account M
 
 Pinnacle has a small "Deal Desk" team of two Account Managers who are authorized to approve discounts over 15%. This capability should be additive on top of the standard Account Manager profile.
 
-1. Navigate to Setup > Permission Sets. Click "New."
+1. Navigate to Setup > Permission Sets. Click "New.
 
 2. Create a permission set with:
    - Label: `Deal_Desk_Approver`

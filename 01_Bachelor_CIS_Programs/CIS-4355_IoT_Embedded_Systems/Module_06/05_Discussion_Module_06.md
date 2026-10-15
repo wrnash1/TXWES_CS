@@ -26,7 +26,7 @@ Diagnose this failure. Identify the root cause at the hardware and software leve
 
 ## Scenario B — Interrupt or Poll?
 
-A robotics team is designing a motor controller that must respond to an emergency stop button within 5 milliseconds of it being pressed. The main loop also reads a quadrature encoder at 1 kHz, updates a PID controller, and sends motor commands over Serial. The senior engineer on the team says the button should be handled with an interrupt. The junior engineer argues that checking `digitalRead()` inside the loop is simpler and "probably fast enough."
+A robotics team is designing a motor controller that must respond to an emergency stop button within 5 milliseconds of it being pressed. The main loop also reads a quadrature encoder at 1 kHz, updates a PID controller, and sends motor commands over Serial. The senior engineer on the team says the button should be handled with an interrupt. The junior engineer argues that checking `digitalRead()` inside the loop is simpler and "probably fast enough.
 
 Evaluate both arguments using specific timing analysis. Calculate the worst-case response latency for polling if the loop body takes 2ms to execute. Explain what happens to interrupt latency if the ISR performs Serial.print() or calls delay(). Describe the flag-and-handle pattern that makes ISRs safe in this scenario. Finally, identify one situation where polling might actually be preferable to interrupts — there is a valid answer, and it involves debouncing or very noisy signals.
 

@@ -396,8 +396,6 @@ Hands-on Python notebooks exploring data classification and feature types in pan
 <https://www.youtube.com/watch?v=hZxnzfnt5v8>
 A concise visual explanation of the four scales of measurement (nominal, ordinal, interval, ratio) with memorable examples. Highly effective for exam preparation on measurement scale questions.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

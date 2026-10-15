@@ -91,11 +91,11 @@ When replying to a classmate's post:
 
 ## Sample Strong Opening Lines (to inspire, not copy)
 
-For Scenario 1: "The core failure here is not a technology gap — Salesforce has the tools to prevent every incident described — but a process failure: no one was enforcing the controls that were available..."
+For Scenario 1: "The core failure here is not a technology gap — Salesforce has the tools to prevent every incident described — but a process failure: no one was enforcing the controls that were available...
 
-For Scenario 2: "The fifteen-year-old 'super-role' model is a product of good intentions and accumulated technical debt: each time a manager needed one additional transaction, it was easier to add it to an existing role than to redesign the role model properly..."
+For Scenario 2: "The fifteen-year-old 'super-role' model is a product of good intentions and accumulated technical debt: each time a manager needed one additional transaction, it was easier to add it to an existing role than to redesign the role model properly...
 
-For Scenario 3: "At 50 people, the temptation is to keep security simple by creating as few profiles as possible and using OWD settings that are permissive enough to avoid constant sharing rule maintenance — but getting this wrong at the start is significantly harder to fix later..."
+For Scenario 3: "At 50 people, the temptation is to keep security simple by creating as few profiles as possible and using OWD settings that are permissive enough to avoid constant sharing rule maintenance — but getting this wrong at the start is significantly harder to fix later...
 
 ---
 

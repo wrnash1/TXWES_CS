@@ -1,5 +1,23 @@
 # Video Script: Module 06 - Data Flow Diagrams and Entity-Relationship Diagrams
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture &bull; Module 06</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=UI6lqHOVHic" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/UI6lqHOVHic" title="Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3312 Systems Analysis and Design
 **Estimated Duration:** 22 minutes
 **Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
@@ -7,11 +25,8 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 - 03:00]
-
+## Section 1: Welcome and Module Overview
 Welcome to Module 06. I am Professor Nash. Today we are covering two foundational visual modeling techniques that every systems analyst must master: Data Flow Diagrams and Entity-Relationship Diagrams. Both appear on the IIBA ECBA exam, and both are tools you will use throughout your BA career.
-
-[SHOW DIAGRAM: Title slide — "Module 06: Data Flow Diagrams and Entity-Relationship Diagrams" with BABOK KA 5 label and IIBA ECBA badge]
 
 These two diagram types answer different questions. A Data Flow Diagram — DFD — asks: how does data move through the system? What processes transform it? Where is it stored? An Entity-Relationship Diagram — ERD — asks: what data does the system store? How are the pieces of data related to each other?
 
@@ -19,9 +34,7 @@ Think of them as complementary. The DFD shows the system in motion — data flow
 
 ---
 
-## Section 2: Data Flow Diagrams [03:00 - 10:00]
-
-[SHOW DIAGRAM: Labeled DFD symbol reference — four symbols with labels: Rectangle (External Entity), Circle/Rounded Rectangle (Process), Open-Ended Rectangle (Data Store), Arrow (Data Flow)]
+## Section 2: Data Flow Diagrams
 
 A DFD uses exactly four symbols. Let me define each one carefully because the exam will test whether you can identify them.
 
@@ -35,8 +48,6 @@ A data flow is an arrow. It represents data moving from one symbol to another. D
 
 Now let me cover the leveling structure.
 
-[SHOW DIAGRAM: Three-level DFD hierarchy — Level 0 (one bubble labeled "Online Book Store System," external entities, and data flows), Level 1 (three process bubbles: "Process Order," "Manage Inventory," "Handle Returns," with data stores), Level 2 (expanded view of "Process Order" with sub-processes)]
-
 A Context Diagram — also called a Level 0 DFD — shows the entire system as a single process bubble. It shows all external entities and all the data flows between the system and those external entities. The Context Diagram defines scope: what the system receives, what it produces, who is involved. Nothing inside the system is shown at Level 0.
 
 A Level 1 DFD decomposes the single system bubble into the major sub-processes. Level 1 shows internal processes, data stores, and the data flows between them. It must be balanced with Level 0: every input and output shown at Level 0 must appear at Level 1.
@@ -47,9 +58,7 @@ A Level 2 DFD decomposes one Level 1 process into its sub-processes. The same ba
 
 ---
 
-## Section 3: ERD Concepts and Notation [10:00 - 16:00]
-
-[SHOW DIAGRAM: ERD for a simple order system — four entities (Customer, Order, Product, OrderLine) with Crow's Foot notation showing cardinalities and key attributes listed inside each entity rectangle]
+## Section 3: ERD Concepts and Notation
 
 An Entity-Relationship Diagram models the data a system needs to store. It does not show process or sequence — it shows structure. Let me introduce the three core concepts: entities, attributes, and relationships.
 
@@ -59,8 +68,6 @@ An attribute is a data element that describes an entity. Customer has attributes
 
 A relationship is an association between two entities. "Customer places Order." "Order contains Product." Relationships are the connections in the ERD. Every relationship has a name (a verb phrase), and it has a cardinality.
 
-[SHOW DIAGRAM: Crow's Foot notation reference — three relationship lines side by side: 1:1 (single lines both sides), 1:N (single line one side, crow's foot other side), M:N (crow's foot both sides), with optional/mandatory indicators (circle vs. tick mark)]
-
 Cardinality expresses how many instances of one entity can relate to how many instances of another. There are three fundamental cardinalities.
 
 One-to-one (1:1): One instance of Entity A relates to exactly one instance of Entity B. Example: one Employee has one Employee Badge. In the database, the foreign key can go in either table. One-to-one relationships are relatively rare.
@@ -69,14 +76,13 @@ One-to-many (1:N): One instance of Entity A relates to many instances of Entity 
 
 Many-to-many (M:N): Many instances of A relate to many instances of B. Example: one Order can contain many Products; one Product can appear in many Orders. Many-to-many relationships cannot be directly implemented in a relational database. They require a junction table — also called an associative entity or bridge table — that holds the foreign keys of both sides. The OrderLine table (with OrderID and ProductID as a composite key) resolves the Order-to-Product M:N relationship.
 
-Crow's Foot notation adds participation indicators: a circle on the line means zero (optional), a tick mark means one (mandatory). So a crow's foot with a circle means "zero or many"; a crow's foot with a tick mark means "one or many."
+Crow's Foot notation adds participation indicators: a circle on the line means zero (optional), a tick mark means one (mandatory). So a crow's foot with a circle means "zero or many"; a crow's foot with a tick mark means "one or many.
 
 > IIBA ECBA Exam Tip: The exam will test cardinality identification. When a question describes a relationship, map it to 1:1, 1:N, or M:N immediately. Then ask: which side holds the foreign key? (The "many" side.) If it is M:N, what is needed? (A junction table.) These are the two downstream design decisions that cardinality drives.
 
 ---
 
-## Section 4: DFD and ERD in the BA Context [16:00 - 19:30]
-
+## Section 4: DFD and ERD in the BA Context
 When do BAs use DFDs versus ERDs? The answer depends on what question you are trying to answer.
 
 Use a DFD when you need to communicate how data moves through a system — what processes exist, what external parties are involved, where data is stored, and how information flows between components. DFDs are excellent for scope definition (the Context Diagram) and for communicating the logical architecture of a system to both technical and non-technical stakeholders. They are particularly useful when analyzing current-state processes and modeling future-state improvements.
@@ -87,8 +93,7 @@ Both diagram types are covered in BABOK Guide v3 under KA 5 Techniques: "Data Fl
 
 ---
 
-## Section 5: Lab Preview and Closing [19:30 - 22:00]
-
+## Section 5: Lab Preview and Closing
 This week's lab uses a single case study — Ridgeview Community Library — to practice both techniques. You will draw a Context Diagram and Level 1 DFD showing how the library's checkout system processes patron requests, manages the catalog, and interacts with external parties. Then you will draw an ERD for the same system showing the entities and their relationships.
 
 Two key reminders. First: in DFDs, processes transform data — data cannot flow between data stores or between external entities without passing through a process. Second: in ERDs, every M:N relationship must be resolved into a junction table with foreign keys from both sides.

@@ -25,25 +25,15 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: "Module 02 Part 2 — Application Layer Protocols, Port Numbers, and DHCP"]
-
 ---
 
 ### Section 1: Part 2 Introduction
-
-[00:00 – 00:45]
-
-[SHOW SLIDE: Professor Nash on camera]
 
 Welcome back to Module 02. In Part 1, we covered the TCP/IP model, IP headers, TCP reliability, UDP speed, and ICMP diagnostics. Now in Part 2, we get into the protocols that you interact with every single day — web, email, DNS, DHCP — and the port numbers you absolutely must memorize for the Network+ exam. Let's go.
 
 ---
 
 ### Section 2: Application Layer Protocols and Port Numbers
-
-[00:45 – 04:30]
-
-[SHOW SLIDE: Port number reference table — left column protocol name, right column port number and transport protocol]
 
 Port numbers identify specific services on a host. When a packet arrives at your computer, the operating system uses the destination port number to determine which application or service should receive the data. There are 65,535 possible port numbers. The ones from 0 to 1,023 are called well-known ports and are assigned to specific services by IANA.
 
@@ -79,10 +69,6 @@ NTP — Network Time Protocol — port 123, UDP. Synchronizes clocks across netw
 
 ### Section 3: DHCP — Automatic IP Configuration
 
-[04:30 – 07:00]
-
-[SHOW DIAGRAM: DHCP DORA sequence diagram. Four steps shown as arrows between a client PC on the left and a DHCP server on the right. Step 1: DISCOVER (broadcast from client to all). Step 2: OFFER (server to client — offers IP lease). Step 3: REQUEST (client broadcasts — formally requests the offered IP). Step 4: ACKNOWLEDGE (server confirms lease).]
-
 [Alt-text: A sequence diagram showing the DHCP DORA process. On the left is an icon of a client workstation labeled Client. On the right is a server icon labeled DHCP Server. Four horizontal arrows are shown. Arrow 1 points from client to server and is labeled DISCOVER (broadcast). Arrow 2 points from server to client and is labeled OFFER (IP address lease offer). Arrow 3 points from client to server and is labeled REQUEST (client requests the offered IP). Arrow 4 points from server to client and is labeled ACKNOWLEDGE (server confirms the lease).]
 
 DHCP (Dynamic Host Configuration Protocol) automatically assigns IP configuration to clients when they connect to a network. Without DHCP, a network administrator would have to manually configure every single device's IP address, subnet mask, default gateway, and DNS server. On a large network, that is thousands of manual configurations. DHCP automates all of it.
@@ -102,10 +88,6 @@ An important detail: DHCP leases are temporary. When the lease reaches 50% of it
 ---
 
 ### Section 4: DNS — Name Resolution
-
-[07:00 – 09:30]
-
-[SHOW DIAGRAM: DNS resolution sequence. A laptop (Client) on the left sends a DNS query for "www.example.com" to a DNS Resolver. The Resolver queries a Root Name Server, then a TLD (.com) Name Server, then the Authoritative Name Server for example.com. The authoritative server returns the IP address 93.184.216.34. The resolver returns this to the client.]
 
 [Alt-text: A DNS resolution flowchart. On the far left is a laptop labeled Client sending a query for www.example.com to a Recursive Resolver. The resolver sends a query to a Root Name Server (labeled "Who handles .com?"). The root server refers to a TLD Name Server. The resolver queries the TLD server (labeled "Who handles example.com?"). The TLD server refers to the Authoritative Name Server for example.com. The resolver queries the authoritative server and receives the IP address. The resolver returns the IP address to the client.]
 
@@ -135,10 +117,6 @@ SOA record — contains administrative information about a DNS zone.
 
 ### Section 5: Lab Preview and Key Takeaways
 
-[09:30 – 11:30]
-
-[SHOW SLIDE: Lab preview — netstat and nslookup command examples]
-
 In this week's lab, you will use command-line tools to observe TCP/IP protocols in action.
 
 The nslookup command lets you manually query DNS servers. You will run it to look up A records, MX records, and see which DNS server your system is using.
@@ -164,8 +142,6 @@ Know every port number in the reading guide table before you take the quiz.
 ---
 
 ### Section 6: Module 02 Closing
-
-[SHOW SLIDE: Module 02 key takeaways list]
 
 That wraps up Module 02. Review the reading guide port number table until those ports are automatic. Complete the lab using nslookup and netstat, take the quiz, and post your discussion by Wednesday.
 

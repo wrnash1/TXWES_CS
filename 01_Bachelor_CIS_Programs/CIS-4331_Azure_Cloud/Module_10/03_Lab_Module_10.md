@@ -145,7 +145,7 @@ CREATE TABLE Students (
 );
 ```
 
-Click **Run**. The Messages panel should show "Command(s) completed successfully."
+Click **Run**. The Messages panel should show "Command(s) completed successfully.
 
 **Step 3.3 — Insert Sample Records**
 

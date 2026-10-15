@@ -28,8 +28,6 @@ A structured methodology does not guarantee success, but it dramatically reduces
 
 Today we cover four areas: the SAP ASAP methodology and its modern evolution; the Salesforce implementation lifecycle and Salesforce's recommended delivery approach; change management as a discipline; and cutover planning, hypercare, and total cost of ownership.
 
-[PAUSE]
-
 ---
 
 ## Segment 2: SAP ASAP Methodology (Lines 41–85)
@@ -180,8 +178,6 @@ Effective ERP training addresses three dimensions: knowledge (conceptual underst
 
 Just-in-time training — delivered close to go-live rather than weeks before — produces better retention. Blended approaches that combine classroom training, job aids (quick reference cards), and system simulations work better than lecture-only formats.
 
-[PAUSE]
-
 ---
 
 ## Segment 5: Cutover, Hypercare, and TCO (Lines 166–208)
@@ -244,8 +240,6 @@ TCO components for SAP S/4HANA:
 - Consulting support for system changes
 
 For both platforms: a three-to-five-year TCO model is standard for executive decision-making. The implementation cost is often 3–5 times the first-year license cost.
-
-[PAUSE]
 
 ---
 

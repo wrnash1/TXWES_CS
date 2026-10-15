@@ -193,7 +193,7 @@ cat ~/.ssh/known_hosts
 This file stores the host keys of servers you have previously connected to. Each line
 contains the hostname/IP, key algorithm, and public key.
 
-When you connect to a server and see "The authenticity of host X can't be established,"
+When you connect to a server and see "The authenticity of host X can't be established,
 SSH is asking you to manually verify the fingerprint matches the real server before
 trusting it. Once you type yes, the key is added to known_hosts.
 

@@ -322,7 +322,7 @@ msf6 > use post/linux/manage/sshkey_persistence
 
 ### SLIDE 9 — Living Off the Land (15:00–17:00)
 
-"Living off the land" (LotL) describes using legitimate built-in tools and binaries that are already present on the target system for malicious purposes. This avoids introducing new malware that might trigger detection.
+Living off the land" (LotL) describes using legitimate built-in tools and binaries that are already present on the target system for malicious purposes. This avoids introducing new malware that might trigger detection.
 
 ### Windows LotL Techniques
 

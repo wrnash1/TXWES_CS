@@ -117,7 +117,7 @@ Select and document a response strategy for each high- and medium-priority risk.
 
 ### Part 3 Instructions
 
-For every risk classified as High or Medium priority in Part 2, complete the response planning columns below. For Low priority risks, you may use "Accept — watchlist."
+For every risk classified as High or Medium priority in Part 2, complete the response planning columns below. For Low priority risks, you may use "Accept — watchlist.
 
 | Risk ID | Priority | Response Strategy | Specific Response Actions | Contingency Plan | Residual Risk After Response |
 |---------|----------|------------------|--------------------------|-----------------|------------------------------|

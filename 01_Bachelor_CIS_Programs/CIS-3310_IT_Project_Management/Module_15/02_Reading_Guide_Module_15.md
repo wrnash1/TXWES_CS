@@ -221,7 +221,7 @@ that resurfaces later as expensive rework or production defects.
 ### 4.1 User Stories
 
 User stories are the most common format for product backlog items in Scrum. They
-follow the template: "As a [user type], I want [capability] so that [business value]."
+follow the template: "As a [user type], I want [capability] so that [business value].
 
 A well-written user story is INVEST:
 
@@ -563,8 +563,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

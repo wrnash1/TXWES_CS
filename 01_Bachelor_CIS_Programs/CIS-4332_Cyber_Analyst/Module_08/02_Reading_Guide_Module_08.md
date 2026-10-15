@@ -465,8 +465,6 @@ CISA's decision-tree framework for vulnerability prioritization that combines ex
 <https://nvd.nist.gov/>
 The primary source for CVSS vector strings, CWE classifications, CPE applicability, and vendor advisory links for every CVE. Practice reading the full NVD entry for any recent high-profile CVE to build fluency in interpreting CVSS Base metrics, temporal metrics, and the relationships between CVE, CWE, and CPE that are tested throughout the CySA+ exam.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

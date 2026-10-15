@@ -25,14 +25,10 @@
 ---
 
 ### Pre-Roll Slide
-[SHOW SLIDE: "CSC-6361 — Module 03 Part 2: SD-WAN Architecture & IPsec VPNs | Texas Wesleyan University"]
 
 ---
 
 ### Section 1: SD-WAN — Software-Defined Wide Area Networking
-
-[00:00 – 07:00]
-[SHOW DIAGRAM: SD-WAN architecture — vManage, vSmart, vBond controllers + vEdge/cEdge devices at branch sites over internet/MPLS/LTE transports]
 
 [Alt-text: A diagram showing the Cisco SD-WAN architecture. At the top is a cloud containing three controller boxes: vManage (management plane), vSmart (control plane), and vBond (orchestration plane). Below the cloud, three branch sites each have a device labeled "vEdge/cEdge" connected upward to the controllers and horizontally to each other via data plane tunnels labeled "IPsec over Internet / MPLS / LTE."]
 
@@ -58,7 +54,7 @@ A **TLOC** identifies a specific transport (color) on a specific device: IP addr
 SD-WAN can use any combination of transports — MPLS, broadband internet, LTE/5G, MPLS — simultaneously. Traffic is distributed across transports based on application SLA policies.
 
 **2. Application-Aware Routing:**
-SD-WAN continuously measures latency, jitter, and packet loss on every transport path. Policies can specify: "If latency on the MPLS path exceeds 20ms, route this application's traffic over the internet path instead."
+SD-WAN continuously measures latency, jitter, and packet loss on every transport path. Policies can specify: "If latency on the MPLS path exceeds 20ms, route this application's traffic over the internet path instead.
 
 **3. Centralized Policy:**
 A single policy pushed from vManage can control routing, QoS, segmentation, and security across hundreds of sites simultaneously — no CLI on each device.
@@ -83,9 +79,6 @@ All SD-WAN data plane tunnels are IPsec-encrypted by default. Certificates are d
 ---
 
 ### Section 2: IPsec VPNs — Site-to-Site and Remote Access
-
-[07:00 – 13:00]
-[SHOW DIAGRAM: IPsec tunnel mode — original IP packet wrapped in ESP header, new outer IP header]
 
 **IPsec Overview:**
 IPsec is a suite of protocols that provides authentication, integrity, and encryption for IP packets. IPsec operates at Layer 3 and is used for both **site-to-site VPNs** (connecting offices) and **remote access VPNs** (connecting individual users).
@@ -141,9 +134,6 @@ Pure IPsec only encrypts unicast traffic — it cannot carry routing protocol mu
 ---
 
 ### Section 3: Module 03 Lab Preview
-
-[13:00 – 15:00]
-[SHOW SLIDE: Module 03 Lab Topology]
 
 The Module 03 lab builds a WAN simulation in Packet Tracer:
 - **3 sites:** HQ, Branch-A, Branch-B, connected through a simulated ISP cloud.

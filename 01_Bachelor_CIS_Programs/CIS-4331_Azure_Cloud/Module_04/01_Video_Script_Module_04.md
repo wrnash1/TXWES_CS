@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Learning Objectives
+## Opening and Learning Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -27,8 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-**[INSTRUCTOR ON CAMERA — title card: "Module 04: Azure Container Services"]**
-
 Welcome to Module 04. I'm Professor Nash. Today we cover containers — one of the most transformative technologies in modern cloud computing. If virtual machines from Module 03 are like renting a full apartment, containers are like renting a single furnished room. They are faster to start, more efficient to run, and perfectly portable between environments.
 
 Azure provides multiple container services targeting different use cases, from running a single container to orchestrating thousands of microservices. AZ-900 tests your ability to distinguish these services and match them to scenarios.
@@ -44,7 +42,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 05:00] What Is a Container?
+## What Is a Container?
 
 **[SLIDE: "Containers vs. Virtual Machines"]**
 
@@ -76,7 +74,7 @@ You do not need deep Docker expertise for AZ-900, but you should understand thes
 
 ---
 
-## [05:00 - 09:00] Azure Container Instances
+## Azure Container Instances
 
 **[SLIDE: "Azure Container Instances (ACI)"]**
 
@@ -135,7 +133,7 @@ ACI uses per-second billing based on vCPU and memory consumed while the containe
 
 ---
 
-## [09:00 - 14:00] Azure Kubernetes Service
+## Azure Kubernetes Service
 
 **[SLIDE: "The Problem ACI Cannot Solve"]**
 
@@ -183,7 +181,7 @@ In the Portal, creating an AKS cluster requires selecting a node pool configurat
 
 ---
 
-## [14:00 - 17:00] Azure Container Apps and Azure App Service
+## Azure Container Apps and Azure App Service
 
 **[SLIDE: "Azure Container Apps"]**
 
@@ -208,7 +206,7 @@ App Service containers are suitable for web applications and APIs packaged as si
 
 ---
 
-## [17:00 - 19:30] Azure Container Registry
+## Azure Container Registry
 
 **[SLIDE: "Azure Container Registry (ACR)"]**
 
@@ -234,7 +232,7 @@ Why use ACR instead of Docker Hub?
 
 ---
 
-## [19:30 - 22:00] Lab Preview and AZ-900 Alignment
+## Lab Preview and AZ-900 Alignment
 
 **[SLIDE: "Module 04 Lab"]**
 
@@ -261,9 +259,7 @@ The exam will give you scenarios and ask which service is appropriate. Match the
 
 ---
 
-## [22:00 - 24:00] Closing
-
-**[INSTRUCTOR ON CAMERA]**
+## Closing
 
 You now understand Azure's container landscape — from the simplicity of Azure Container Instances to the power of Azure Kubernetes Service. Containers are a fundamental skill in modern cloud computing, and understanding when to use each service is exactly the kind of architectural judgment that AZ-900 tests.
 

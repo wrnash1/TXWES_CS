@@ -26,7 +26,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening
+## Opening
 
 Welcome back. Professor Nash here, and this is Module 05. Over the past four modules, we built a solid foundation in machine learning and neural networks. Today we shift to one of the most practically impactful areas of AI: Natural Language Processing, or NLP.
 
@@ -34,7 +34,7 @@ NLP is the field of AI concerned with enabling computers to understand, generate
 
 ---
 
-## [01:30 - 04:30] Why NLP Is Hard
+## Why NLP Is Hard
 
 Human language is extraordinarily complex. Unlike structured data where a "1" always means the same thing, language is ambiguous, context-dependent, and constantly evolving. Let me give you three concrete examples of why this is hard.
 
@@ -48,7 +48,7 @@ Historical NLP systems used hand-crafted rules — dictionaries of synonyms, gra
 
 ---
 
-## [04:30 - 08:00] Key NLP Tasks
+## Key NLP Tasks
 
 The AI-900 exam tests your ability to identify NLP workload types and match them to Azure services. Let me walk through the eight core NLP tasks you need to know.
 
@@ -70,9 +70,7 @@ The AI-900 exam tests your ability to identify NLP workload types and match them
 
 ---
 
-## [08:00 - 11:30] How Text Becomes Numbers — Tokenization and Embeddings
-
-[SHOW DIAGRAM: Pipeline with boxes: "Raw Text" → "Tokenization" → "Token IDs" → "Word Embeddings" → "Neural Network." Each box shows example values.]
+## How Text Becomes Numbers — Tokenization and Embeddings
 
 Machine learning models work with numbers, not words. To apply ML to text, we need a way to convert words into numerical representations. This process involves two steps: tokenization and embedding.
 
@@ -86,9 +84,7 @@ Modern transformer models use contextual embeddings — each word's vector depen
 
 ---
 
-## [11:30 - 14:30] The Transformer Architecture and Why It Matters for NLP
-
-[SHOW DIAGRAM: A simplified transformer diagram. Input tokens enter an "Encoder" block containing a "Self-Attention" layer and a "Feed-Forward" layer. Output tokens leave a "Decoder" block. Bidirectional arrows within the Self-Attention layer connecting every token to every other token.]
+## The Transformer Architecture and Why It Matters for NLP
 
 Module 11 covers transformers in depth in the context of Azure OpenAI and generative AI. But I want to introduce the key concept here because it is the foundation of every modern NLP system.
 
@@ -100,9 +96,7 @@ BERT — Bidirectional Encoder Representations from Transformers — is a pretra
 
 ---
 
-## [14:30 - 17:30] Azure NLP Services Overview
-
-[SHOW DIAGRAM: A two-column table. Left column: "AI-900 NLP Task." Right column: "Azure Service." Rows: Sentiment Analysis → Language Service / Text Analytics. Translation → Azure Translator. Speech-to-Text → Azure Speech Service. Text-to-Speech → Azure Speech Service. Question Answering → Language Service (custom QA). Key Phrase Extraction → Language Service. Named Entity Recognition → Language Service.]
+## Azure NLP Services Overview
 
 Azure organizes NLP capabilities primarily under two services that you must know for AI-900.
 
@@ -118,7 +112,7 @@ For AI-900 scenarios: if the task involves written text analysis, the answer is 
 
 ---
 
-## [17:30 - 20:00] Responsible AI in NLP
+## Responsible AI in NLP
 
 Language models learn from human-generated text on the internet, which contains human biases, stereotypes, and harmful content. This creates serious responsible AI considerations for NLP systems.
 
@@ -132,7 +126,7 @@ Microsoft addresses these concerns through content filtering built into Azure La
 
 ---
 
-## [20:00 - 22:00] Module Summary and Lab Preview
+## Module Summary and Lab Preview
 
 Let me recap Module 05.
 

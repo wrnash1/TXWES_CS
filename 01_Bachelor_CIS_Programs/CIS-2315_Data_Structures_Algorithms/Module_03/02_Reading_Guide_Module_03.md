@@ -203,7 +203,7 @@ class Queue:
 
 ## 3. The Monotonic Stack Pattern
 
-A monotonic stack maintains elements in sorted order (strictly increasing or strictly decreasing) as items are pushed. When a new element would break the monotonic property, elements are popped from the stack until the property can be restored — and each popped element has found its "answer."
+A monotonic stack maintains elements in sorted order (strictly increasing or strictly decreasing) as items are pushed. When a new element would break the monotonic property, elements are popped from the stack until the property can be restored — and each popped element has found its "answer.
 
 ### Next Greater Element Template
 
@@ -240,7 +240,7 @@ def daily_temperatures(temps):
 
 ### When to Use a Monotonic Stack
 
-- "For each element, find the next/previous element that is greater/smaller."
+- "For each element, find the next/previous element that is greater/smaller.
 - Trapping Rain Water (LeetCode #42).
 - Largest Rectangle in Histogram (LeetCode #84).
 - Next Greater Element I/II (LeetCode #496/#503).
@@ -366,9 +366,6 @@ The following free, openly licensed resources reinforce the concepts in this mod
 
 ---
 
-
----
-
 ## Deep Theoretical Foundations & Conceptual Architecture
 
 ### 1. Epistemological Framework & First Principles
@@ -451,7 +448,6 @@ Before proceeding to this module's laboratory exercises, synthesize concise, rig
 1. **First-Principles Invariant Defense:** How does the theoretical model in this module ensure state correctness under adverse operating conditions? What mathematical proof or telemetry metric validates this behavior?
 2. **Architectural Trade-Off Analysis:** If forced to reduce execution latency by 50%, what specific compromises in consistency, redundancy, or capital expenditure would your architecture be forced to accept?
 3. **Failure Mode Pathology:** Explain the exact mechanistic chain of events that occurs when this module's primary subsystem experiences an unhandled resource starvation condition.
-
 
 ## 8. Study Checklist
 

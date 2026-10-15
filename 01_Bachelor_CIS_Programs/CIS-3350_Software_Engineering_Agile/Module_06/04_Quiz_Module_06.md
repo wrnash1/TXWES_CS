@@ -144,10 +144,10 @@ Distractor Analysis:
 
 Which of the following best illustrates the INVEST criterion "Valuable"?
 
-- A) "As a developer, I will refactor the UserService class to reduce cyclomatic complexity"
-- B) "As a customer, I can filter search results by price range so that I find products within my budget faster"
-- C) "As a system, the database will be migrated from MySQL to PostgreSQL"
-- D) "The team will update all API documentation to match the v2 schema"
+- A) "As a developer, I will refactor the UserService class to reduce cyclomatic complexity
+- B) "As a customer, I can filter search results by price range so that I find products within my budget faster
+- C) "As a system, the database will be migrated from MySQL to PostgreSQL
+- D) "The team will update all API documentation to match the v2 schema
 
 Correct Answer: B — This story is written from a user perspective with a clear benefit ("find products within my budget faster"), demonstrating that completing the item delivers direct value to a user.
 
@@ -199,7 +199,7 @@ Distractor Analysis:
 
 ### Question 11 (5 points)
 
-Which INVEST criterion does the following story most clearly violate? "As a user, I can use all app features."
+Which INVEST criterion does the following story most clearly violate? "As a user, I can use all app features.
 
 - A) Independent — it depends on too many other stories
 - B) Small — it encompasses all features and cannot be completed in one Sprint

@@ -134,7 +134,7 @@ and MaintenanceRequest as entities. The Lease entity has a one-to-many relations
 Tenant on one side and Unit on the other. A property manager immediately says: "We
 sometimes have two tenants on the same lease — like roommates. And sometimes we let a
 tenant hold two overlapping short-term leases for different units." The leasing agent adds:
-"Also, a maintenance request can be for a whole building, not just one unit."
+Also, a maintenance request can be for a whole building, not just one unit.
 
 Respond to this scenario: Identify each business rule correction implied by the
 stakeholders' feedback. For each correction, describe the specific change to the ERD —

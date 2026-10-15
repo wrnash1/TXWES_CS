@@ -252,7 +252,7 @@ When the data source only updates once per day, refreshing every 5 seconds queri
 
 ### Question 13 (5 points)
 
-Which data storytelling element answers the question "so what should we do about it?"
+Which data storytelling element answers the question "so what should we do about it?
 
 A) Context — establishes why the finding matters relative to goals or benchmarks.
 

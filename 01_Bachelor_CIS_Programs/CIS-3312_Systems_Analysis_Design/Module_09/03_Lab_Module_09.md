@@ -99,8 +99,8 @@ pools for all patron-Librarian communication. Both approaches are acceptable.
 #### Step 2 — Identify All Activities
 
 Map each step in the As-Is narrative to a named BPMN Task or Gateway. Name tasks with
-verb-noun phrases: "Search Paper Catalog," "Record Reservation on Form," "Call Patron,"
-"Leave Voicemail."
+verb-noun phrases: "Search Paper Catalog," "Record Reservation on Form," "Call Patron,
+Leave Voicemail.
 
 #### Step 3 — Identify All Decision Points
 
@@ -213,7 +213,7 @@ Prepare a brief written annotation document (one page maximum) that includes:
   decision gateways, number of end events, number of potential phone-tag loops, availability
   hours (business hours only vs. 24/7).
 - Three specific process improvements enabled by the new LMS, stated as: "Pain point X in
-  the As-Is is resolved in the To-Be by Y."
+  the As-Is is resolved in the To-Be by Y.
 - One process risk introduced by the To-Be model that did not exist in the As-Is model and
   a proposed mitigation.
 

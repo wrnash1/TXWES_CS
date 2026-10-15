@@ -30,21 +30,15 @@
 
 ## Pre-Roll Slate
 
-**[SHOW SLIDE: Course title card — "CIS-4328 Information Security | Module 10 | Texas Wesleyan University"]**
-
 ---
 
 ## Opening — Part 2 Recap
-
-**[INSTRUCTOR ON CAMERA]**
 
 Welcome back. In Part 1 we worked through the first seven OWASP Top 10 categories. In Part 2 we finish the list, then spend the second half on the secure development lifecycle — the practices that prevent these vulnerabilities from shipping in the first place.
 
 ---
 
 ## Section 1 — A08: Software and Data Integrity Failures
-
-**[SHOW SLIDE: A08 heading — CI/CD pipeline diagram]**
 
 A08 covers situations where code and data integrity is not verified. This includes untrusted plugins or libraries loaded without integrity checks, and insecure CI/CD pipelines where an attacker can inject malicious code into the build process.
 
@@ -56,8 +50,6 @@ Defenses include code signing, cryptographic hash verification of third-party pa
 
 ## Section 2 — A09: Security Logging and Monitoring Failures
 
-**[SHOW SLIDE: A09 heading — SIEM dashboard screenshot]**
-
 A09 addresses the inability to detect, escalate, and respond to active breaches. Without sufficient logging and monitoring, attackers can maintain persistence for months before detection. The Verizon Data Breach Investigations Report consistently finds that the median dwell time — the period between initial compromise and detection — exceeds weeks for many organizations.
 
 Logging failures include not logging authentication events, not alerting on brute-force attempts, storing logs locally where attackers can delete them, and failing to monitor logs at all.
@@ -68,8 +60,6 @@ Countermeasures include centralized log aggregation in a SIEM, alerting on anoma
 
 ## Section 3 — A10: Server-Side Request Forgery
 
-**[SHOW SLIDE: A10 heading — SSRF attack diagram]**
-
 SSRF is the newest Top 10 category, elevated from a note in 2017 to its own category in 2021 because of its rising prevalence in cloud environments. In an SSRF attack, an attacker causes the server to make HTTP requests to an attacker-controlled destination — or, more dangerously, to internal resources that should not be accessible from the internet.
 
 In cloud environments, the most valuable SSRF target is the instance metadata service, or IMDS, at `169.254.169.254`. On AWS, a GET request to that address from within the instance returns temporary credentials for the instance's IAM role. An attacker who can trigger SSRF can retrieve those credentials and gain access to cloud resources.
@@ -79,8 +69,6 @@ Countermeasures include input validation of all server-side URL parameters, bloc
 ---
 
 ## Section 4 — Cross-Site Scripting (XSS)
-
-**[SHOW SLIDE: XSS attack flow diagram — stored vs. reflected]**
 
 While XSS does not have its own A0X number in the 2021 list, it falls under A03 Injection and remains heavily tested on Security+. XSS occurs when an attacker injects malicious client-side script into web pages viewed by other users.
 
@@ -95,8 +83,6 @@ Countermeasures include output encoding, a Content Security Policy header, HttpO
 ---
 
 ## Section 5 — The Secure Software Development Lifecycle
-
-**[SHOW SLIDE: SDLC phase wheel — Requirements, Design, Development, Testing, Deployment, Maintenance]**
 
 Now let's talk about how to build software that resists these attacks from the start. The Secure SDLC integrates security activities into every phase of development rather than treating it as a final checkpoint before release.
 
@@ -116,8 +102,6 @@ In the **Maintenance phase**, the team monitors for new CVEs in dependencies, re
 
 ## Section 6 — SAST and DAST
 
-**[SHOW SLIDE: SAST vs. DAST comparison table]**
-
 Two testing approaches dominate Security+ exam questions on application testing: SAST and DAST.
 
 **SAST** stands for Static Application Security Testing. It analyzes source code, bytecode, or compiled binaries without executing the application. SAST tools can find SQL injection patterns, buffer overflow risks, hardcoded credentials, and insecure API calls by reading the code. SAST is often integrated directly into the IDE or the code commit pipeline. The key phrase is "white-box" — the tool has visibility into the code internals.
@@ -136,8 +120,6 @@ A mature security program uses both. SAST catches issues early in development wh
 
 ## Section 7 — Code Signing
 
-**[SHOW SLIDE: Code signing certificate chain diagram]**
-
 Code signing is the process of applying a digital signature to software to verify its origin and integrity. A developer obtains a code-signing certificate from a trusted Certificate Authority. Before publishing, the developer uses their private key to sign the compiled binary. Users or operating systems verify the signature using the developer's public key certificate before executing the software.
 
 Code signing provides two guarantees. First, **authenticity** — the software came from a specific, identified developer. Second, **integrity** — the binary has not been modified since signing.
@@ -150,8 +132,6 @@ The Security+ exam tests code signing in the context of supply chain security an
 
 ## Section 8 — Security in CI/CD Pipelines
 
-**[SHOW SLIDE: CI/CD pipeline stages with security gates highlighted]**
-
 Modern software development uses Continuous Integration and Continuous Delivery pipelines. Code commits automatically trigger builds, tests, and deployments. Security gates inserted into this pipeline enforce security policy without manual bottlenecks.
 
 A typical secure pipeline includes the following gates. At commit, a pre-commit hook blocks secrets from entering the repository. On pull request, SAST scans run automatically and must pass before merge. On build, dependency vulnerability scanning checks for known CVEs in all packages. On staging deployment, DAST scans run against the deployed application. Before production release, a final artifact signature verification confirms the binary matches what was built.
@@ -161,8 +141,6 @@ The term for integrating security into DevOps is DevSecOps. The "shift left" phi
 ---
 
 ## Closing
-
-**[INSTRUCTOR ON CAMERA]**
 
 Application security is where the attacker meets the software. The OWASP Top 10 is your map of the ten most-traveled attack routes. The secure SDLC, SAST, DAST, and code signing are your engineering controls to close those routes before they reach production.
 

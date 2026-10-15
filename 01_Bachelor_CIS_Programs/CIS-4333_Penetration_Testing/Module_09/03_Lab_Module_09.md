@@ -50,7 +50,7 @@ In Firefox, open Settings and search for "proxy." Set the manual proxy to HTTP: 
 
 ### Step 1.2 — Install the Burp CA Certificate
 
-With the proxy configured and Firefox pointing through Burp, navigate to `http://burp` in Firefox. Download the CA Certificate (`cacert.der`). In Firefox, go to Preferences > Privacy & Security > Certificates > View Certificates > Import. Import `cacert.der` and check "Trust this CA to identify websites."
+With the proxy configured and Firefox pointing through Burp, navigate to `http://burp` in Firefox. Download the CA Certificate (`cacert.der`). In Firefox, go to Preferences > Privacy & Security > Certificates > View Certificates > Import. Import `cacert.der` and check "Trust this CA to identify websites.
 
 Verify: Navigate to `https://www.google.com`. If you see the page without a certificate error, Burp's HTTPS interception is working.
 
@@ -283,7 +283,7 @@ Submit to Canvas:
 Confirm the CA certificate is installed in Firefox. Go to `http://burp` in Firefox (with proxy on) and re-download/re-import the certificate.
 
 **DVWA shows blank page or database error:**
-Navigate to `http://DVWA_IP/dvwa/setup.php` and click "Create / Reset Database."
+Navigate to `http://DVWA_IP/dvwa/setup.php` and click "Create / Reset Database.
 
 **sqlmap session cookie expiring:**
 Log back into DVWA in Firefox, copy the new PHPSESSID from Burp Proxy history, and update your sqlmap command.

@@ -400,8 +400,6 @@ The following free resources supplement Module 15 content on laser printers, ink
    URL: [https://www.comptia.org/certifications/a](https://www.comptia.org/certifications/a)
    Relevance: The official CompTIA A+ exam objectives are available as a free PDF download from comptia.org. Domain 3.7 lists every printer technology, maintenance process, and troubleshooting procedure that is within scope for the exam. Comparing the exam objectives to Module 15 content ensures full coverage of all tested printer topics.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

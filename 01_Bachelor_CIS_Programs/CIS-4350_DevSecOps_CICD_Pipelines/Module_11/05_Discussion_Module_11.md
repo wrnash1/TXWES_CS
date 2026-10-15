@@ -40,7 +40,7 @@ In 175–225 words, design a remediation plan that addresses:
 
 ### Scenario 3 — Base Image Negligence and the Dependabot Gap
 
-A security audit of a production Kubernetes workload reveals the application container is running `python:3.9-slim` as its base image. Trivy reports 47 findings including 8 CRITICAL CVEs. The most recent image build was 14 months ago. The team's Dockerfile pins the base image as `FROM python:3.9-slim` without a digest. When asked why the base image was never updated, the engineer responds: "We have Dependabot enabled — if there were vulnerabilities it would have opened a PR."
+A security audit of a production Kubernetes workload reveals the application container is running `python:3.9-slim` as its base image. Trivy reports 47 findings including 8 CRITICAL CVEs. The most recent image build was 14 months ago. The team's Dockerfile pins the base image as `FROM python:3.9-slim` without a digest. When asked why the base image was never updated, the engineer responds: "We have Dependabot enabled — if there were vulnerabilities it would have opened a PR.
 
 In 175–225 words, correct the engineer's misunderstanding and propose a complete base image currency solution by addressing:
 

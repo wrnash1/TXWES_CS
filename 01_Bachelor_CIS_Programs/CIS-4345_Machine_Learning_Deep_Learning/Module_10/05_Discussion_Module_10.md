@@ -64,7 +64,7 @@ The data scientist is almost certainly right, and the consultant's recommendatio
 
 I would structure a comparison experiment as follows: establish a moving-average baseline first to set the performance floor. Then train a 1-layer GRU with 32 units, a 1-layer LSTM with 32 units, and finally the 2-layer LSTM with 64 units as the "middle ground." Measure validation F1 score on threshold-crossing events (not just MSE — rare events matter here), training time per epoch, and inference latency for all 50 sensors.
 
-"Good enough" in a safety-critical context means high recall on danger-threshold crossings, not average forecast accuracy. A model that misses 20% of exceedance events is unacceptable even if its MAE is low. This shifts model selection toward sensitivity-optimized thresholds and calibrated probability outputs, not raw architecture depth.
+Good enough" in a safety-critical context means high recall on danger-threshold crossings, not average forecast accuracy. A model that misses 20% of exceedance events is unacceptable even if its MAE is low. This shifts model selection toward sensitivity-optimized thresholds and calibrated probability outputs, not raw architecture depth.
 
 ---
 
@@ -96,7 +96,7 @@ Your diagnosis matches mine, but I want to add one point: before switching to LS
 
 These scenarios are drawn from real deployment decisions. Scenario A reflects a pattern I have seen repeatedly: engineers defaulting to the most complex architecture rather than starting simple and escalating based on evidence. Scenario B is the single most common failure mode I observe when students first work with RNNs on real data. Scenario C raises the question that textbooks often skip — accuracy metrics must be matched to the cost of different error types.
 
-There is no single correct answer to any of these scenarios. Strong responses will show that you can reason from specific problem constraints rather than applying a generic rule. I am looking for evidence that you understand *why* architectural choices matter, not just which architecture is "better."
+There is no single correct answer to any of these scenarios. Strong responses will show that you can reason from specific problem constraints rather than applying a generic rule. I am looking for evidence that you understand *why* architectural choices matter, not just which architecture is "better.
 
 ---
 

@@ -218,10 +218,10 @@ A user story reads: "As a registered customer, I can view my order history so th
 
 Which of the following is the best Given/When/Then acceptance criterion for the story "As a user, I can log out so that my session ends securely"?
 
-- A) "The logout button must be in the top-right corner of the navigation bar."
-- B) "Given a logged-in user is on any page, When they click 'Log Out,' Then their session token is invalidated and they are redirected to the login page."
-- C) "The system should implement a session timeout after 30 minutes of inactivity."
-- D) "Users should not be able to access protected pages after logging out."
+- A) "The logout button must be in the top-right corner of the navigation bar.
+- B) "Given a logged-in user is on any page, When they click 'Log Out,' Then their session token is invalidated and they are redirected to the login page.
+- C) "The system should implement a session timeout after 30 minutes of inactivity.
+- D) "Users should not be able to access protected pages after logging out.
 
 - **Correct Answer:** B
 - **Distractor Analysis:**
@@ -303,10 +303,10 @@ A Product Manager wants to add a Product Backlog item written as: "Implement Red
 
 Which of the following acceptance criteria best covers an "edge case" for the story "As a user, I can search for products"?
 
-- A) "Given a user enters a valid product name, When they submit the search, Then matching products appear within 500 ms."
-- B) "Given a user submits a search with no text entered, When the form is submitted, Then an error message prompts them to enter at least one character."
-- C) "The search bar must be displayed prominently on the home page."
-- D) "The search index must be rebuilt nightly to reflect new inventory."
+- A) "Given a user enters a valid product name, When they submit the search, Then matching products appear within 500 ms.
+- B) "Given a user submits a search with no text entered, When the form is submitted, Then an error message prompts them to enter at least one character.
+- C) "The search bar must be displayed prominently on the home page.
+- D) "The search index must be rebuilt nightly to reflect new inventory.
 
 - **Correct Answer:** B
 - **Distractor Analysis:**
@@ -346,7 +346,7 @@ The story "As a user, I can do everything the old system did" fails which INVEST
 - **Distractor Analysis:**
   - A) Incorrect — Negotiability concerns whether implementation approach is flexible; the primary failure here is scope and testability.
   - B) Incorrect — Independence concerns dependencies between backlog items; the story could theoretically stand alone even if it is too large.
-  - D) Incorrect — Migrating an old system's features may be high-value; the problem is not the value, but the inability to define or test "everything the old system did."
+  - D) Incorrect — Migrating an old system's features may be high-value; the problem is not the value, but the inability to define or test "everything the old system did.
 
 ---
 

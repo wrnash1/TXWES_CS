@@ -28,9 +28,9 @@
 
 ---
 
-### [00:00 – 01:30] Opening and Module Overview
+### Opening and Module Overview
 
-**Visual:** Title card — "Module 09: Natural Language Processing with TensorFlow"
+**Visual:** Title card — "Module 09: Natural Language Processing with TensorFlow
 
 **Audio:**
 Welcome back, everyone. I'm Professor Nash, and in Module 09 we step out of the image domain and into the world of text. Natural Language Processing — NLP — is one of the most impactful application areas in machine learning today, and it is a major section of the TensorFlow Developer Certificate exam.
@@ -48,7 +48,7 @@ Every one of these topics appears on the TF Developer Certificate. Let's get int
 
 ---
 
-### [01:30 – 04:00] The Text Representation Problem
+### The Text Representation Problem
 
 **Visual:** Diagram showing "the food was terrible" being converted to integers and then to embedding vectors.
 
@@ -67,7 +67,7 @@ Each stage is critical. If you get tokenization wrong, the rest of the pipeline 
 
 ---
 
-### [04:00 – 07:30] Tokenizer — The Legacy API
+### Tokenizer — The Legacy API
 
 **Visual:** Code editor showing `Tokenizer` being fit and applied.
 
@@ -116,7 +116,7 @@ The `oov_token` is crucial. Without it, words not seen during `fit_on_texts` are
 
 ---
 
-### [07:30 – 11:00] TextVectorization — The Modern API
+### TextVectorization — The Modern API
 
 **Visual:** Code editor showing `TextVectorization` layer integrated into a Keras model.
 
@@ -183,7 +183,7 @@ When this model is saved and deployed, the vectorization logic travels with it. 
 
 ---
 
-### [11:00 – 13:30] The Embedding Layer
+### The Embedding Layer
 
 **Visual:** Animation showing a lookup table where each row is an embedding vector for one word.
 
@@ -227,7 +227,7 @@ For simple text classification, `GlobalAveragePooling1D` is fast and effective. 
 
 ---
 
-### [13:30 – 16:30] Text Classification End-to-End
+### Text Classification End-to-End
 
 **Visual:** Full model architecture diagram for sentiment analysis.
 
@@ -293,7 +293,7 @@ A few key decisions in this code:
 
 ---
 
-### [16:30 – 18:30] Sentiment Analysis with Custom Text
+### Sentiment Analysis with Custom Text
 
 **Visual:** Model predicting sentiment on new review strings.
 
@@ -336,7 +336,7 @@ This is a major advantage of the `TextVectorization` approach: the deployed mode
 
 ---
 
-### [18:30 – 20:30] Certification Exam Tips
+### Certification Exam Tips
 
 **Visual:** Bullet list of key facts and common mistakes.
 
@@ -353,7 +353,7 @@ Here are the exam tips for Module 09:
 
 ---
 
-### [20:30 – 22:00] Module Summary and Lab Preview
+### Module Summary and Lab Preview
 
 **Visual:** Summary slide with NLP pipeline checklist.
 

@@ -1,5 +1,23 @@
 # Video Script: Module 12 - Network Infrastructure Devices
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course &bull; Module 12</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLG49S3nxzAnlGHY8ObL8DiyP3AIu9vdnH" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLG49S3nxzAnlGHY8ObL8DiyP3AIu9vdnH" title="Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-2320 Hardware Fundamentals
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — Domain 2.2: Compare and contrast common networking hardware
 **Estimated Duration:** 20-24 minutes
@@ -7,7 +25,7 @@
 
 ---
 
-## [00:00 - 02:30] Section 1 — Introduction and Certification Alignment
+## Section 1 — Introduction and Certification Alignment
 
 <div style="text-align: center; margin: 24px 0;">
 <svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
@@ -91,7 +109,7 @@ Our five sections today are: Layer 1 through Layer 3 devices and the OSI model �
 
 ---
 
-## [02:30 - 07:30] Section 2 — OSI Layer Assignments and the Hub vs Switch vs Router Hierarchy
+## Section 2 — OSI Layer Assignments and the Hub vs Switch vs Router Hierarchy
 
 **[SHOW COMPONENT: OSI Layer diagram — Layers 1, 2, 3 highlighted with device labels]**
 
@@ -111,7 +129,7 @@ Layer 3 is the Network layer. Routers operate at Layer 3. Instead of MAC address
 
 ---
 
-## [07:30 - 13:00] Section 3 — Switches, WAPs, Firewalls, and Modems in Depth
+## Section 3 — Switches, WAPs, Firewalls, and Modems in Depth
 
 **[SHOW COMPONENT: Managed switch on camera or image — showing port LEDs, uplink ports]**
 
@@ -137,7 +155,7 @@ A patch panel is passive — I want to say that word clearly: passive. It has no
 
 ---
 
-## [13:00 - 17:30] Section 4 — Power over Ethernet Standards
+## Section 4 — Power over Ethernet Standards
 
 **[SHOW COMPONENT: PoE switch port close-up — showing PoE indicator LEDs and "PoE" port labeling]**
 
@@ -157,7 +175,7 @@ A switch port must be PoE-capable to deliver power. A non-PoE switch will not da
 
 ---
 
-## [17:30 - 21:30] Section 5 — Network Topology in a Rack and Lab Preparation
+## Section 5 — Network Topology in a Rack and Lab Preparation
 
 **[SHOW COMPONENT: Rack diagram with labeled components: patch panel, switch, router, firewall, modem]**
 

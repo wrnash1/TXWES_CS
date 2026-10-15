@@ -137,7 +137,7 @@ This immediately refreshes both Computer Configuration and User Configuration po
 gpresult /r
 ```
 
-`gpresult /r` shows a text summary of all applied GPOs for the current computer and user. Look for your GPO name under "Applied Group Policy Objects."
+`gpresult /r` shows a text summary of all applied GPOs for the current computer and user. Look for your GPO name under "Applied Group Policy Objects.
 
 ```cmd
 gpresult /h C:\GPReport.html
@@ -202,7 +202,7 @@ Get-GPResultantSetOfPolicy -Computer "WS-IT-001" -User "CORP\dprince" -ReportTyp
 
 **[SHOW SCREEN: Exam tips slide for Module 05]**
 
-**Exam Tip 1:** LSDOU — OU wins over Domain in normal processing. But "Enforced" reverses this and wins over everything. And "Enforced" always beats "Block Inheritance."
+**Exam Tip 1:** LSDOU — OU wins over Domain in normal processing. But "Enforced" reverses this and wins over everything. And "Enforced" always beats "Block Inheritance.
 
 **Exam Tip 2:** `gpresult /r` for quick text output. `gpresult /h report.html` for full RSoP HTML report. Know when to use each: `/r` for quick diagnosis, `/h` for thorough analysis.
 

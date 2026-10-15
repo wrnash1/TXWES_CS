@@ -109,7 +109,7 @@ For simple applications with one or two well-behaved tasks, the superloop is ade
 
 ### Real-Time Requirements
 
-A **real-time system** is one where correctness depends not only on the logical result of a computation but also on the time at which that result is produced. An industrial robot arm controller must process encoder readings and update motor commands within microseconds; a slow-but-correct update is a dangerous-but-incorrect update. A medical alarm system must alert within a defined number of milliseconds, not "eventually."
+A **real-time system** is one where correctness depends not only on the logical result of a computation but also on the time at which that result is produced. An industrial robot arm controller must process encoder readings and update motor commands within microseconds; a slow-but-correct update is a dangerous-but-incorrect update. A medical alarm system must alert within a defined number of milliseconds, not "eventually.
 
 Real-time systems are classified as:
 
@@ -402,8 +402,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

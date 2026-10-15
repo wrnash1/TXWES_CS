@@ -62,7 +62,7 @@ In the linear probing implementation, deleted entries are marked with a `_DELETE
 **Distractor Analysis:**
 
 - *Why A is incorrect:* Python lists can store `None` without any issue. The problem is not a storage limitation.
-- *Why B is correct:* During a `get` probe, the algorithm stops when it finds a `None` slot, interpreting it as "this key was never inserted." If a previously occupied slot is simply set to `None` on deletion, a probe for a key inserted after the now-deleted slot will stop early at that `None` and return the wrong result. The `_DELETED` sentinel says "something was here, keep probing."
+- *Why B is correct:* During a `get` probe, the algorithm stops when it finds a `None` slot, interpreting it as "this key was never inserted." If a previously occupied slot is simply set to `None` on deletion, a probe for a key inserted after the now-deleted slot will stop early at that `None` and return the wrong result. The `_DELETED` sentinel says "something was here, keep probing.
 - *Why C is incorrect:* The hash function is deterministic and does not consult the table contents. The sentinel has no effect on hash computation.
 - *Why D is incorrect:* While the count of deleted slots could be tracked for load-factor accounting, that is not the reason for the sentinel. The sentinel's purpose is correctness of probe chains during lookups.
 

@@ -32,7 +32,7 @@ Sub-questions:
 
 ## Scenario B — Velocity Under Pressure
 
-The Apex Team has delivered 30–35 story points per Sprint consistently for five Sprints. At a quarterly business review, the Director of Engineering announces: "All development teams need to show 20% velocity improvement by end of Q2 or we will consider staff changes." The Product Owner is alarmed and asks the Scrum Master: "Can we just inflate our estimates going forward so our velocity looks higher?"
+The Apex Team has delivered 30–35 story points per Sprint consistently for five Sprints. At a quarterly business review, the Director of Engineering announces: "All development teams need to show 20% velocity improvement by end of Q2 or we will consider staff changes." The Product Owner is alarmed and asks the Scrum Master: "Can we just inflate our estimates going forward so our velocity looks higher?
 
 Sub-questions:
 
@@ -44,7 +44,7 @@ Sub-questions:
 
 ## Scenario C — The Estimation Debate
 
-During a refinement session, a user story about integrating a third-party payment processor is being estimated. Jordan (frontend) says 5 points. Alex (backend) says 21 points. The difference triggers a 25-minute argument about API complexity, PCI compliance requirements, and third-party documentation quality. The Product Owner, frustrated, says: "Just pick 13 and move on — we're wasting time."
+During a refinement session, a user story about integrating a third-party payment processor is being estimated. Jordan (frontend) says 5 points. Alex (backend) says 21 points. The difference triggers a 25-minute argument about API complexity, PCI compliance requirements, and third-party documentation quality. The Product Owner, frustrated, says: "Just pick 13 and move on — we're wasting time.
 
 Sub-questions:
 

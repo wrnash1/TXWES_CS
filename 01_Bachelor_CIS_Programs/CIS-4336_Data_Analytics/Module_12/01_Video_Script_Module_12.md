@@ -28,29 +28,29 @@
 
 ---
 
-### [00:00 – 02:00] Introduction
+### Introduction
 
 **Visual:** Instructor on camera with title card: **Python for Data Analysis**.
 
-**Audio:** "Welcome to Module 12. This week we move from concepts into code. Python has become the dominant language for data analysis in professional environments, and the CompTIA Data+ exam expects you to understand what Python tools exist and what problems they solve. By the end of this module you will be able to manipulate DataFrames with pandas, perform array math with NumPy, build charts with matplotlib and seaborn, clean messy data, and handle nulls and outliers. Let's get started."
+**Audio:** "Welcome to Module 12. This week we move from concepts into code. Python has become the dominant language for data analysis in professional environments, and the CompTIA Data+ exam expects you to understand what Python tools exist and what problems they solve. By the end of this module you will be able to manipulate DataFrames with pandas, perform array math with NumPy, build charts with matplotlib and seaborn, clean messy data, and handle nulls and outliers. Let's get started.
 
 **Study Link:** [Python for Data Analysis — freeCodeCamp Full Course](https://www.youtube.com/watch?v=r-uOLxNrNk8)
 
 ---
 
-### [02:00 – 05:00] Why Python for Data Analysis?
+### Why Python for Data Analysis?
 
 **Visual:** Slide comparing Excel, SQL, Python, and R on four axes: scalability, automation, visualization, and statistical depth.
 
 **Alt-text:** A four-quadrant matrix placing Python in the high-scalability and high-automation quadrant alongside R, while Excel sits in the low-scalability zone.
 
-**Audio:** "Before we open a code editor, let's answer the question every new analyst asks — why Python? Excel is excellent for small datasets and ad-hoc exploration. SQL is ideal for querying relational databases. But when you need to automate a monthly report that processes 10 million rows, apply a custom cleaning function across 50 columns, or produce a reproducible chart that updates when the data changes — Python is the right tool. The two core libraries you will use daily are **pandas** for tabular data and **NumPy** for numerical computation. On top of those sit **matplotlib** and **seaborn** for visualization. All four libraries are free, open-source, and included in the Anaconda distribution, which we use in this course."
+**Audio:** "Before we open a code editor, let's answer the question every new analyst asks — why Python? Excel is excellent for small datasets and ad-hoc exploration. SQL is ideal for querying relational databases. But when you need to automate a monthly report that processes 10 million rows, apply a custom cleaning function across 50 columns, or produce a reproducible chart that updates when the data changes — Python is the right tool. The two core libraries you will use daily are **pandas** for tabular data and **NumPy** for numerical computation. On top of those sit **matplotlib** and **seaborn** for visualization. All four libraries are free, open-source, and included in the Anaconda distribution, which we use in this course.
 
-**Transition:** "Let's look at pandas first."
+**Transition:** "Let's look at pandas first.
 
 ---
 
-### [05:00 – 09:30] pandas — DataFrames, groupby, merge, pivot
+### pandas — DataFrames, groupby, merge, pivot
 
 **Visual:** VS Code split-screen showing a Jupyter notebook on the left and a rendered DataFrame table on the right.
 
@@ -94,13 +94,13 @@ df.pivot_table(
 )
 ```
 
-`fill_value=0` replaces NaN with zero for regions that had no sales in a given quarter. This is a very common pattern in reporting pipelines."
+`fill_value=0` replaces NaN with zero for regions that had no sales in a given quarter. This is a very common pattern in reporting pipelines.
 
-**Checkpoint:** "Pause here and think — when would you use merge instead of groupby? Merge combines two tables on a shared key. groupby aggregates within one table. They solve different problems."
+**Checkpoint:** "Pause here and think — when would you use merge instead of groupby? Merge combines two tables on a shared key. groupby aggregates within one table. They solve different problems.
 
 ---
 
-### [09:30 – 12:30] NumPy — Arrays and Vectorized Math
+### NumPy — Arrays and Vectorized Math
 
 **Visual:** Side-by-side slide: a Python for-loop timing versus NumPy vectorized operation timing on 1 million numbers.
 
@@ -121,11 +121,11 @@ That single line multiplies every element by 0.9 with no loop needed. This is ca
 - `np.where(condition, value_if_true, value_if_false)` for conditional replacement
 - `np.nan` as NumPy's representation of a missing numeric value
 
-pandas is built on top of NumPy, so understanding arrays makes you a significantly better pandas user. When you see a pandas Series, you are looking at a NumPy array with an index label attached to it."
+pandas is built on top of NumPy, so understanding arrays makes you a significantly better pandas user. When you see a pandas Series, you are looking at a NumPy array with an index label attached to it.
 
 ---
 
-### [12:30 – 16:30] Visualization — matplotlib and seaborn
+### Visualization — matplotlib and seaborn
 
 **Visual:** Gallery of four chart types rendered in a Jupyter notebook: line, bar, histogram, and heatmap.
 
@@ -164,11 +164,11 @@ A correlation heatmap is especially useful during exploratory analysis:
 sns.heatmap(df.corr(numeric_only=True), annot=True, cmap='coolwarm')
 ```
 
-This shows every pairwise correlation coefficient. Values close to 1.0 mean the two variables move together. Values close to -1.0 mean they move in opposite directions. This helps you spot multicollinearity before building any model."
+This shows every pairwise correlation coefficient. Values close to 1.0 mean the two variables move together. Values close to -1.0 mean they move in opposite directions. This helps you spot multicollinearity before building any model.
 
 ---
 
-### [16:30 – 20:30] Data Cleaning — Nulls and Outliers
+### Data Cleaning — Nulls and Outliers
 
 **Visual:** Notebook showing a raw DataFrame with NaN values side-by-side with the cleaned version.
 
@@ -201,17 +201,17 @@ outliers = df[(df['Revenue'] < lower) | (df['Revenue'] > upper)]
 
 Values outside 1.5 times the interquartile range are flagged as outliers. You then make a judgment call: are they data entry errors to remove, or legitimate extreme values to keep? A $5 million sale is not an error. A $5 billion sale in a dataset of small retail businesses almost certainly is.
 
-A boxplot gives you a visual complement to the IQR calculation — the whiskers on a boxplot represent exactly the 1.5-IQR boundary."
+A boxplot gives you a visual complement to the IQR calculation — the whiskers on a boxplot represent exactly the 1.5-IQR boundary.
 
 ---
 
-### [20:30 – 22:00] Exam Connection and Wrap-Up
+### Exam Connection and Wrap-Up
 
 **Visual:** Data+ domain map with Domain 3 — Data Analysis — highlighted.
 
 **Audio:** "For the Data+ exam, Python questions appear in Domain 3, Data Analysis and Statistics. You will not write code on the exam, but you will see questions about what a specific function does, which library is appropriate for a task, and how to interpret the output of a cleaning operation. Focus on knowing the purpose of each library and the difference between dropping and imputing null values. Imputation preserves sample size; dropping removes potentially important rows.
 
-This week's lab has you building a complete analysis pipeline in a Jupyter notebook: load the dataset, clean nulls and flag outliers, aggregate with groupby, and produce two charts. Do not skip it. The hands-on repetition is what moves these concepts into long-term memory. I will see you in the lab. Good luck."
+This week's lab has you building a complete analysis pipeline in a Jupyter notebook: load the dataset, clean nulls and flag outliers, aggregate with groupby, and produce two charts. Do not skip it. The hands-on repetition is what moves these concepts into long-term memory. I will see you in the lab. Good luck.
 
 ---
 

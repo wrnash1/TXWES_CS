@@ -26,45 +26,37 @@
 
 ---
 
-## [00:00 – 02:00] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 16 | Final Exam Prep & JSE Certification Review | CIS-1320"]**
-
-"This is the last module of CIS-1320. By this point, you have covered every major topic in the JSE certification exam: variables, operators, control flow, functions, arrays, objects, classes, the DOM, events, asynchronous JavaScript, and error handling. Module 16 is not new material — it is the review and consolidation session that ties everything together and prepares you to walk into the exam with confidence.
+This is the last module of CIS-1320. By this point, you have covered every major topic in the JSE certification exam: variables, operators, control flow, functions, arrays, objects, classes, the DOM, events, asynchronous JavaScript, and error handling. Module 16 is not new material — it is the review and consolidation session that ties everything together and prepares you to walk into the exam with confidence.
 
 Here is what we are doing in this video. First, I will give you a brief overview of the JSE exam itself. Then we will do a rapid domain-by-domain review — hitting the most-tested concepts in each area. After that, I will walk through the question types that trip students up most often. And I will close with exam day strategy.
 
-Let me start with the exam itself."
+Let me start with the exam itself.
 
 ---
 
-## [02:00 – 04:00] The JSE Exam — What to Expect
+## The JSE Exam — What to Expect
 
-**[SHOW SLIDE: "JSE Certified Associate — Exam Overview"]**
-
-"The JSE — Certified Associate in JavaScript Programming exam is offered by OpenEDG through the JS Institute. Here is what you need to know about the format.
+The JSE — Certified Associate in JavaScript Programming exam is offered by OpenEDG through the JS Institute. Here is what you need to know about the format.
 
 The exam has 30 questions in 45 minutes. Questions are single-answer multiple choice. There is no partial credit and no penalty for guessing — always answer every question. The passing score is 70%, which means you need 21 correct answers.
 
 The exam tests pure JavaScript — the language itself. It does not test frameworks, libraries, or browser-specific APIs beyond what the language specifies. It does not test advanced ES2022+ features. It focuses on: data types and operators, control flow, functions, arrays, objects, classes, basic DOM interaction, and error handling.
 
-You have already done more preparation in this course than the exam requires. The labs, quizzes, and reading guides have covered every domain."
+You have already done more preparation in this course than the exam requires. The labs, quizzes, and reading guides have covered every domain.
 
 ---
 
-## [04:00 – 08:30] Domain 1–4 Rapid Review: Language Fundamentals
+## Domain 1–4 Rapid Review: Language Fundamentals
 
-**[SHOW SLIDE: "Domain Review: Language Fundamentals"]**
-
-"Let me move through each domain quickly. These are the concepts that appear most frequently.
+Let me move through each domain quickly. These are the concepts that appear most frequently.
 
 **Variables and Data Types:**
 
 `let` is block-scoped, can be reassigned. `const` is block-scoped, cannot be reassigned — but objects and arrays declared with `const` can still be mutated. `var` is function-scoped and hoisted; avoid it in new code.
 
 The seven primitive types: `string`, `number`, `boolean`, `null`, `undefined`, `symbol`, `bigint`. Everything else is an object. `typeof null` returns `'object'` — this is a historical bug in the language, not a design choice.
-
-[PAUSE]
 
 **Operators:**
 
@@ -74,29 +66,23 @@ The seven primitive types: `string`, `number`, `boolean`, `null`, `undefined`, `
 
 Nullish coalescing: `a ?? b` returns `b` only if `a` is `null` or `undefined`. Optional chaining: `obj?.prop` returns `undefined` instead of throwing if `obj` is null or undefined.
 
-[PAUSE]
-
 **Control Flow:**
 
 `switch` uses strict equality for comparison. Remember `break` — without it, execution falls through to the next case.
 
 `for...in` iterates over an object's enumerable property names (keys). `for...of` iterates over the values of an iterable (array, string, Map, Set). Do not confuse them.
 
-[PAUSE]
-
 **Functions:**
 
 Arrow functions do not have their own `this` — they inherit `this` from the surrounding context. Regular functions have their own `this`. This distinction matters for methods inside classes and event handlers.
 
-Default parameters: `function greet(name = 'World')`. Rest parameters: `function sum(...nums)` — collects remaining arguments into an array. Spread operator: `Math.max(...arr)` — expands an array into individual arguments."
+Default parameters: `function greet(name = 'World')`. Rest parameters: `function sum(...nums)` — collects remaining arguments into an array. Spread operator: `Math.max(...arr)` — expands an array into individual arguments.
 
 ---
 
-## [08:30 – 12:30] Domain 5–7 Rapid Review: Arrays, Objects, Classes
+## Domain 5–7 Rapid Review: Arrays, Objects, Classes
 
-**[SHOW SLIDE: "Domain Review: Arrays, Objects, Classes"]**
-
-"**Arrays and Array Methods:**
+**Arrays and Array Methods:**
 
 Know the return value of every array method:
 
@@ -111,8 +97,6 @@ Know the return value of every array method:
 - `slice` returns a new array (non-mutating). `splice` mutates in place.
 - `includes` returns boolean. `indexOf` returns index or `-1`.
 
-[PAUSE]
-
 **Objects:**
 
 `Object.keys(obj)` returns an array of the object's own enumerable property names. `Object.values(obj)` returns an array of values. `Object.entries(obj)` returns an array of `[key, value]` pairs.
@@ -122,8 +106,6 @@ Destructuring: `const { name, age } = user` — extracts properties by name. Ren
 Spread to copy or merge: `const copy = { ...original }`. `const merged = { ...defaults, ...overrides }`.
 
 `this` inside an object method refers to the object. In an arrow function, `this` is inherited from the outer scope — which can be a problem when you want the method to refer to its own object.
-
-[PAUSE]
 
 **Classes:**
 
@@ -144,23 +126,19 @@ class Dog extends Animal {
 }
 ```
 
-`super()` in a subclass constructor calls the parent constructor — required before using `this`. `super.method()` calls the parent class's method. Subclass instances pass `instanceof` checks for both the subclass and the parent class."
+`super()` in a subclass constructor calls the parent constructor — required before using `this`. `super.method()` calls the parent class's method. Subclass instances pass `instanceof` checks for both the subclass and the parent class.
 
 ---
 
-## [12:30 – 16:30] Domain 8–10 Rapid Review: DOM, Events, Async
+## Domain 8–10 Rapid Review: DOM, Events, Async
 
-**[SHOW SLIDE: "Domain Review: DOM, Events, Async"]**
-
-"**DOM:**
+**DOM:**
 
 `getElementById` returns one element or `null`. `querySelector` returns the first matching element or `null`. `querySelectorAll` returns a static `NodeList` of all matches.
 
 `textContent` sets plain text — safe for user data. `innerHTML` parses as HTML — never use it with user-provided strings (XSS risk).
 
 `classList.add`, `remove`, `toggle`, `contains`. `setAttribute`, `getAttribute`, `removeAttribute`. `dataset.propertyName` for `data-*` attributes.
-
-[PAUSE]
 
 **Events:**
 
@@ -172,8 +150,6 @@ Event bubbling: events propagate from the target up through parent elements. `ev
 
 Event delegation: one listener on a parent element handles events from all children, including dynamically added ones. Use `event.target.closest(selector)` to find which child triggered the event.
 
-[PAUSE]
-
 **Async JavaScript:**
 
 The event loop: synchronous code runs first; callbacks from `setTimeout` and Promises go to the queue and run only after the call stack is empty.
@@ -182,15 +158,13 @@ The event loop: synchronous code runs first; callbacks from `setTimeout` and Pro
 
 `async` functions always return a Promise. `await` pauses the async function, not the engine. `try/catch` inside async functions catches rejected Promises.
 
-`fetch` resolves for any HTTP response, including 404. Always check `response.ok`."
+`fetch` resolves for any HTTP response, including 404. Always check `response.ok`.
 
 ---
 
-## [16:30 – 19:30] Domain 11 Rapid Review: Error Handling
+## Domain 11 Rapid Review: Error Handling
 
-**[SHOW SLIDE: "Domain Review: Error Handling"]**
-
-"**Error Types:**
+**Error Types:**
 
 `TypeError` — wrong type for the operation. `ReferenceError` — variable not declared. `RangeError` — value out of valid range. `SyntaxError` — code cannot be parsed. `URIError` — malformed URI. `EvalError` — historical.
 
@@ -212,15 +186,13 @@ class ValidationError extends Error {
 }
 ```
 
-`super(message)` initializes `.message` and the stack. `this.name = 'ValidationError'` sets the name — without it, `err.name` defaults to `'Error'`."
+`super(message)` initializes `.message` and the stack. `this.name = 'ValidationError'` sets the name — without it, `err.name` defaults to `'Error'`.
 
 ---
 
-## [19:30 – 22:30] Tricky Question Types
+## Tricky Question Types
 
-**[SHOW SLIDE: "Watch Out For These"]**
-
-"Let me walk through the question patterns that produce the most wrong answers.
+Let me walk through the question patterns that produce the most wrong answers.
 
 **`typeof null` is `'object'`** — not `'null'`. This is a language quirk every exam tests.
 
@@ -234,15 +206,13 @@ class ValidationError extends Error {
 
 **`Promise.all` vs `Promise.allSettled`** — `Promise.all` rejects on the first rejection. `Promise.allSettled` never rejects; it always returns all results. Know which is which.
 
-**`event.target` vs `event.currentTarget`** — `target` is where the event originated. `currentTarget` is where the listener is attached. In a delegated event handler on a `<ul>`, clicking a `<li>` gives `target` as the `<li>` and `currentTarget` as the `<ul>`."
+**`event.target` vs `event.currentTarget`** — `target` is where the event originated. `currentTarget` is where the listener is attached. In a delegated event handler on a `<ul>`, clicking a `<li>` gives `target` as the `<li>` and `currentTarget` as the `<ul>`.
 
 ---
 
-## [22:30 – 24:00] Exam Day Strategy
+## Exam Day Strategy
 
-**[SHOW SLIDE: "Exam Day"]**
-
-"A few practical notes for exam day.
+A few practical notes for exam day.
 
 You have 45 minutes for 30 questions — that is 90 seconds per question. Most questions take 20–30 seconds. Spend your remaining time on the ones you flagged.
 
@@ -254,7 +224,7 @@ There is no penalty for guessing. Never leave a question blank. Your best guess 
 
 The exam tests concepts, not syntax memorization. If you understand why `Promise.all` fails fast, you can answer any question about it even if the exact phrasing is unfamiliar.
 
-You are ready. The course has covered everything. Good luck."
+You are ready. The course has covered everything. Good luck.
 
 ---
 

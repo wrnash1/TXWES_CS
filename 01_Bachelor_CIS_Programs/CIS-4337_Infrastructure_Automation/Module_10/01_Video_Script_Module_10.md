@@ -40,8 +40,6 @@ Terraform provides two main approaches: **workspaces** and **directory-based env
 
 Let's get started.
 
-[PAUSE]
-
 ---
 
 ## Section 1: What Are Terraform Workspaces (1:30 – 5:00)
@@ -81,8 +79,6 @@ terraform workspace show
 terraform workspace delete staging
 ```
 
-[PAUSE]
-
 [SHOW TERMINAL]
 
 Let's run through a quick demonstration:
@@ -106,8 +102,6 @@ terraform workspace show
 # dev
 ```
 
-[PAUSE]
-
 ### Where Workspaces Store State
 
 When using local state, workspaces store their state in a `terraform.tfstate.d/` directory:
@@ -127,8 +121,6 @@ When using a remote backend like S3, each workspace gets a separate key. For exa
 - `default` workspace: `env:/default/my-app/terraform.tfstate`
 - `dev` workspace: `env:/dev/my-app/terraform.tfstate`
 - `staging` workspace: `env:/staging/my-app/terraform.tfstate`
-
-[PAUSE]
 
 ---
 
@@ -184,8 +176,6 @@ resource "aws_instance" "web" {
 
 This pattern is powerful: the same configuration, deployed to multiple workspaces, produces different infrastructure sizes based on the workspace name.
 
-[PAUSE]
-
 ---
 
 ## Section 3: Limitations of Workspaces (8:30 – 11:30)
@@ -212,9 +202,7 @@ When someone reads your Terraform configuration, there is no way to see from the
 
 HashiCorp's own documentation explicitly warns:
 
-> "Workspaces alone are not a suitable mechanism for deployment pipelines targeting separate environments with separate credentials, separate state storage, or separate architectural requirements."
-
-[PAUSE]
+> "Workspaces alone are not a suitable mechanism for deployment pipelines targeting separate environments with separate credentials, separate state storage, or separate architectural requirements.
 
 ---
 
@@ -282,8 +270,6 @@ terraform {
 }
 ```
 
-[PAUSE]
-
 ### Benefits of Directory Isolation
 
 - **Separate state**: Each environment has completely separate state files — no cross-contamination possible
@@ -291,8 +277,6 @@ terraform {
 - **Separate approval workflows**: CI/CD pipelines can require manual approval for `prod` but auto-apply `dev`
 - **Visible in code**: Reading the directory structure tells you immediately how many environments exist and how they differ
 - **Safe blast radius**: An error in `dev` cannot affect `prod` state
-
-[PAUSE]
 
 ---
 
@@ -322,8 +306,6 @@ terraform workspace delete feature/new-vpc
 - **Production-tier environments**: `prod` should always have its own backend, state, and credentials — never share these with lower environments
 - **Architecturally different environments**: If `prod` needs a multi-region active-active setup and `dev` is single-region, workspaces cannot cleanly express this
 - **Different cloud accounts per environment**: Workspaces share provider configuration; separate accounts require separate provider configurations
-
-[PAUSE]
 
 ---
 
@@ -358,8 +340,6 @@ terraform workspace select default
 terraform workspace delete "pr-${PR_NUMBER}"
 ```
 
-[PAUSE]
-
 ---
 
 ## Summary and Exam Tips (21:30 – 23:30)
@@ -381,8 +361,6 @@ Here is what we covered in Module 10:
 - `terraform workspace delete` requires the workspace to not be currently selected
 - `terraform.workspace` is a built-in value, not a variable — no `var.` prefix
 - HashiCorp recommends directory-based isolation for environments with different credentials
-
-[PAUSE]
 
 ---
 

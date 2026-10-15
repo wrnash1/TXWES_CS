@@ -49,7 +49,7 @@ The owner (also called the user, abbreviated u) is the account that created the 
 assigned ownership with chown. The owner has the highest priority when permissions are evaluated.
 
 The group (abbreviated g) is a named collection of user accounts. When a file's group is set to
-"developers," every user in the developers group gets the group permissions for that file.
+developers," every user in the developers group gets the group permissions for that file.
 
 Others (abbreviated o) means everyone else - any user on the system who is neither the owner nor
 a member of the file's assigned group. Others permissions are the most restrictive layer.

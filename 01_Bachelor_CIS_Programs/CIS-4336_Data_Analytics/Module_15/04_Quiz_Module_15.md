@@ -340,7 +340,7 @@ B) Data collected for one specific, stated purpose may not be used for a differe
 
 C) Organizations must limit the number of purposes they state in their privacy policy to three or fewer.
 
-D) Data may only be processed by employees whose job title includes the word "analyst."
+D) Data may only be processed by employees whose job title includes the word "analyst.
 
 #### Q17 Correct Answer: B
 

@@ -82,7 +82,7 @@ To exit: **Control+X**. If you have unsaved changes, nano will ask if you want t
 
 To cut a whole line: **Control+K**. The line disappears into a cut buffer.
 
-To paste what you cut: **Control+U** — think "uncut."
+To paste what you cut: **Control+U** — think "uncut.
 
 To search: **Control+W**, then type your search string and press Enter. Press **Control+W** again to find the next match.
 

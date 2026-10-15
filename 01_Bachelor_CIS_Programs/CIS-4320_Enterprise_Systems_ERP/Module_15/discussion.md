@@ -24,7 +24,7 @@ A national insurance company completed its SAP S/4HANA implementation on schedul
 - Data migration dress rehearsal: completed; all records migrated successfully; migration takes 11.5 hours (cutover window is 14 hours)
 - Open items: 47 medium and low priority items
 
-The executive sponsor pushed for go-live as planned, citing competitive pressure. The implementation partner project manager said "we can manage the risks."
+The executive sponsor pushed for go-live as planned, citing competitive pressure. The implementation partner project manager said "we can manage the risks.
 
 Address the following in your post:
 
@@ -42,7 +42,7 @@ Your response should demonstrate understanding of Go/No-Go criteria, cutover ris
 A regional retail chain implemented Salesforce Service Cloud eight months ago. The system was technically successful — it passed all testing, went live on time, and most users were trained. However, eight months later:
 
 - 60% of customer service cases are still being tracked in the old Excel spreadsheets, not in Salesforce
-- The new automated case routing feature is unused because reps "just handle it themselves"
+- The new automated case routing feature is unused because reps "just handle it themselves
 - Managers are still emailing weekly status reports instead of pulling them from Salesforce dashboards
 - Three of the eight service managers have resigned and cited "constant system problems" as a contributing factor
 
@@ -110,11 +110,11 @@ When replying to a classmate's post:
 
 ## Sample Strong Opening Lines (to inspire, not copy)
 
-For Scenario 1: "The training completion rate — 71% when the target is 85% — is actually the most concerning gap on this status sheet, because the other gaps can be managed with workarounds, but untrained users will create data quality problems from the moment the system goes live that compound over time and may never be fully cleaned up..."
+For Scenario 1: "The training completion rate — 71% when the target is 85% — is actually the most concerning gap on this status sheet, because the other gaps can be managed with workarounds, but untrained users will create data quality problems from the moment the system goes live that compound over time and may never be fully cleaned up...
 
-For Scenario 2: "The continued use of Excel spreadsheets eight months after go-live is not a user behavior problem — it is an organizational permission problem. As long as managers accept Excel reports and do not require Salesforce data, users have a rational choice: use the tool they know, not the tool the project team wanted them to use..."
+For Scenario 2: "The continued use of Excel spreadsheets eight months after go-live is not a user behavior problem — it is an organizational permission problem. As long as managers accept Excel reports and do not require Salesforce data, users have a rational choice: use the tool they know, not the tool the project team wanted them to use...
 
-For Scenario 3: "The CPQ integration request in Month 3 is the decision that should have triggered a formal project reset, not just a change control evaluation. Six weeks of additional work on a twelve-month project is a 12.5% scope expansion in a single request — that is not an enhancement, it is a scope change that required an updated business case..."
+For Scenario 3: "The CPQ integration request in Month 3 is the decision that should have triggered a formal project reset, not just a change control evaluation. Six weeks of additional work on a twelve-month project is a 12.5% scope expansion in a single request — that is not an enhancement, it is a scope change that required an updated business case...
 
 ---
 

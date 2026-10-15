@@ -413,7 +413,7 @@ Correct Answer: B
 ### Explanation 18
 
 - A is incorrect: This describes an explicit deny, not an implicit deny. An explicit deny occurs when a Deny statement in an applicable policy directly matches the action and resource.
-- B is correct: AWS IAM uses a default-deny model. If no applicable policy (identity policy, resource policy, SCP, permission boundary) contains an Allow statement for the specific action and resource, access is implicitly denied. The request is rejected not because anything said "no," but because nothing said "yes."
+- B is correct: AWS IAM uses a default-deny model. If no applicable policy (identity policy, resource policy, SCP, permission boundary) contains an Allow statement for the specific action and resource, access is implicitly denied. The request is rejected not because anything said "no," but because nothing said "yes.
 - C is incorrect: API rate limiting results in throttling errors (HTTP 429 / ThrottlingException), not IAM authorization denials. Throttling is a service-level control, not an IAM evaluation outcome.
 - D is incorrect: IAM evaluates whether the principal is authorized to perform the action. If the service action is valid but no Allow exists, the result is implicit deny — not a rejection of the action's validity.
 

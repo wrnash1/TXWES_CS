@@ -28,11 +28,8 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 - 02:30]
-
+## Section 1: Welcome and Module Overview
 Welcome to Module 15. I am Professor Nash. This module covers one of the most important conceptual shifts in ITIL 4 compared to earlier versions — the explicit integration of DevOps, Agile, and Lean thinking into the ITIL framework. If you have heard that ITIL is rigid and bureaucratic while DevOps is fast and collaborative, this module addresses that tension directly.
-
-[SHOW DIAGRAM: Title slide — "Module 15: DevOps, Agile, and ITIL 4 Integration" with ITIL 4 SVS label and ITIL 4 Foundation certification badge]
 
 ITIL 4 was redesigned with the explicit goal of working alongside DevOps and Agile rather than conflicting with them. The ITIL 4 Service Value System is designed to be flexible enough to encompass both structured, governance-heavy practices and fast, iterative delivery approaches. Understanding how these frameworks coexist is essential — both for the Foundation exam and for working in modern IT organizations where all three approaches are often present simultaneously.
 
@@ -40,9 +37,7 @@ By the end of this module you will be able to: explain how ITIL 4 aligns with Ag
 
 ---
 
-## Section 2: ITIL 4 and Agile [02:30 - 06:30]
-
-[SHOW DIAGRAM: Agile values alignment table — Agile Manifesto's four values on the left, corresponding ITIL 4 SVS principles on the right, with connecting arrows]
+## Section 2: ITIL 4 and Agile
 
 ### Agile Principles in Context
 
@@ -56,15 +51,11 @@ ITIL 4 aligns with Agile in several specific ways.
 
 **"Collaborate and Promote Visibility"** — ITIL 4's fifth principle aligns with Agile's emphasis on team communication, daily standups, and shared visibility through tools like Kanban boards.
 
-[PAUSE]
-
 The difference between Agile and ITIL is scope, not philosophy. Agile primarily addresses how software is developed. ITIL addresses the full lifecycle of IT service management — including operations, support, asset management, risk, and governance. ITIL 4 provides the governance and operational framework that operates around the Agile delivery teams.
 
 ---
 
-## Section 3: ITIL 4 and DevOps [06:30 - 11:00]
-
-[SHOW DIAGRAM: DevOps infinity loop — Plan → Code → Build → Test → Release → Deploy → Operate → Monitor → back to Plan — with ITIL 4 practice names mapped to relevant stages]
+## Section 3: ITIL 4 and DevOps
 
 ### What Is DevOps?
 
@@ -82,15 +73,11 @@ Key alignments include:
 
 **Shared metrics** — DORA's four metrics — deployment frequency, lead time, change failure rate, time to restore — map directly to ITIL 4 service value metrics. Both frameworks measure the same outcomes from different perspectives.
 
-[PAUSE]
-
 The silo problem is where DevOps and traditional ITIL implementations have most frequently clashed. Traditional ITSM created separate teams for development, testing, deployment, and operations — each with its own tools, priorities, and accountability. DevOps organizations collapse these silos, creating cross-functional teams that own the full lifecycle of the services they build and run. ITIL 4 supports this model through its emphasis on collaboration and value stream thinking.
 
 ---
 
-## Section 4: Value Stream Mapping [11:00 - 14:30]
-
-[SHOW DIAGRAM: Value stream map example — user story request flows through: Product Backlog → Sprint Planning → Development → Code Review → Automated Testing → Staging Deployment → Production Deployment → User Value. Each step shows value-added time and wait time. Total lead time and value-added ratio labeled.]
+## Section 4: Value Stream Mapping
 
 ### What Is Value Stream Mapping?
 
@@ -110,9 +97,7 @@ VSM reveals where waste is concentrated, which allows organizations to target im
 
 ---
 
-## Section 5: CI/CD in the ITSM Context [14:30 - 17:30]
-
-[SHOW DIAGRAM: CI/CD pipeline with ITSM gates labeled — Code Commit → Build → Unit Tests → Integration Tests → Staging Deploy → Automated Acceptance Tests → Change Record Creation → Approval Gate → Production Deploy → Post-Deploy Tests → Monitoring Alerts]
+## Section 5: CI/CD in the ITSM Context
 
 Continuous Integration (CI) is the practice of frequently merging code changes into a shared repository, where automated builds and tests run to validate each change immediately. Continuous Delivery (CD) extends CI to ensure that code is always in a deployable state — every passing change is potentially releasable to production.
 
@@ -128,9 +113,7 @@ The ITIL 4 integration point is the approval gate in the pipeline. Standard chan
 
 ---
 
-## Section 6: Site Reliability Engineering [17:30 - 20:00]
-
-[SHOW DIAGRAM: SRE error budget model — vertical bar showing 100% availability target (99.9% = 43.8 minutes/month), error budget allocation, actual consumption to date, remaining error budget for the month]
+## Section 6: Site Reliability Engineering
 
 Site Reliability Engineering (SRE) is a discipline developed at Google that applies software engineering principles to IT operations problems. SRE teams treat operational stability as an engineering challenge — writing code to automate manual operations tasks, building self-healing systems, and using data to make reliability decisions.
 
@@ -146,9 +129,7 @@ This concept is revolutionary because it quantifies the relationship between vel
 
 ---
 
-## Section 7: Measuring Flow [20:00 - 22:00]
-
-[SHOW DIAGRAM: Four DORA metrics — four dials/gauges showing Deployment Frequency, Lead Time for Changes, Change Failure Rate, Time to Restore Service — with Elite/High/Medium/Low band labels from DORA research]
+## Section 7: Measuring Flow
 
 The DORA Four Keys are the industry-standard metrics for measuring software delivery performance:
 

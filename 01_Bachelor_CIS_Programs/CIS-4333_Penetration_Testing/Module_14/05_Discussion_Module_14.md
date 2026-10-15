@@ -34,7 +34,7 @@ The lead tester is preparing the report and faces several decisions.
 
 In 200–250 words, address all three of the following questions:
 
-1. **Report Audience and Tone**: The hospital's CEO has asked to receive "the full report"
+1. **Report Audience and Tone**: The hospital's CEO has asked to receive "the full report
    because she wants to understand exactly what was found. Should the tester send the CEO
    the complete technical report with evidence screenshots, CVSS vector strings, and
    reproduction steps? Explain your reasoning, referencing the appropriate report structure

@@ -178,7 +178,37 @@ def sanitize_for_students(text):
         text,
         flags=re.IGNORECASE
     )
-    # 4. Clean up any leftover duplicate divider rules or multiple blank lines
+    # 4. Teleprompter, camera, and slide cues
+    cues = [
+        r'\*\*\[INSTRUCTOR ON CAMERA[^\n\]]*\]\*\*',
+        r'\[INSTRUCTOR ON CAMERA[^\n\]]*\]',
+        r'\*\*\[ON CAMERA[^\n\]]*\]\*\*',
+        r'\[ON CAMERA[^\n\]]*\]',
+        r'\*\*\[SHOW SLIDE:[^\n\]]*\]\*\*',
+        r'\[SHOW SLIDE:[^\n\]]*\]',
+        r'\*\*\[SHOW SLIDE[^\n\]]*\]\*\*',
+        r'\[SHOW SLIDE[^\n\]]*\]',
+        r'\*\*\[PAUSE\]\*\*',
+        r'\[PAUSE\]',
+        r'\*\*\[SHOW DIAGRAM[^\n\]]*\]\*\*',
+        r'\[SHOW DIAGRAM[^\n\]]*\]',
+        r'\*\*\[TRANSITION[^\n\]]*\]\*\*',
+        r'\[TRANSITION[^\n\]]*\]',
+        r'\*\*\[DEMO[^\n\]]*\]\*\*',
+        r'\[DEMO[^\n\]]*\]',
+        r'\*\*\[CUT TO[^\n\]]*\]\*\*',
+        r'\[CUT TO[^\n\]]*\]',
+        r'\*\*\[DIRECTOR[^\n\]]*\]\*\*',
+        r'\[DIRECTOR[^\n\]]*\]',
+        r'\[Title card:[^\n\]]*\]',
+        r'\*\*\[Title card:[^\n\]]*\]\*\*',
+    ]
+    for c in cues:
+        text = re.sub(c, '', text, flags=re.IGNORECASE)
+    # Clean section header timestamps e.g. ## [00:00 - 01:00] Title -> ## Title
+    text = re.sub(r'^(#{2,4})\s*\[[0-9]{2}:[0-9]{2}\s*[\u2013-]\s*[0-9]{2}:[0-9]{2}\]\s*(.*)$', r'\1 \2', text, flags=re.MULTILINE)
+    text = re.sub(r'^(#{2,4})\s*(.*?)\s*\[[0-9]{2}:[0-9]{2}\s*[\u2013-]\s*[0-9]{2}:[0-9]{2}\]\s*$', r'\1 \2', text, flags=re.MULTILINE)
+    # 5. Clean up any leftover duplicate divider rules or multiple blank lines
     text = re.sub(r'---\s*\n\s*---', '---', text)
     text = re.sub(r'\n{3,}', '\n\n', text)
     return text.strip()
@@ -193,8 +223,8 @@ def extract_slides_for_item(course_path, item_rel, content):
     if not is_lecture:
         return []
 
-    # 1. Video scripts with timestamped sections or SHOW SLIDE tags
-    sections = re.findall(r'(##\s+\[(.*?)\]\s+(.*?)\n([\s\S]*?)(?=\n##\s+\[|\Z))', content)
+    # 1. Cleaned Lecture Notes / Video Scripts: extract conceptual headings (## Section Title)
+    sections = re.findall(r'(##\s+([^#\n]+)\n([\s\S]*?)(?=\n##\s+[^#\n]+|\Z))', content)
     if sections:
         doc_title_m = re.search(r'#\s+(.*?)\n(?:##\s+(.*?)\n)?', content)
         t1 = doc_title_m.group(1).strip() if doc_title_m else "Lecture Presentation"
@@ -209,16 +239,18 @@ def extract_slides_for_item(course_path, item_rel, content):
                 "Synchronized with module video lecture, lab benchmarks, and certification blueprints."
             ]
         })
-        for full_sec, ts, sec_title, sec_body in sections:
-            slide_m = re.findall(r'\[SHOW SLIDE:?\s*[\"“]?(.*?)[\"”]?\]', sec_body, re.IGNORECASE)
-            heading = slide_m[0] if slide_m else sec_title
+        for full_sec, sec_title, sec_body in sections:
+            clean_sec_title = re.sub(r'\[.*?\]', '', sec_title).strip()
+            if not clean_sec_title or clean_sec_title.lower().startswith('production'):
+                continue
             
             raw_paras = [p.strip() for p in sec_body.split('\n\n') if p.strip()]
             bullets = []
             for p in raw_paras:
-                if p.startswith('>') or p.startswith('---') or p.startswith('```') or (p.startswith('**[') and p.endswith(']**')):
+                if p.startswith('>') or p.startswith('---') or p.startswith('```') or p.startswith('<') or (p.startswith('**[') and p.endswith(']**')):
                     continue
                 clean = re.sub(r'[\*\`\#]', '', p).strip('" ')
+                clean = re.sub(r'\[.*?\]', '', clean).strip()
                 sents = re.split(r'(?<=[.!?])\s+', clean)
                 for s in sents:
                     s = s.strip()
@@ -231,8 +263,8 @@ def extract_slides_for_item(course_path, item_rel, content):
             if not bullets:
                 bullets = ["Core technical principles, theoretical framework, and laboratory mastery."]
             slides.append({
-                "title": heading,
-                "subtitle": f"Section [{ts}] • {sec_title}",
+                "title": clean_sec_title,
+                "subtitle": f"{course_name} • Key Concepts",
                 "bullets": bullets
             })
         return slides

@@ -534,8 +534,6 @@ Interactive browser-based tool for visualizing how layer depth, activation funct
 <https://github.com/karpathy/micrograd>
 A minimal 100-line implementation of backpropagation and automatic differentiation from scratch. Reading this code alongside the module's chain-rule section makes the GradientTape concept concrete and demystifies what TensorFlow does internally during the backward pass.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

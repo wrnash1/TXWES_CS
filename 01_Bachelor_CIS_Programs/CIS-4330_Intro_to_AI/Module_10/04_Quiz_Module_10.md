@@ -321,7 +321,7 @@ B. Providing the model with task instructions but no examples of the expected in
 ### Q13 — Distractor Analysis
 
 - A is incorrect: Zero-shot refers to the absence of examples, not the absence of any prompt. The prompt still contains task instructions and input data.
-- C is incorrect: "Zero-shot" is a prompting strategy classification. Temperature zero is a sampling parameter. These are unrelated concepts that share the word "zero."
+- C is incorrect: "Zero-shot" is a prompting strategy classification. Temperature zero is a sampling parameter. These are unrelated concepts that share the word "zero.
 - D is incorrect: Providing no system prompt is a specific deployment configuration, not a prompting technique. Zero-shot prompting includes task instructions; it omits examples only.
 
 ---

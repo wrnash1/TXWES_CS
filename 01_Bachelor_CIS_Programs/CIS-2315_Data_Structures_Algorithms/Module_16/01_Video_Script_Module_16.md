@@ -26,19 +26,15 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 16 | Final Exam Prep | CIS-2315"]**
-
-"This is the final module of CIS-2315. We have covered sixteen weeks of data structures and algorithms — arrays, linked lists, trees, graphs, hash tables, heaps, divide-and-conquer, greedy algorithms, dynamic programming, and string algorithms. Today we review the six major algorithm families, connect them to the LeetCode problems you have practiced, and discuss how to approach a coding interview problem you have never seen before. The goal is not just to remember algorithms — it is to recognize which algorithm applies when."
+This is the final module of CIS-2315. We have covered sixteen weeks of data structures and algorithms — arrays, linked lists, trees, graphs, hash tables, heaps, divide-and-conquer, greedy algorithms, dynamic programming, and string algorithms. Today we review the six major algorithm families, connect them to the LeetCode problems you have practiced, and discuss how to approach a coding interview problem you have never seen before. The goal is not just to remember algorithms — it is to recognize which algorithm applies when.
 
 ---
 
-## [01:30 – 07:00] Review — Sorting, Searching, and Tree Operations
+## Review — Sorting, Searching, and Tree Operations
 
-**[SHOW SLIDE: "Foundational Algorithms: Sort, Search, Tree"]**
-
-"Let's start with the foundation. Every interview assumes you know these cold.
+Let's start with the foundation. Every interview assumes you know these cold.
 
 **Sorting:** Know three algorithms and their trade-offs.
 
@@ -80,15 +76,13 @@ def search_leftmost(arr, target):
 
 **Heaps:** Min-heap via `heapq`. Push: O(log n). Pop: O(log n). Heapify: O(n). Use for K-th largest (size-K min-heap), K-way merge, and priority queues.
 
-[PAUSE]"
+"
 
 ---
 
-## [07:00 – 13:00] Review — Graph Algorithms
+## Review — Graph Algorithms
 
-**[SHOW SLIDE: "Graph Algorithms: BFS, DFS, Dijkstra"]**
-
-"Graphs are the most common non-trivial data structure in interviews. Know three algorithms.
+Graphs are the most common non-trivial data structure in interviews. Know three algorithms.
 
 **BFS — shortest path in unweighted graphs, level-by-level traversal:**
 
@@ -136,15 +130,13 @@ def dijkstra(graph, start):
 
 Time: O((V+E) log V). Negative weights: use Bellman-Ford — O(V·E).
 
-[PAUSE]"
+"
 
 ---
 
-## [13:00 – 18:00] Review — Divide & Conquer and Greedy
+## Review — Divide & Conquer and Greedy
 
-**[SHOW SLIDE: "Divide & Conquer and Greedy"]**
-
-"**Divide & Conquer — Master Theorem:**
+**Divide & Conquer — Master Theorem:**
 
 T(n) = a·T(n/b) + f(n). Let c = log_b(a).
 - Case 2: f(n) = Θ(n^c) → T(n) = Θ(n^c log n)
@@ -161,15 +153,13 @@ Three canonical problems:
 
 When greedy fails — 0/1 knapsack. Items cannot be split → use DP.
 
-[PAUSE]"
+"
 
 ---
 
-## [18:00 – 23:00] Review — Dynamic Programming
+## Review — Dynamic Programming
 
-**[SHOW SLIDE: "Dynamic Programming: Subproblem, Recurrence, Base Case"]**
-
-"DP requires two properties: optimal substructure and overlapping subproblems.
+DP requires two properties: optimal substructure and overlapping subproblems.
 
 The three-step DP setup:
 1. Define the subproblem: what does `dp[i]` (or `dp[i][j]`) mean?
@@ -194,15 +184,13 @@ LCS: dp[i][j] = LCS length of text1[0..i-1] and text2[0..j-1].
 0/1 Knapsack: dp[i][w] = max value using first i items with capacity w.
 - dp[i][w] = max(dp[i-1][w], dp[i-1][w-weight]+value)
 
-[PAUSE]"
+"
 
 ---
 
-## [23:00 – 27:00] Review — Hash Tables and String Algorithms
+## Review — Hash Tables and String Algorithms
 
-**[SHOW SLIDE: "Hash Tables, Trie, Sliding Window"]**
-
-"**Hash Tables:**
+**Hash Tables:**
 
 Python `dict` and `set` — O(1) average for insert, lookup, delete. `collections.Counter` for frequency counts. `collections.defaultdict` to avoid KeyError on missing keys.
 
@@ -226,15 +214,13 @@ for right, char in enumerate(s):
 
 Minimum Window Substring: expand right until formed==required; shrink left while valid.
 
-Expand-Around-Center for palindromes: call `expand(i,i)` and `expand(i,i+1)` for every center."
+Expand-Around-Center for palindromes: call `expand(i,i)` and `expand(i,i+1)` for every center.
 
 ---
 
-## [27:00 – 31:00] Five Interview Strategies
+## Five Interview Strategies
 
-**[SHOW SLIDE: "Five Strategies for Unseen Problems"]**
-
-"When you see a new problem in an interview:
+When you see a new problem in an interview:
 
 **1. Restate the problem.** Repeat it back in your own words and confirm constraints (sorted? unique? positive? what to return?). This shows you understand it and buys thinking time.
 
@@ -246,8 +232,6 @@ Expand-Around-Center for palindromes: call `expand(i,i)` and `expand(i,i+1)` for
 
 **5. Test on the examples, then on edge cases.** Edge cases: empty input, single element, all same elements, already sorted, reverse sorted. Run them mentally before saying 'I'm done.'
 
-[PAUSE]
-
 **The pattern map:**
 
 - Any contiguous range problem → Sliding window or prefix sum
@@ -256,7 +240,7 @@ Expand-Around-Center for palindromes: call `expand(i,i)` and `expand(i,i+1)` for
 - Any problem with 'at most K' or overlapping subsets → DP
 - Any prefix lookup or word suggestion → Trie
 
-Good luck on your certification exam. You have the tools. Now practice until the patterns are automatic."
+Good luck on your certification exam. You have the tools. Now practice until the patterns are automatic.
 
 ---
 

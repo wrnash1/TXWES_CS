@@ -182,10 +182,10 @@ Distractor Analysis:
 
 Which of the following Sprint Goals is written in the best Scrum style?
 
-- A) "Complete PBI-01, PBI-03, PBI-04, and PBI-07 by end of Sprint"
-- B) "Allow students to create study groups and browse campus events so that the beta launch audience can begin using core social features"
-- C) "Improve application performance by 20% and fix all critical bugs"
-- D) "The team will work on the calendar and notifications features this Sprint"
+- A) "Complete PBI-01, PBI-03, PBI-04, and PBI-07 by end of Sprint
+- B) "Allow students to create study groups and browse campus events so that the beta launch audience can begin using core social features
+- C) "Improve application performance by 20% and fix all critical bugs
+- D) "The team will work on the calendar and notifications features this Sprint
 
 Correct Answer: B — This Sprint Goal states a user-facing outcome, is achievable within a Sprint, allows flexibility in implementation, and can be evaluated at the Sprint Review. It explains both what will be delivered and why it matters.
 
@@ -320,10 +320,10 @@ A team's Sprint Planning consistently exceeds its timebox. What is the most like
 
 Which of the following Daily Scrum updates most clearly demonstrates a team member focusing on the Sprint Goal rather than just task completion?
 
-- A) "Yesterday I finished task 14 and task 15. Today I will start task 16."
-- B) "I reviewed the PR from Marcos. Today I will write unit tests."
-- C) "I finished the login API endpoint. That completes the authentication piece we need for the Sprint Goal. Today I start the user profile endpoint — if it's done by tomorrow we're on track."
-- D) "I worked on the backend most of the day. Today more of the same."
+- A) "Yesterday I finished task 14 and task 15. Today I will start task 16.
+- B) "I reviewed the PR from Marcos. Today I will write unit tests.
+- C) "I finished the login API endpoint. That completes the authentication piece we need for the Sprint Goal. Today I start the user profile endpoint — if it's done by tomorrow we're on track.
+- D) "I worked on the backend most of the day. Today more of the same.
 
 - **Correct Answer:** C
 - **Distractor Analysis:**

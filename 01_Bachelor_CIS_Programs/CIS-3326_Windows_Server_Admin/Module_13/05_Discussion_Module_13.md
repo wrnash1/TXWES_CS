@@ -89,7 +89,7 @@ Grades are based on the following point distribution:
 
 ## Tips for a Strong Post
 
-Storage discussions are strengthened by specific numbers and comparisons. Instead of saying "mirror is better for important data," say "a two-way mirror requires at least two disks and stores one redundant copy, surviving one disk failure — sufficient for this workload's RTO requirements."
+Storage discussions are strengthened by specific numbers and comparisons. Instead of saying "mirror is better for important data," say "a two-way mirror requires at least two disks and stores one redundant copy, surviving one disk failure — sufficient for this workload's RTO requirements.
 
 If you are answering Prompt C, research HIPAA's specific language around encryption — it is an "addressable" rather than "required" implementation specification, which creates an interesting compliance nuance worth discussing.
 

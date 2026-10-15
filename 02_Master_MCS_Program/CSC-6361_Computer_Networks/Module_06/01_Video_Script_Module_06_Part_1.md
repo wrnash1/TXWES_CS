@@ -27,14 +27,9 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: Course banner — "CSC-6361 Advanced Computer Networks | Module 06: Cloud Networking & Hybrid Architectures — SD-WAN, VXLAN & EVPN | Texas Wesleyan University | Graduate Level"]
-
 ---
 
 ### Section 1: Welcome and Thanksgiving Notice
-
-[00:00 – 02:00]
-[SHOW SLIDE: Professor Nash on camera, SD-WAN architecture diagram visible behind.]
 
 Welcome to Module 06 of CSC-6361. We are in the final full content module before our capstone week. This module addresses two of the most transformative areas in modern enterprise networking: **SD-WAN** — Software-Defined Wide Area Networking — and **overlay technologies**, specifically VXLAN and EVPN.
 
@@ -49,9 +44,6 @@ Let's begin with SD-WAN.
 ---
 
 ### Section 2: SD-WAN Architecture — The Viptela Control Plane
-
-[02:00 – 07:30]
-[SHOW DIAGRAM: Cisco SD-WAN four-component architecture — vManage (management plane), vSmart (control plane), vBond (orchestration plane), vEdge (data plane). Show each component's position and communication paths.]
 
 [Alt-text: A diagram showing four labeled boxes arranged in a layered architecture. At the top: "vManage — Management Plane (HTTPS/NETCONF, centralized policy and monitoring)." Middle left: "vSmart — Control Plane (OMP, policy distribution)." Middle right: "vBond — Orchestration Plane (zero-touch provisioning, authentication)." Bottom: "vEdge/cEdge routers — Data Plane (GRE/IPsec tunnels, BFD, actual traffic forwarding)." Arrows show vManage connects to all components; vSmart connects to vEdge devices via OMP; vBond connects to vEdge devices during onboarding; vEdge-to-vEdge data tunnels bypass the control plane after establishment.]
 
@@ -99,9 +91,6 @@ vEdge devices (Viptela hardware) and cEdge devices (Cisco IOS XE routers running
 
 ### Section 3: OMP — Overlay Management Protocol
 
-[07:30 – 10:30]
-[SHOW DIAGRAM: OMP route distribution — vEdge-1 advertises prefixes to vSmart, vSmart re-advertises to all other vEdge devices]
-
 [Alt-text: A triangle diagram. At the apex: "vSmart Controller." At the two base corners: "vEdge-HQ" and "vEdge-Branch." Arrows labeled "OMP Updates (TLOC, prefixes, services)" run from each vEdge upward to vSmart. Arrows labeled "OMP re-advertisement" run from vSmart downward to each vEdge. A dashed arrow at the bottom labeled "IPsec data tunnel (established after OMP convergence)" connects vEdge-HQ directly to vEdge-Branch.]
 
 OMP is an SD-WAN proprietary routing protocol that runs between each vEdge device and the vSmart controller. It is not a link-state protocol and not a distance-vector protocol in the traditional sense — it is more analogous to BGP: it uses a session model and carries rich attributes alongside prefixes.
@@ -138,9 +127,6 @@ show sdwan omp services           ! Show service advertisements
 ---
 
 ### Section 4: SD-WAN Policies
-
-[10:30 – 13:30]
-[SHOW DIAGRAM: Policy flow — vManage pushes policies to vSmart, which pushes to vEdge; centralized vs. localized policy distinction]
 
 SD-WAN has two major policy categories: **centralized policies** and **localized policies**. This distinction appears on the CCNP ENCOR exam.
 
@@ -180,9 +166,6 @@ Localized policies run on the vEdge device itself and are not distributed via vS
 ---
 
 ### Section 5: VXLAN — Virtual Extensible LAN
-
-[13:30 – 17:30]
-[SHOW DIAGRAM: VXLAN encapsulation format — inner Ethernet frame, VXLAN header, outer UDP/IP header]
 
 [Alt-text: A layered packet format diagram showing (from innermost to outermost): "Original Layer 2 Frame (Ethernet header + payload)." Then: "VXLAN Header (8 bytes): Flags (8 bits), Reserved (24 bits), VNI — VXLAN Network Identifier (24 bits), Reserved (8 bits)." Then: "Outer UDP Header: Source Port (entropy/hash), Destination Port 4789, Length, Checksum." Then: "Outer IP Header: Source IP = originating VTEP IP, Destination IP = target VTEP IP (or multicast group for BUM)." Then: "Outer Ethernet Header (for transport across L2 underlay if applicable)."]
 
@@ -232,9 +215,6 @@ show interfaces nve 1             ! NVE interface stats
 
 ### Section 6: EVPN — Ethernet VPN for VXLAN Control Plane
 
-[17:30 – 20:00]
-[SHOW DIAGRAM: EVPN route type overview — Type 2 (MAC/IP), Type 3 (Inclusive Multicast), Type 5 (IP Prefix)]
-
 VXLAN by itself is a data plane technology — it defines how to encapsulate frames. It does not define how VTEPs learn about each other or where remote MAC addresses are located. That is the job of **EVPN — Ethernet VPN**, defined in **RFC 7432**.
 
 EVPN uses BGP (specifically the L2VPN EVPN address family) as a control plane to distribute:
@@ -275,9 +255,6 @@ show evpn evi detail              ! EVPN instance details (NX-OS)
 ---
 
 ### Section 7: Part 1 Summary
-
-[20:00 – 21:30]
-[SHOW SLIDE: Module 06 Part 1 key concept summary]
 
 In Part 1 you have learned:
 

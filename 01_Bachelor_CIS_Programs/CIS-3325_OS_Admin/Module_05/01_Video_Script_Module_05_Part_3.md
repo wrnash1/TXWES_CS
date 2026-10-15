@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 03:00] Part 1: Automated Archival Architecture in Linux
+## Part 1: Automated Archival Architecture in Linux
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -29,18 +29,18 @@
 
 **[CAMERA: Cut to terminal workbench displaying /etc filesystem]**
 
-"Welcome back, class. In Part 1 and Part 2 of Module 05, we mastered Bash variable assignment, positional parameters, conditional exit statuses, and loop constructs. Today in Part 3, we bring everything together into a mission-critical system administration task: writing a fully automated, idempotent backup and archival script using `tar`, `gzip`, and date formatting.
+Welcome back, class. In Part 1 and Part 2 of Module 05, we mastered Bash variable assignment, positional parameters, conditional exit statuses, and loop constructs. Today in Part 3, we bring everything together into a mission-critical system administration task: writing a fully automated, idempotent backup and archival script using `tar`, `gzip`, and date formatting.
 
 In production system administration, manual backups are an invitation to catastrophic data loss. As a Linux system administrator, you must automate repetitive operational tasks so they run deterministically without human intervention. Today, we will write a production-grade backup script that compresses the `/etc` configuration directory, verifies file integrity, names the archive with a precise timestamp, and stores it securely in a target destination.
 
-Let's dissect the core commands we will use."
+Let's dissect the core commands we will use.
 
 ---
 
-## [03:00 - 08:30] Part 2: Dissecting `tar` and Compression Flags
+## Part 2: Dissecting `tar` and Compression Flags
 **[SHOW SCREEN: Highlighting tar syntax: `tar -czvf /destination/backup.tar.gz /source` ]**
 
-"The primary tool for archiving in Linux is `tar` — which stands for Tape Archive. `tar` groups multiple files and directories into a single archive file, preserving file permissions, ownership, and directory hierarchies.
+The primary tool for archiving in Linux is `tar` — which stands for Tape Archive. `tar` groups multiple files and directories into a single archive file, preserving file permissions, ownership, and directory hierarchies.
 
 Notice the flags we are using:
 - `-c`: **Create** a new archive file.
@@ -48,14 +48,14 @@ Notice the flags we are using:
 - `-v`: **Verbosely** list the files being processed. Excellent for debugging and log tracking.
 - `-f`: Specify the **filename** of the archive. *Exam rule:* The `-f` flag must immediately precede the archive name.
 
-If we want higher compression at the cost of CPU cycles, we would use `-j` for `bzip2` (`.tar.bz2`) or `-J` for `xz` (`.tar.xz`). On CompTIA Linux+, you will be asked to distinguish between `-z` (`gzip`), `-j` (`bzip2`), and `-J` (`xz`). Memorize that difference."
+If we want higher compression at the cost of CPU cycles, we would use `-j` for `bzip2` (`.tar.bz2`) or `-J` for `xz` (`.tar.xz`). On CompTIA Linux+, you will be asked to distinguish between `-z` (`gzip`), `-j` (`bzip2`), and `-J` (`xz`). Memorize that difference.
 
 ---
 
-## [08:30 - 14:00] Part 3: Writing the Production-Grade Backup Script
+## Part 3: Writing the Production-Grade Backup Script
 **[SHOW SCREEN: Writing `backup_etc.sh` in vim/nano]**
 
-"Now, let's open our editor and write `backup_etc.sh`. Notice how we adhere to enterprise shell scripting best practices:
+Now, let's open our editor and write `backup_etc.sh`. Notice how we adhere to enterprise shell scripting best practices:
 
 ```bash
 #!/bin/bash
@@ -111,14 +111,14 @@ exit 0
 Notice the defensive programming lines:
 1. `set -euo pipefail`: Prevents silent script failures on unset variables or failed pipeline commands.
 2. `TIMESTAMP=$(date +"%Y%m%d_%H%M%S")`: Guarantees unique, chronological filenames that sort cleanly in directories.
-3. `gzip -t`: Tests the compressed archive's cyclic redundancy check (CRC) to ensure no corruption occurred during write operations."
+3. `gzip -t`: Tests the compressed archive's cyclic redundancy check (CRC) to ensure no corruption occurred during write operations.
 
 ---
 
-## [14:00 - 18:45] Part 4: Permissions, Execution, and Lab Deliverables
+## Part 4: Permissions, Execution, and Lab Deliverables
 **[SHOW SCREEN: Setting permissions with `chmod +x` and verifying with `ls -la`]**
 
-"Once your script is saved, you must give it execute permissions before running it:
+Once your script is saved, you must give it execute permissions before running it:
 ```bash
 chmod +x backup_etc.sh
 ./backup_etc.sh
@@ -136,4 +136,4 @@ You will see your newly created `.tar.gz` archive with its accurate timestamp an
 3. Capture a clear terminal screenshot showing the script execution output and the `ls -lh ~/backups/` directory listing.
 4. Submit the script file and your verification screenshot to Canvas.
 
-In our next module, we will explore Linux storage management, partitioning with `fdisk` and `parted`, and building logical volumes with LVM. I will see you in Module 06!"
+In our next module, we will explore Linux storage management, partitioning with `fdisk` and `parted`, and building logical volumes with LVM. I will see you in Module 06!

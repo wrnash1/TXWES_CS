@@ -41,7 +41,7 @@ Your initial post should be 175 to 225 words.
 
 ## Scenario C: Breakpoint Strategy for a SaaS Dashboard
 
-A startup is building a project management SaaS product in React. The design team delivers three mockups: mobile (375px), tablet (768px), and desktop (1440px). A senior engineer opens a team discussion about breakpoint strategy — specifically arguing that the team should not hard-code breakpoints at those exact pixel values, but should instead add breakpoints "where the layout breaks."
+A startup is building a project management SaaS product in React. The design team delivers three mockups: mobile (375px), tablet (768px), and desktop (1440px). A senior engineer opens a team discussion about breakpoint strategy — specifically arguing that the team should not hard-code breakpoints at those exact pixel values, but should instead add breakpoints "where the layout breaks.
 
 Address all three of the following in your post:
 

@@ -109,5 +109,5 @@ Unix permissions do not stop them from pivoting — they already have the web se
 SELinux and AppArmor constrain what that compromised process can actually do: it cannot read
 your SSH keys, cannot write to system binaries, cannot make network connections it was not
 designed to make. That containment is the value of MAC. The administrators who disable SELinux
-"because it keeps blocking things" are removing their last line of defense for the sake of
+because it keeps blocking things" are removing their last line of defense for the sake of
 avoiding ten minutes of troubleshooting. Learn the tools. Fix the context. Keep enforcement on.

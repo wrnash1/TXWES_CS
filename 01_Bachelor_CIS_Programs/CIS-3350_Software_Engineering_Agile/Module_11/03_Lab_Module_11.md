@@ -78,7 +78,7 @@ Task C — Sprint communication (10 points): Write a 100–150 word message from
 
 - Connect the technical problem to a business outcome (velocity, reliability, or time to market)
 - Avoid overly technical language
-- Not use any Scrum jargon beyond "Sprint" and "velocity"
+- Not use any Scrum jargon beyond "Sprint" and "velocity
 
 ---
 

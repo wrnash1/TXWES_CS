@@ -20,7 +20,7 @@ An e-commerce company runs an A/B test on their checkout page. Version A (curren
 
 In 175–225 words, address all three of the following:
 
-1. State the null and alternative hypotheses for this test. At alpha = 0.05, what is the correct statistical decision? Write your decision in one complete sentence using proper hypothesis testing language — neither "accept H0" nor "accept H1."
+1. State the null and alternative hypotheses for this test. At alpha = 0.05, what is the correct statistical decision? Write your decision in one complete sentence using proper hypothesis testing language — neither "accept H0" nor "accept H1.
 2. The 0.3 percentage point difference is statistically significant. Is it practically significant? The company processes an average of 500,000 checkouts per month. Calculate the expected increase in monthly conversions if Version B is rolled out, and evaluate whether the practical significance justifies deploying it.
 3. A product manager argues that p = 0.021 means there is only a 2.1% chance that Version A and Version B perform equally. Is this correct? Provide the precise definition of a p-value and explain why the product manager's interpretation is wrong.
 

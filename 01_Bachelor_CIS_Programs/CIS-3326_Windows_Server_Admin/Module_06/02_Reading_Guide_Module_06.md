@@ -88,7 +88,7 @@
 
 Module 06 covers the two network infrastructure services that every Windows Server environment depends on: DNS for name resolution and DHCP for IP address assignment. Both are critical for Active Directory to function. This reading guide provides reference tables, an architecture diagram, exam tips, a glossary, and a study checklist.
 
-**Certification Alignment:** AZ-800 — "Implement and manage DNS" and "Implement and manage DHCP"
+**Certification Alignment:** AZ-800 — "Implement and manage DNS" and "Implement and manage DHCP
 
 ---
 
@@ -546,8 +546,6 @@ Official DHCP documentation covering audit log interpretation, rogue server dete
 ---
 
 *Review all sections before beginning Lab 06, Quiz 06, and Discussion 06.*
-
-
 
 ---
 

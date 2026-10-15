@@ -236,7 +236,7 @@ An analyst wants to investigate why a retailer's online conversion rate dropped 
 
 - **Correct Answer:** B
 - **Distractor Analysis:**
-  - **Why B is correct:** Diagnostic analytics investigates the root cause of a known event — here, explaining why the conversion rate fell. The defining question is "why did it happen?"
+  - **Why B is correct:** Diagnostic analytics investigates the root cause of a known event — here, explaining why the conversion rate fell. The defining question is "why did it happen?
   - **Why A is incorrect:** Descriptive analytics would have produced the summary metric showing the 18-percent drop, but it does not investigate the cause.
   - **Why C is incorrect:** Predictive analytics would forecast future conversion rates, not explain what caused a past change.
   - **Why D is incorrect:** Prescriptive analytics would recommend specific actions to improve conversion; investigation of cause comes before any recommendation.

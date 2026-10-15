@@ -82,7 +82,7 @@ Behavior 2: The Scrum Master runs the Daily Scrum, going around the room asking 
 
 Behavior 3: Halfway through Sprint 4, the VP of Engineering walks into the team room and tells two Developers to stop working on their Sprint Backlog items and fix a production bug instead. The Developers comply without telling the Scrum Master or Product Owner.
 
-Behavior 4: At the Sprint Review, only the Scrum Team attends — no stakeholders are invited because "we don't want external feedback confusing the team's direction."
+Behavior 4: At the Sprint Review, only the Scrum Team attends — no stakeholders are invited because "we don't want external feedback confusing the team's direction.
 
 Behavior 5: The team's Definition of Done requires code review and unit testing, but the team skips both for a "quick fix" item in Sprint 4 because they are behind schedule.
 

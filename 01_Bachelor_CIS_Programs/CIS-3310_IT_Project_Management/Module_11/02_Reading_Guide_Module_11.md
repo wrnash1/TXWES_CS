@@ -303,7 +303,7 @@ A contingency plan is pre-planned for an identified risk. A workaround is improv
 When calculating EMV for a risk portfolio, threats contribute negative values and opportunities contribute positive values. The sum gives the net expected risk impact to the project.
 
 **Tip 8 — Risk Register is updated at every risk management step:**
-Initial entries come from identification. Probability and impact scores come from qualitative analysis. Response strategies, owners, and reserves come from response planning. Status updates come from monitoring. The register is never "done."
+Initial entries come from identification. Probability and impact scores come from qualitative analysis. Response strategies, owners, and reserves come from response planning. Status updates come from monitoring. The register is never "done.
 
 ---
 
@@ -459,8 +459,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

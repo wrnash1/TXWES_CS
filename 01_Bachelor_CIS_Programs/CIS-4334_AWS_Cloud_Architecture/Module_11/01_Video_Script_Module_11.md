@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -43,9 +43,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 06:00] Containers and Why They Matter
-
-[SHOW DIAGRAM]
+## Containers and Why They Matter
 
 A container is a lightweight, portable execution environment that packages application code together with its dependencies, runtime, and configuration. Containers run on top of a container runtime (such as Docker) that shares the host operating system kernel. This makes containers much smaller and faster to start than virtual machines, which each run a full guest operating system.
 
@@ -59,8 +57,6 @@ Density: Many containers can run on a single EC2 instance, making better use of 
 
 Fast startup: Containers start in seconds rather than the minutes it takes to boot a virtual machine.
 
-[SHOW DIAGRAM]
-
 Container images are stored in a container registry. AWS provides Amazon Elastic Container Registry (ECR) as a fully managed, private Docker-compatible container registry. ECR integrates with IAM for access control — no separate login credentials to manage. ECR images are pulled by ECS and EKS tasks at deployment time.
 
 The container lifecycle:
@@ -73,9 +69,7 @@ The container lifecycle:
 
 ---
 
-## [06:00 - 12:00] Amazon ECS
-
-[SHOW DIAGRAM]
+## Amazon ECS
 
 Amazon Elastic Container Service is AWS's fully managed container orchestration service. ECS manages the placement, scheduling, and lifecycle of containers on a cluster of compute resources.
 
@@ -89,8 +83,6 @@ Task: A running instance of a task definition. A task is one or more containers 
 
 Service: An ECS service maintains a desired number of running tasks. If a task fails or the underlying instance is terminated, the ECS service scheduler launches a replacement task to maintain the desired count. Services integrate with Application Load Balancers for traffic routing.
 
-[SHOW DIAGRAM]
-
 ECS Launch Types:
 
 EC2 launch type: You provision and manage a cluster of EC2 instances. The ECS agent runs on each instance and registers it with the cluster. You are responsible for the EC2 instances — choosing instance types, patching the OS, managing capacity. The advantage is full control over the host environment and cost optimization for sustained workloads.
@@ -98,8 +90,6 @@ EC2 launch type: You provision and manage a cluster of EC2 instances. The ECS ag
 Fargate launch type: AWS manages the underlying compute infrastructure. You define the task — the container image, CPU, memory, and networking — and Fargate runs it without you provisioning any EC2 instances. You pay per vCPU-second and GB-second of memory used by each task. Fargate eliminates the operational overhead of managing EC2 instances for containers.
 
 Exam rule: "No infrastructure management" or "serverless containers" → Fargate. "Need full control of underlying host" or "cost-optimize sustained container workloads with reserved instances" → ECS on EC2.
-
-[SHOW DIAGRAM]
 
 ECS Task IAM Roles:
 
@@ -109,9 +99,7 @@ Do not confuse the task role (permissions for the container application) with th
 
 ---
 
-## [12:00 - 16:00] Amazon EKS
-
-[SHOW DIAGRAM]
+## Amazon EKS
 
 Amazon Elastic Kubernetes Service is a fully managed Kubernetes control plane on AWS. Kubernetes is an open-source container orchestration system that has become the industry standard for deploying, scaling, and managing containerized applications at scale.
 
@@ -135,9 +123,7 @@ Exam rule: "Kubernetes" → EKS. "Managed containers without Kubernetes" → ECS
 
 ---
 
-## [16:00 - 19:30] AWS Fargate
-
-[SHOW DIAGRAM]
+## AWS Fargate
 
 AWS Fargate is the serverless compute engine for containers. Fargate runs containers without requiring you to provision, configure, or manage any EC2 instances. It works with both ECS and EKS.
 
@@ -159,9 +145,7 @@ Fargate is less cost-effective for sustained high-throughput workloads compared 
 
 ---
 
-## [19:30 - 22:00] Container Architecture Integration
-
-[SHOW DIAGRAM]
+## Container Architecture Integration
 
 A production container architecture on AWS typically includes:
 
@@ -179,7 +163,7 @@ Auto Scaling: ECS service auto scaling adjusts the desired task count based on C
 
 ---
 
-## [22:00 - 24:00] Module Summary
+## Module Summary
 
 Containers package application code and dependencies into portable, isolated units. Amazon ECR stores container images.
 

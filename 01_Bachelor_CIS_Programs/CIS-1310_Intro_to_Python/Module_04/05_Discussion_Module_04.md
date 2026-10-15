@@ -99,7 +99,7 @@ In 175–225 words, respond to the following:
 
 ## Tips for a Strong Post
 
-**Be specific about the error mechanism.** Instead of "Python gave the wrong grade," write "When I entered 95, Python evaluated `95 >= 60` as `True` on the first `if` branch, assigned `'D'`, and skipped all remaining `elif` blocks — because only the first matching condition runs."
+**Be specific about the error mechanism.** Instead of "Python gave the wrong grade," write "When I entered 95, Python evaluated `95 >= 60` as `True` on the first `if` branch, assigned `'D'`, and skipped all remaining `elif` blocks — because only the first matching condition runs.
 
 **Connect to real software.** Scenario A and C ask you to think beyond the lab. Consider apps that handle money, health, or safety-critical data, where a silent wrong answer could have real consequences.
 

@@ -110,7 +110,7 @@ Create an IP Address Management spreadsheet for the Main Branch network.
 
 ### Step 4: Create Subnet Tab
 
-Create a spreadsheet with two tabs: "Subnets" and "Static Assignments."
+Create a spreadsheet with two tabs: "Subnets" and "Static Assignments.
 
 On the Subnets tab, create columns and fill in a row for each subnet:
 

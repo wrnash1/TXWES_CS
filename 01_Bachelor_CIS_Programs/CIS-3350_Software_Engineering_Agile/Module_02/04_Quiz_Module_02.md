@@ -221,7 +221,7 @@ Agile Manifesto Principle 9 states that "continuous attention to technical excel
 - A) Scheduling a code review only before the final Sprint release
 - B) Incorporating refactoring and automated testing as ongoing activities within every Sprint
 - C) Assigning a dedicated quality assurance team to test after each Sprint
-- D) Delaying architectural improvements until a designated "hardening Sprint"
+- D) Delaying architectural improvements until a designated "hardening Sprint
 
 - **Correct Answer:** B
 - **Distractor Analysis:**
@@ -361,6 +361,6 @@ According to the Agile Manifesto, what is the correct relationship between an Ag
 
 - **Correct Answer:** C
 - **Distractor Analysis:**
-  - A) Incorrect — The Manifesto does not prohibit contracts; Value 3 says "customer collaboration over contract negotiation," not "no contracts."
+  - A) Incorrect — The Manifesto does not prohibit contracts; Value 3 says "customer collaboration over contract negotiation," not "no contracts.
   - B) Incorrect — Locking a complete feature list is a Waterfall practice that conflicts with welcoming change (Value 4 and Principle 2).
   - D) Incorrect — The Product Owner maximizes product value, which means continuously re-prioritizing based on new information, not enforcing a fixed original scope.

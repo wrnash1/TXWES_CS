@@ -28,13 +28,9 @@
 
 ## Pre-Roll Slate
 
-**[SHOW SLIDE: Course title card — "CIS-4328 Information Security | Module 01 | Texas Wesleyan University"]**
-
 ---
 
 ## Opening
-
-**[INSTRUCTOR ON CAMERA]**
 
 Welcome to CIS-4328 Information Security. I'm Professor Nash, and this is Module 01 — Threats, Attacks, and Vulnerabilities.
 
@@ -45,8 +41,6 @@ Before we can defend anything, we have to understand what we are defending again
 ---
 
 ## Section 1 — The CIA Triad
-
-**[SHOW DIAGRAM: Triangle with three labeled vertices — Confidentiality (top), Integrity (bottom-left), Availability (bottom-right). Center label reads "CIA Triad — Foundation of Information Security." Below each vertex: Confidentiality = Encryption; Integrity = Hashing; Availability = Redundancy.]**
 
 **[Alt-text: An equilateral triangle. The top vertex is labeled Confidentiality. The bottom-left vertex is labeled Integrity. The bottom-right vertex is labeled Availability. The center reads CIA Triad. Below each vertex is a one-line control example.]**
 
@@ -65,8 +59,6 @@ There is a fourth concept that extends the triad: **Non-repudiation**. Non-repud
 ---
 
 ## Section 2 — Security Controls Framework
-
-**[SHOW DIAGRAM: Two-axis grid. Horizontal axis shows three Control Categories: Physical, Technical/Logical, Administrative/Managerial. Vertical axis shows six Control Functions: Preventive, Detective, Corrective, Deterrent, Compensating, Directive. Representative examples appear in each cell.]**
 
 **[Alt-text: A six-by-three grid titled Security Controls Framework. Columns are Physical, Technical, Administrative. Rows are Preventive, Detective, Corrective, Deterrent, Compensating, Directive. Sample cell values: Physical/Preventive = Mantrap; Technical/Preventive = Firewall; Administrative/Preventive = Acceptable Use Policy; Physical/Detective = Security Camera; Technical/Detective = IDS/SIEM; Administrative/Detective = Security Audit; Technical/Corrective = Backup Restore; Physical/Deterrent = Warning Signs; Technical/Compensating = Encryption when patching is delayed.]**
 
@@ -93,8 +85,6 @@ The six control functions:
 
 ## Section 3 — Threat Actors and Their Attributes
 
-**[SHOW DIAGRAM: Table with five columns — Threat Actor Type, Motivation, Technical Sophistication, Resources, Typical Attack Vector. Five rows: Nation-State, Organized Crime, Hacktivist, Insider Threat, Script Kiddie.]**
-
 **[Alt-text: A five-column comparison table titled Threat Actor Attributes. Row 1: Nation-State — Espionage and Disruption, Advanced, Nation-level funding, Zero-days and supply chain. Row 2: Organized Crime — Financial gain, High, Well-funded networks, Ransomware and banking trojans. Row 3: Hacktivist — Ideology, Moderate, Crowdsourced, Website defacement and DDoS. Row 4: Insider Threat — Revenge or financial or accidental, Varies, Authorized access, Data exfiltration and sabotage. Row 5: Script Kiddie — Notoriety, Low, Minimal, Pre-built exploit tools.]**
 
 A **threat actor** is any individual, group, or entity that poses a potential danger to an organization's information systems. The SY0-701 exam expects you to identify threat actors by their attributes — motivation, sophistication, and resources — because those attributes determine the nature of the attack.
@@ -112,8 +102,6 @@ A **threat actor** is any individual, group, or entity that poses a potential da
 ---
 
 ## Section 4 — Vulnerability Classes
-
-**[SHOW DIAGRAM: Hierarchy chart titled Vulnerability Classes. Top node: Vulnerability. Four child nodes: Software Flaw, Misconfiguration, Weak Credential, Missing Patch. Each child has two sub-nodes with examples.]**
 
 **[Alt-text: A hierarchy diagram. Root node: Vulnerability. Four branches: Software Flaw — sub-nodes Buffer Overflow and Race Condition; Misconfiguration — sub-nodes Default Credentials and Open Ports; Weak Credential — sub-node Password Reuse; Missing Patch — sub-node Publicly Known CVE.]**
 
@@ -139,8 +127,6 @@ Common vulnerability classes:
 
 ## Section 5 — Active vs. Passive Attacks
 
-**[SHOW DIAGRAM: Two-column comparison table. Left column header: Passive Attacks. Right column header: Active Attacks. A vertical dividing line is labeled with the question: "Does the attack modify data?" Left = No. Right = Yes.]**
-
 **[Alt-text: Two-column table. Left column: Passive Attacks — Eavesdropping captures traffic without modification; Traffic Analysis infers information from patterns; Shoulder Surfing observes input visually. Right column: Active Attacks — Replay retransmits captured valid packets; Injection inserts malicious content into a data stream; Man-in-the-Middle intercepts and modifies communication; Denial of Service overwhelms resources to deny access.]**
 
 The SY0-701 exam distinguishes between passive and active attacks.
@@ -157,8 +143,6 @@ The SY0-701 exam distinguishes between passive and active attacks.
 ---
 
 ## Closing — Part 1
-
-**[INSTRUCTOR ON CAMERA]**
 
 In Part 1 we covered the CIA Triad and non-repudiation, the security controls framework with three categories and six functions, the five major threat actor types and their distinguishing attributes, common vulnerability classes, and the distinction between passive and active attacks.
 

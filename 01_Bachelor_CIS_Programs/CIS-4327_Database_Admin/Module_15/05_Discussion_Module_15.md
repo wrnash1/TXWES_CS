@@ -93,7 +93,7 @@ Address the following:
 
 1. Define SLOs for both databases. For each, specify the SLI (what you measure),
    the SLO target (numerical), the measurement window, and what constitutes a
-   "bad minute" for error budget tracking. Consider that Spanner and Cloud SQL have
+   bad minute" for error budget tracking. Consider that Spanner and Cloud SQL have
    fundamentally different failure modes.
 
 2. The SRE team wants to run monthly automated failover tests for Cloud SQL and wants

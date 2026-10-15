@@ -442,7 +442,7 @@ connections to 25. Which command is correct?
 ### Question 14 (5 points)
 
 You check a DFS Namespace folder and find that a folder target is marked as
-"offline." Users report they cannot access `\\txwes.edu\Shared\Projects`. Which
+offline." Users report they cannot access `\\txwes.edu\Shared\Projects`. Which
 PowerShell command brings the folder target back online?
 
 - A) `Set-DfsnFolder -Path "\\txwes.edu\Shared\Projects" -State Online`

@@ -28,17 +28,17 @@
 
 ---
 
-### [00:00 – 02:00] Introduction
+### Introduction
 
 **Visual:** Instructor on camera with title card: **Reporting and Dashboard Design**.
 
-**Audio:** "Welcome to Module 13. This week we step back from writing code and focus on communicating data. Even the most sophisticated analysis has no value if the person making decisions cannot understand or trust what you are showing them. This module covers the business intelligence tools professionals use most — Tableau, Power BI, and Looker — along with dashboard design principles, KPI selection, data storytelling, and stakeholder communication. These topics appear directly on the CompTIA Data+ exam in Domain 4, Data Visualization. Let's get into it."
+**Audio:** "Welcome to Module 13. This week we step back from writing code and focus on communicating data. Even the most sophisticated analysis has no value if the person making decisions cannot understand or trust what you are showing them. This module covers the business intelligence tools professionals use most — Tableau, Power BI, and Looker — along with dashboard design principles, KPI selection, data storytelling, and stakeholder communication. These topics appear directly on the CompTIA Data+ exam in Domain 4, Data Visualization. Let's get into it.
 
 **Study Link:** [Tableau Public Training Resources](https://public.tableau.com/en-us/s/resources)
 
 ---
 
-### [02:00 – 06:00] Business Intelligence Tools Overview
+### Business Intelligence Tools Overview
 
 **Visual:** Side-by-side screenshots of Tableau Desktop, Power BI Desktop, and a Looker dashboard.
 
@@ -52,11 +52,11 @@
 
 **Looker** is a cloud-based BI platform owned by Google. Its unique feature is LookML — a modeling language that defines metrics and dimensions once in a central repository so every analyst in the organization calculates revenue the same way. Looker is common in data-mature technology companies.
 
-For the Data+ exam you do not need deep tool expertise. You need to understand what category of problem each tool solves and how they differ architecturally."
+For the Data+ exam you do not need deep tool expertise. You need to understand what category of problem each tool solves and how they differ architecturally.
 
 ---
 
-### [06:00 – 10:00] Dashboard Design Principles
+### Dashboard Design Principles
 
 **Visual:** Split screen comparing a cluttered dashboard with 14 charts versus a clean dashboard with 4 focused KPI tiles and charts. Red annotations highlight problems in the cluttered version.
 
@@ -72,11 +72,11 @@ Three — Consistent color encoding. Pick one color to mean good and one to mean
 
 Four — Remove chart junk. Gridlines, 3D effects, legends when labels will do, and decorative borders all compete with the data for attention.
 
-Five — Proximity and grouping. Related metrics belong next to each other. Whitespace between groups signals a topic boundary."
+Five — Proximity and grouping. Related metrics belong next to each other. Whitespace between groups signals a topic boundary.
 
 ---
 
-### [10:00 – 13:30] KPI Selection
+### KPI Selection
 
 **Visual:** A two-column table: left shows vanity metrics; right shows actionable KPIs.
 
@@ -86,15 +86,15 @@ Five — Proximity and grouping. Related metrics belong next to each other. Whit
 
 A common trap is reporting **vanity metrics** — numbers that look impressive but do not drive decisions. Total website visitors is a vanity metric. Conversion rate — the percentage of visitors who complete a purchase — is a KPI. Total support tickets closed is a vanity metric. Average resolution time is a KPI.
 
-For the Data+ exam, know the difference between a metric, a KPI, and a benchmark. A metric is any quantitative measurement. A KPI is a metric tied to a strategic objective with a target and a direction. A benchmark is a reference value used to evaluate performance in context."
+For the Data+ exam, know the difference between a metric, a KPI, and a benchmark. A metric is any quantitative measurement. A KPI is a metric tied to a strategic objective with a target and a direction. A benchmark is a reference value used to evaluate performance in context.
 
 ---
 
-### [13:30 – 17:00] Storytelling with Data
+### Storytelling with Data
 
 **Visual:** A four-panel sequence: raw data table → single chart → annotated chart → one-sentence insight statement.
 
-**Alt-text:** Four-panel progression. Panel 1: a raw spreadsheet. Panel 2: a line chart of monthly revenue. Panel 3: the same chart with an annotation circle and callout "March drop caused by warehouse outage." Panel 4: text reading "Revenue recovered in April after a temporary March disruption; Q2 on track to exceed target."
+**Alt-text:** Four-panel progression. Panel 1: a raw spreadsheet. Panel 2: a line chart of monthly revenue. Panel 3: the same chart with an annotation circle and callout "March drop caused by warehouse outage." Panel 4: text reading "Revenue recovered in April after a temporary March disruption; Q2 on track to exceed target.
 
 **Audio:** "Data storytelling is the practice of combining data, visualization, and narrative to communicate a finding in a way that drives action. The classic structure is:
 
@@ -106,11 +106,11 @@ Third — **Evidence.** Show the chart or table that supports the finding. Annot
 
 Fourth — **Implication.** What should happen next? What decision does this data support?
 
-This four-part structure works for a one-page executive summary, a five-minute presentation, or a single email. Lead with the insight, not the methodology."
+This four-part structure works for a one-page executive summary, a five-minute presentation, or a single email. Lead with the insight, not the methodology.
 
 ---
 
-### [17:00 – 20:30] Stakeholder Communication
+### Stakeholder Communication
 
 **Visual:** A two-by-two persona matrix with four stakeholder types and their communication preferences.
 
@@ -120,15 +120,15 @@ This four-part structure works for a one-page executive summary, a five-minute p
 
 The common mistake analysts make is presenting data in the format that makes sense to them — detailed, technically precise, hedged with caveats — to an audience that makes decisions at a strategic level.
 
-Key communication rules for the Data+ exam: match detail to role; always label axes, units, and time periods; provide data definitions for any metric that might be calculated differently across teams; and always state the data's recency — 'as of last Monday' or 'refreshed daily at 6 AM.'"
+Key communication rules for the Data+ exam: match detail to role; always label axes, units, and time periods; provide data definitions for any metric that might be calculated differently across teams; and always state the data's recency — 'as of last Monday' or 'refreshed daily at 6 AM.'
 
 ---
 
-### [20:30 – 22:00] Exam Connection and Wrap-Up
+### Exam Connection and Wrap-Up
 
 **Visual:** Data+ domain map with Domain 4 — Data Visualization — highlighted.
 
-**Audio:** "Domain 4 covers approximately 20 to 24 percent of Data+ exam questions, making it one of the highest-value domains to study. Expect questions about chart type selection for a given scenario, dashboard design principles, the difference between KPI and metric and benchmark, and how to match communication format to audience. The reading guide this week covers every chart type on the exam. The lab has you producing a dashboard design document. See you there."
+**Audio:** "Domain 4 covers approximately 20 to 24 percent of Data+ exam questions, making it one of the highest-value domains to study. Expect questions about chart type selection for a given scenario, dashboard design principles, the difference between KPI and metric and benchmark, and how to match communication format to audience. The reading guide this week covers every chart type on the exam. The lab has you producing a dashboard design document. See you there.
 
 ---
 

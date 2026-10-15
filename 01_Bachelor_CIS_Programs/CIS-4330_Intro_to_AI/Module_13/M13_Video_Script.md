@@ -10,8 +10,6 @@
 
 ## SEGMENT 1 — Hook and Module Overview (Slides 1–3) [3 min]
 
-[ON CAMERA]
-
 Welcome to Module 13. Let me start with a number: $15.7 trillion. That is the projected contribution of artificial intelligence to the global economy by 2030, according to PricewaterhouseCoopers. AI is not just a technology story — it is an economics story.
 
 But here is what that number does not tell you: most organizations that invest in AI do not see returns anywhere close to what the hype suggests. The difference between the companies that succeed and the companies that do not is almost never the algorithm. It is the business strategy, the implementation approach, and the organizational readiness.

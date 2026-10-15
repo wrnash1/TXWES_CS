@@ -46,7 +46,7 @@ Strong initial posts will:
 
 - Address two or more prompts with specific technical detail
 - Name commands, tools, or configuration options from the module
-- Describe trade-offs rather than presenting a single "right answer"
+- Describe trade-offs rather than presenting a single "right answer
 - Connect the technical content to a realistic failure mode or production scenario
 
 Strong response posts will:

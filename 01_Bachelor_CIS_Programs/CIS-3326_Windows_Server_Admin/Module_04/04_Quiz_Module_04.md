@@ -100,7 +100,7 @@ A) Managed Service Account (MSA)
 
 B) Group Managed Service Account (gMSA)
 
-C) Standard user account with "Password never expires"
+C) Standard user account with "Password never expires
 
 D) Domain Local group with service logon rights
 

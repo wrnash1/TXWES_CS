@@ -1,5 +1,23 @@
 # Video Script: Module 06 – Quality Management
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Google Career Certificates &bull; IT Project Management &bull; Module 06</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" title="Google Career Certificates &bull; IT Project Management" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Google Career Certificates &bull; IT Project Management</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3310 IT Project Management
 **Estimated Duration:** 21 minutes
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
@@ -7,20 +25,18 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 – 03:00]
-
+## Section 1: Welcome and Module Overview
 Welcome back to CIS-3310. I am Professor Nash, and this is Module 06: Quality Management. After defining scope, building the schedule, and planning costs, this module asks: how do we make sure the deliverables we produce actually meet the standards required?
 
 Quality management in project management is not about perfection — it is about fitness for use. Does the deliverable do what the stakeholder needs it to do, at the standard they expect?
 
-[SHOW SLIDE] Module 06 title: "Quality Management"
+ Module 06 title: "Quality Management
 
 Today we cover four topics: the quality management process flow; Quality Assurance vs. Quality Control; the Cost of Quality; and the Seven Basic Quality Tools.
 
 ---
 
-## Section 2: Quality Management Process Flow [03:00 – 06:30]
-
+## Section 2: Quality Management Process Flow
 PMI defines three processes in Quality Management.
 
 Plan Quality Management — identifies the quality standards applicable to the project and determines how to satisfy them. The output is the Quality Management Plan, which defines metrics, standards, and the approach to both QA and QC.
@@ -29,13 +45,12 @@ Manage Quality — formerly called Quality Assurance, this is the execution-phas
 
 Control Quality — the Monitoring and Controlling process of inspecting completed deliverables to verify they meet the quality requirements. It is reactive and product-focused. The output includes quality control measurements and verified deliverables.
 
-[SHOW SLIDE] Three Quality Management processes mapped to Process Groups
+ Three Quality Management processes mapped to Process Groups
 
 ---
 
-## Section 3: Quality Assurance vs. Quality Control [06:30 – 11:00]
-
-[SHOW SLIDE] QA vs. QC comparison table
+## Section 3: Quality Assurance vs. Quality Control
+ QA vs. QC comparison table
 
 The distinction between Quality Assurance and Quality Control is the most frequently tested quality concept on the Project+ exam.
 
@@ -51,9 +66,8 @@ The relationship between QA and QC is that QA findings may trigger QC activities
 
 ---
 
-## Section 4: Cost of Quality [11:00 – 14:00]
-
-[SHOW SLIDE] Cost of Quality breakdown diagram
+## Section 4: Cost of Quality
+ Cost of Quality breakdown diagram
 
 The Cost of Quality (COQ) framework recognizes that quality-related costs fall into two categories.
 
@@ -73,15 +87,14 @@ The goal of quality management is to invest enough in conformance costs to reduc
 
 ---
 
-## Section 5: Seven Basic Quality Tools [14:00 – 20:00]
-
-[SHOW SLIDE] Seven Basic Quality Tools list
+## Section 5: Seven Basic Quality Tools
+ Seven Basic Quality Tools list
 
 PMI identifies seven basic quality tools. Each has a specific purpose and is tested on the exam.
 
 Cause-and-Effect Diagram (Fishbone or Ishikawa): a visual tool that identifies potential root causes of a quality problem. The problem is the fish's head; the bones represent categories of causes (people, process, equipment, materials, environment, measurement). Used to brainstorm causes before implementing corrective action.
 
-[SHOW SLIDE] Fishbone diagram example
+ Fishbone diagram example
 
 Flowchart (Process Map): a diagram showing the sequential steps in a process, including decision points. Used to analyze a process for inefficiencies or failure points.
 
@@ -89,7 +102,7 @@ Checksheet: a simple tally form used in real time to record how often specific d
 
 Pareto Chart: a bar chart that ranks defect categories from most to least frequent. Based on the 80/20 principle — roughly 80% of defects come from 20% of causes. The PM uses the Pareto chart to prioritize which issues to address first.
 
-[SHOW SLIDE] Pareto chart example
+ Pareto chart example
 
 Histogram: a bar chart showing the frequency distribution of data. Used to identify patterns in defect data over time.
 
@@ -101,8 +114,7 @@ Scatter Diagram: a graph plotting two variables against each other to reveal whe
 
 ---
 
-## End Card [20:00 – 21:00]
-
+## End Card
 Module 06 is complete. Complete the Reading Guide, which includes a full quality tools reference; complete the Lab where you will apply quality tools to an IT scenario; take the Quiz; post your Discussion by Wednesday.
 
 Quality management study resources at professormesser.com and comptia.org.

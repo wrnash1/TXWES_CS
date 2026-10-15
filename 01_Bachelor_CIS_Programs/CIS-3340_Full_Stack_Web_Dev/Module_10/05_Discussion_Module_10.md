@@ -14,7 +14,7 @@ Choose **one** of the three scenarios below and write a 175–225 word response 
 
 ## Scenario A — Choosing Between useState and useReducer
 
-A junior developer on your team asks for advice. They are building a checkout form with four fields (name, email, address, creditCard), a validation state object that tracks errors for each field, and a `submitted` boolean. They are considering whether to use four separate `useState` calls, one `useState` with a large object, or `useReducer`. They say "it seems like overkill to use useReducer for just a form."
+A junior developer on your team asks for advice. They are building a checkout form with four fields (name, email, address, creditCard), a validation state object that tracks errors for each field, and a `submitted` boolean. They are considering whether to use four separate `useState` calls, one `useState` with a large object, or `useReducer`. They say "it seems like overkill to use useReducer for just a form.
 
 Explain the tradeoffs between the three approaches for this specific situation. Describe at least one concrete problem you have experienced or can anticipate with the separate `useState` approach as the form grows. Explain what specifically changes about the code structure when you switch to `useReducer` and how that change improves or complicates the developer experience. Give your recommendation with a clear justification.
 
@@ -34,7 +34,7 @@ You made a strong case for `useReducer`. I want to add that the testability argu
 
 ## Scenario B — React Query vs Manual Fetch
 
-Your team has a dashboard that displays five different data panels: recent orders, inventory levels, top customers, pending shipments, and revenue chart data. The current implementation uses five separate `useEffect` hooks with five `useState` pairs (loading, data). A new team member suggests replacing all of it with React Query. Another team member says "we already have it working — React Query is just extra complexity."
+Your team has a dashboard that displays five different data panels: recent orders, inventory levels, top customers, pending shipments, and revenue chart data. The current implementation uses five separate `useEffect` hooks with five `useState` pairs (loading, data). A new team member suggests replacing all of it with React Query. Another team member says "we already have it working — React Query is just extra complexity.
 
 Respond to both positions. Explain specifically what React Query provides beyond what the current `useEffect` approach does. Identify at least one concrete scenario where the manual approach fails in a way that React Query solves out of the box. Discuss whether adding React Query to an existing codebase is justified in this case.
 

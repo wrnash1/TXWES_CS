@@ -172,7 +172,7 @@ When you see "Sign in with Google" and the app knows who you are (not just that 
 
 The relationship:
 
-- **OAuth 2.0** — answers "what can this app access?"
+- **OAuth 2.0** — answers "what can this app access?
 
 - **OIDC** — answers "who is this user?" and provides a verified identity assertion.
 

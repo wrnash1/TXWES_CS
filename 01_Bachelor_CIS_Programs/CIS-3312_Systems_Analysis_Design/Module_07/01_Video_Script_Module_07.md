@@ -28,11 +28,8 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 - 02:30]
-
+## Section 1: Welcome and Module Overview
 Welcome to Module 07. I am Professor Nash. Today we are covering Requirements Elicitation Techniques — one of the most essential skill sets in business analysis and one of the most heavily tested areas on the IIBA ECBA exam.
-
-[SHOW DIAGRAM: Title slide — "Module 07: Requirements Elicitation Techniques" with BABOK Guide v3 KA 4 label and IIBA ECBA certification badge]
 
 Elicitation is the process of drawing out, discovering, and capturing stakeholder needs and requirements. Notice the word "drawing out" — requirements are rarely handed to you fully formed. They must be surfaced through disciplined techniques that help stakeholders articulate what they need, often including needs they themselves have not yet consciously identified.
 
@@ -40,9 +37,7 @@ BABOK Guide v3 covers elicitation as part of Knowledge Area 4 — Elicitation an
 
 ---
 
-## Section 2: Why Elicitation Is Difficult [02:30 - 05:00]
-
-[SHOW DIAGRAM: The requirements iceberg — visible portion above waterline labeled "Stated requirements"; large submerged portion labeled "Unstated needs, tacit knowledge, assumed requirements, contradictions, unknown unknowns"]
+## Section 2: Why Elicitation Is Difficult
 
 Requirements elicitation sounds straightforward: ask people what they need. In practice, it is one of the most challenging activities in any systems project. Here is why.
 
@@ -54,9 +49,7 @@ Finally, stakeholders sometimes do not know what they want until they see what t
 
 ---
 
-## Section 3: Interview Techniques [05:00 - 09:00]
-
-[SHOW DIAGRAM: Interview types comparison — Structured (fixed question list, consistent across all subjects) vs. Unstructured (open-ended conversation, flexible follow-up) vs. Semi-structured (core questions plus adaptive follow-up)]
+## Section 3: Interview Techniques
 
 Interviews are the most fundamental elicitation technique. A BA meets with a stakeholder — individually or in a small group — to ask questions, listen carefully, and probe for depth and clarity.
 
@@ -68,17 +61,13 @@ Interviews are the most fundamental elicitation technique. A BA meets with a sta
 
 **Semi-structured interviews** are the most common BA approach: a prepared set of core questions ensures key topics are covered, but the interviewer has freedom to probe interesting responses and follow tangential threads.
 
-[PAUSE]
-
 ### Effective Interview Techniques
 
 Ask open-ended questions first: "Describe what happens when a customer order arrives." Follow with clarifying probes: "You mentioned an exception — what triggers that?" Use silence strategically — stakeholders often fill silence with important information if the interviewer does not rush to the next question. Record interviews (with permission) or take detailed notes immediately after.
 
 ---
 
-## Section 4: Workshops and JAD Sessions [09:00 - 12:00]
-
-[SHOW DIAGRAM: Workshop layout — facilitator at front, stakeholders from multiple departments around a table, visual outputs (whiteboard, sticky notes, wireframes) on the wall, showing cross-functional collaboration]
+## Section 4: Workshops and JAD Sessions
 
 ### Requirements Workshops
 
@@ -96,9 +85,7 @@ JAD sessions produce high stakeholder engagement and rapid consensus because dec
 
 ---
 
-## Section 5: Observation [12:00 - 14:30]
-
-[SHOW DIAGRAM: Observation types — passive observation (BA watches without participating, takes notes) vs. active observation (BA participates in the work alongside subject, asks questions during the process)]
+## Section 5: Observation
 
 Observation — sometimes called ethnography in academic contexts — involves the BA watching how work is actually performed rather than asking how it is supposed to be performed. This distinction is critical.
 
@@ -108,15 +95,11 @@ People describe their work ideally. They forget about workarounds, exception han
 
 **Active observation** allows the BA to ask questions during the work session. This is useful for immediately clarifying what is being observed but can interrupt the natural flow of work.
 
-[PAUSE]
-
 Observation is the elicitation technique most likely to surface tacit knowledge — the rules and patterns that experienced workers follow automatically without conscious awareness. It is most effective when combined with interviews: observe first, then interview based on what you saw.
 
 ---
 
-## Section 6: Document Analysis and Surveys [14:30 - 17:30]
-
-[SHOW DIAGRAM: Document analysis inputs — existing system documentation, process manuals, sample reports, data schemas, regulatory requirements, audit reports — all pointing to BA analysis output: documented existing requirements, constraints, data elements]
+## Section 6: Document Analysis and Surveys
 
 ### Document Analysis
 
@@ -136,9 +119,7 @@ The limitation of surveys is that they cannot probe unexpected responses. If a s
 
 ---
 
-## Section 7: Prototyping [17:30 - 19:30]
-
-[SHOW DIAGRAM: Prototyping types — throwaway prototype (paper wireframe or low-fidelity mockup, used to elicit feedback, then discarded) vs. evolutionary prototype (incrementally refined into the actual system)]
+## Section 7: Prototyping
 
 A prototype is a partial, preliminary representation of a system that stakeholders can interact with or react to in order to elicit and validate requirements. Prototyping is particularly effective because it concretizes abstract requirements — stakeholders can see and react to a tangible representation rather than responding to verbal or written descriptions.
 
@@ -150,9 +131,7 @@ Prototyping is most effective when stakeholders struggle to articulate requireme
 
 ---
 
-## Section 8: Requirements Documentation and Stakeholder Management [19:30 - 22:00]
-
-[SHOW DIAGRAM: Requirements documentation hierarchy — Business requirements (why) → Stakeholder requirements (who needs what) → Solution requirements (what the system must do: functional + non-functional) → Transition requirements (how to get from current to future state)]
+## Section 8: Requirements Documentation and Stakeholder Management
 
 ### Requirements Documentation
 

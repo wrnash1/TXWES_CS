@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -39,9 +39,7 @@ EC2 is AWS's primary compute service and a major focus of the SAA-C03 exam. Whet
 
 ---
 
-## [01:30 - 07:00] EC2 Instance Types and Families
-
-[SHOW DIAGRAM]
+## EC2 Instance Types and Families
 
 EC2 instances come in families, each optimized for a different workload type. The SAA-C03 exam presents scenario questions where you must match the workload description to the correct instance family. Let me walk through each family.
 
@@ -55,15 +53,11 @@ EC2 instances come in families, each optimized for a different workload type. Th
 
 **Accelerated Computing (P, G, Inf, and Trn families)** — hardware accelerators for GPU compute and machine learning. P4d, P3: ML model training, high-performance computing, graphics rendering. G4dn, G5: ML inference, video transcoding, game streaming. Inf1, Inf2: high-throughput, low-latency ML inference using AWS Inferentia chips. Trn1: ML training using AWS Trainium. The exam pattern: GPU, machine learning, graphics, or deep learning workloads.
 
-[SHOW DIAGRAM]
-
 Instance naming convention breakdown — let me decode this. Take `m6g.2xlarge`: `m` is the family (general purpose), `6` is the generation (higher = newer), `g` is the attribute (in this case, Graviton — AWS's ARM-based processor), `2xlarge` is the size within the family. Common attribute letters: `a` = AMD processor, `g` = AWS Graviton ARM processor, `i` = Intel processor, `n` = enhanced networking, `d` = NVMe local storage, `e` = extra storage or memory.
 
 ---
 
-## [07:00 - 11:00] EC2 Purchasing Options
-
-[SHOW DIAGRAM]
+## EC2 Purchasing Options
 
 Choosing the right purchasing option is as important as choosing the right instance type for cost optimization — which is 20% of the SAA-C03 exam. There are four main options.
 
@@ -79,9 +73,7 @@ Exam pattern: match the workload description to the purchasing model. Consistent
 
 ---
 
-## [11:00 - 15:30] EC2 Auto Scaling
-
-[SHOW DIAGRAM]
+## EC2 Auto Scaling
 
 EC2 Auto Scaling automatically adjusts the number of instances in a fleet based on demand. It consists of three components: the Launch Template (or Launch Configuration), the Auto Scaling Group, and the scaling policies.
 
@@ -99,17 +91,13 @@ Scheduled Scaling adds or removes capacity at a specific time. Use this when you
 
 Predictive Scaling uses machine learning to forecast future load based on historical patterns and pre-scales capacity before the load arrives. Use this for workloads with predictable daily or weekly traffic cycles.
 
-[SHOW DIAGRAM]
-
 The SAA-C03 exam frequently asks about the relationship between Auto Scaling and load balancers. When you attach an Auto Scaling Group to an Application Load Balancer, the ALB automatically registers new instances as targets when they are launched and deregisters them when they are terminated. Health checks flow in both directions — the ASG uses EC2 health checks AND ALB health checks to determine instance health.
 
 Connection draining (called deregistration delay on ALB) ensures that when an instance is being terminated, the load balancer stops sending new requests to it while allowing in-flight requests to complete. The default is 300 seconds. For long-running requests, increase this value. For short-lived connections, decrease it to speed up scale-in.
 
 ---
 
-## [15:30 - 19:30] Elastic Load Balancing
-
-[SHOW DIAGRAM]
+## Elastic Load Balancing
 
 AWS offers four types of load balancers. Choosing the right one is a frequent SAA-C03 exam question.
 
@@ -129,9 +117,7 @@ Exam pattern for load balancer selection:
 
 ---
 
-## [19:30 - 22:00] Putting It Together — Multi-AZ Scalable Architecture
-
-[SHOW DIAGRAM]
+## Putting It Together — Multi-AZ Scalable Architecture
 
 Let me describe the canonical multi-AZ, load-balanced, auto-scaled architecture you will design on the SAA-C03 exam:
 
@@ -145,7 +131,7 @@ This pattern achieves:
 
 ---
 
-## [22:00 - 24:00] Module Summary and Exam Preview
+## Module Summary and Exam Preview
 
 Instance families: General Purpose (M, T) for balanced; Compute Optimized (C) for CPU-intensive; Memory Optimized (R, X) for in-memory; Storage Optimized (I, D) for local I/O; Accelerated Computing (P, G, Inf) for GPU and ML.
 

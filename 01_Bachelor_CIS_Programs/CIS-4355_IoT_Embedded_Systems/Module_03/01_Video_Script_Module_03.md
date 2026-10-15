@@ -7,8 +7,7 @@
 
 ---
 
-## Segment 1: Introduction and Learning Objectives [00:00 – 02:00]
-
+## Segment 1: Introduction and Learning Objectives
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -41,9 +40,7 @@ Let us start with why C is everywhere in embedded systems.
 
 ---
 
-## Segment 2: Why C Dominates Embedded Programming [02:00 – 06:00]
-
-[SHOW DIAGRAM]
+## Segment 2: Why C Dominates Embedded Programming
 
 C has been the dominant language for embedded systems since the 1970s and remains so today. There are three reasons: predictable memory layout, direct hardware access, and deterministic performance.
 
@@ -67,8 +64,7 @@ C compiles to machine code. The compiled program runs at the processor's native 
 
 ---
 
-## Segment 3: Key C Concepts for Embedded Programming [06:00 – 11:00]
-
+## Segment 3: Key C Concepts for Embedded Programming
 [SHOW CODE]
 
 Let me walk through the embedded C concepts you need to know for the lab and the exam.
@@ -128,9 +124,7 @@ static uint16_t readings[16]; // 16-element ADC reading buffer
 
 ---
 
-## Segment 4: Introduction to MicroPython [11:00 – 15:00]
-
-[SHOW DIAGRAM]
+## Segment 4: Introduction to MicroPython
 
 MicroPython is a lean implementation of Python 3 designed to run directly on microcontrollers with modest resources: as little as 256 KB of flash and 16 KB of RAM. It was created by Damien George in 2013 and has grown into a mature platform supported on the ESP32, ESP8266, Raspberry Pi Pico, STM32, and many other chips.
 
@@ -148,8 +142,7 @@ MicroPython is also substantially easier to debug. You can connect to the REPL (
 
 ---
 
-## Segment 5: MicroPython DHT11 Sensor Example [15:00 – 19:30]
-
+## Segment 5: MicroPython DHT11 Sensor Example
 [SHOW CODE]
 
 Let us write real MicroPython code to read a DHT11 temperature and humidity sensor and print the results to the serial console. This is the exact code you will study and modify in the lab.
@@ -206,8 +199,7 @@ The `try/except OSError` block is critical. DHT sensors occasionally miss a read
 
 ---
 
-## Segment 6: Embedded C Security Vulnerabilities [19:30 – 21:30]
-
+## Segment 6: Embedded C Security Vulnerabilities
 Before we close, I need to cover three security vulnerabilities that are specific to embedded C programming. These appear on the CompTIA IoT+ exam and in real-world IoT security audits.
 
 ### Buffer Overflow
@@ -232,8 +224,7 @@ Although dynamic allocation is avoided in most embedded C, when it is used, use-
 
 ---
 
-## Segment 7: Summary and Lab Preview [21:30 – 23:00]
-
+## Segment 7: Summary and Lab Preview
 C provides predictable memory layout, direct hardware register access, and deterministic timing — all critical for constrained microcontrollers. MicroPython provides Python syntax on microcontrollers, trading execution speed for development speed and interactive debugging, making it ideal for rapid IoT prototyping.
 
 Key C embedded programming patterns: use fixed-width integer types, use static memory allocation, use bitwise operations for register control, avoid dynamic allocation, and always bounds-check input.

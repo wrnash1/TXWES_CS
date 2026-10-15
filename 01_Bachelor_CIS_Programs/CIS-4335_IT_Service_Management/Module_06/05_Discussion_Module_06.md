@@ -16,7 +16,7 @@ Reference specific step numbers and step names from the seven-step model. Vague 
 
 ## Scenario A: The Overwhelmed Help Desk
 
-A mid-size insurance company's IT help desk handles 350 tickets per day with a team of 8 agents. Performance data shows: average resolution time of 6.4 hours (target: 3 hours), first-contact resolution of 19% (target: 55%), customer satisfaction score of 2.4 out of 5.0, and 40% of tickets are password resets that require no troubleshooting. The IT manager says: "We know we need to improve, but we do not even know where to start. Everything seems urgent."
+A mid-size insurance company's IT help desk handles 350 tickets per day with a team of 8 agents. Performance data shows: average resolution time of 6.4 hours (target: 3 hours), first-contact resolution of 19% (target: 55%), customer satisfaction score of 2.4 out of 5.0, and 40% of tickets are password resets that require no troubleshooting. The IT manager says: "We know we need to improve, but we do not even know where to start. Everything seems urgent.
 
 Respond to all three of the following prompts:
 
@@ -28,7 +28,7 @@ Respond to all three of the following prompts:
 
 ## Scenario B: The Stalled Improvement Register
 
-A government IT agency has maintained a Continual Improvement Register for three years. The current CIR has 94 items. An audit reveals: 61 items have been in "idea" status for more than one year; 12 items are marked "in progress" but have had no update in six months; 8 items were closed as "completed" but no outcome was documented; and only 13 items have ever resulted in a measurable change. Staff have stopped submitting improvement ideas because "they just go into a black hole."
+A government IT agency has maintained a Continual Improvement Register for three years. The current CIR has 94 items. An audit reveals: 61 items have been in "idea" status for more than one year; 12 items are marked "in progress" but have had no update in six months; 8 items were closed as "completed" but no outcome was documented; and only 13 items have ever resulted in a measurable change. Staff have stopped submitting improvement ideas because "they just go into a black hole.
 
 Respond to all three of the following prompts:
 

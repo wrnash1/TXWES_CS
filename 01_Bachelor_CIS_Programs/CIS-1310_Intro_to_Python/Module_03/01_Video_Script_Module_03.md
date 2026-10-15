@@ -26,31 +26,25 @@
 
 ---
 
-## [00:00 – 00:45] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 03 | Variables and Basic I/O | CIS-1310"]**
-
-"Welcome back, everyone. We're in Module 03 now, and this is where Python starts to feel like an actual programming language rather than a calculator.
+Welcome back, everyone. We're in Module 03 now, and this is where Python starts to feel like an actual programming language rather than a calculator.
 
 So far you've worked with literal values — you typed `42` or `'Hello'` directly into the REPL and Python gave you the result. But real programs don't work with fixed values — they work with data that changes: a user's name, a temperature reading, a bank balance, a product count. To work with changing data, we need **variables**.
 
-This module covers three tightly connected topics: variables and naming rules, dynamic typing, and basic input and output. These are foundational skills that every single module from here forward depends on. Let's go."
+This module covers three tightly connected topics: variables and naming rules, dynamic typing, and basic input and output. These are foundational skills that every single module from here forward depends on. Let's go.
 
 ---
 
-## [00:45 – 02:30] What Is a Variable?
+## What Is a Variable?
 
-**[SHOW SLIDE: "Variables — Named Storage for Values"]**
-
-"A **variable** is a named label that points to a value stored in memory. When you write:
+A **variable** is a named label that points to a value stored in memory. When you write:
 
 ```python
 age = 25
 ```
 
 You are telling Python: 'Create a place in memory to hold the value `25`, and give that place the name `age`.' Now whenever you use `age` in your code, Python looks up what value is stored under that name.
-
-**[DEMO — REPL]**
 
 ```python
 >>> age = 25
@@ -75,15 +69,13 @@ You can reassign a variable at any time:
 30
 ```
 
-The old value `25` is gone. `age` now points to `30`. Variables are not permanent — they hold whatever was most recently assigned to them."
+The old value `25` is gone. `age` now points to `30`. Variables are not permanent — they hold whatever was most recently assigned to them.
 
 ---
 
-## [02:30 – 05:00] Variable Naming Rules and PEP 8 Conventions
+## Variable Naming Rules and PEP 8 Conventions
 
-**[SHOW SLIDE: "Variable Naming — Rules and Conventions"]**
-
-"Python has strict rules for what makes a valid variable name. The PCAP exam will show you names and ask you to identify which are valid. Know these rules cold.
+Python has strict rules for what makes a valid variable name. The PCAP exam will show you names and ask you to identify which are valid. Know these rules cold.
 
 ### The Rules (enforced by Python)
 
@@ -119,8 +111,6 @@ The old value `25` is gone. `age` now points to `30`. Variables are not permanen
 
 **Rule 4:** You cannot use Python **reserved keywords** as variable names. Keywords are words Python uses for its own syntax.
 
-**[PAUSE]**
-
 Here are all 35 Python 3 reserved keywords:
 
 ```text
@@ -143,17 +133,13 @@ These aren't enforced by Python — they're conventions that professional develo
 - Variable names should be **descriptive** — `student_count` is better than `sc` or `n`.
 - Avoid single-letter names except for loop counters (`i`, `j`, `k`) or coordinates (`x`, `y`).
 
-The PCAP exam tests both the rules (what Python enforces) and the naming conventions (what PEP 8 recommends)."
+The PCAP exam tests both the rules (what Python enforces) and the naming conventions (what PEP 8 recommends).
 
 ---
 
-## [05:00 – 06:30] Dynamic Typing
+## Dynamic Typing
 
-**[SHOW SLIDE: "Dynamic Typing — Python Determines Types at Runtime"]**
-
-"Python is a **dynamically typed** language. This means you never declare a variable's type. Python determines the type automatically based on the value you assign.
-
-**[DEMO]**
+Python is a **dynamically typed** language. This means you never declare a variable's type. Python determines the type automatically based on the value you assign.
 
 ```python
 >>> x = 42
@@ -179,15 +165,13 @@ Dynamic typing makes Python flexible and fast to write. But it also means Python
 TypeError: can only concatenate str (not 'int') to str
 ```
 
-Python didn't know `x` would be used for arithmetic. It only caught the problem when you actually tried to add an `int` to a `str`. This is the trade-off of dynamic typing — flexibility comes with the responsibility to track your own types."
+Python didn't know `x` would be used for arithmetic. It only caught the problem when you actually tried to add an `int` to a `str`. This is the trade-off of dynamic typing — flexibility comes with the responsibility to track your own types.
 
 ---
 
-## [06:30 – 07:45] Multiple Assignment and Augmented Assignment
+## Multiple Assignment and Augmented Assignment
 
-**[SHOW SLIDE: "Multiple Assignment and Augmented Operators"]**
-
-"Python gives you convenient shorthand for several assignment patterns.
+Python gives you convenient shorthand for several assignment patterns.
 
 **Multiple assignment — assign multiple variables in one line:**
 
@@ -239,15 +223,13 @@ These combine an arithmetic operation with assignment:
 3
 ```
 
-All seven arithmetic operators have augmented forms: `+=`, `-=`, `*=`, `/=`, `//=`, `%=`, `**=`. These are used everywhere in Python — loops, accumulators, counters."
+All seven arithmetic operators have augmented forms: `+=`, `-=`, `*=`, `/=`, `//=`, `%=`, `**=`. These are used everywhere in Python — loops, accumulators, counters.
 
 ---
 
-## [07:45 – 10:00] The print() Function — Full Control Over Output
+## The print() Function — Full Control Over Output
 
-**[SHOW SLIDE: "print() — Output to the Screen"]**
-
-"You have been using `print()` since Module 01. Now let's cover its full capabilities.
+You have been using `print()` since Module 01. Now let's cover its full capabilities.
 
 **Multiple arguments:**
 
@@ -281,8 +263,6 @@ Loading...Done
 
 By default, `print()` adds a newline `\n` at the end. Setting `end=''` or `end='...'` changes that behavior.
 
-**[DEMO — show loop with end parameter]**
-
 ```python
 >>> for i in range(5):
 ...     print(i, end=' ')
@@ -312,17 +292,13 @@ You can embed any expression inside `{}` — not just variable names:
 Total: $59.97
 ```
 
-The `:2f` format spec rounds the float to 2 decimal places. f-strings are tested on the PCAP exam."
+The `:2f` format spec rounds the float to 2 decimal places. f-strings are tested on the PCAP exam.
 
 ---
 
-## [10:00 – 12:30] The input() Function — Getting Data from Users
+## The input() Function — Getting Data from Users
 
-**[SHOW SLIDE: "input() — Reading User Input"]**
-
-"The `input()` function lets your programs interact with users. It pauses execution, shows a prompt, waits for the user to type something and press Enter, and returns what they typed.
-
-**[DEMO — run in script mode, not REPL, to show interactive flow]**
+The `input()` function lets your programs interact with users. It pauses execution, shows a prompt, waits for the user to type something and press Enter, and returns what they typed.
 
 ```python
 name = input('What is your name? ')
@@ -383,17 +359,13 @@ The PCAP exam tests `input()` behavior heavily. Three things to remember:
 
 1. `input()` always returns `str`
 2. `input('prompt')` displays the prompt text — no extra space is added automatically, so put a space before the closing quote: `input('Enter name: ')`
-3. `int(input())` — conversion wraps the entire `input()` call"
+3. `int(input())` — conversion wraps the entire `input()` call
 
 ---
 
-## [12:30 – 14:00] Putting It Together — Interactive Program
+## Putting It Together — Interactive Program
 
-**[SHOW SLIDE: "Putting It All Together"]**
-
-**[DEMO — show final script]**
-
-"Let me show you a complete interactive program that uses everything from this module:
+Let me show you a complete interactive program that uses everything from this module:
 
 ```python
 # profile.py
@@ -419,15 +391,13 @@ print()
 print(f'Welcome to Texas Wesleyan, {name}!')
 ```
 
-This script uses `input()` with type conversion, f-strings with format specs, and augmented assignment. It's a complete, working, useful program — about 15 lines."
+This script uses `input()` with type conversion, f-strings with format specs, and augmented assignment. It's a complete, working, useful program — about 15 lines.
 
 ---
 
-## [14:00 – 15:00] PCAP Exam Tips & Wrap-Up
+## PCAP Exam Tips & Wrap-Up
 
-**[SHOW SLIDE: "Module 03 — PCAP Alignment"]**
-
-"Key exam take-aways:
+Key exam take-aways:
 
 **1.** `input()` always returns `str` — even if the user types a number.
 
@@ -443,7 +413,7 @@ This script uses `input()` with type conversion, f-strings with format specs, an
 
 In your Module 03 lab, you will write a greeting program, a unit converter, and trigger `TypeError` and `ValueError` intentionally to see the exact error messages.
 
-Module 04 covers control flow — `if`, `elif`, `else` — where variables and input really start working together to make decisions. See you there."
+Module 04 covers control flow — `if`, `elif`, `else` — where variables and input really start working together to make decisions. See you there.
 
 ---
 

@@ -133,7 +133,7 @@ txwes.edu domain.
 Key attributes on a user object include:
 
 - **sAMAccountName** — the pre-Windows 2000 logon name, also called the
-  "username." Must be unique in the domain. Maximum 20 characters.
+  username." Must be unique in the domain. Maximum 20 characters.
 
 - **userPrincipalName (UPN)** — the email-style logon name such as
   jsmith@txwes.edu. Preferred for modern authentication. Must be unique in

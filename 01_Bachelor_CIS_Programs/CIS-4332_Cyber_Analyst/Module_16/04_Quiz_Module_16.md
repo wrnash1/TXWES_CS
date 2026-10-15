@@ -211,7 +211,7 @@ A CySA+ exam question asks: "Which phase of the NIST 800-61 Incident Response li
 
 ## Question 14
 
-A CySA+ scenario asks: "An analyst investigates a phishing compromise and determines the attacker used the compromised account to access SharePoint, download 2,400 files from a finance folder, and send 15 internal emails impersonating the compromised user. Which NIST 800-61 information impact category best describes this incident?"
+A CySA+ scenario asks: "An analyst investigates a phishing compromise and determines the attacker used the compromised account to access SharePoint, download 2,400 files from a finance folder, and send 15 internal emails impersonating the compromised user. Which NIST 800-61 information impact category best describes this incident?
 
 - A) None — no data left the organization's environment
 - B) Privacy Breach — personally identifiable information may have been accessed

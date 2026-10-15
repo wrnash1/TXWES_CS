@@ -68,7 +68,7 @@ Traditional networking embeds both the control plane and the data plane inside e
 Every network device has three logical planes:
 
 * The management plane handles out-of-band management traffic — SSH sessions, SNMP, syslog. This is how you configure the device.
-* The control plane makes forwarding decisions — routing protocols, spanning tree, ARP. This is the device's "brain."
+* The control plane makes forwarding decisions — routing protocols, spanning tree, ARP. This is the device's "brain.
 * The data plane forwards packets based on what the control plane decided. This runs at hardware speed in ASICs.
 
 ### SDN Architecture

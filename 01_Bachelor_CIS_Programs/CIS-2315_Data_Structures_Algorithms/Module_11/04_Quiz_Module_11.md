@@ -391,7 +391,7 @@ After running Dijkstra on a connected graph from source `s`, a vertex `v` has `d
 
 - *Why A is incorrect:* Dijkstra computes shortest distances from source to all reachable nodes — outgoing edges from v are irrelevant to whether v is reachable from s. Even if v has many outgoing edges, it may still be unreachable from s in a directed graph.
 - *Why B is incorrect:* Negative-weight edges cause Dijkstra to produce incorrect results for graphs with them — but the result would be a wrong finite distance, not necessarily infinity. Infinity means v was never reached via any path.
-- *Why C is correct:* After Dijkstra completes on a connected undirected graph, all vertices have finite distances. In a directed graph, some vertices may be unreachable from s (no directed path from s to v). These vertices remain at `float('inf')` because no relaxation ever updates them. Remaining at infinity is Dijkstra's way of indicating "no path found."
+- *Why C is correct:* After Dijkstra completes on a connected undirected graph, all vertices have finite distances. In a directed graph, some vertices may be unreachable from s (no directed path from s to v). These vertices remain at `float('inf')` because no relaxation ever updates them. Remaining at infinity is Dijkstra's way of indicating "no path found.
 - *Why D is incorrect:* The premise states "after running Dijkstra" — the algorithm has completed. Remaining `float('inf')` is the algorithm's result, not an incomplete state.
 
 ---

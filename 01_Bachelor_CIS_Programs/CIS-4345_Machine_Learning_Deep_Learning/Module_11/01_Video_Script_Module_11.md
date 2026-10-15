@@ -30,8 +30,6 @@
 
 ## SEGMENT 1 — Introduction and Motivation (0:00–2:30)
 
-**[ON CAMERA]**
-
 Welcome back. I'm Professor Nash, and this is Module 11 of CIS-4345.
 
 Here is a question I want you to sit with for a moment. Training a state-of-the-art image classifier from scratch on ImageNet — 1.2 million images, 1000 classes — takes roughly two to three weeks on a cluster of high-end GPUs. The research teams at Google and Microsoft that built VGG16, ResNet, and MobileNet spent months and enormous computational budgets developing those models.
@@ -64,7 +62,7 @@ Let's get started.
 
 To understand why transfer learning works, we need to revisit what CNNs actually learn.
 
-In Module 7 we studied convolutional networks. You learned that early layers learn low-level features — edges, colors, gradients. Middle layers combine those into textures and shapes. Deep layers learn high-level, task-specific representations — "this looks like a wheel" or "this is a face."
+In Module 7 we studied convolutional networks. You learned that early layers learn low-level features — edges, colors, gradients. Middle layers combine those into textures and shapes. Deep layers learn high-level, task-specific representations — "this looks like a wheel" or "this is a face.
 
 Here is the key insight: **low- and mid-level features are generic**. An edge detector is useful whether you are classifying dogs, cars, X-rays, or satellite images. The network has already learned a general visual vocabulary. Only the deepest layers are highly task-specific.
 
@@ -284,8 +282,6 @@ Notice the `preprocess_input` call — each pretrained model family expects its 
 ---
 
 ## SEGMENT 8 — Wrap-Up and Certification Alignment (21:30–24:00)
-
-**[ON CAMERA]**
 
 Let's wrap up.
 

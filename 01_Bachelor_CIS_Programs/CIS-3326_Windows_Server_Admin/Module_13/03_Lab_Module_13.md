@@ -413,7 +413,7 @@ content, and measure the savings rate.
 1. A storage administrator creates a Storage Spaces pool with five 4 TB disks and
    a dual parity virtual disk, expecting maximum capacity with two-failure
    tolerance. Six months later, two disks fail simultaneously. The pool shows
-   "Degraded" status and data is inaccessible. The administrator is surprised
+   Degraded" status and data is inaccessible. The administrator is surprised
    because dual parity should survive two failures. What is the most likely
    explanation, and what monitoring and alerting practice would have prevented
    the data loss?

@@ -7,8 +7,7 @@
 
 ---
 
-## Segment 1: Introduction and Learning Objectives [00:00 – 02:00]
-
+## Segment 1: Introduction and Learning Objectives
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -44,9 +43,7 @@ Let us get started.
 
 ---
 
-## Segment 2: Microcontrollers vs. Single-Board Computers [02:00 – 06:30]
-
-[SHOW DIAGRAM]
+## Segment 2: Microcontrollers vs. Single-Board Computers
 
 Before we touch code, we need to understand the fundamental difference between these two device categories, because confusing them on an exam or in a job interview is a meaningful error.
 
@@ -89,15 +86,11 @@ Strengths: full operating system, built-in networking, runs the entire Linux sof
 
 Limitations: higher power consumption (3 to 7 watts idle, up to 15 watts peak), 15 to 30 second boot time, not suited for hard real-time control where microsecond timing is required, higher cost per unit.
 
-[SHOW DIAGRAM]
-
 The practical decision rule: use Arduino-class microcontrollers when you need real-time control, battery operation, or sub-millisecond timing. Use Raspberry Pi-class single-board computers when you need networking, complex software, file storage, or need to run multiple services simultaneously.
 
 ---
 
-## Segment 3: Arduino Hardware and Pin Layout [06:30 – 10:30]
-
-[SHOW DIAGRAM]
+## Segment 3: Arduino Hardware and Pin Layout
 
 Let me walk through the physical Arduino Uno board so you can orient yourself before the lab.
 
@@ -131,8 +124,7 @@ The analog pins connect to the ATmega328P's 10-bit ADC. They convert a voltage i
 
 ---
 
-## Segment 4: Arduino Sketch Structure and Blink Example [10:30 – 14:30]
-
+## Segment 4: Arduino Sketch Structure and Blink Example
 [SHOW CODE]
 
 Every Arduino program is called a sketch. Every sketch has exactly two required functions: `setup()` and `loop()`.
@@ -179,9 +171,7 @@ For the full Arduino language reference covering every built-in function, visit 
 
 ---
 
-## Segment 5: Raspberry Pi GPIO and Python Script [14:30 – 18:30]
-
-[SHOW DIAGRAM]
+## Segment 5: Raspberry Pi GPIO and Python Script
 
 The Raspberry Pi 4's GPIO header is a 40-pin connector along the top edge of the board. Not all 40 pins are programmable GPIO.
 
@@ -235,9 +225,7 @@ Second, the `try/except KeyboardInterrupt` block combined with `GPIO.cleanup()` 
 
 ---
 
-## Segment 6: Choosing the Right Platform [18:30 – 20:30]
-
-[SHOW DIAGRAM]
+## Segment 6: Choosing the Right Platform
 
 Let me give you a practical decision framework for choosing between Arduino and Raspberry Pi.
 
@@ -261,8 +249,7 @@ In professional IoT deployments you often use both together. The microcontroller
 
 ---
 
-## Segment 7: Summary and Lab Preview [20:30 – 22:00]
-
+## Segment 7: Summary and Lab Preview
 The core distinction: microcontrollers like the ATmega328P in the Arduino Uno run one program directly on bare hardware with no OS, providing deterministic real-time behavior at very low power. Single-board computers like the Raspberry Pi run a full Linux OS offering rich networking, software ecosystems, and computational power at the cost of higher power consumption and boot overhead.
 
 Arduino sketches require `setup()` for one-time initialization and `loop()` for continuous execution. GPIO pins on both platforms support digital input, digital output, analog input via ADC, PWM output, and hardware communication buses.

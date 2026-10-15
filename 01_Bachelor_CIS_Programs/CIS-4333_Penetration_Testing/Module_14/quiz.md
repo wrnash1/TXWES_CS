@@ -32,7 +32,7 @@ D. 18 U.S.C. § 1343 — Wire Fraud
 
 **Distractor Analysis:**
 
-- A is incorrect. The ECPA (18 U.S.C. § 2511) governs the interception of electronic communications. While relevant to packet capture without authorization, it does not directly address unauthorized computer access or "exceeding authorization."
+- A is incorrect. The ECPA (18 U.S.C. § 2511) governs the interception of electronic communications. While relevant to packet capture without authorization, it does not directly address unauthorized computer access or "exceeding authorization.
 - B is correct. The CFAA (18 U.S.C. § 1030) specifically prohibits both unauthorized access and access that "exceeds authorized access" to protected computers. Testing beyond the authorized scope constitutes exceeding authorization.
 - C is incorrect. The GLBA pretexting provisions address obtaining customer financial information through false pretenses. They do not directly govern unauthorized computer system access.
 - D is incorrect. Wire Fraud (18 U.S.C. § 1343) could theoretically apply if fraud was used to obtain access, but it is not the most direct statute. The CFAA specifically addresses unauthorized computer access.

@@ -50,7 +50,7 @@ experienced six P1 incidents — three of which had warning events logged in the
 monitoring system 20–45 minutes before the outage occurred, but no one acted on them
 because the alert dashboard was too noisy to identify what mattered.
 
-Priya's CISO argues the solution is "more monitoring — more data, better coverage."
+Priya's CISO argues the solution is "more monitoring — more data, better coverage.
 Priya disagrees.
 
 Using ITIL 4 Monitoring and Event Management concepts, explain why more monitoring data
@@ -68,10 +68,10 @@ incident was resolved. The war room worked well — coordinated response, clear 
 timely stakeholder communications.
 
 However, the CTO is now asking: "Why did this happen? How do we make sure it never
-happens again?"
+happens again?
 
 The Incident Manager responds: "We fixed the problem. The system is back up. The
-incident is closed."
+incident is closed.
 
 The CTO is frustrated by this answer — and rightly so according to ITIL 4.
 

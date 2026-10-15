@@ -1,5 +1,23 @@
 # Video Script: Module 08 – Communications Management
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Google Career Certificates &bull; IT Project Management &bull; Module 08</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" title="Google Career Certificates &bull; IT Project Management" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Google Career Certificates &bull; IT Project Management</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3310 IT Project Management
 **Estimated Duration:** 22 minutes
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
@@ -7,18 +25,16 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 – 03:00]
-
+## Section 1: Welcome and Module Overview
 Welcome back to CIS-3310. I am Professor Nash, and this is Module 08: Communications Management. Research consistently shows that project managers spend 80 to 90 percent of their time communicating. That number sounds high, but think about everything communication encompasses: status reports, stakeholder briefings, team meetings, escalation emails, vendor negotiations, and change control documentation. Communication is not an add-on to project work — it is the connective tissue that holds every other knowledge area together.
 
-[SHOW SLIDE] Module 08 title: "Communications Management"
+ Module 08 title: "Communications Management
 
 Today we cover: the communications management process flow; the communication channels formula; communication methods (push, pull, and interactive); the Communications Management Plan; and communication barriers and best practices. These concepts appear in both the CompTIA Project+ exam and in real project work, so pay close attention to the specific terminology.
 
 ---
 
-## Section 2: The Communications Management Process Flow [03:00 – 07:00]
-
+## Section 2: The Communications Management Process Flow
 PMI defines three processes in Communications Management.
 
 Plan Communications Management creates the Communications Management Plan, which documents who needs what information, when they need it, in what format, and through which channel. This is done during Planning and is updated as stakeholder needs evolve.
@@ -27,15 +43,14 @@ Manage Communications is the Executing process. This is where you actually creat
 
 Monitor Communications is a Monitoring and Controlling process. You evaluate whether the communications plan is working — are stakeholders getting the information they need? Are they satisfied with the frequency and format? If communications are not effective, you update the plan and improve the approach.
 
-[SHOW SLIDE] Communication management process chain
+ Communication management process chain
 
 > **Project+ Exam Tip:** Know which process group each communications process belongs to. Plan Communications Management is in Planning. Manage Communications is in Executing. Monitor Communications is in Monitoring and Controlling. Exam questions often ask which process is the correct context for a described activity.
 
 ---
 
-## Section 3: The Communication Channels Formula [07:00 – 11:00]
-
-[SHOW SLIDE] Communication channels formula with worked example
+## Section 3: The Communication Channels Formula
+ Communication channels formula with worked example
 
 The communication channels formula is one of the most frequently tested calculations on the Project+ exam. The formula is:
 
@@ -51,9 +66,8 @@ Now consider a more realistic scenario. You have a project with 10 stakeholders.
 
 ---
 
-## Section 4: Communication Methods — Push, Pull, and Interactive [11:00 – 16:00]
-
-[SHOW SLIDE] Push, Pull, Interactive communication methods with examples
+## Section 4: Communication Methods — Push, Pull, and Interactive
+ Push, Pull, Interactive communication methods with examples
 
 PMI categorizes communication methods into three types. Understanding which type applies in a given scenario is an important exam skill.
 
@@ -67,9 +81,8 @@ Pull communication makes information available for recipients to retrieve on the
 
 ---
 
-## Section 5: The Communications Management Plan and Barriers [16:00 – 21:00]
-
-[SHOW SLIDE] Communications Management Plan components
+## Section 5: The Communications Management Plan and Barriers
+ Communications Management Plan components
 
 The Communications Management Plan documents the communication approach for the entire project. It is a component of the Project Management Plan and is developed during Plan Communications Management. Key components include:
 
@@ -87,7 +100,7 @@ How to escalate issues: the escalation path if a communication is not acknowledg
 
 The Communications Management Plan should also address communication constraints — for example, a board member who is not available by email and requires a weekly printed summary.
 
-[SHOW SLIDE] Communication barriers and noise model
+ Communication barriers and noise model
 
 Effective communication requires a clear sender, an accurate message, an appropriate medium, and a ready receiver. Barriers that degrade communication quality include language and terminology differences, physical distance and time zones, cultural differences in directness and communication norms, information overload, technology failures, and noise in the channel. A good Communications Management Plan anticipates these barriers and builds mitigations.
 
@@ -95,8 +108,7 @@ Effective communication requires a clear sender, an accurate message, an appropr
 
 ---
 
-## End Card [21:00 – 22:00]
-
+## End Card
 Module 08 is complete. Complete the Reading Guide, complete the Lab where you will build a Communications Management Plan for a realistic project scenario, take the Quiz, and post your Discussion by Wednesday.
 
 Module 09 covers Risk Management — the systematic process of identifying, analyzing, and responding to project risks. We will cover the risk register, qualitative and quantitative risk analysis, and the five risk response strategies. See you there.

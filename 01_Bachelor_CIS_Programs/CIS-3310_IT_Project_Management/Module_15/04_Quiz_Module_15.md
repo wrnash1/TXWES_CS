@@ -150,7 +150,7 @@ independence is not the primary issue. B is incorrect — the story could be neg
 to be more specific, but that is not what it currently violates. D is incorrect — the
 story is not unusually large in scope. C is correct — "fast and easy to use" cannot be
 tested because there is no measurable threshold defined. A testable story would specify
-"loads in under 2 seconds" and "achieves a System Usability Scale score of 75 or above."
+loads in under 2 seconds" and "achieves a System Usability Scale score of 75 or above.
 
 ---
 

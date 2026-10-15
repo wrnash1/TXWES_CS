@@ -40,8 +40,6 @@ We will cover: the order of volatility, forensic imaging and write blockers, has
 
 ## SEGMENT 2 — Order of Volatility (1:30–5:00)
 
-[SHOW DIAGRAM: Order of volatility pyramid — RAM at top, disk at bottom, network at bottom-right]
-
 The order of volatility is the principle that governs what you collect first at a forensic scene. The rule is straightforward: collect the most volatile evidence first, because it disappears when you are not looking.
 
 At the top of the volatility ladder is RAM — physical memory. Everything in RAM is gone the moment the system powers off. And RAM contains the most investigatively valuable data on a running compromised system: active malware processes, decrypted file encryption keys, cleartext credentials loaded into memory, injected shellcode that exists nowhere on disk, and live network connections showing exactly who the attacker is communicating with right now. RAM acquisition must come first.
@@ -59,8 +57,6 @@ The exam frequently tests this hierarchy in scenario questions. When you see a r
 ---
 
 ## SEGMENT 3 — Forensic Imaging and Write Blockers (5:00–9:00)
-
-[SHOW DIAGRAM: Write blocker between suspect drive and forensic workstation — arrows showing blocked write path]
 
 After collecting volatile evidence, you need to create a forensic image of the storage media — a bit-for-bit copy of every sector on the drive, including unallocated space, deleted file remnants, and file system metadata.
 
@@ -116,8 +112,6 @@ Final disposition: when the investigation concludes, evidence is either returned
 
 ## SEGMENT 6 — Legal Holds and Forensic Preservation (14:30–17:00)
 
-[SHOW DIAGRAM: Legal hold process — notification triggers preservation, evidence feeds litigation]
-
 A legal hold is a directive from an organization's legal team to preserve all data and documents potentially relevant to anticipated or active litigation or regulatory investigation. The legal hold obligation supersedes the normal data retention and deletion schedules.
 
 Here is why this matters for an IR analyst: if you are conducting a forensic investigation on systems that are also under a legal hold, you must coordinate with legal counsel before taking any action that modifies or deletes data. Destroying or modifying data subject to a legal hold is called spoliation — and courts take it seriously. Spoliating evidence can result in sanctions, adverse jury instructions, or losing the legal case entirely.
@@ -129,8 +123,6 @@ IR investigation and legal hold can coexist — in fact, a well-documented foren
 ---
 
 ## SEGMENT 7 — Forensic Artifacts on Windows Systems (17:00–19:30)
-
-[SHOW DIAGRAM: Windows artifact map — registry, event logs, prefetch, browser history, MFT]
 
 When you analyze a Windows disk image, there are specific artifact categories that yield the highest investigative value.
 

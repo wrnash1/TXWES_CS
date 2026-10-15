@@ -50,8 +50,6 @@ A phone number field in a customer record must have different quality standards 
 
 [SHOW CHART — Six dimensions of data quality as a hexagon diagram]
 
-[PAUSE]
-
 Data quality is measured along six dimensions. Let's go through each one.
 
 ---
@@ -66,8 +64,6 @@ Example: A customer database lists a customer's city as "Dallas" but the custome
 
 How to assess accuracy: compare records against authoritative external sources (address verification services, government registries, third-party data enrichment).
 
-[PAUSE]
-
 ### Completeness
 
 Completeness is the degree to which all required data is present.
@@ -78,8 +74,6 @@ Completeness is often measured as a percentage: `completeness = non_null_records
 
 Note that completeness and accuracy are independent. A record can be complete (all fields filled) but inaccurate (wrong values). It can also be accurate but incomplete (right values where present, but some required fields missing).
 
-[PAUSE]
-
 ### Consistency
 
 Consistency is the degree to which data values across different systems or datasets agree with each other.
@@ -87,8 +81,6 @@ Consistency is the degree to which data values across different systems or datas
 Example: The customer address in the CRM system says "123 Main St." The same customer's address in the billing system says "123 Main Street." Both might be correct representations of the same address, but they are inconsistent — queries joining the two systems will fail to match the records.
 
 Consistency issues often arise during system integrations and data migrations.
-
-[PAUSE]
 
 ### Timeliness
 
@@ -98,8 +90,6 @@ Example: Customer contact data that was last updated 3 years ago may be outdated
 
 Timeliness is not just about how old the data is — it is about whether the data is current enough for its intended use. A monthly financial report can tolerate month-old data. A real-time fraud detection system cannot tolerate data that is 2 seconds old.
 
-[PAUSE]
-
 ### Validity
 
 Validity is the degree to which data conforms to defined business rules, formats, and constraints.
@@ -107,8 +97,6 @@ Validity is the degree to which data conforms to defined business rules, formats
 Example: A date field contains the value "February 30, 2024" — that date does not exist. An email field contains "john_at_email.com" — missing the @ symbol. An age field contains -5. All three are invalid.
 
 Validity checks include: range checks, format checks, referential integrity checks, and business rule validation.
-
-[PAUSE]
 
 ### Uniqueness
 
@@ -134,8 +122,6 @@ A data steward is a person (or team) assigned responsibility for a specific data
 - Coordinating with IT on data source systems
 - Training data creators and consumers on standards
 
-[PAUSE]
-
 Data stewardship is distinct from data ownership. A **data owner** is typically an executive or business leader who has ultimate accountability for a data domain — they make strategic decisions about how data is used. A data steward handles the operational execution of those decisions.
 
 [SHOW CHART — RACI matrix: Data Owner, Data Steward, IT (DBA), Data Consumer roles]
@@ -151,8 +137,6 @@ Master data is the core business data that is shared across multiple systems —
 **Master Data Management** (MDM) is the discipline of creating and maintaining a single, authoritative, consistent record for each master data entity — called the **golden record** or **system of record**.
 
 [SHOW CHART — MDM architecture: multiple source systems → MDM hub → golden records → downstream systems]
-
-[PAUSE]
 
 ### Why MDM Matters
 
@@ -173,8 +157,6 @@ MDM solves this by establishing a single golden record for "Acme Corporation" wi
 - **Coexistence style:** Golden records are created and synchronized back to source systems.
 - **Centralized style:** Source systems are replaced; all writes go to the MDM hub.
 
-[PAUSE]
-
 ---
 
 ## Segment 6: Data Catalogs (14:00–16:30)
@@ -191,8 +173,6 @@ A data catalog contains:
 - **Certifications** — which datasets are officially endorsed as authoritative
 
 [SHOW CHART — Data catalog UI screenshot mockup showing search results with metadata, quality scores, and lineage]
-
-[PAUSE]
 
 ### Why Data Catalogs Matter
 
@@ -224,8 +204,6 @@ The 11 DAMA knowledge areas are:
 10. Metadata Management
 11. Data Quality
 
-[PAUSE]
-
 For the Data+ exam, you do not need to memorize all 11 areas. What you need to know:
 
 - Data governance is the overarching discipline that enables all other data management areas
@@ -237,8 +215,6 @@ For the Data+ exam, you do not need to memorize all 11 areas. What you need to k
 ## Segment 8: Data Quality in SQL (18:30–20:00)
 
 You can assess data quality directly using SQL — checking completeness, validity, uniqueness, and consistency in a database.
-
-[PAUSE]
 
 ```sql
 -- Completeness check: percentage of non-null email addresses
@@ -263,8 +239,6 @@ HAVING COUNT(*) > 1
 ORDER BY occurrence_count DESC;
 ```
 
-[PAUSE]
-
 These simple queries give you an immediate picture of data quality issues in any relational dataset. Real data profiling tools automate these checks across thousands of columns.
 
 ---
@@ -272,8 +246,6 @@ These simple queries give you an immediate picture of data quality issues in any
 ## Segment 9: Module Summary (20:00–21:30)
 
 Let me wrap up.
-
-[PAUSE]
 
 The six dimensions of data quality:
 

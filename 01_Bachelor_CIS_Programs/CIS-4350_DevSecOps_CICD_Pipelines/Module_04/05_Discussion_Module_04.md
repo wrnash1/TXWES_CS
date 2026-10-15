@@ -30,7 +30,7 @@ Your classmate proposed a prioritization framework for remediating 47 images. Is
 
 ## Scenario 2 — Distroless vs. Developer Productivity
 
-Your security team mandates that all production container images must use `gcr.io/distroless` base images, citing the lack of shell as a critical attack surface reduction. Three development teams push back with the same argument: "Our on-call engineers need to exec into containers to debug production issues. Without a shell, we're flying blind during incidents."
+Your security team mandates that all production container images must use `gcr.io/distroless` base images, citing the lack of shell as a critical attack surface reduction. Three development teams push back with the same argument: "Our on-call engineers need to exec into containers to debug production issues. Without a shell, we're flying blind during incidents.
 
 Take a position. Is the security team's mandate reasonable given the stated trade-off? What alternative debugging approaches exist that do not require a shell in the production image — for example, debug containers in Kubernetes, sidecar debugging patterns, or structured logging with distributed tracing? If you were writing the policy, how would you balance the security mandate with legitimate operational needs? Consider whether the "no shell in production" principle should apply equally to all container types or whether there are justified exceptions. Reference at least one specific tool or technique from this module or your own research.
 

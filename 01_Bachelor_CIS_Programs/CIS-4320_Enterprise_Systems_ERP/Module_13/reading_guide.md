@@ -96,7 +96,7 @@ Object permissions in Salesforce are six flags per object per profile or permiss
 - **View All:** see all records regardless of sharing settings
 - **Modify All:** edit and delete all records regardless of sharing settings
 
-"View All" and "Modify All" are powerful bypasses of record-level sharing. Use them sparingly — only for administrators or specific operational roles that genuinely need system-wide access.
+View All" and "Modify All" are powerful bypasses of record-level sharing. Use them sparingly — only for administrators or specific operational roles that genuinely need system-wide access.
 
 ### Field-Level Security
 
@@ -202,7 +202,7 @@ Salesforce's platform does not natively enforce SoD through a rule engine, but a
 
 **Record types and page layouts** can restrict what fields are visible at different stages of a process, preventing users from modifying data they should not touch after certain milestones.
 
-**Validation rules** enforce business rules at the data level — for example, a rule that prevents any user from changing the invoice total after the status is "Approved."
+**Validation rules** enforce business rules at the data level — for example, a rule that prevents any user from changing the invoice total after the status is "Approved.
 
 **Third-party tools** such as Salesforce Shield Event Monitoring provide activity-level audit data that compliance teams can use to detect SoD violations after the fact, even when prevention-only controls are not feasible.
 
@@ -335,8 +335,6 @@ Security topics tested include:
 ---
 
 *Document prepared for CIS-4320 instructional use. Texas Wesleyan University. Proprietary and Confidential.*
-
-
 
 ---
 

@@ -161,7 +161,7 @@ Examples: locks, badge readers, security guards, fences, cable locks, environmen
 
 ### Combining the Dimensions
 
-The two classification dimensions can be combined. A security camera is a physical, detective control. An acceptable use policy is an administrative, directive control. Network segmentation is a technical, preventive control. This combined classification is how Security+ scenario questions are structured: "What type of control is a firewall? A physical detective control / A technical preventive control / An administrative corrective control / A physical deterrent control?"
+The two classification dimensions can be combined. A security camera is a physical, detective control. An acceptable use policy is an administrative, directive control. Network segmentation is a technical, preventive control. This combined classification is how Security+ scenario questions are structured: "What type of control is a firewall? A physical detective control / A technical preventive control / An administrative corrective control / A physical deterrent control?
 
 **The answer: a technical preventive control.**
 

@@ -348,11 +348,11 @@ Salesforce's role in supply chain is primarily in order management (connecting s
 Complete before attempting the quiz:
 
 - **Salesforce Trailhead — Salesforce Order Management**
-  URL: trailhead.salesforce.com — search "Salesforce Order Management Basics"
+  URL: trailhead.salesforce.com — search "Salesforce Order Management Basics
   Covers how Salesforce handles order fulfillment — relevant for understanding CRM-SCM integration.
 
 - **Salesforce Trailhead — Manufacturing Cloud Basics**
-  URL: trailhead.salesforce.com — search "Manufacturing Cloud Basics"
+  URL: trailhead.salesforce.com — search "Manufacturing Cloud Basics
   Covers Salesforce's industry cloud for manufacturing — relevant for understanding how CRM connects to supply chain planning.
 
 ---
@@ -498,8 +498,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

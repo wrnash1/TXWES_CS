@@ -24,7 +24,7 @@ Scaling is where Agile idealism meets organizational reality. Every organization
 
 GlobalBank has twelve development teams building their core banking platform. Each team owns a component: authentication, transaction processing, account management, reporting, notifications, and so on. Teams frequently block each other — the Notification team cannot complete a story without a new API endpoint from the Transaction team, which itself needs schema changes from the Account Management team.
 
-The organization's CTO has proposed adopting SAFe. She argues that PI Planning will force the teams to surface these dependencies early and coordinate before Sprint work begins. A senior architect objects: "PI Planning doesn't fix the architecture. We have twelve component teams because the system was designed with tight component coupling. Adding planning ceremonies will not eliminate the handoffs — it will just schedule them more formally."
+The organization's CTO has proposed adopting SAFe. She argues that PI Planning will force the teams to surface these dependencies early and coordinate before Sprint work begins. A senior architect objects: "PI Planning doesn't fix the architecture. We have twelve component teams because the system was designed with tight component coupling. Adding planning ceremonies will not eliminate the handoffs — it will just schedule them more formally.
 
 Who has the stronger argument? What does PI Planning actually address in this scenario, and what does it leave unresolved? If you were the Agile consultant, what would you recommend the organization do before or alongside the SAFe adoption? Your post should be 175–225 words.
 
@@ -42,7 +42,7 @@ My recommendation before the SAFe adoption: assess whether any component teams c
 
 A 200-person software company is considering LeSS for their flagship enterprise product. Currently, eight teams build the product with eight independent Product Owners and eight separate backlogs. The leadership team has identified that customer-facing features frequently require coordinating across four or five teams because no single team owns a complete user workflow.
 
-A proposed LeSS adoption would consolidate to one Product Owner and one shared backlog. Two Product Owners whose roles would be eliminated in the consolidation have objected vigorously. Their argument: "We understand our domain deeply. A single Product Owner cannot maintain the depth of knowledge we have about our respective areas. We will end up with a less-informed prioritization process."
+A proposed LeSS adoption would consolidate to one Product Owner and one shared backlog. Two Product Owners whose roles would be eliminated in the consolidation have objected vigorously. Their argument: "We understand our domain deeply. A single Product Owner cannot maintain the depth of knowledge we have about our respective areas. We will end up with a less-informed prioritization process.
 
 Is their concern valid? What does LeSS's model of one Product Owner actually require of that person, and how does LeSS address the concern about deep domain knowledge? What would you tell the departing Product Owners about how their expertise fits in the new model? Your post should be 175–225 words.
 
@@ -67,7 +67,7 @@ MidWest Insurance adopted SAFe eighteen months ago across three ARTs totaling tw
 - Number of SAFe ceremonies per week per team: 6 (up from 2 before SAFe)
 - Developer satisfaction survey: 34 percent satisfied (down from 71 percent before SAFe)
 
-The program leader says: "We have the framework in place. We just need more discipline in following it." A senior Scrum Master says: "The ceremonies are not the problem. We adopted SAFe as an organizational overlay without changing the underlying team structure or product ownership model. We have three ARTs that are still fundamentally component teams with shared dependencies."
+The program leader says: "We have the framework in place. We just need more discipline in following it." A senior Scrum Master says: "The ceremonies are not the problem. We adopted SAFe as an organizational overlay without changing the underlying team structure or product ownership model. We have three ARTs that are still fundamentally component teams with shared dependencies.
 
 What is your assessment of the senior Scrum Master's diagnosis? What does the data suggest about how well empiricism is functioning in this organization? What would you recommend the organization do — not just add or remove — to address the situation? Your post should be 175–225 words.
 

@@ -1,5 +1,23 @@
 # Video Script: Module 04 - Switching Concepts & VLANs
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course &bull; Module 04</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" title="Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 2: Network Access - 20%)
 **Estimated Duration:** 22 minutes
@@ -7,13 +25,10 @@
 
 ---
 
-## Section 1: Introduction - Why VLANs Matter [00:00 - 03:00]
-
+## Section 1: Introduction - Why VLANs Matter
 Welcome to Module 04. I am Professor Nash. Today we cover VLANs and switching concepts — topics that account for a significant portion of the CCNA 200-301 Network Access domain.
 
 Without VLANs, every device on a switch shares the same broadcast domain. A 200-port switch with no VLANs means that every broadcast — ARP requests, DHCP discovery, STP BPDUs — reaches all 200 devices simultaneously. That creates performance problems and security risks. VLANs solve both.
-
-[SHOW DIAGRAM: A flat switch with 6 devices all receiving a broadcast wave, versus a VLAN-segmented switch where the broadcast is contained within VLAN 10 only, not reaching VLAN 20 devices]
 
 Today's topics:
 
@@ -26,13 +41,10 @@ Today's topics:
 
 ---
 
-## Section 2: Layer 2 Switching Fundamentals [03:00 - 07:30]
-
+## Section 2: Layer 2 Switching Fundamentals
 Before we configure VLANs, let us briefly review how switches forward frames at Layer 2.
 
 When a frame arrives on a switch port, the switch reads the source MAC address and records it in the MAC address table along with the incoming port number. This is called MAC address learning. When a frame arrives with a destination MAC that is already in the table, the switch forwards it only to the correct port — this is unicast forwarding. When the destination MAC is unknown, the switch floods the frame out all ports except the source port — this is unknown unicast flooding.
-
-[SHOW DIAGRAM: Switch MAC address table with 4 entries showing MAC address, VLAN, and port columns. A new frame arrives showing the learning process and selective forwarding]
 
 Key MAC address table behaviors:
 
@@ -44,11 +56,8 @@ CCNA Exam Tip: A switch that receives a frame with a destination MAC that is not
 
 ---
 
-## Section 3: VLANs and Port Types [07:30 - 13:00]
-
+## Section 3: VLANs and Port Types
 A VLAN is a logical broadcast domain created within a switch. Devices in the same VLAN communicate at Layer 2 as if they are on the same physical segment, regardless of which physical ports or switches they connect to. Devices in different VLANs cannot communicate without a Layer 3 device (a router or multilayer switch) routing between them.
-
-[SHOW DIAGRAM: A switch with 8 ports: ports 1-4 in VLAN 10 (labeled Engineering) and ports 5-8 in VLAN 20 (labeled Sales). Broadcast within VLAN 10 stops at the VLAN boundary]
 
 ### Access Ports
 
@@ -66,8 +75,6 @@ SW1(config-if)# switchport access vlan 10
 
 A trunk port carries traffic for multiple VLANs simultaneously. Trunk ports are used on uplinks between switches and between switches and routers (for Router-on-a-Stick inter-VLAN routing). Each frame on a trunk has an 802.1Q tag identifying its VLAN.
 
-[SHOW DIAGRAM: Two switches connected via a trunk link. VLAN 10 frames shown with a blue 802.1Q tag, VLAN 20 frames shown with a green tag traveling across the same physical trunk link]
-
 Configure a trunk port:
 
 ```ios
@@ -80,8 +87,7 @@ CCNA Exam Tip: Access ports strip the 802.1Q tag before delivering frames to end
 
 ---
 
-## Section 4: Native VLAN and DTP [13:00 - 18:00]
-
+## Section 4: Native VLAN and DTP
 ### Native VLAN
 
 The native VLAN is the one VLAN on an 802.1Q trunk that sends frames without a tag. By default, the native VLAN is VLAN 1 on Cisco switches. Both ends of a trunk must agree on the native VLAN — a mismatch generates a CDP warning:
@@ -105,8 +111,6 @@ DTP is Cisco-proprietary and allows two switches to automatically negotiate whet
 - `switchport mode dynamic desirable` — actively tries to form a trunk
 - `switchport mode dynamic auto` — forms a trunk only if the other side actively requests it
 
-[SHOW DIAGRAM: DTP negotiation matrix table showing which combinations of modes result in trunk or access ports]
-
 Two ports set to `dynamic auto` will NOT form a trunk — both sides are passive. This is a common CCNA exam trap.
 
 Security best practice: disable DTP on all user-facing ports and any port that should not form a trunk:
@@ -120,8 +124,7 @@ CCNA Exam Tip: On user-facing access ports, always use `switchport mode access` 
 
 ---
 
-## Section 5: Verification Commands and Lab Preview [18:00 - 22:00]
-
+## Section 5: Verification Commands and Lab Preview
 These commands verify your VLAN and trunk configuration:
 
 ```ios
@@ -130,8 +133,6 @@ SW1# show interfaces trunk
 SW1# show interfaces FastEthernet0/1 switchport
 SW1# show mac address-table
 ```
-
-[SHOW DIAGRAM: Terminal output of show vlan brief showing VLAN IDs 1, 10, 20 with their names and port assignments in a clean tabular format]
 
 `show vlan brief` shows all VLANs and their assigned ports but does not show trunk ports — trunk ports do not appear in VLAN assignments because they carry multiple VLANs.
 

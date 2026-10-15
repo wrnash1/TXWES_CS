@@ -382,8 +382,6 @@ The team behind the most widely used ELT transformation tool explains the ELT pa
 <https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/>
 Ralph Kimball's dimensional modeling techniques are the industry standard for data warehouse design. This page covers star schema, snowflake schema, fact tables, and dimension tables with authoritative depth.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

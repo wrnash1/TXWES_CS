@@ -328,8 +328,6 @@ The complete `find` manual from the Linux man-pages project. Covers every predic
 **3. [GNU Coreutils — Redirections and Pipes (Bash Manual)](https://www.gnu.org/software/bash/manual/bash.html#Redirections)**
 The official GNU Bash manual section on I/O redirection. Covers all redirect operators (`>`, `>>`, `2>`, `&>`, `<<<`, process substitution) with formal definitions. Essential reference for understanding how file descriptors 0, 1, and 2 are manipulated.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

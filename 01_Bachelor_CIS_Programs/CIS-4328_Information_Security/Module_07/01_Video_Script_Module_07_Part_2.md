@@ -180,41 +180,41 @@ Individual users connect to the corporate network from remote locations. The use
 
 #### Trap 1: IDS vs. IPS Placement
 
-"An organization wants to monitor traffic without the risk of blocking legitimate connections." — IDS (out-of-band, passive).
+An organization wants to monitor traffic without the risk of blocking legitimate connections." — IDS (out-of-band, passive).
 
-"An organization wants to automatically block malicious traffic in real time." — IPS (inline).
+An organization wants to automatically block malicious traffic in real time." — IPS (inline).
 
 The words "monitor" and "alert" = IDS. The words "block" and "prevent" = IPS.
 
 #### Trap 2: Implicit Deny
 
-"A new firewall has been configured with three allow rules: permit HTTP, permit HTTPS, permit SSH. A user reports they cannot send email. Why?"
+A new firewall has been configured with three allow rules: permit HTTP, permit HTTPS, permit SSH. A user reports they cannot send email. Why?
 
 Answer: The implicit deny at the end of the rule list blocks SMTP. No explicit allow rule exists for SMTP.
 
 #### Trap 3: DMZ vs. Internal Placement
 
-"A company runs a web server that must be accessible from the internet and a database server that stores customer data. Where should each be placed?"
+A company runs a web server that must be accessible from the internet and a database server that stores customer data. Where should each be placed?
 
 Answer: Web server in the DMZ; database server on the internal network. The database server should never be directly exposed to the internet or the DMZ — the web server should query it through a controlled connection permitted by the inner firewall.
 
 #### Trap 4: WAF vs. NGFW
 
-"An organization wants to protect against SQL injection attacks targeting their web application." — WAF.
+An organization wants to protect against SQL injection attacks targeting their web application." — WAF.
 
-"An organization wants to block BitTorrent traffic regardless of which port it uses." — NGFW (application-aware).
+An organization wants to block BitTorrent traffic regardless of which port it uses." — NGFW (application-aware).
 
 #### Trap 5: Zero Trust vs. VPN
 
-"An organization wants to replace their broad-access VPN with a solution where users can only access the specific application they are authorized for." — Zero Trust / SDP / ZTNA (Zero Trust Network Access).
+An organization wants to replace their broad-access VPN with a solution where users can only access the specific application they are authorized for." — Zero Trust / SDP / ZTNA (Zero Trust Network Access).
 
 Traditional VPN grants network-level access to a subnet. ZTNA grants access to specific applications only.
 
 #### Trap 6: Fail-Open vs. Fail-Closed
 
-"A hospital deploys an inline IPS on the network segment carrying patient monitoring systems. What should the fail behavior be?" — Fail-open. Patient monitoring availability is critical; security can be degraded temporarily rather than blocking clinical traffic.
+A hospital deploys an inline IPS on the network segment carrying patient monitoring systems. What should the fail behavior be?" — Fail-open. Patient monitoring availability is critical; security can be degraded temporarily rather than blocking clinical traffic.
 
-"A financial transaction processing network deploys an inline IPS. What fail behavior is most appropriate?" — Fail-closed. Security of financial transactions takes priority over availability.
+A financial transaction processing network deploys an inline IPS. What fail behavior is most appropriate?" — Fail-closed. Security of financial transactions takes priority over availability.
 
 ---
 

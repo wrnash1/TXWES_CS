@@ -80,9 +80,9 @@ Address **all** of the following in your post:
 
 When responding to classmates, choose posts that made a **design decision different from what you would have chosen** and engage substantively with that difference. Strong peer response prompts:
 
-- "You recommended active/standby Direct Connect with BGP AS path prepending. I argued for active/active with a LAG. Given that your firm's peak throughput is 400 Mbps on a 1 Gbps circuit, what specific event would cause your active/standby design to drop traffic for longer than your 99.95% SLA allows?"
-- "You chose ingress replication for BUM traffic. Your design has 20 servers — so 20 VTEPs. At 2,000 VMs, how many ARP broadcasts per second would ingress replication generate at peak, and at what scale would you reconsider multicast underlay?"
-- "You kept MPLS for healthcare WAN because of HIPAA. But RFC 7348 VXLAN supports optional IPsec encapsulation of the outer UDP packet. Does that change your security argument against broadband internet as a secondary transport?"
+- "You recommended active/standby Direct Connect with BGP AS path prepending. I argued for active/active with a LAG. Given that your firm's peak throughput is 400 Mbps on a 1 Gbps circuit, what specific event would cause your active/standby design to drop traffic for longer than your 99.95% SLA allows?
+- "You chose ingress replication for BUM traffic. Your design has 20 servers — so 20 VTEPs. At 2,000 VMs, how many ARP broadcasts per second would ingress replication generate at peak, and at what scale would you reconsider multicast underlay?
+- "You kept MPLS for healthcare WAN because of HIPAA. But RFC 7348 VXLAN supports optional IPsec encapsulation of the outer UDP packet. Does that change your security argument against broadband internet as a secondary transport?
 
 ---
 

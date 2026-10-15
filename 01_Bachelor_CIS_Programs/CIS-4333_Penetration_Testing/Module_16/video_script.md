@@ -216,11 +216,11 @@ Communication: How to present to technical vs. non-technical audiences. Professi
 
 [SLIDE: Domain 4 Must-Know Scenarios]
 
-"A client asks you to remove a Critical finding from the report because they have already mitigated it." — Keep the finding, add a "Mitigated" note with evidence of the fix if the client verifies remediation.
+A client asks you to remove a Critical finding from the report because they have already mitigated it." — Keep the finding, add a "Mitigated" note with evidence of the fix if the client verifies remediation.
 
-"A finding was discovered after the testing period ended due to log review." — This may be included as a post-assessment finding with clear documentation of the timeline.
+A finding was discovered after the testing period ended due to log review." — This may be included as a post-assessment finding with clear documentation of the timeline.
 
-"The CISO asks for the raw Nmap output immediately after scanning." — This is a reasonable request; testers often provide interim deliverables. Ensure client authorization explicitly permits this (it should be in the ROE).
+The CISO asks for the raw Nmap output immediately after scanning." — This is a reasonable request; testers often provide interim deliverables. Ensure client authorization explicitly permits this (it should be in the ROE).
 
 [SLIDE: Domain 5 — Tools and Code Analysis]
 

@@ -118,7 +118,7 @@ Module 2 covers two foundational skill areas: the Linux installation process and
 - **`cp`**: Copy files. `cp -r` for directories. `cp -p` preserves permissions and timestamps. `cp -i` prompts before overwriting.
 - **`mv`**: Move or rename files and directories. No `-r` flag needed for directories.
 - **`rm`**: Remove files permanently. `rm -r` for directories. `rm -i` prompts before deleting. `rm -rf` silently and permanently removes directory trees — use with extreme caution.
-- **`file`**: Determines file type by reading file content, not extension. Returns type description like "ASCII text" or "ELF 64-bit executable."
+- **`file`**: Determines file type by reading file content, not extension. Returns type description like "ASCII text" or "ELF 64-bit executable.
 - **`which`**: Searches PATH for the executable that runs when a command name is typed.
 - **`whereis`**: Locates the binary, source, and man page for a command.
 - **`man`**: Opens the manual page for a command. Navigate with arrow keys, search with `/`, quit with `q`.
@@ -317,8 +317,6 @@ A practical Red Hat sysadmin article covering `fdisk` for MBR partitioning and `
 
 **3. [man7.org — ls(1) Manual Page](https://man7.org/linux/man-pages/man1/ls.1.html)**
 The online version of the `ls` man page from the Linux man-pages project. Useful for reviewing all available flags and their descriptions when not at a terminal, and for understanding the full output format of `ls -l`.
-
-
 
 ---
 

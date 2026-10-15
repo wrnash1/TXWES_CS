@@ -31,7 +31,7 @@ Each of the six team behaviors below either upholds or violates one or more Agil
 
 Behavior A: A project manager insists that all team communication go through a formal change request system, even for small questions between developers and the Product Owner.
 
-Behavior B: The team ships a tested, working user login feature at the end of every two-week Sprint, even when stakeholders ask for a longer first Sprint to "get more done."
+Behavior B: The team ships a tested, working user login feature at the end of every two-week Sprint, even when stakeholders ask for a longer first Sprint to "get more done.
 
 Behavior C: The contract between a vendor and client specifies a fixed list of 200 features. When the client discovers mid-project that 40 of those features are not actually needed, the vendor refuses to re-prioritize because the contract is binding.
 
@@ -39,7 +39,7 @@ Behavior D: The team discovers in Sprint 8 that a core architectural decision ma
 
 Behavior E: The team produces a 300-page functional specification document before writing any code, and the document is reviewed and approved by all stakeholders before development begins.
 
-Behavior F: The team is consistently working 60-hour weeks to meet release commitments. The Scrum Master does not raise this issue because "the team is highly motivated and doesn't mind."
+Behavior F: The team is consistently working 60-hour weeks to meet release commitments. The Scrum Master does not raise this issue because "the team is highly motivated and doesn't mind.
 
 ### Grading (30 points)
 
@@ -99,9 +99,9 @@ Alpha Squad is a 7-person development team at a financial technology startup. Th
 - They run two-week Sprints
 - The project manager writes all the user stories and assigns them to individual developers before Sprint Planning
 - Sprint Planning lasts four hours, during which the project manager walks through the stories one by one; developers estimate but do not modify the stories
-- The Daily Scrum is a 30-minute status meeting where each developer reports to the project manager: "Yesterday I did X, today I'll do Y, blockers: none"
+- The Daily Scrum is a 30-minute status meeting where each developer reports to the project manager: "Yesterday I did X, today I'll do Y, blockers: none
 - At the end of each Sprint, the project manager reviews the code and decides if it meets requirements; stakeholders are not invited
-- There is no Sprint Retrospective — the project manager says "we don't have time for that"
+- There is no Sprint Retrospective — the project manager says "we don't have time for that
 - The team consistently delivers only 60% of what was committed in Sprint Planning
 
 ### Assessment Tasks

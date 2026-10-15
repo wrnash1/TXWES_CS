@@ -38,7 +38,7 @@ A mid-sized law firm specializing in intellectual property litigation evaluates 
 
 A risk assessment identifies this as a High risk. The security team recommends implementing an enterprise Digital Rights Management (DRM) solution that would encrypt all attachments and restrict forwarding. Cost: $180,000/year.
 
-The managing partners push back: "Our clients expect to be able to forward documents. If we lock down documents, we lose business. We will accept this risk."
+The managing partners push back: "Our clients expect to be able to forward documents. If we lock down documents, we lose business. We will accept this risk.
 
 Address all of the following in your post:
 

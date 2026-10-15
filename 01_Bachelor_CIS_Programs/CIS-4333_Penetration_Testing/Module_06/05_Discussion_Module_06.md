@@ -41,7 +41,7 @@ In 175–225 words, address the following:
 
 During an authorized internal penetration test at a manufacturing company, a tester discovers that all 47 network switches and routers respond to SNMP queries using the community string "public." Running snmpwalk against the core router reveals the complete routing table, all interface IP addresses, connected device hostnames, and — remarkably — the SNMP write community string stored in plaintext within the MIB: "private." The tester confirms that SNMP write access is enabled.
 
-The client's network manager, when informed of the finding during the daily check-in call, says: "SNMP is just for monitoring. Nobody can actually do anything with read access. And write access would require someone to know our network topology anyway."
+The client's network manager, when informed of the finding during the daily check-in call, says: "SNMP is just for monitoring. Nobody can actually do anything with read access. And write access would require someone to know our network topology anyway.
 
 **Discussion Prompt:**
 

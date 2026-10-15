@@ -124,7 +124,7 @@ This is valuable for:
 
 The service returns an array of key phrases ranked by importance.
 
-For the text: "Azure AI Language provides natural language processing capabilities including sentiment analysis, key phrase extraction, and named entity recognition." — the extracted key phrases might include "Azure AI Language," "natural language processing capabilities," "sentiment analysis," "key phrase extraction," and "named entity recognition."
+For the text: "Azure AI Language provides natural language processing capabilities including sentiment analysis, key phrase extraction, and named entity recognition." — the extracted key phrases might include "Azure AI Language," "natural language processing capabilities," "sentiment analysis," "key phrase extraction," and "named entity recognition.
 
 Notice that the service identifies meaningful multi-word phrases, not just individual keywords. This is important for preserving semantic context.
 
@@ -221,9 +221,9 @@ After training, you publish the model to a prediction endpoint. Your application
 
 ### CLU vs. Pre-built Question Answering
 
-CLU is for applications where the user is issuing commands or making requests. It answers "what does the user want to do?"
+CLU is for applications where the user is issuing commands or making requests. It answers "what does the user want to do?
 
-Question Answering (formerly QnA Maker) is for applications where the user asks a question and expects a direct answer from a knowledge base. It answers "what information does the user need?"
+Question Answering (formerly QnA Maker) is for applications where the user asks a question and expects a direct answer from a knowledge base. It answers "what information does the user need?
 
 Many conversational AI systems combine both — CLU handles task intents, Question Answering handles informational queries. We will go deeper on this in Module 9.
 

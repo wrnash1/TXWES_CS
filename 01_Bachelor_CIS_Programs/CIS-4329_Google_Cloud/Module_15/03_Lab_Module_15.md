@@ -66,7 +66,7 @@ Billing export cannot be enabled via gcloud CLI — it requires the Cloud Consol
 
 1. Navigate to Cloud Console → Billing → Billing Export
 2. Select the BigQuery export tab
-3. Click "Edit Settings"
+3. Click "Edit Settings
 4. Select your project and the `billing_export` dataset you just created
 5. Click Save
 
@@ -107,7 +107,7 @@ Screenshot of the Cloud Console Billing Export page showing the export enabled w
    - Threshold 2: 90% of budget ($45)
    - Threshold 3: 100% of budget ($50)
 
-4. Under Manage Notifications, check "Email alerts to billing admins and users"
+4. Under Manage Notifications, check "Email alerts to billing admins and users
 
 5. Click Finish
 
@@ -124,7 +124,7 @@ gcloud billing budgets list \
 #### Task 2.3 — Add a Pub/Sub notification to the budget
 
 1. In Cloud Console, edit the budget you just created
-2. Under Manage Notifications, click "Connect a Pub/Sub topic"
+2. Under Manage Notifications, click "Connect a Pub/Sub topic
 3. Create a new topic: `billing-alerts`
 4. Save the budget
 

@@ -250,10 +250,10 @@ A BA has completed a use case diagram that shows four actors (Customer, Sales Re
 
 *   A) Entity-Relationship Diagram (ERD) — to show the data entities involved in the order process
 *   B) BPMN process model — to show the swim-lane flow of the order-to-fulfillment business process
-*   C) Use case specification (use case description) — a structured text document that describes the actor goal, preconditions, main success scenario, alternative flows, and exception flows for "Place Order"
+*   C) Use case specification (use case description) — a structured text document that describes the actor goal, preconditions, main success scenario, alternative flows, and exception flows for "Place Order
 *   D) Data Flow Diagram (DFD) Level 0 — to show the data inputs and outputs at the system boundary for the order process
 
-*   **Correct Answer:** C) Use case specification (use case description) — a structured text document that describes the actor goal, preconditions, main success scenario, alternative flows, and exception flows for "Place Order"
+*   **Correct Answer:** C) Use case specification (use case description) — a structured text document that describes the actor goal, preconditions, main success scenario, alternative flows, and exception flows for "Place Order
 *   **Distractor Analysis:**
     *   *Why C is correct:* A use case diagram shows the scope of actors and use cases but contains no behavioral detail. The use case specification (also called a use case narrative or use case description) is the companion artifact that documents the detailed interaction: preconditions, trigger, main success scenario (normal flow), alternative flows, and exception flows. It directly addresses what the question describes — documenting the normal flow, alternative flows, and exception flows for a specific use case.
     *   *Why A is incorrect:* An ERD models the data storage structure (entities, attributes, relationships). It is the correct next artifact for data modeling requirements, but it does not describe the interaction flow, actor goals, or exception handling for a use case.

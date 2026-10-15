@@ -40,9 +40,9 @@ Discuss: What are the technical steps required to complete this migration? What 
 
 ## Sample Peer Response Starters
 
-- "You raised an important point about drift resolution. I would add that..."
-- "I chose the same scenario and reached a different conclusion about the severity threshold because..."
-- "Your OIDC migration plan is solid. One risk you may not have considered is..."
+- "You raised an important point about drift resolution. I would add that...
+- "I chose the same scenario and reached a different conclusion about the severity threshold because...
+- "Your OIDC migration plan is solid. One risk you may not have considered is...
 
 ---
 

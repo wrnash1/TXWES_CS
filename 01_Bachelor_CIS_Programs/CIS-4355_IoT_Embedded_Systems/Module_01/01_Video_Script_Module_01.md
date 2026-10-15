@@ -7,8 +7,7 @@
 
 ---
 
-## Segment 1: Introduction and Learning Objectives [00:00 – 02:30]
-
+## Segment 1: Introduction and Learning Objectives
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -43,9 +42,7 @@ These objectives align directly with CompTIA IoT+ exam objectives 1.1 and 1.2, s
 
 ---
 
-## Segment 2: The Four-Layer IoT Architecture Model [02:30 – 08:00]
-
-[SHOW DIAGRAM]
+## Segment 2: The Four-Layer IoT Architecture Model
 
 The most widely accepted model for IoT system design uses four layers stacked vertically. Picture a stack of building floors: the basement is closest to the physical world, the top floor is closest to the human or business system consuming the data.
 
@@ -96,15 +93,11 @@ The application layer is what humans interact with. It contains:
 
 Security at this layer emphasizes strong authentication (OAuth 2.0, API keys, multi-factor authentication), role-based access control, and input validation to prevent injection attacks that could send malicious commands back down to actuators.
 
-[SHOW DIAGRAM]
-
 Let me make the data flow concrete. A temperature sensor on Layer 1 reads 98 degrees Fahrenheit. It encodes that value and transmits it over BLE to a Raspberry Pi gateway on Layer 2. The gateway wraps the reading in an MQTT message and publishes it to a broker on Layer 3. A rules engine on Layer 3 compares 98 degrees to a threshold of 90 degrees, determines it is an alert condition, and writes to both InfluxDB and a notification queue. The application layer dashboard on Layer 4 reads the InfluxDB record and lights a red indicator. A text message goes to the facilities manager. That full path takes under two seconds end to end.
 
 ---
 
-## Segment 3: Edge Devices, Gateways, and the Cloud [08:00 – 13:00]
-
-[SHOW DIAGRAM]
+## Segment 3: Edge Devices, Gateways, and the Cloud
 
 These three terms – edge device, gateway, and cloud – are frequently confused on exam questions. Let me be precise about each.
 
@@ -135,14 +128,11 @@ Cloud services offer horizontal scalability, global accessibility, managed secur
 
 The tradeoff is latency and connectivity dependence. Applications that can tolerate hundreds of milliseconds of latency and require archival analytics are well-suited for the cloud. Applications demanding millisecond response or operating in environments with unreliable connectivity favor edge processing.
 
-[SHOW DIAGRAM]
-
 In modern architectures you rarely choose one or the other exclusively. You choose both. The edge handles real-time local decisions. The cloud handles long-term analytics, model training, and global fleet management. Data flows selectively upward based on business rules.
 
 ---
 
-## Segment 4: IoT Reference Architectures [13:00 – 17:30]
-
+## Segment 4: IoT Reference Architectures
 The industry has produced several formal reference architectures. The two you are most likely to see on the CompTIA IoT+ exam are the three-tier model and the five-tier model.
 
 ### Three-Tier Model
@@ -178,8 +168,7 @@ Data flowing from a lower-trust zone to a higher-trust zone must be authenticate
 
 ---
 
-## Segment 5: Real-World Case Studies [17:30 – 20:30]
-
+## Segment 5: Real-World Case Studies
 Let me briefly walk through two real-world scenarios to anchor these concepts.
 
 ### Case Study 1 – Smart Agriculture
@@ -198,8 +187,7 @@ This is a hybrid edge-plus-cloud architecture. The edge handles real-time infere
 
 ---
 
-## Segment 6: Module Summary and Lab Preview [20:30 – 22:30]
-
+## Segment 6: Module Summary and Lab Preview
 Let me summarize the key points from this module.
 
 IoT architecture is organized into four layers: Perception, Network, Processing, and Application. Each layer has distinct responsibilities and distinct security concerns.

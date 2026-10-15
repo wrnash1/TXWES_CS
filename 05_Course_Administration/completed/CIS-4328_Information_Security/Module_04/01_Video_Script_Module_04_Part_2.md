@@ -200,7 +200,7 @@ Let's work through the specific ways Security+ question writers test this domain
 
 #### Trap 1: Malware Type by Propagation
 
-Question stem: "A piece of malware has infected multiple systems across a network. No user interaction was involved in spreading it."
+Question stem: "A piece of malware has infected multiple systems across a network. No user interaction was involved in spreading it.
 
 Wrong answers: virus, trojan.
 
@@ -210,7 +210,7 @@ The distractor is "virus" because viruses are the most familiar term, but viruse
 
 #### Trap 2: Phishing Scope
 
-Question stem: "An attacker researches a specific VP of Finance and sends a carefully crafted email referencing her current projects."
+Question stem: "An attacker researches a specific VP of Finance and sends a carefully crafted email referencing her current projects.
 
 Wrong answer: phishing (too generic).
 
@@ -218,7 +218,7 @@ Correct answer: **spear phishing**. The targeting and research distinguish it. I
 
 #### Trap 3: Rootkit Detection
 
-Question stem: "A security analyst suspects a rootkit is installed but scans from within the OS return clean results."
+Question stem: "A security analyst suspects a rootkit is installed but scans from within the OS return clean results.
 
 Wrong answer: run the scan again with updated definitions.
 
@@ -226,7 +226,7 @@ Correct answer: **boot from trusted media and scan offline**. The compromised OS
 
 #### Trap 4: Supply Chain vs. Zero-Day
 
-Question stem: "An attacker inserted malicious code into a software update that was cryptographically signed by the vendor."
+Question stem: "An attacker inserted malicious code into a software update that was cryptographically signed by the vendor.
 
 Wrong answers: zero-day exploit, man-in-the-middle attack.
 
@@ -234,7 +234,7 @@ Correct answer: **supply chain attack**. The signing happened after the insertio
 
 #### Trap 5: Pharming vs. Phishing
 
-Question stem: "A user visits a bank website by typing the URL correctly and still lands on a fraudulent site."
+Question stem: "A user visits a bank website by typing the URL correctly and still lands on a fraudulent site.
 
 Wrong answer: phishing (requires a malicious link the user clicks).
 
@@ -242,7 +242,7 @@ Correct answer: **pharming** (DNS cache poisoning or hosts file modification red
 
 #### Trap 6: Best Recovery Control for Ransomware
 
-Question stem: "What is the MOST effective control for recovering from a ransomware attack?"
+Question stem: "What is the MOST effective control for recovering from a ransomware attack?
 
 Wrong answers: antivirus, EDR, user training.
 

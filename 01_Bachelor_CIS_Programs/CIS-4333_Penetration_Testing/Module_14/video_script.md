@@ -135,7 +135,7 @@ The rules of engagement document is a technical companion to the SOW. Where the 
 
 ROE elements:
 
-Testing hours: "Testing may be conducted during business hours (8 AM–6 PM local time) with critical system testing only after business hours by prior arrangement."
+Testing hours: "Testing may be conducted during business hours (8 AM–6 PM local time) with critical system testing only after business hours by prior arrangement.
 
 Permitted techniques: Specific attack categories permitted — port scanning, exploitation, social engineering, physical testing.
 

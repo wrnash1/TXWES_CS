@@ -133,7 +133,7 @@ The Rule of Seven states that seven or more consecutive data points on the same 
 
 Distractor Analysis:
 
-- **Why B is correct:** Control limits are necessary but not sufficient for declaring a process in control. The Rule of Seven identifies systematic process shifts that the control limits alone cannot detect. Seven consecutive points below the mean indicates the process has changed in a non-random way — investigation is required even though the numbers look "good."
+- **Why B is correct:** Control limits are necessary but not sufficient for declaring a process in control. The Rule of Seven identifies systematic process shifts that the control limits alone cannot detect. Seven consecutive points below the mean indicates the process has changed in a non-random way — investigation is required even though the numbers look "good.
 - **Why A is incorrect:** Being within control limits is only one condition for statistical control. The Rule of Seven identifies an additional out-of-control signal that applies even when individual points are within limits. Ignoring non-random patterns is a control chart interpretation error.
 - **Why C is incorrect:** Consistently below-mean performance is not inherently good — it signals that something changed in the process. If the change is positive (a process improvement was implemented), it should be identified, documented, and the control limits recalculated. Unknown process changes require investigation regardless of direction.
 - **Why D is incorrect:** No individual point is below the LCL of 10%. The lowest reading is 13%, which is above the LCL. The LCL has not been breached. The out-of-control signal is the Rule of Seven pattern, not a limit violation.
@@ -282,8 +282,8 @@ The four steps of the PDCA (Deming) cycle in correct order are:
 **Distractor Analysis:**
 
 - *Why B is correct:* PDCA stands for Plan (establish objectives and processes), Do (implement on a small scale), Check (evaluate results against the plan), Act (standardize successful changes or return to Plan if unsuccessful). This is the correct four-step sequence.
-- *Why A is incorrect:* "Control" is the fourth step of DMAIC (Six Sigma), not PDCA. The fourth PDCA step is "Act."
-- *Why C is incorrect:* "Define" is the first step of DMAIC. PDCA begins with "Plan." The last step is also "Act," not "Adjust."
+- *Why A is incorrect:* "Control" is the fourth step of DMAIC (Six Sigma), not PDCA. The fourth PDCA step is "Act.
+- *Why C is incorrect:* "Define" is the first step of DMAIC. PDCA begins with "Plan." The last step is also "Act," not "Adjust.
 - *Why D is incorrect:* "Deliver" and "Adjust" are not PDCA steps. This is a fabricated distractor.
 
 ---
@@ -401,7 +401,7 @@ How does the "Act" step of the PDCA cycle differ from simply completing a task?
 
 **Distractor Analysis:**
 
-- *Why B is correct:* Act is the institutionalization step. If the Do step produced a successful improvement (confirmed in Check), Act means embedding the new process as the standard so it persists. If the improvement was insufficient, Act means looping back to Plan with new information. Either way, the cycle continues — quality improvement is never "done."
+- *Why B is correct:* Act is the institutionalization step. If the Do step produced a successful improvement (confirmed in Check), Act means embedding the new process as the standard so it persists. If the improvement was insufficient, Act means looping back to Plan with new information. Either way, the cycle continues — quality improvement is never "done.
 - *Why A is incorrect:* Assigning new tasks is an operational activity, not the PDCA Act step. Act is about systemic standardization, not task assignment.
 - *Why C is incorrect:* Sponsor approval may be needed for significant changes to baselines, but the Act step as defined in PDCA is about standardizing or re-planning — not a governance approval gate.
 - *Why D is incorrect:* PDCA is cyclical, not terminal. Closing the process permanently contradicts the continuous improvement philosophy. The Risk Register is not a PDCA artifact.

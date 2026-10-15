@@ -71,7 +71,7 @@ rpm -qf /etc/ssh/sshd_config
 ```
 
 Query file: identifies which package owns /etc/ssh/sshd_config. The -f flag means "what
-package installed this file?"
+package installed this file?
 
 ```bash
 rpm -qR openssh-server
@@ -263,7 +263,7 @@ Locally installed packages not tracked by any repository may not receive securit
 ### Section 6: Exam Tips
 
 The apt remove versus apt purge distinction is tested constantly. remove keeps configuration
-files. purge removes them. The exam scenario: "completely uninstall including all configuration"
+files. purge removes them. The exam scenario: "completely uninstall including all configuration
 = purge.
 
 dpkg -S finds the package that owns a file. This is the inverse of dpkg -L (which lists files

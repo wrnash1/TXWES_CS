@@ -88,7 +88,7 @@ After the reboot, log back in and open PowerShell again.
 Get-NetAdapter
 ```
 
-This lists all adapters with their names and statuses. Note the name in the first column — typically "Ethernet" or "Ethernet0."
+This lists all adapters with their names and statuses. Note the name in the first column — typically "Ethernet" or "Ethernet0.
 
 ```powershell
 # Step 3: Assign a static IP address

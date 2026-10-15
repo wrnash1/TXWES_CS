@@ -423,8 +423,6 @@ Before the quiz and lab, confirm you can do all of the following without looking
 * Find AppArmor denials in the journal
 * Compare SELinux and AppArmor by approach, default distro, and log location
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

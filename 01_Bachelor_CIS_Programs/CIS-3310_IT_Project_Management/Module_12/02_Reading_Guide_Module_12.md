@@ -299,7 +299,7 @@ Any question describing accountability confusion on a project is signaling a RAC
 Consulted is two-way communication before the work is done (you ask for their input and use it). Informed is one-way communication after the decision or action (you tell them what happened). The exam distinguishes these with scenario language.
 
 **Tip 4 — Push, Pull, Interactive — match the scenario:**
-"The PM sends weekly status reports to all stakeholders" = Push. "Project documents are stored in SharePoint for team access" = Pull. "The team holds a decision-making meeting" = Interactive.
+The PM sends weekly status reports to all stakeholders" = Push. "Project documents are stored in SharePoint for team access" = Pull. "The team holds a decision-making meeting" = Interactive.
 
 **Tip 5 — Power-Interest grid: High Power/High Interest = Manage Closely:**
 The exam will describe a stakeholder and ask for the appropriate strategy. High Power/High Interest stakeholders must be closely and actively managed. Do not confuse with High Power/Low Interest (keep satisfied — they need respect but not constant engagement).
@@ -466,8 +466,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

@@ -119,7 +119,7 @@ print(f"Rows after deduplication: {len(df)}")
 
 Standardization transforms data values to a consistent format without changing their meaning.
 
-**String standardization** is one of the most common tasks. Trim leading and trailing whitespace. Normalize case (typically all lowercase or title case). Map synonyms and abbreviations to a canonical form: "US," "USA," "U.S.A.," and "United States" all become "United States."
+**String standardization** is one of the most common tasks. Trim leading and trailing whitespace. Normalize case (typically all lowercase or title case). Map synonyms and abbreviations to a canonical form: "US," "USA," "U.S.A.," and "United States" all become "United States.
 
 **Date format standardization** is critical when combining data from multiple sources. The ISO 8601 format — YYYY-MM-DD — is the universal standard for dates in data pipelines. All date values should be converted to this format as early as possible in the pipeline.
 

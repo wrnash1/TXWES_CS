@@ -34,7 +34,7 @@ In 175-225 words, address all three of the following points:
 
 Your organization's SIEM is generating 2,400 alerts per day. Your analysis of the past two weeks' alerts reveals the following breakdown:
 
-- 71% of alerts are from a single correlation rule: "Service Account Logon Outside Business Hours"
+- 71% of alerts are from a single correlation rule: "Service Account Logon Outside Business Hours
 - Of those, 99.7% are from a batch processing system that runs nightly backups from 2-4 AM
 - The remaining 0.3% are genuinely suspicious — service account use from unusual source IPs
 - Analysts are spending 65% of their investigation time on this single rule

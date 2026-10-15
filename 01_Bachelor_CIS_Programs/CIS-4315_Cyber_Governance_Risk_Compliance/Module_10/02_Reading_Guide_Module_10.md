@@ -598,8 +598,6 @@ CISA's operational guidance for categorizing and reporting cybersecurity inciden
 https://www.sans.org/white-papers/33901/
 A practitioner-level reference describing IRP components, communication planning, and evidence handling procedures. Complements the NIST framework with hands-on field guidance from experienced incident responders.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

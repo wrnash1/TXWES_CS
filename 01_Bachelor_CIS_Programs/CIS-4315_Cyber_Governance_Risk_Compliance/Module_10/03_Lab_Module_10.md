@@ -234,7 +234,7 @@ Keep your completed deliverables. With minor customization, they can serve as pr
 
 You have been provided with an existing, abbreviated Incident Response Plan excerpt below. Review it and perform a structured gap analysis against the eight required IRP components described in Section 2.1 of the Module 10 Reading Guide.
 
-**Excerpt:** "Crestview IRP v1.0 — This document describes how the IT department will respond to security events. The IT Manager is responsible for all incidents. Events should be reported to IT@crestview-health.org. Systems will be restored from backup as quickly as possible following any disruption."
+**Excerpt:** "Crestview IRP v1.0 — This document describes how the IT department will respond to security events. The IT Manager is responsible for all incidents. Events should be reported to IT@crestview-health.org. Systems will be restored from backup as quickly as possible following any disruption.
 
 Step 1: For each of the eight required IRP components, assess whether the excerpt satisfies the requirement (Met / Partially Met / Not Met) and explain your assessment in one sentence.
 

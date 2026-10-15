@@ -86,7 +86,7 @@ The underlay represents the physical WAN transport layer — in real SD-WAN this
 
 **Step 2:** Connect routers with straight-through Ethernet cables per the topology diagram. Assign all physical interface IP addresses from the addressing table.
 
-**Step 3:** Configure OSPF Process 10 on all underlay interfaces (Gi0/1, Gi0/2, and Lo0 on each router). Use Area 0 for all underlay interfaces. This is the "underlay routing protocol."
+**Step 3:** Configure OSPF Process 10 on all underlay interfaces (Gi0/1, Gi0/2, and Lo0 on each router). Use Area 0 for all underlay interfaces. This is the "underlay routing protocol.
 
 ```cisco
 ! vEdge-HQ (R1) — underlay OSPF
@@ -140,7 +140,7 @@ interface Tunnel10
 
 ### Part 3: Configure BGP on the Overlay — Simulating OMP (25 pts)
 
-In SD-WAN, OMP distributes site prefixes (LAN subnets) via vSmart to all vEdge devices. Here, BGP running over the GRE overlay tunnels simulates this prefix distribution. The LAN subnets (192.168.x.0/24) are the "OMP vRoutes."
+In SD-WAN, OMP distributes site prefixes (LAN subnets) via vSmart to all vEdge devices. Here, BGP running over the GRE overlay tunnels simulates this prefix distribution. The LAN subnets (192.168.x.0/24) are the "OMP vRoutes.
 
 Use BGP AS 65000 for all three routers (iBGP). The BGP router-ID for each router is its loopback IP.
 

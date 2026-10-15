@@ -24,7 +24,7 @@ A penetration tester is conducting an authorized internal test for a logistics c
 
 The tester is about to run the Metasploit `ms17_010_eternalblue` module when a colleague mentions that the hostname `10.10.50.15` resolves to `prod-erp-db01.logistics.local` — a name suggesting this may be a production database server.
 
-The `check` command in the module returns: "The target appears to be vulnerable."
+The `check` command in the module returns: "The target appears to be vulnerable.
 
 **Discussion Prompt:**
 
@@ -43,7 +43,7 @@ In 175–225 words, address the following:
 
 ## Discussion Scenario 2 — The Public Exploit Problem
 
-A junior penetration tester searches GitHub for a proof-of-concept exploit for a recently disclosed CVE affecting a target web application. They find a Python script posted three days ago by an anonymous account. The script has 47 stars and a few comments saying "works great."
+A junior penetration tester searches GitHub for a proof-of-concept exploit for a recently disclosed CVE affecting a target web application. They find a Python script posted three days ago by an anonymous account. The script has 47 stars and a few comments saying "works great.
 
 The tester copies the script to their Kali machine, glances at the first ten lines, and prepares to run it against the authorized target. A more experienced team member suggests reading the full script first.
 

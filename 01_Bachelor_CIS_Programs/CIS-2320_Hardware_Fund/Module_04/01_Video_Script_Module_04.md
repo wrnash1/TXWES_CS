@@ -26,22 +26,20 @@
 
 ---
 
-## Section 1: Introduction and Certification Alignment [00:00 - 03:00]
-
+## Section 1: Introduction and Certification Alignment
 **[CAMERA: Instructor on camera, title card "Module 04 — Memory (RAM) Types and Configuration"]**
 
-"Welcome back, class. Professor Nash here. Module 04 is all about RAM — Random Access Memory — the volatile working memory your CPU uses to hold running programs and active data. When you upgrade a computer's RAM or troubleshoot a system with memory errors, you need to get this right. The wrong RAM generation, the wrong slot configuration, or a module that is not fully seated will either prevent the system from booting or cause intermittent crashes that are difficult to diagnose.
+Welcome back, class. Professor Nash here. Module 04 is all about RAM — Random Access Memory — the volatile working memory your CPU uses to hold running programs and active data. When you upgrade a computer's RAM or troubleshoot a system with memory errors, you need to get this right. The wrong RAM generation, the wrong slot configuration, or a module that is not fully seated will either prevent the system from booting or cause intermittent crashes that are difficult to diagnose.
 
 Today we cover three major areas: DDR generations and their physical differences; DIMM versus SODIMM form factors and where each is used; and dual-channel configuration — how to set it up and why it matters for performance.
 
-This material maps to CompTIA A+ Core 1 Domain 3.3. You will see RAM installation scenarios on the exam where you need to identify the correct generation, explain why a module won't seat, or explain why dual-channel isn't activating. Let's go."
+This material maps to CompTIA A+ Core 1 Domain 3.3. You will see RAM installation scenarios on the exam where you need to identify the correct generation, explain why a module won't seat, or explain why dual-channel isn't activating. Let's go.
 
 **[PAUSE — 3 seconds]**
 
 ---
 
-## Section 2: DDR Generations — DDR3, DDR4, and DDR5 [03:00 - 09:00]
-
+## Section 2: DDR Generations — DDR3, DDR4, and DDR5
 **[CAMERA: Cut to component table]**
 
 <div style="text-align: center; margin: 24px 0;">
@@ -107,7 +105,7 @@ This material maps to CompTIA A+ Core 1 Domain 3.3. You will see RAM installatio
 
 **[SHOW COMPONENT: Hold up DDR4 DIMM — show both sides]**
 
-"DDR stands for Double Data Rate synchronous DRAM. The 'double data rate' part means the module transfers data on both the rising and falling edges of the clock signal, effectively doubling throughput compared to the original SDR SDRAM that came before it. The number after DDR — 3, 4, 5 — indicates the generation.
+DDR stands for Double Data Rate synchronous DRAM. The 'double data rate' part means the module transfers data on both the rising and falling edges of the clock signal, effectively doubling throughput compared to the original SDR SDRAM that came before it. The number after DDR — 3, 4, 5 — indicates the generation.
 
 Each generation runs faster, uses less voltage, and is physically keyed differently so you cannot insert the wrong generation into a slot. Let me walk through the three generations you need to know.
 
@@ -127,21 +125,20 @@ DDR5 operating voltage is 1.1 volts. DDR5 integrates the voltage regulator onto 
 
 **[PAUSE — 3 seconds]**
 
-Here is the exam trap I want you to remember: DDR4 and DDR5 both have 288 pins on a desktop DIMM. The pin count alone does not distinguish them. The notch position does. If a question says a RAM module has 288 pins and asks what generation it is — without mentioning the notch — the answer could be DDR4 or DDR5. The notch is the only reliable physical identifier between those two generations."
+Here is the exam trap I want you to remember: DDR4 and DDR5 both have 288 pins on a desktop DIMM. The pin count alone does not distinguish them. The notch position does. If a question says a RAM module has 288 pins and asks what generation it is — without mentioning the notch — the answer could be DDR4 or DDR5. The notch is the only reliable physical identifier between those two generations.
 
 **[CAMERA: Slide with DDR comparison table]**
 
-"Let me lock in the numbers. DDR3: 240 pins, 1.5V. DDR4: 288 pins, 1.2V. DDR5: 288 pins, 1.1V. For laptop SODIMMs: DDR3 SODIMM has 204 pins; DDR4 SODIMM has 260 pins; DDR5 SODIMM has 262 pins. The SODIMM pin counts are all different from each other, which helps distinguish generations in the laptop context."
+Let me lock in the numbers. DDR3: 240 pins, 1.5V. DDR4: 288 pins, 1.2V. DDR5: 288 pins, 1.1V. For laptop SODIMMs: DDR3 SODIMM has 204 pins; DDR4 SODIMM has 260 pins; DDR5 SODIMM has 262 pins. The SODIMM pin counts are all different from each other, which helps distinguish generations in the laptop context.
 
 ---
 
-## Section 3: DIMM vs. SODIMM Form Factors [09:00 - 13:30]
-
+## Section 3: DIMM vs. SODIMM Form Factors
 **[CAMERA: Hold up DIMM and SODIMM side by side]**
 
 **[SHOW COMPONENT: Full-size DDR4 DIMM in one hand, DDR4 SODIMM in the other]**
 
-"Now let's talk about the two physical form factors: DIMM and SODIMM.
+Now let's talk about the two physical form factors: DIMM and SODIMM.
 
 DIMM stands for Dual Inline Memory Module. The word 'dual inline' refers to the fact that the contacts on both sides of the PCB are electrically independent — unlike older SIMMs where both sides were the same circuit. A standard desktop DIMM is approximately 133 millimeters long. This is what you install in desktop motherboards, workstations, and some all-in-one PCs.
 
@@ -155,17 +152,16 @@ Installing a SODIMM is different from installing a DIMM. A SODIMM inserts at app
 
 A DIMM installs differently. You press straight down with even pressure on both ends simultaneously until the locking clips on both sides of the slot snap upward into the notches on the module. The clips should click audibly. If only one side snaps and the other does not, the module is not fully seated and the system will likely not POST or will generate memory errors.
 
-**[PAUSE — 3 seconds]**"
+**[PAUSE — 3 seconds]**
 
 ---
 
-## Section 4: Dual-Channel Configuration [13:30 - 18:30]
-
+## Section 4: Dual-Channel Configuration
 **[CAMERA: Close-up of motherboard RAM slots showing color coding]**
 
 **[SHOW COMPONENT: Point to the color-coded slot pairs on the motherboard]**
 
-"Dual-channel is a memory architecture where two RAM modules are accessed simultaneously in parallel, effectively doubling the memory bandwidth compared to single-channel operation. On a modern DDR4 or DDR5 system, dual-channel can make a noticeable difference in memory-intensive tasks — video editing, large spreadsheets, gaming on integrated graphics — because the CPU's memory controller is pulling data from two modules at once instead of one.
+Dual-channel is a memory architecture where two RAM modules are accessed simultaneously in parallel, effectively doubling the memory bandwidth compared to single-channel operation. On a modern DDR4 or DDR5 system, dual-channel can make a noticeable difference in memory-intensive tasks — video editing, large spreadsheets, gaming on integrated graphics — because the CPU's memory controller is pulling data from two modules at once instead of one.
 
 Here is the critical rule: dual-channel requires modules in the correct paired slots. Look at the motherboard. The four slots are labeled — either by color or by text printed on the board: A1, A2, B1, B2. A1 and B1 belong to channel A and channel B respectively. A2 and B2 are the second slots for each channel.
 
@@ -181,15 +177,14 @@ For a four-slot board with two modules: always use A1+B1 or A2+B2. Consult the m
 
 **[PAUSE — 3 seconds]**
 
-What about mixing RAM speeds or brands? The system will work — it runs at the speed of the slower module and may drop into single-channel mode on some boards. For best results and guaranteed dual-channel operation, use a matched pair — two modules of the same brand, speed, capacity, and part number. These are sold as kits for exactly this reason."
+What about mixing RAM speeds or brands? The system will work — it runs at the speed of the slower module and may drop into single-channel mode on some boards. For best results and guaranteed dual-channel operation, use a matched pair — two modules of the same brand, speed, capacity, and part number. These are sold as kits for exactly this reason.
 
 ---
 
-## Section 5: Memory Errors and Lab Walkthrough [18:30 - 21:00]
-
+## Section 5: Memory Errors and Lab Walkthrough
 **[CAMERA: Instructor on camera]**
 
-"Let me briefly cover memory errors before walking you through the lab.
+Let me briefly cover memory errors before walking you through the lab.
 
 The most common memory-related POST failure is a system that powers on but produces no video — sometimes with beep codes from the motherboard. Beep codes for memory errors vary by BIOS vendor: AMI BIOS uses a pattern like three long beeps; Award BIOS has its own patterns. Check the motherboard manual for the specific code. The first thing to try: remove all modules, clean the slot contacts with a dry cotton swab or compressed air, reseat the modules firmly, and retry.
 
@@ -197,15 +192,14 @@ If one module works but not the other, you can isolate a failed module by testin
 
 For the lab this week, you will identify DDR generation from physical inspection, complete a slot identification exercise for dual-channel configuration, perform or document a DIMM installation, examine a laptop SODIMM installation, and answer scenario questions about memory troubleshooting. Bring the reading guide; the spec tables in it are directly useful for the identification exercise.
 
-Complete the lab, take the quiz, and post your discussion response by Wednesday at 11:59 PM. I will see you in Module 05."
+Complete the lab, take the quiz, and post your discussion response by Wednesday at 11:59 PM. I will see you in Module 05.
 
 ---
 
-## End Card [21:00 - 22:00]
-
+## End Card
 **[CAMERA: Title card]**
 
-"This has been Module 04 of CIS-2320 Hardware Fundamentals at Texas Wesleyan University. Key takeaways: DDR3 = 240 pins desktop; DDR4 = 288 pins, 1.2V; DDR5 = 288 pins, 1.1V — notch position distinguishes DDR4 from DDR5. DIMM is desktop; SODIMM is laptop. Dual-channel requires paired slots A1+B1, not adjacent A1+A2."
+This has been Module 04 of CIS-2320 Hardware Fundamentals at Texas Wesleyan University. Key takeaways: DDR3 = 240 pins desktop; DDR4 = 288 pins, 1.2V; DDR5 = 288 pins, 1.1V — notch position distinguishes DDR4 from DDR5. DIMM is desktop; SODIMM is laptop. Dual-channel requires paired slots A1+B1, not adjacent A1+A2.
 
 ---
 

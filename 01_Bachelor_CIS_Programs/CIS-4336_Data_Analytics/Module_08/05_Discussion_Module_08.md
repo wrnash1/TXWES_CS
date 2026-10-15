@@ -37,7 +37,7 @@ In your initial post, address the following:
 
 A national retail chain with 2.3 million loyalty card members wants to use k-means clustering for targeted marketing. Features available include: total spend (last 12 months), number of transactions, average basket size, days since last purchase, and product category breadth.
 
-A junior analyst asks: "Why use clustering instead of manually defining segments in Excel — like 'high spenders' and 'low spenders'?"
+A junior analyst asks: "Why use clustering instead of manually defining segments in Excel — like 'high spenders' and 'low spenders'?
 
 In your initial post, address the following:
 
@@ -49,7 +49,7 @@ In your initial post, address the following:
 
 ## Scenario C: The Loan Default Prediction Dilemma
 
-A community bank wants to use a decision tree model to automate initial loan application screening. A loan officer raises an ethical concern: "Some of our best long-term customers have unconventional financial profiles that would probably get flagged by an algorithm."
+A community bank wants to use a decision tree model to automate initial loan application screening. A loan officer raises an ethical concern: "Some of our best long-term customers have unconventional financial profiles that would probably get flagged by an algorithm.
 
 In your initial post, address the following:
 

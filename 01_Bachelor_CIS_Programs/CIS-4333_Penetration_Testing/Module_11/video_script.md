@@ -55,15 +55,15 @@ Vishing is voice phishing — phone calls. Smishing is SMS phishing.
 
 A pretext is the fictional scenario that frames the attack. Effective pretexts exploit:
 
-Authority — "This is the IT security team. We need you to verify your credentials."
+Authority — "This is the IT security team. We need you to verify your credentials.
 
-Urgency — "Your account will be suspended in 2 hours unless you verify."
+Urgency — "Your account will be suspended in 2 hours unless you verify.
 
-Fear — "We have detected unauthorized access to your account."
+Fear — "We have detected unauthorized access to your account.
 
-Curiosity — "Your package could not be delivered. Click here to reschedule."
+Curiosity — "Your package could not be delivered. Click here to reschedule.
 
-Reciprocity — "As a thank-you for completing our survey, please click here to claim your reward."
+Reciprocity — "As a thank-you for completing our survey, please click here to claim your reward.
 
 The best pretexts combine multiple factors and are tailored to the target's context. A pretext about a "mandatory HR policy update" is more credible to an employee who recently received an HR communication.
 
@@ -221,7 +221,7 @@ Comparison benchmarks: Industry averages allow context. A 20% click rate is conc
 
 Authorized social engineering testing places testers in a position of significant power over real people who do not know they are being tested. This creates ethical obligations.
 
-Proportionality: The test should be realistic but not weaponized. Pretexts that fabricate medical emergencies, death of a family member, or imminent job loss to manipulate targets cross an ethical line even if technically "authorized."
+Proportionality: The test should be realistic but not weaponized. Pretexts that fabricate medical emergencies, death of a family member, or imminent job loss to manipulate targets cross an ethical line even if technically "authorized.
 
 Data minimization: Capture only what is necessary to measure susceptibility. Do not retain real employee credentials beyond the engagement period, and secure them during the engagement.
 

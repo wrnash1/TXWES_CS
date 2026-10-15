@@ -26,19 +26,15 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 03 | Stacks & Queues | CIS-2315"]**
-
-"Module 02 built your pointer manipulation skills with linked lists. This module introduces the two most fundamental abstract data types in computer science: the stack and the queue. Every operating system, compiler, web browser, and scheduling system uses at least one of these. By the end of this module, you will be able to implement both from scratch in Python, explain their complexity profile, and solve the core interview problems that use them — including balanced parentheses, minimum stack, and the monotonic stack pattern."
+Module 02 built your pointer manipulation skills with linked lists. This module introduces the two most fundamental abstract data types in computer science: the stack and the queue. Every operating system, compiler, web browser, and scheduling system uses at least one of these. By the end of this module, you will be able to implement both from scratch in Python, explain their complexity profile, and solve the core interview problems that use them — including balanced parentheses, minimum stack, and the monotonic stack pattern.
 
 ---
 
-## [01:30 – 06:00] Part 1 — Stacks: LIFO
+## Part 1 — Stacks: LIFO
 
-**[SHOW SLIDE: "The Stack — Last In, First Out"]**
-
-"Imagine a stack of plates in a cafeteria. You always add a plate to the top and take a plate from the top. The last plate placed on the stack is the first one removed. That is LIFO — Last In, First Out. A stack is defined entirely by that property.
+Imagine a stack of plates in a cafeteria. You always add a plate to the top and take a plate from the top. The last plate placed on the stack is the first one removed. That is LIFO — Last In, First Out. A stack is defined entirely by that property.
 
 The three fundamental operations are:
 
@@ -47,10 +43,6 @@ The three fundamental operations are:
 - **peek()** — return the top item without removing it
 
 All three are O(1). A fourth operation, **is_empty()**, is O(1) as well.
-
-[PAUSE]
-
-**[DEMO — Stack using Python list]**
 
 The simplest Python stack uses a list, because `list.append()` adds to the right end in O(1), and `list.pop()` removes from the right end in O(1). The right end is the top of the stack.
 
@@ -79,8 +71,6 @@ class Stack:
         return len(self._data)
 ```
 
-[PAUSE]
-
 Let me demonstrate:
 
 ```python
@@ -96,17 +86,13 @@ print(len(s))     # 1 — only 10 remains
 
 Notice: always check `is_empty()` before pop and peek. Popping from an empty stack is one of the most common bugs in stack problems.
 
-[PAUSE]
-
-**Where does Python itself use a stack?** The call stack. Every time your program calls a function, Python pushes a frame onto the call stack. When the function returns, the frame is popped. If you recurse too deeply, Python raises `RecursionError: maximum recursion depth exceeded` — the call stack overflowed. Understanding the stack data structure is literally understanding how your own code runs."
+**Where does Python itself use a stack?** The call stack. Every time your program calls a function, Python pushes a frame onto the call stack. When the function returns, the frame is popped. If you recurse too deeply, Python raises `RecursionError: maximum recursion depth exceeded` — the call stack overflowed. Understanding the stack data structure is literally understanding how your own code runs.
 
 ---
 
-## [06:00 – 10:00] Part 2 — Stack Interview Pattern: Balanced Parentheses
+## Part 2 — Stack Interview Pattern: Balanced Parentheses
 
-**[SHOW SLIDE: "LeetCode #20 — Valid Parentheses"]**
-
-"The classic stack interview problem is balanced parentheses. Given a string of brackets — `(`, `)`, `[`, `]`, `{`, `}` — determine whether every open bracket has a matching close bracket in the correct order.
+The classic stack interview problem is balanced parentheses. Given a string of brackets — `(`, `)`, `[`, `]`, `{`, `}` — determine whether every open bracket has a matching close bracket in the correct order.
 
 The algorithm:
 
@@ -114,10 +100,6 @@ The algorithm:
    - If it is an opening bracket, push it onto the stack.
    - If it is a closing bracket, check whether the top of the stack is the matching opener. If so, pop. If not (or the stack is empty), return `False`.
 2. After scanning the full string, return `True` only if the stack is empty.
-
-[PAUSE]
-
-**[DEMO]**
 
 ```python
 def is_valid(s):
@@ -149,15 +131,13 @@ Now trace `'([)]'`:
 - `[` → push. Stack: `['(', '[']`
 - `)` → top is `[`, not `(` → mismatch → return `False`.
 
-Time: O(n). Space: O(n) worst case (all openers). This problem appears in the first five minutes of many phone screens."
+Time: O(n). Space: O(n) worst case (all openers). This problem appears in the first five minutes of many phone screens.
 
 ---
 
-## [10:00 – 14:00] Part 3 — Queues: FIFO
+## Part 3 — Queues: FIFO
 
-**[SHOW SLIDE: "The Queue — First In, First Out"]**
-
-"A queue is the opposite principle: First In, First Out. Think of a printer queue — the first document sent is the first printed. Or a line at a coffee shop — the first person in line is the first served.
+A queue is the opposite principle: First In, First Out. Think of a printer queue — the first document sent is the first printed. Or a line at a coffee shop — the first person in line is the first served.
 
 The operations are:
 
@@ -167,10 +147,6 @@ The operations are:
 - **is_empty()** — O(1) check
 
 All operations must be O(1). This rules out using a plain Python list as a queue: `list.pop(0)` removes from the front but requires shifting all remaining elements — that is O(n). Instead, Python provides `collections.deque`.
-
-[PAUSE]
-
-**[DEMO — Queue using collections.deque]**
 
 `deque` is a double-ended queue — a doubly linked list under the hood. `append()` adds to the right. `popleft()` removes from the left. Both are O(1).
 
@@ -201,8 +177,6 @@ class Queue:
         return len(self._data)
 ```
 
-[PAUSE]
-
 ```python
 q = Queue()
 q.enqueue('A')
@@ -213,21 +187,15 @@ print(q.dequeue())  # 'B'
 print(q.peek())     # 'C'
 ```
 
-Where are queues used? BFS uses a queue to process nodes level by level. Task schedulers, web request queues, and operating system process scheduling all use queues. Any system where fairness requires items to be processed in the order they arrived."
+Where are queues used? BFS uses a queue to process nodes level by level. Task schedulers, web request queues, and operating system process scheduling all use queues. Any system where fairness requires items to be processed in the order they arrived.
 
 ---
 
-## [14:00 – 18:30] Part 4 — Monotonic Stack Pattern
+## Part 4 — Monotonic Stack Pattern
 
-**[SHOW SLIDE: "Monotonic Stack — Next Greater Element"]**
-
-"The monotonic stack is one of the most important interview patterns you will learn in this course. It solves problems that ask: for each element, what is the next element that is greater (or smaller) than it?
+The monotonic stack is one of the most important interview patterns you will learn in this course. It solves problems that ask: for each element, what is the next element that is greater (or smaller) than it?
 
 The key insight: maintain a stack where elements are always in monotonically decreasing order. When a new element breaks that order, the stack tells you which previous elements have found their 'next greater.'
-
-[PAUSE]
-
-**[DEMO — LeetCode #739 Daily Temperatures]**
 
 Problem: Given a list of daily temperatures, return a list where each entry is the number of days you have to wait for a warmer day. If no such day exists, put 0.
 
@@ -260,21 +228,15 @@ Remaining stack indices never got a warmer day — result stays 0.
 
 Final: `[1, 1, 4, 2, 1, 1, 0, 0]`.
 
-Time: O(n) — each index is pushed and popped at most once. Space: O(n) worst case."
+Time: O(n) — each index is pushed and popped at most once. Space: O(n) worst case.
 
 ---
 
-## [18:30 – 21:30] Part 5 — Implementing Queue with Two Stacks
+## Part 5 — Implementing Queue with Two Stacks
 
-**[SHOW SLIDE: "LeetCode #232 — Implement Queue using Stacks"]**
-
-"A classic interview construction problem: implement a queue using only two stacks. This tests whether you understand both data structures at a deep level.
+A classic interview construction problem: implement a queue using only two stacks. This tests whether you understand both data structures at a deep level.
 
 The idea: one stack is for pushing (inbox), one is for popping (outbox). When you dequeue and the outbox is empty, pour the entire inbox into the outbox — this reversal produces FIFO order.
-
-[PAUSE]
-
-**[DEMO]**
 
 ```python
 class MyQueue:
@@ -302,15 +264,13 @@ class MyQueue:
                 self.outbox.append(self.inbox.pop())
 ```
 
-The amortized cost of each operation is O(1). Every element is pushed once, transferred once, and popped once — three operations over its lifetime, which is O(1) amortized even though individual `pop` calls that trigger a transfer are O(n)."
+The amortized cost of each operation is O(1). Every element is pushed once, transferred once, and popped once — three operations over its lifetime, which is O(1) amortized even though individual `pop` calls that trigger a transfer are O(n).
 
 ---
 
-## [21:30 – 23:30] Part 6 — Complexity Summary and Closing
+## Part 6 — Complexity Summary and Closing
 
-**[SHOW SLIDE: "Stack and Queue Complexity"]**
-
-"Let me consolidate the complexity for both data structures.
+Let me consolidate the complexity for both data structures.
 
 | Operation | Stack (list) | Queue (deque) |
 |---|---|---|
@@ -321,8 +281,6 @@ The amortized cost of each operation is O(1). Every element is pushed once, tran
 | Space | O(n) | O(n) |
 
 Everything you do at the top of a stack or the front of a queue is O(1). Never search a stack — pop everything or use a different structure.
-
-[PAUSE]
 
 **When do you reach for a stack?**
 
@@ -338,7 +296,7 @@ Everything you do at the top of a stack or the front of a queue is O(1). Never s
 - Any system requiring fair FIFO ordering.
 - Sliding window problems often use a deque for O(1) front and back access.
 
-The Module 03 lab has you implement both from scratch and solve four LeetCode problems. The quiz covers LIFO vs FIFO, operation complexity, and the monotonic stack pattern. Good luck."
+The Module 03 lab has you implement both from scratch and solve four LeetCode problems. The quiz covers LIFO vs FIFO, operation complexity, and the monotonic stack pattern. Good luck.
 
 ---
 

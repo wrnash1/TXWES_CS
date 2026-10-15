@@ -25,14 +25,10 @@
 ---
 
 ### Pre-Roll Slide
-[SHOW SLIDE: "CSC-6361 — Module 05 Part 1: Quality of Service (QoS) & High Availability | Texas Wesleyan University | Graduate Level"]
 
 ---
 
 ### Section 1: Quality of Service — The Business Case
-
-[00:00 – 02:00]
-[SHOW SLIDE: Network traffic types — voice, video, data — competing for bandwidth]
 
 Welcome to Module 05. This module covers two topics that are central to real production networks: **Quality of Service (QoS)** and **High Availability (HA)**. Plus, we introduce the emerging discipline of **network automation** — the skill set that separates modern network engineers from traditional ones.
 
@@ -41,9 +37,6 @@ Without QoS, all traffic is treated equally — a 4K video stream competes for b
 ---
 
 ### Section 2: QoS — DiffServ Model (CCNP Level)
-
-[02:00 – 08:00]
-[SHOW DIAGRAM: DSCP marking through an enterprise — PC marks traffic → switch trusts marking → WAN applies QoS policy]
 
 [Alt-text: A flow diagram showing: PC running VoIP app → Cisco IP Phone (marks traffic as DSCP EF) → Access Switch (trusts QoS marking from phone) → Distribution Switch (applies queuing policy) → WAN Router (shapes/polices toward ISP). DSCP values shown in each packet header icon.]
 
@@ -111,9 +104,6 @@ interface GigabitEthernet0/0
 
 ### Section 3: DSCP Marking at the Access Layer
 
-[08:00 – 11:00]
-[SHOW DIAGRAM: IP phone marking EF, PC in same VLAN unmarked, switch trust policy]
-
 One of the most common CCNP exam topics is **QoS trust boundaries**. The question: which device in the network should mark traffic, and which devices should trust or re-mark those markings?
 
 **Trust Boundary Principle:**
@@ -134,9 +124,6 @@ interface FastEthernet0/1
 ---
 
 ### Section 4: High Availability — HSRP, VRRP, and GLBP
-
-[11:00 – 15:00]
-[SHOW DIAGRAM: HSRP — Active router, Standby router, Virtual IP as gateway for hosts]
 
 [Alt-text: Two distribution switches labeled "DS1 (Active — HSRP)" and "DS2 (Standby — HSRP)." Both switches have arrows pointing to a laptop labeled "End Device — Default Gateway: 10.10.10.254 (Virtual IP)." An arrow between DS1 and DS2 is labeled "HSRP Hello Messages." A dotted arrow shows "If DS1 fails → DS2 becomes Active."]
 
@@ -167,7 +154,7 @@ interface Vlan10
 **VRRP (Virtual Router Redundancy Protocol):**
 - Open standard (IEEE, RFC 5798) — equivalent to HSRP but vendor-neutral.
 - Configuration nearly identical to HSRP.
-- Called "Master" and "Backup" instead of "Active" and "Standby."
+- Called "Master" and "Backup" instead of "Active" and "Standby.
 
 **GLBP (Gateway Load Balancing Protocol):**
 - Cisco proprietary.
@@ -193,9 +180,6 @@ standby 1 bfd
 ---
 
 ### Section 5: Part 1 Summary
-
-[15:00 – 16:00]
-[SHOW SLIDE: Key terms recap]
 
 In Part 1 you learned:
 - **DiffServ QoS** using DSCP markings, MQC configuration, LLQ for voice, CBWFQ for data.

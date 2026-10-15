@@ -42,9 +42,9 @@ GulfTech Pharmaceuticals is a mid-sized drug manufacturer subject to FDA regulat
 
 The IR team is split on the containment decision:
 
-Position A (the Technical Lead): "We should covertly monitor the attacker for 24–48 more hours before isolating. We need to understand their full scope — what else have they accessed, what have they exfiltrated, where else in the environment are they? If we isolate now, we see only what we already know."
+Position A (the Technical Lead): "We should covertly monitor the attacker for 24–48 more hours before isolating. We need to understand their full scope — what else have they accessed, what have they exfiltrated, where else in the environment are they? If we isolate now, we see only what we already know.
 
-Position B (the CISO): "We need to isolate RESEARCH-DB-04 immediately. Every additional hour risks additional exfiltration of $340 million in trade secret data. We contain now and investigate what we have."
+Position B (the CISO): "We need to isolate RESEARCH-DB-04 immediately. Every additional hour risks additional exfiltration of $340 million in trade secret data. We contain now and investigate what we have.
 
 Both positions have merit. The company's legal counsel has just confirmed that there is no immediate regulatory obligation to delay containment.
 
@@ -56,7 +56,7 @@ Both positions have merit. The company's legal counsel has just confirmed that t
 
 CivicTech Municipal Services provides IT services to 23 city government agencies. Over the past three years, CivicTech experienced four significant security incidents:
 
-Year 1 — A ransomware attack affecting 7 file servers. Recovery took 11 days. A lessons-learned meeting was scheduled but canceled because the IT director said "everyone is too busy catching up from the downtime."
+Year 1 — A ransomware attack affecting 7 file servers. Recovery took 11 days. A lessons-learned meeting was scheduled but canceled because the IT director said "everyone is too busy catching up from the downtime.
 
 Year 2 — A phishing attack that compromised the email accounts of 14 employees including two city council members. No lessons-learned meeting occurred. The CISO documented the incident in a ticket and moved on.
 

@@ -272,7 +272,7 @@ Rotations per insert: at most 2 (one for LR or RL). After a rotation, the subtre
 
 ## 7. Interview Exam Tips
 
-1. **Know all four rotation cases by name** — LL, RR (single rotations), LR, RL (double rotations). Interviewers ask "what rotation fires when you insert X into this tree?"
+1. **Know all four rotation cases by name** — LL, RR (single rotations), LR, RL (double rotations). Interviewers ask "what rotation fires when you insert X into this tree?
 
 2. **Balance factor sign convention** — define it consistently: `height(right) - height(left)`. Positive means right-heavy, negative means left-heavy.
 
@@ -308,9 +308,6 @@ The following free, openly licensed resources reinforce the concepts in this mod
 
 5. **Python `sortedcontainers` Documentation** — [https://grantjenks.com/docs/sortedcontainers/](https://grantjenks.com/docs/sortedcontainers/)
    Free documentation for Python's `SortedList`, `SortedDict`, and `SortedSet` — the practical Python equivalents of AVL/Red-Black trees for interview use. Covers time complexity guarantees and usage examples.
-
----
-
 
 ---
 
@@ -396,7 +393,6 @@ Before proceeding to this module's laboratory exercises, synthesize concise, rig
 1. **First-Principles Invariant Defense:** How does the theoretical model in this module ensure state correctness under adverse operating conditions? What mathematical proof or telemetry metric validates this behavior?
 2. **Architectural Trade-Off Analysis:** If forced to reduce execution latency by 50%, what specific compromises in consistency, redundancy, or capital expenditure would your architecture be forced to accept?
 3. **Failure Mode Pathology:** Explain the exact mechanistic chain of events that occurs when this module's primary subsystem experiences an unhandled resource starvation condition.
-
 
 ## 8. Study Checklist
 

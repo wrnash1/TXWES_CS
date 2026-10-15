@@ -27,14 +27,14 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-- [ ] Title slide loaded: "Module 02 - Rules of Engagement and Legal Considerations"
+- [ ] Title slide loaded: "Module 02 - Rules of Engagement and Legal Considerations
 - [ ] Terminal window ready for document examples
 - [ ] CFAA statutory language excerpt prepared
 - [ ] PT0-002 domain map highlighting Planning and Scoping at 14%
 
 ---
 
-## [00:00 - 01:30] Opening
+## Opening
 
 **[SLIDE: Module 02 — Rules of Engagement and Legal Considerations]**
 
@@ -52,7 +52,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 05:00] The Rules of Engagement in Depth
+## The Rules of Engagement in Depth
 
 **[SLIDE: RoE — The Operational Contract]**
 
@@ -95,7 +95,7 @@ Any sensitive data discovered during testing — credentials, PII, financial dat
 
 ---
 
-## [05:00 - 09:30] The Legal Framework
+## The Legal Framework
 
 **[SLIDE: Computer Fraud and Abuse Act — 18 U.S.C. § 1030]**
 
@@ -125,7 +125,7 @@ The ECPA governs interception of electronic communications and access to stored 
 
 ---
 
-## [09:30 - 13:00] Compliance Standards That Drive Penetration Testing
+## Compliance Standards That Drive Penetration Testing
 
 **[SLIDE: Why Compliance Matters to Penetration Testers]**
 
@@ -149,7 +149,7 @@ SOC 2 is an auditing framework for service organizations. The security trust ser
 
 ---
 
-## [13:00 - 16:30] Ethics and Professional Obligations
+## Ethics and Professional Obligations
 
 **[SLIDE: The Ethics of Offensive Security]**
 
@@ -173,7 +173,7 @@ Everything you discover during a penetration test is confidential. The NDA prote
 
 ---
 
-## [16:30 - 19:30] Handling Difficult Situations
+## Handling Difficult Situations
 
 **[SLIDE: When Things Get Complicated]**
 
@@ -197,7 +197,7 @@ A client asks you to test a competitor's network to "see how they compare." This
 
 ---
 
-## [19:30 - 22:30] Constructing a Complete RoE — Walkthrough
+## Constructing a Complete RoE — Walkthrough
 
 **[SHOW TERMINAL]**
 
@@ -251,7 +251,7 @@ Notice how every section is specific and actionable. There is no ambiguity about
 
 ---
 
-## [22:30 - 23:30] Exam Tips and Summary
+## Exam Tips and Summary
 
 **[SLIDE: PT0-002 Exam Tips — Module 02]**
 
@@ -271,7 +271,7 @@ For additional study, visit **professormesser.com** and **comptia.org** for PT0-
 
 ---
 
-## [23:30 - 24:00] Closing
+## Closing
 
 In Module 03 we move into the reconnaissance phase — specifically passive OSINT techniques. You will learn how much information about a target can be gathered without ever touching their systems, using only publicly available sources.
 

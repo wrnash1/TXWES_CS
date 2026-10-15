@@ -134,7 +134,7 @@ Interviews are one-on-one or small-group conversations between the BA and a stak
 
 - Prepare open-ended questions in advance, organized by topic area
 - Begin with broad context-setting questions before narrowing to specifics
-- Use probing follow-ups: "Can you give me an example?" "What happens when that fails?"
+- Use probing follow-ups: "Can you give me an example?" "What happens when that fails?
 - Allow silence — stakeholders often provide important information when the interviewer pauses rather than rushing to the next question
 - Take notes or record the session (with permission); do not rely on memory alone
 - Send a summary to the stakeholder after the interview to confirm accuracy
@@ -260,7 +260,7 @@ Common formats include:
 
 - **Business Requirements Document (BRD)** — traditional document used in waterfall projects
 - **Software Requirements Specification (SRS)** — detailed technical specification of system behavior
-- **User stories** — Agile format: "As a [user role], I want [goal] so that [reason]"
+- **User stories** — Agile format: "As a [user role], I want [goal] so that [reason]
 - **Use cases** — structured descriptions of how actors interact with the system to achieve goals
 
 ---
@@ -462,8 +462,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

@@ -40,8 +40,6 @@ Let's start with the relational database workhorse — Amazon RDS.
 
 ### SEGMENT 2 — Amazon RDS: Multi-AZ and Read Replicas (1:30–6:00)
 
-[SHOW DIAGRAM: RDS Multi-AZ architecture — Primary DB instance in AZ-A with synchronous replication arrow to Standby DB instance in AZ-B. A single DNS endpoint sits above both instances. A red X over the primary with a curved arrow showing automatic failover to standby.]
-
 Amazon Relational Database Service — RDS — is a managed service for running relational databases on AWS. RDS manages the undifferentiated heavy lifting: hardware provisioning, database setup, patching, automated backups, and failover. You choose from six supported database engines: MySQL, PostgreSQL, MariaDB, Oracle, Microsoft SQL Server, and Amazon Aurora.
 
 The two most tested RDS features are Multi-AZ and Read Replicas. They are fundamentally different, and confusing them is one of the most common SAA-C03 mistakes.
@@ -56,13 +54,9 @@ Because replication is asynchronous, Read Replicas have some replication lag —
 
 Read Replicas can be in the same region or in a different region — cross-region Read Replicas provide both read scaling and disaster recovery capability in a single feature. A cross-region Read Replica can be promoted to a full standalone database during a regional outage.
 
-[SHOW DIAGRAM: Side-by-side comparison — Multi-AZ left column showing synchronous replication, 1 standby, same region only, no read scaling, automatic failover. Read Replicas right column showing asynchronous replication, up to 5 (15 Aurora), cross-region supported, read scaling yes, manual promotion.]
-
 ---
 
 ### SEGMENT 3 — Amazon Aurora (6:00–9:00)
-
-[SHOW DIAGRAM: Aurora cluster architecture — primary instance and up to 15 read replicas all connected to a shared distributed storage layer spanning 3 AZs with 6 copies of data (2 per AZ). Writer endpoint and reader endpoint labeled above.]
 
 Amazon Aurora is AWS's cloud-native relational database. Aurora is compatible with MySQL and PostgreSQL — you can migrate most MySQL or PostgreSQL applications to Aurora with minimal changes. Aurora is not just a hosted version of MySQL; it is a fundamentally different architecture.
 
@@ -82,8 +76,6 @@ On the exam: if a scenario mentions "MySQL or PostgreSQL compatible," "automatic
 
 ### SEGMENT 4 — Amazon DynamoDB (9:00–12:30)
 
-[SHOW DIAGRAM: DynamoDB table with partition key and sort key illustrated. Arrows show partition key → partition hash → storage partition. GSI shown as a separate projected table with a different partition key.]
-
 DynamoDB is AWS's fully managed serverless NoSQL key-value and document database. It delivers single-digit millisecond performance at any scale — millions of requests per second — with automatic sharding, replication across 3 AZs, and no infrastructure to manage.
 
 DynamoDB data model: data is stored as **items** (equivalent to rows) in **tables**. Items are identified by a **primary key** — either a simple partition key or a composite partition key plus sort key. The partition key determines which physical partition stores the item. Items with the same partition key and different sort keys are stored together and can be queried as a range.
@@ -102,15 +94,11 @@ On the exam: if you need a new query pattern on an existing table, the answer is
 
 ### SEGMENT 5 — Amazon ElastiCache (12:30–15:00)
 
-[SHOW DIAGRAM: Application tier → ElastiCache cluster (Redis or Memcached) → Database. Cache hit path shown going directly from ElastiCache back to application. Cache miss path shown going through to the database, then back through ElastiCache to application.]
-
 ElastiCache is a fully managed in-memory caching service. It reduces database load by caching frequently accessed data in memory, delivering sub-millisecond response times. ElastiCache supports two engines: Redis and Memcached.
 
 **Redis** is the feature-rich option. Redis supports complex data structures — strings, hashes, lists, sets, sorted sets — making it suitable not just for caching but also for leaderboards, session stores, geospatial indexes, and pub/sub messaging. Redis supports persistence (saving data to disk), replication, Multi-AZ with automatic failover, and Redis Cluster mode for horizontal sharding. Redis is the right choice when you need high availability, data persistence, or complex data structures beyond simple key-value storage.
 
 **Memcached** is simpler and designed purely for high-performance distributed caching. It supports only string key-value pairs, no persistence, and no replication. Memcached uses multi-threading, which can be more efficient than Redis for pure caching at very high throughput. Memcached is the right choice when you need the simplest, fastest pure cache with no other requirements.
-
-[SHOW DIAGRAM: Redis vs. Memcached feature matrix with checkmarks — Data structures, Persistence, Replication, Multi-AZ, Pub/Sub: all checked for Redis, all unchecked for Memcached except checkmarks for Simplicity and Multi-threading]
 
 On the exam: if a scenario mentions "leaderboard," "session store," "high availability cache," "pub/sub," or "cache with persistence" → Redis. If it says "simple cache, highest throughput, no special features needed" → Memcached.
 
@@ -119,8 +107,6 @@ The Lazy Loading caching pattern loads data into the cache only when a cache mis
 ---
 
 ### SEGMENT 6 — Amazon Redshift and Neptune (15:00–18:00)
-
-[SHOW DIAGRAM: Redshift cluster architecture — Leader Node receiving SQL queries from BI tools, with arrows to 2–128 Compute Nodes processing data in parallel. S3 icon labeled COPY showing data loading from S3.]
 
 **Amazon Redshift** is a fully managed petabyte-scale data warehouse optimized for OLAP (Online Analytical Processing) queries over large historical datasets. Redshift uses columnar storage, data compression, and massively parallel processing (MPP) to execute complex analytical queries across billions of rows efficiently.
 
@@ -139,8 +125,6 @@ On the exam: if a scenario mentions "graph," "relationships between entities," "
 ---
 
 ### SEGMENT 7 — Choosing the Right Database (18:00–20:30)
-
-[SHOW DIAGRAM: Database selection decision tree — Relational/SQL required? → RDS or Aurora. Need 15 read replicas or serverless scaling? → Aurora. NoSQL, millions of req/sec, single-digit ms? → DynamoDB. Reduce DB load with caching? → ElastiCache. Petabyte analytics/BI? → Redshift. Graph relationships? → Neptune.]
 
 Choosing the right database is the ultimate exam skill for this module. Let me give you the complete decision framework.
 

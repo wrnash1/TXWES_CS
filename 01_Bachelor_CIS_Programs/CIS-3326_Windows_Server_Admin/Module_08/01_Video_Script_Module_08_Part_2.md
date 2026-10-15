@@ -249,7 +249,7 @@ The HTML report from `gpresult /h` shows:
 - The winning setting for every configured policy value.
 
 This is the primary troubleshooting tool for Group Policy. When a user says
-"my policy is not applying," your first step is `gpresult /h`.
+my policy is not applying," your first step is `gpresult /h`.
 
 ---
 

@@ -313,8 +313,6 @@ Physical findings use the same report structure as technical findings but requir
 - Proxmark3 Documentation: https://github.com/RfidResearchGroup/proxmark3
 - ANSI/BHMA A156.30 High Security Locks Standard
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

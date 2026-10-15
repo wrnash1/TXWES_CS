@@ -47,7 +47,7 @@ D) Run `setsebool -P httpd_can_network_connect on` to allow Apache to access the
 
 **Question 4**
 An administrator writes the following crontab entry: `*/5 * * * * /usr/local/bin/check_disk.sh`. A colleague says the script will run "at minute 5 of every hour." Who is correct and why?
-A) The colleague is correct — `*/5` in the minute field means "at minute 5."
+A) The colleague is correct — `*/5` in the minute field means "at minute 5.
 B) The administrator is correct — `*/5` means "every 5 minutes" (at minutes 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55). The script runs 12 times per hour.
 C) Neither — `*/5` is invalid cron syntax and the job will not be scheduled.
 D) The colleague is correct — the `/` in cron syntax indicates a specific minute, not an interval.
@@ -208,7 +208,7 @@ D) MySQL is using IPv6 addressing. The equivalent IPv4 bind address is `127.0.0.
 *   **Correct Answer:** B) MySQL is bound to all network interfaces and accepts connections from any IP address on port 3306. If no firewall rule restricts access, the database is reachable from the network.
 *   **Distractor Analysis:**
     *   *Why A is incorrect:* The loopback interface bind address is `127.0.0.1`, not `0.0.0.0`. `127.0.0.1` restricts MySQL to local connections only, which is the recommended default for database servers that should not be externally accessible. `0.0.0.0` is the wildcard address meaning all interfaces.
-    *   *Why C is incorrect:* A port shown in `ss -tuln` output is already listening — the process is bound and actively accepting connections. Closed ports do not appear in `ss -tuln` output. The `l` flag in `ss -tuln` means "listening."
+    *   *Why C is incorrect:* A port shown in `ss -tuln` output is already listening — the process is bound and actively accepting connections. Closed ports do not appear in `ss -tuln` output. The `l` flag in `ss -tuln` means "listening.
     *   *Why D is incorrect:* `0.0.0.0` is a valid IPv4 wildcard address meaning all IPv4 interfaces. The IPv6 equivalent wildcard is `::` or `:::3306`. These are different address families and different bind semantics. `0.0.0.0` has nothing to do with IPv6 addressing.
 
 ---

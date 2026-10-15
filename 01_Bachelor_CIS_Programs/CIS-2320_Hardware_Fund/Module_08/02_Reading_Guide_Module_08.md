@@ -457,8 +457,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
    URL: [https://pcpartpicker.com/builds/](https://pcpartpicker.com/builds/)
    Relevance: Community PC build database with component lists and total cost estimates. Browse completed builds tagged as "Workstation," "NAS," "Gaming," and "Server" to see real-world examples of how the component selection principles from this module are applied in practice.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

@@ -26,23 +26,19 @@
 
 ---
 
-## [00:00 – 00:45] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 09 | Scopes, Namespaces, and Recursion | CIS-1310"]**
-
-"Welcome back. Module 08 introduced functions and touched on scope. This module goes deeper — into how Python actually tracks variables, what LEGB means, how closures work, and the concept of recursion.
+Welcome back. Module 08 introduced functions and touched on scope. This module goes deeper — into how Python actually tracks variables, what LEGB means, how closures work, and the concept of recursion.
 
 Recursion is one of those topics that causes confusion the first time and then becomes one of the most elegant tools in your toolkit. A recursive function calls itself — and once you understand how Python's call stack makes that safe and predictable, a whole class of problems becomes easy to express.
 
-Scopes and namespaces are also tested directly on the PCAP exam — specifically LEGB lookup order and the `nonlocal` keyword. Let's cover it all."
+Scopes and namespaces are also tested directly on the PCAP exam — specifically LEGB lookup order and the `nonlocal` keyword. Let's cover it all.
 
 ---
 
-## [00:45 – 03:00] LEGB Scope Rules
+## LEGB Scope Rules
 
-**[SHOW SLIDE: "LEGB — Python's Name Lookup Order"]**
-
-"When Python encounters a variable name, it looks for it in four scopes, in order. This is called the **LEGB rule**:
+When Python encounters a variable name, it looks for it in four scopes, in order. This is called the **LEGB rule**:
 
 - **L — Local:** The innermost scope — inside the current function
 - **E — Enclosing:** Any enclosing functions (for nested functions)
@@ -50,8 +46,6 @@ Scopes and namespaces are also tested directly on the PCAP exam — specifically
 - **B — Built-in:** Python's built-in names like `len`, `print`, `range`
 
 Python searches these scopes in order and uses the first match it finds.
-
-**[DEMO]**
 
 ```python
 x = 'global'
@@ -80,8 +74,6 @@ global
 
 Each level of scope has its own `x`. The inner function sees only its own local `x`. The outer function sees its own `x`. The module-level code sees the global `x`.
 
-**[DEMO — when no local variable exists]**
-
 ```python
 name = 'Global Name'
 
@@ -97,17 +89,13 @@ Output:
 Global Name
 ```
 
-Python walks up the LEGB chain until it finds the name. If it reaches Built-in scope without finding it, it raises `NameError`."
+Python walks up the LEGB chain until it finds the name. If it reaches Built-in scope without finding it, it raises `NameError`.
 
 ---
 
-## [03:00 – 04:30] The nonlocal Keyword
+## The nonlocal Keyword
 
-**[SHOW SLIDE: "nonlocal — Modify Enclosing Scope Variables"]**
-
-"Module 08 introduced `global` — which allows a nested function to modify a module-level variable. `nonlocal` is the equivalent for the enclosing function's scope — it allows an inner function to modify a variable defined in the enclosing function.
-
-**[DEMO]**
+Module 08 introduced `global` — which allows a nested function to modify a module-level variable. `nonlocal` is the equivalent for the enclosing function's scope — it allows an inner function to modify a variable defined in the enclosing function.
 
 ```python
 def make_counter():
@@ -134,19 +122,15 @@ Output:
 3
 ```
 
-`nonlocal count` tells Python that `count` inside `increment()` refers to the `count` in `make_counter()`'s scope — not a new local. This is the foundation of **closures** — a function that captures and remembers variables from its enclosing scope."
+`nonlocal count` tells Python that `count` inside `increment()` refers to the `count` in `make_counter()`'s scope — not a new local. This is the foundation of **closures** — a function that captures and remembers variables from its enclosing scope.
 
 ---
 
-## [04:30 – 06:00] Closures
+## Closures
 
-**[SHOW SLIDE: "Closures — Functions That Remember Their Environment"]**
-
-"A **closure** is a function that carries its enclosing scope's variables with it, even after the enclosing function has returned.
+A **closure** is a function that carries its enclosing scope's variables with it, even after the enclosing function has returned.
 
 In the `make_counter()` example, `counter` is a closure. After `make_counter()` returns, its local `count` variable is no longer in a live call stack — but `counter` still has access to it, because the closure captured it.
-
-**[DEMO — practical closure: multiplier factory]**
 
 ```python
 def make_multiplier(factor):
@@ -164,20 +148,16 @@ print(double(7))    # 14
 
 Each call to `make_multiplier()` creates a separate closure with its own `factor`. `double` captured `factor=2`. `triple` captured `factor=3`. They are completely independent.
 
-Closures are one of the most powerful patterns in Python — used extensively in decorators, callbacks, and functional programming."
+Closures are one of the most powerful patterns in Python — used extensively in decorators, callbacks, and functional programming.
 
 ---
 
-## [06:00 – 09:00] Recursion — Functions That Call Themselves
+## Recursion — Functions That Call Themselves
 
-**[SHOW SLIDE: "Recursion — Breaking a Problem into Smaller Copies"]**
-
-"A **recursive** function is one that calls itself. Every recursive function needs two things:
+A **recursive** function is one that calls itself. Every recursive function needs two things:
 
 1. A **base case** — a condition that stops the recursion
 2. A **recursive case** — the function calling itself with a smaller or simpler argument
-
-**[DEMO — factorial]**
 
 ```python
 def factorial(n):
@@ -214,8 +194,6 @@ Six frames deep. When `factorial(0)` returns `1`, each frame unwinds and compute
 
 If the base case is never reached, Python eventually hits the maximum recursion depth and raises `RecursionError: maximum recursion depth exceeded`.
 
-**[DEMO]**
-
 ```python
 def bad_recursion(n):
     return bad_recursion(n - 1)    # no base case
@@ -229,15 +207,13 @@ Output:
 RecursionError: maximum recursion depth exceeded
 ```
 
-Python's default recursion limit is 1,000 frames. You can check it with `import sys; sys.getrecursionlimit()`."
+Python's default recursion limit is 1,000 frames. You can check it with `import sys; sys.getrecursionlimit()`.
 
 ---
 
-## [09:00 – 11:00] More Recursive Examples
+## More Recursive Examples
 
-**[SHOW SLIDE: "Classic Recursive Problems"]**
-
-"### Sum of a List
+### Sum of a List
 
 ```python
 def list_sum(lst):
@@ -272,15 +248,13 @@ Note: This naive recursive Fibonacci is clear and elegant but very slow for larg
 
 Recursion shines when the problem is naturally recursive — when it breaks down into identical smaller sub-problems. Tree traversal, file system scanning, parsing nested data, divide-and-conquer algorithms — these are natural fits.
 
-For simple counting or list iteration, a `for` loop is more efficient and easier to read."
+For simple counting or list iteration, a `for` loop is more efficient and easier to read.
 
 ---
 
-## [11:00 – 12:15] Namespaces
+## Namespaces
 
-**[SHOW SLIDE: "Namespaces — Dictionaries of Names"]**
-
-"A **namespace** is a mapping from names to objects — essentially a dictionary. When you write `x = 5`, Python adds `'x': 5` to the current namespace.
+A **namespace** is a mapping from names to objects — essentially a dictionary. When you write `x = 5`, Python adds `'x': 5` to the current namespace.
 
 Python maintains several namespaces simultaneously:
 
@@ -289,8 +263,6 @@ Python maintains several namespaces simultaneously:
 - **Built-in namespace:** One per Python interpreter session. Contains all built-in functions and exceptions.
 
 You can inspect the current global namespace with `globals()` and the local namespace with `locals()`:
-
-**[DEMO]**
 
 ```python
 >>> x = 10
@@ -301,13 +273,11 @@ True
 10
 ```
 
-Namespaces are why Python can have variables with the same name in different scopes without conflict — they live in separate namespace dictionaries."
+Namespaces are why Python can have variables with the same name in different scopes without conflict — they live in separate namespace dictionaries.
 
 ---
 
-## [12:15 – 13:45] Putting It Together — Counter Closure + Recursive Display
-
-**[DEMO — live code]**
+## Putting It Together — Counter Closure + Recursive Display
 
 ```python
 # scope_demo.py
@@ -363,11 +333,9 @@ Countdown from 10:
 
 ---
 
-## [13:45 – 15:00] PCAP Exam Tips and Wrap-Up
+## PCAP Exam Tips and Wrap-Up
 
-**[SHOW SLIDE: "Module 09 — PCAP Alignment"]**
-
-"Key exam take-aways:
+Key exam take-aways:
 
 **1.** LEGB: Local → Enclosing → Global → Built-in. Python searches in this order.
 
@@ -383,7 +351,7 @@ Countdown from 10:
 
 **7.** `locals()` and `globals()` return dictionaries of the current local and global namespaces.
 
-Module 10 covers dictionaries — Python's most powerful and flexible mapping type. See you there."
+Module 10 covers dictionaries — Python's most powerful and flexible mapping type. See you there.
 
 ---
 

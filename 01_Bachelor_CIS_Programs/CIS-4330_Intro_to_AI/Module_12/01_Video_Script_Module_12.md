@@ -26,17 +26,15 @@
 
 ---
 
-## [00:00 - 01:30] Opening
+## Opening
 
 Welcome back. Professor Nash here, and this is Module 12. We have now covered the technical foundations of AI — machine learning, deep learning, computer vision, NLP, Azure Cognitive Services, Azure ML, and generative AI. This module steps back from implementation and asks: when should a business adopt AI, what does it cost, how do you measure the value, and how do you make the build-versus-buy decision? These are the business questions that data scientists, product managers, and executives wrestle with on every AI project. Understanding them will make you a more effective AI practitioner — and they appear on AI-900 in the form of scenario questions about AI use case selection. Let us get into it.
 
 ---
 
-## [01:30 - 06:00] AI Business Use Case Categories
+## AI Business Use Case Categories
 
 AI adds value to businesses through four broad categories of application. Knowing these categories helps you quickly recognize and classify AI use cases in exam scenarios and in real project work.
-
-[SHOW DIAGRAM: Four quadrants labeled with use case categories. Top-left: "Automation." Top-right: "Enhancement." Bottom-left: "Insights." Bottom-right: "New Products." Each quadrant has 2-3 bullet-point examples.]
 
 **Category 1 — Automation:** AI performs tasks previously done by humans, reducing cost and increasing throughput. Examples: document processing (extracting invoice fields with Azure Form Recognizer), customer inquiry routing (CLU-based intent classification), quality control inspection (custom vision on manufacturing lines). The value proposition: same output at lower cost, faster speed, or 24/7 availability.
 
@@ -50,9 +48,7 @@ For AI-900, these categories help you reason through scenario questions: "A comp
 
 ---
 
-## [06:00 - 10:30] The Build vs Buy Decision
-
-[SHOW DIAGRAM: Decision tree. Root node: "Does a prebuilt Azure AI service cover this use case?" Branch Yes: "Use Azure Cognitive Services — faster, cheaper, no training data." Branch No: "Is the task domain-specific with proprietary data?" Sub-branch Yes: "Build custom model with Azure ML or Custom Vision/CLU." Sub-branch No: "Can a general-purpose LLM with prompt engineering solve it?" End nodes labeled with appropriate Azure services.]
+## The Build vs Buy Decision
 
 When a business decides to adopt AI, one of the first decisions is whether to use a prebuilt capability or build a custom model. This is the build-versus-buy decision in AI, and it is directly tested on AI-900.
 
@@ -80,9 +76,7 @@ The decision is a spectrum, not binary. A single business application may use pr
 
 ---
 
-## [10:30 - 15:00] Measuring AI ROI
-
-[SHOW DIAGRAM: ROI framework. Left box: "AI Investment Costs." Items: development and training, data collection and labeling, Azure compute costs, maintenance and retraining, integration work. Right box: "AI Value Realized." Items: labor cost savings, quality improvement, revenue from new capabilities, cost avoidance, speed improvement. Bottom: "ROI = (Value - Cost) / Cost x 100%"]
+## Measuring AI ROI
 
 Executives want to know if AI investments pay off. Measuring AI return on investment requires identifying both the costs and the value realized — and being honest about both.
 
@@ -112,7 +106,7 @@ Cost avoidance — AI preventing errors, regulatory violations, or safety incide
 
 ---
 
-## [15:00 - 18:30] Common AI Business Use Case Patterns
+## Common AI Business Use Case Patterns
 
 Let me walk through the most common patterns you will encounter in AI-900 scenario questions, with the correct Azure service for each.
 
@@ -134,7 +128,7 @@ Let me walk through the most common patterns you will encounter in AI-900 scenar
 
 ---
 
-## [18:30 - 21:30] AI Adoption Maturity
+## AI Adoption Maturity
 
 Organizations adopt AI along a maturity curve. Understanding where an organization sits on this curve informs the right AI strategy.
 
@@ -150,7 +144,7 @@ Most enterprises are currently between Levels 1 and 3. The Azure AI platform is 
 
 ---
 
-## [21:30 - 23:00] Module Summary
+## Module Summary
 
 Let me summarize Module 12.
 

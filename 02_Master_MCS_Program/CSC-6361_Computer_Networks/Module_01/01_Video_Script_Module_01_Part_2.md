@@ -24,14 +24,10 @@
 ---
 
 ### Pre-Roll Slide
-[SHOW SLIDE: "CSC-6361 — Module 01 Part 2: EIGRP Deep Dive & Redistribution | Texas Wesleyan University"]
 
 ---
 
 ### Section 1: EIGRP — From Basics to CCNP Depth
-
-[00:00 – 02:00]
-[SHOW SLIDE: EIGRP logo/overview — "Enhanced Interior Gateway Routing Protocol"]
 
 Welcome back to Module 01, Part 2. In Part 1, we built a deep understanding of multi-area OSPF. Now we turn to EIGRP — Enhanced Interior Gateway Routing Protocol — and examine it at CCNP depth.
 
@@ -40,9 +36,6 @@ EIGRP was developed by Cisco as a proprietary protocol and became an open standa
 ---
 
 ### Section 2: The DUAL Algorithm
-
-[02:00 – 06:00]
-[SHOW DIAGRAM: EIGRP topology table showing Successor, Feasible Successor, FD, AD, and RD values]
 
 [Alt-text: A table showing an EIGRP topology table for a destination network 10.2.0.0/24. The table has columns: Via (next-hop router), Reported Distance (RD), Feasibility Condition (RD < FD?), and Status. Row 1: Via R2, RD=1000, FD=1500, Status=Successor. Row 2: Via R3, RD=800, FD=1600, Status=Feasible Successor. Row 3: Via R4, RD=2000, FD=2400, Status=Neither (Stuck in Active if needed).]
 
@@ -64,9 +57,6 @@ If no Feasible Successor exists, EIGRP enters an **Active** state for that route
 ---
 
 ### Section 3: EIGRP Named Mode Configuration
-
-[06:00 – 10:00]
-[SHOW SLIDE: Classic EIGRP config vs. Named Mode config — side-by-side comparison]
 
 Cisco introduced **EIGRP Named Mode** (also called EIGRP Multi-AF Mode) starting in IOS 15.x. Named mode is now the preferred configuration style on CCNP exams and in modern enterprise deployments.
 
@@ -114,9 +104,6 @@ Named mode provides:
 
 ### Section 4: OSPF–EIGRP Redistribution
 
-[10:00 – 14:00]
-[SHOW DIAGRAM: Two routing domains — left side OSPF, right side EIGRP — connected at an ASBR/redistribution router]
-
 [Alt-text: A diagram showing two separate routing domains. On the left, three routers connected in Area 0 (OSPF). On the right, three routers running EIGRP AS 100. In the center, a single router labeled "ASBR/Redistribution Router" has one interface in the OSPF domain and one in the EIGRP domain. Two arrows indicate mutual redistribution between protocols.]
 
 In an enterprise environment, you will frequently encounter situations where OSPF and EIGRP coexist — often as a result of acquisitions, legacy network segments, or multi-vendor WAN connections. **Route redistribution** allows routes learned by one routing protocol to be injected into another.
@@ -146,9 +133,6 @@ Mutual redistribution (redistributing OSPF into EIGRP AND EIGRP into OSPF simult
 
 ### Section 5: Module 01 Lab Preview
 
-[14:00 – 15:30]
-[SHOW SLIDE: Module 01 Lab Topology Diagram]
-
 In the Module 01 lab, you will build the following topology in Cisco Packet Tracer:
 - **4 routers:** R1 and R2 in OSPF Area 0, R3 as the ABR connecting Area 1 (containing R4 and R5), R4 as the redistribution router connecting to an EIGRP domain (R5, R6).
 - Configure multi-area OSPF with inter-area summarization on R3.
@@ -161,9 +145,6 @@ All lab instructions and the starter `.pkt` topology file are in Canvas Module 0
 ---
 
 ### Section 6: Part 2 Summary & Looking Ahead
-
-[15:30 – 17:00]
-[SHOW SLIDE: Module 01 summary and Module 02 preview]
 
 This week you learned:
 - **Multi-Area OSPF** architecture, LSA types, stub areas, and ABR summarization (Part 1).

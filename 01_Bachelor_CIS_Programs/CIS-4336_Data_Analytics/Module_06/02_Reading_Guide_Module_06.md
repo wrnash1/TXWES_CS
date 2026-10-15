@@ -449,8 +449,6 @@ An interactive, browser-based visualization of confidence intervals, hypothesis 
 <https://docs.scipy.org/doc/scipy/reference/stats.html>
 The official reference for all statistical tests available in Python's scipy.stats module, including t-tests, ANOVA, chi-square, Mann-Whitney, and Pearson correlation. Includes function signatures, parameters, and worked examples.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

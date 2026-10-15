@@ -87,7 +87,7 @@ A law firm uses Windows Server 2022 as a file server. Senior attorneys encrypt
 their client case files using EFS to prevent paralegals and other staff from
 accessing them. The firm's IT director is concerned about data loss risk if an
 attorney leaves suddenly. A junior IT administrator suggests: "We can always
-just use the Administrator account to open the files if someone leaves."
+just use the Administrator account to open the files if someone leaves.
 
 1. Explain why the junior administrator's suggestion is incorrect. Describe
    how EFS actually prevents access even by administrators, referencing the

@@ -559,8 +559,6 @@ A practical DigitalOcean tutorial covering the full lifecycle of systemd service
 **3. [Understanding Cron — Crontab Guru](https://crontab.guru/)**
 An interactive cron expression editor and validator. Enter any cron expression and it immediately shows the next scheduled run times in plain English. The site also includes a reference for all five time fields and a library of common expressions. Essential for verifying cron schedules before deploying them to production, and directly applicable to the cron scheduling tasks in the Module 12 lab.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

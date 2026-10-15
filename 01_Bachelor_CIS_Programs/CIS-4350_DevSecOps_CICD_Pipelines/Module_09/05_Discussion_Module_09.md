@@ -14,7 +14,7 @@ This discussion applies Module 09 concepts — secrets failure modes, Gitleaks, 
 
 ## Scenario A: The Exposed API Key Incident
 
-A security researcher emails a startup's security team: "I found your Stripe API production key in your public GitHub repository. The key appears to have been committed six months ago and removed three commits later. The key is still visible in the commit at SHA `a7c3d9f`." The development team lead responds: "We removed it immediately after we noticed, so it should be fine. Besides, we use GitHub Secrets now."
+A security researcher emails a startup's security team: "I found your Stripe API production key in your public GitHub repository. The key appears to have been committed six months ago and removed three commits later. The key is still visible in the commit at SHA `a7c3d9f`." The development team lead responds: "We removed it immediately after we noticed, so it should be fine. Besides, we use GitHub Secrets now.
 
 In 175-225 words, address the following: Explain precisely why the development team lead's assessment is incorrect — what exactly makes a secret committed to Git history permanently exposed even after removal. Describe the correct remediation steps in the correct order, explaining why the order matters (hint: rotation vs. history removal have different urgency levels). Explain what the migration to GitHub Secrets addresses going forward and what it does not address retroactively. Finally, describe what monitoring capability should have alerted the team to this exposure before the researcher found it, and how it would have worked in this specific case.
 
@@ -36,7 +36,7 @@ In 175-225 words, address the following: Compare all three options across at lea
 
 ## Scenario C: The Docker Build Secret Leak
 
-A junior DevSecOps engineer is reviewing a container image scan report for their organization's Python microservice. The Trivy scan shows the image is clean — no CVEs, no exposed files with secrets. However, a senior engineer reviewing the Dockerfile raises a concern about a build argument used to authenticate to a private package registry. The junior engineer responds: "The credentials aren't in any file in the final image — Trivy would have found them if they were."
+A junior DevSecOps engineer is reviewing a container image scan report for their organization's Python microservice. The Trivy scan shows the image is clean — no CVEs, no exposed files with secrets. However, a senior engineer reviewing the Dockerfile raises a concern about a build argument used to authenticate to a private package registry. The junior engineer responds: "The credentials aren't in any file in the final image — Trivy would have found them if they were.
 
 In 175-225 words, address the following: Explain precisely why the senior engineer's concern is valid despite the clean Trivy file scan — specifically, what does Docker store in image layer metadata and how is it accessible. Describe the specific Docker command an attacker would use to recover the credential from the image. Provide the solution using BuildKit's `--mount=type=secret` and explain at the technical level why this approach does not persist the secret in any layer. Finally, explain whether a container registry that stores the image publicly (such as Docker Hub) would expose the secret to anyone who can pull the image, and what the remediation would be if the image were already pushed.
 

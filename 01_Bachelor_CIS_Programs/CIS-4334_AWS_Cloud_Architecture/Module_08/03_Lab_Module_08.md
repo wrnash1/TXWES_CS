@@ -138,7 +138,7 @@ aws s3api get-object \
 cat recovered_v1.txt
 ```
 
-Paste the content of `recovered_v1.txt` to confirm you retrieved "Log entry version 1."
+Paste the content of `recovered_v1.txt` to confirm you retrieved "Log entry version 1.
 
 ### Task 1.4 — Configure an Event Notification
 

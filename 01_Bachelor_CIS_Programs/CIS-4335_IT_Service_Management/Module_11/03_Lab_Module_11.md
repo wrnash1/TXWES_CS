@@ -113,7 +113,7 @@ The current MRHN SLA with clinical departments includes the following metrics:
 The clinical staff satisfaction survey identified these top IT pain points:
 
 1. EHR patient record load time exceeds 12 seconds during morning shift change (7–9 AM) — staff report this as a daily workflow disruption
-2. The patient scheduling platform is unavailable for roughly 20 minutes every other Wednesday morning — staff describe this as "unpredictable downtime that disrupts appointment scheduling"
+2. The patient scheduling platform is unavailable for roughly 20 minutes every other Wednesday morning — staff describe this as "unpredictable downtime that disrupts appointment scheduling
 3. Clinical imaging systems take 45–90 seconds to load high-resolution images — radiologists report this as a significant productivity barrier
 
 ### Exercise 2 — Part A
@@ -233,7 +233,7 @@ Module 11 Lab | CIS-4335 IT Service Management | Texas Wesleyan University
 
 ### Challenge 1: SLA Failure Mode Diagnosis
 
-A regional bank's IT department has maintained a formal SLA with its retail banking division for three years. The SLA reports green every month: 99.8% availability, 96% of P2 tickets closed within the 4-hour target, and 100% of planned maintenance windows communicated in advance. Despite this, the retail banking VP submitted a formal complaint last quarter stating that "IT never delivers on what matters to the business."
+A regional bank's IT department has maintained a formal SLA with its retail banking division for three years. The SLA reports green every month: 99.8% availability, 96% of P2 tickets closed within the 4-hour target, and 100% of planned maintenance windows communicated in advance. Despite this, the retail banking VP submitted a formal complaint last quarter stating that "IT never delivers on what matters to the business.
 
 An investigation surfaces the following:
 
@@ -247,13 +247,13 @@ An investigation surfaces the following:
 
 2. The bank's SLA reports green every month while the VP considers service quality poor. Name this specific failure mode and explain in two sentences why it is more damaging to the business relationship than an honest SLA breach report would be.
 
-3. Redesign the availability target to be customer-outcome-centered rather than provider-centered. Write the new target in measurable terms and explain why it better reflects the ITIL 4 Guiding Principle "Focus on value."
+3. Redesign the availability target to be customer-outcome-centered rather than provider-centered. Write the new target in measurable terms and explain why it better reflects the ITIL 4 Guiding Principle "Focus on value.
 
 4. Draft one OLA between the Application Support team and the Network Operations team. Include: parties involved, at least two specific targets, and one consequence clause if the OLA is consistently missed.
 
 ### Challenge 2: SLM Practice Integration
 
-A logistics company is implementing ITIL 4 for the first time. Their IT manager asks: "We have Incident Management and Continual Improvement already working well. Do we really need Service Level Management as a separate practice? Can't we just track incidents and improve over time?"
+A logistics company is implementing ITIL 4 for the first time. Their IT manager asks: "We have Incident Management and Continual Improvement already working well. Do we really need Service Level Management as a separate practice? Can't we just track incidents and improve over time?
 
 1. Construct a counter-argument explaining why SLM is a distinct and necessary practice even when Incident Management and Continual Improvement are already in place. Use at least two specific concepts from the Module 11 reading guide.
 

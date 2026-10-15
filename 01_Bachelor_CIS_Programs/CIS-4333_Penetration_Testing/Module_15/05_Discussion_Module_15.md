@@ -37,13 +37,13 @@ network management interface (FIND-005, originally High). She wants a retest rep
 confirming both are remediated. During your retest, FIND-002 is confirmed remediated. For
 FIND-005, the default credentials are gone, but you notice the management interface now uses
 a weak 6-character alphabetic password that you crack in under two minutes. The CISO insists
-this should be classified as Remediated because "the default password is gone."
+this should be classified as Remediated because "the default password is gone.
 
 **Issue 3 — Evidence Retention Request**: The credit union's legal team contacts you three
 months after the engagement (within your 90-day retention window). They are responding to
 a regulatory examination and ask you to provide the raw engagement evidence — specifically
 the tool output files and screenshots showing the confirmed findings. They want everything
-transmitted via unencrypted email "for convenience."
+transmitted via unencrypted email "for convenience.
 
 ### Initial Post (Due Wednesday at 11:59 PM)
 

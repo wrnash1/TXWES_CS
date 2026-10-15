@@ -307,7 +307,7 @@ Security group.
 
 **Exam Tip 4** — `-ProtectedFromAccidentalDeletion $true` is the parameter that
 prevents accidental OU deletion. Enabling this is a best practice and exam answer
-for "how do you prevent accidental OU removal."
+for "how do you prevent accidental OU removal.
 
 **Exam Tip 5** — `Search-ADAccount` with `-AccountDisabled`, `-LockedOut`, or
 `-AccountExpired` is the PowerShell approach to bulk account auditing. Know these
@@ -504,8 +504,6 @@ Covers enabling the AD Recycle Bin, restoring deleted objects with `Restore-ADOb
 ---
 
 *Review all sections before beginning Lab 07, Quiz 07, and Discussion 07.*
-
-
 
 ---
 

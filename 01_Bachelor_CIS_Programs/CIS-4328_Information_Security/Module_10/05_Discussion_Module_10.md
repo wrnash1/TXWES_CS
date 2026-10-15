@@ -43,7 +43,7 @@ Organize your response in a table or numbered list.
 
 ## Part 2 — The "Shift Right" Problem (Required)
 
-The CISO tells the board: "We moved security review to after launch to meet our deadline. We now understand this was the wrong trade-off."
+The CISO tells the board: "We moved security review to after launch to meet our deadline. We now understand this was the wrong trade-off.
 
 In your post, argue one side of the following position: **"Meeting a software release deadline justifies deferring security testing to post-launch."**
 

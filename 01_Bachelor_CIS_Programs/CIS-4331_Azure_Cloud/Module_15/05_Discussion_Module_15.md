@@ -88,10 +88,10 @@ Responses that only say "great post" or restate the classmate's points without a
 
 To help you open your initial post with substance rather than filler:
 
-- "The core compliance gap in this scenario is not just technical — it is jurisdictional, because..."
-- "GDPR's 72-hour breach notification requirement creates immediate pressure here because..."
-- "The right Azure Policy effect for the region restriction problem is Deny rather than Audit because..."
-- "Azure Blueprints adds value beyond Policy alone in this scenario because it addresses..."
+- "The core compliance gap in this scenario is not just technical — it is jurisdictional, because...
+- "GDPR's 72-hour breach notification requirement creates immediate pressure here because...
+- "The right Azure Policy effect for the region restriction problem is Deny rather than Audit because...
+- "Azure Blueprints adds value beyond Policy alone in this scenario because it addresses...
 
 ---
 

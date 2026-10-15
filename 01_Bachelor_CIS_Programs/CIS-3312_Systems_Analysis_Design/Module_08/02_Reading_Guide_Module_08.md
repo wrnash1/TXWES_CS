@@ -244,7 +244,7 @@ second branch from the same step. Extension 3a.1 is a sub-step within Extension 
 ### Section 5: User Story Format and INVEST Criteria
 
 User stories originated in Extreme Programming (XP) and were popularized by Mike Cohn in
-"User Stories Applied" (2004). They are the primary requirements format in Scrum-based
+User Stories Applied" (2004). They are the primary requirements format in Scrum-based
 development.
 
 #### Standard User Story Format
@@ -553,8 +553,6 @@ The following open educational resources extend module content on use case model
    Focus: Practical guide to writing Given-When-Then acceptance criteria with worked examples in a software development context. Directly supports the acceptance criteria writing tasks in the lab.
 
 *Reading Guide — Module 08 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*
-
-
 
 ---
 

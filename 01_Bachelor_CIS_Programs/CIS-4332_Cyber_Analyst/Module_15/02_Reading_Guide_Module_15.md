@@ -146,7 +146,7 @@ CySA+ analysts should aspire to Level 3. The exam tests Level 3 concepts.
 
 A good hypothesis structure:
 
-"Based on [threat intelligence or TTPs], we hypothesize that [specific adversary activity] is or has occurred in [specific environment or time range], which we would detect by observing [specific telemetry indicator] in [specific data source]."
+Based on [threat intelligence or TTPs], we hypothesize that [specific adversary activity] is or has occurred in [specific environment or time range], which we would detect by observing [specific telemetry indicator] in [specific data source].
 
 ### Investigating the Hypothesis
 
@@ -442,8 +442,6 @@ Sigma is an open, vendor-neutral format for SIEM detection rules, similar to how
 - CrowdStrike Threat Hunting Guide — crowdstrike.com (free registration)
 - CompTIA CySA+ CS0-003 Exam Objectives — Domain 1
 - Module 15 Video Lecture (Professor Nash)
-
-
 
 ---
 

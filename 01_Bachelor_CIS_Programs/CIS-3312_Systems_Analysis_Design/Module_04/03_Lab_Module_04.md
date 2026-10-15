@@ -80,15 +80,15 @@ Use the format: "The system shall..." for all rewritten requirements.
 
 ### Draft Requirements to Improve
 
-Requirement A: "The system shall provide a good experience for loan applicants using mobile devices."
+Requirement A: "The system shall provide a good experience for loan applicants using mobile devices.
 
-Requirement B: "The system shall be secure."
+Requirement B: "The system shall be secure.
 
-Requirement C: "The system shall send emails and also display the application history and process applications fast."
+Requirement C: "The system shall send emails and also display the application history and process applications fast.
 
-Requirement D: "The system shall be reliable and not lose data."
+Requirement D: "The system shall be reliable and not lose data.
 
-Requirement E: "The system shall handle large volumes of applications."
+Requirement E: "The system shall handle large volumes of applications.
 
 ### Grading Rubric — Part 2
 
@@ -167,8 +167,8 @@ Present your analysis as a one-page structured memo addressed to the project spo
 
 For each of the following three requirements, write two specific, measurable acceptance criteria that a QA analyst could use to write a definitive pass/fail test case:
 
-1. "The system shall send a loan decision notification to the applicant."
-2. "The system shall prevent submission of incomplete loan applications."
-3. "The system shall maintain application response time under peak load."
+1. "The system shall send a loan decision notification to the applicant.
+2. "The system shall prevent submission of incomplete loan applications.
+3. "The system shall maintain application response time under peak load.
 
 Each acceptance criterion should follow the Given-When-Then format (e.g., "Given a submitted application where all required fields are populated, When the underwriting engine completes review, Then the system shall send an email notification to the applicant's registered email address within 60 seconds"). This exercise develops the BABOK skill of translating abstract requirements into testable acceptance criteria.

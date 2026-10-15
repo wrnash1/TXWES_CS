@@ -286,7 +286,7 @@ Which Google dork operator would a penetration tester use to search specifically
 
 - **Distractor Analysis:**
   - Why B is correct: `inurl:` matches pages where the specified text appears in the URL path. Combined with `site:`, this finds pages on the target domain whose URL contains "admin" — commonly revealing admin panels, admin directories, or administrative API endpoints.
-  - Why A is incorrect: `filetype:admin` is not a valid Google dork operator. `filetype:` is used with file extensions (e.g., `filetype:pdf`), not with words like "admin."
+  - Why A is incorrect: `filetype:admin` is not a valid Google dork operator. `filetype:` is used with file extensions (e.g., `filetype:pdf`), not with words like "admin.
   - Why C is incorrect: `intitle:` matches pages where the specified text appears in the HTML page title, not the URL. This could find pages titled "Admin" but would miss admin URLs with different titles.
   - Why D is incorrect: `cache:` retrieves a cached version of a specific URL. It does not search for pages containing a keyword in the URL path.
 

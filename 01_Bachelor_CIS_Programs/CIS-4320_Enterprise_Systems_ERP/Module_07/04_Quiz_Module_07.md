@@ -202,7 +202,7 @@ A Salesforce Opportunity moves from Negotiation/Review (80% probability) to Clos
 **Distractor Analysis:**
 
 - *Why B is correct:* In Salesforce's standard forecast model, Closed Won maps to the "Closed" Forecast Category. The full Amount ($200,000 at 100% probability = $200,000) moves from forecast to booked revenue. This is the final state in the opportunity lifecycle and is reflected immediately in forecast rollup reports.
-- *Why A is incorrect:* "Best Case" is the Forecast Category for Proposal and Negotiation stages — it reflects deals that are likely but not yet confirmed. Closed Won always maps to "Closed," not "Best Case."
+- *Why A is incorrect:* "Best Case" is the Forecast Category for Proposal and Negotiation stages — it reflects deals that are likely but not yet confirmed. Closed Won always maps to "Closed," not "Best Case.
 - *Why C is incorrect:* "Pipeline" is the Forecast Category for early-stage Opportunities like Prospecting and Qualification. A Closed Won deal exits the open pipeline and moves to closed bookings.
 - *Why D is incorrect:* Forecast Category is automatically set by the Stage field (based on the Sales Process configuration). Managers can override forecast amounts manually in the Forecasts tab, but the Forecast Category itself is system-driven by Stage, not manually set by the manager.
 
@@ -295,7 +295,7 @@ A Salesforce Opportunity record shows: Amount = $320,000, Stage = "Value Proposi
 A Salesforce administrator wants to display a real-time count of open Cases on the Account record, visible to all account team members. Which Salesforce feature should be used?
 
 - A) A Custom Report exported to Excel and uploaded to the Account as a file attachment
-- B) A Roll-Up Summary field on the Account that counts Case records with Status not equal to "Closed"
+- B) A Roll-Up Summary field on the Account that counts Case records with Status not equal to "Closed
 - C) A scheduled Dashboard refreshed nightly showing open Case counts per Account
 - D) A Custom Formula field on the Case that calculates the number of days it has been open
 

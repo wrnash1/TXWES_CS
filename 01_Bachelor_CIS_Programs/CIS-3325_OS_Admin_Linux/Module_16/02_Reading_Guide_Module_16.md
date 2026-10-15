@@ -617,8 +617,6 @@ Professor Messer's free Linux+ course notes companion to his video series. Organ
 **3. [Linux Journey — linuxjourney.com](https://linuxjourney.com/)**
 An interactive, self-paced Linux learning platform covering all core administration topics: command line, text processing, user management, filesystems, networking, processes, and more. Each lesson includes exercises and quizzes. Linux Journey is especially useful for reinforcing the hands-on command syntax that the Linux+ performance-based questions test — the questions that require you to type actual commands rather than select from multiple choice options.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

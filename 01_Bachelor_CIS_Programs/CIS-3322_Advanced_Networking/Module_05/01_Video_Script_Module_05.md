@@ -1,5 +1,23 @@
 # Video Script: Module 05 - Spanning Tree Protocol (STP & RSTP)
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course &bull; Module 05</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" title="Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 2: Network Access - 20%)
 **Estimated Duration:** 22 minutes
@@ -7,13 +25,10 @@
 
 ---
 
-## Section 1: Why STP Exists [00:00 - 03:30]
-
+## Section 1: Why STP Exists
 Welcome to Module 05. I am Professor Nash. Today we cover Spanning Tree Protocol — the mechanism that keeps Layer 2 networks from destroying themselves.
 
 Here is the problem STP solves. Ethernet networks with redundant paths have no built-in TTL like IP packets do. If a switch forwards a broadcast frame and there are multiple paths between switches, the frame will loop indefinitely — each switch forwarding it to the next, growing exponentially. Within seconds, a broadcast storm can consume 100% of bandwidth and crash the entire network.
-
-[SHOW DIAGRAM: Three switches connected in a triangle with no STP. An ARP broadcast enters at SW1, is forwarded by SW2 and SW3, arrives back at SW1, and the loop continues indefinitely with frame count growing rapidly]
 
 STP solves this by selectively blocking one or more switch ports to create a loop-free tree topology while keeping the redundant paths available for failover.
 
@@ -28,9 +43,7 @@ Today's topics:
 
 ---
 
-## Section 2: Root Bridge Election and Bridge ID [03:30 - 08:30]
-
-[SHOW DIAGRAM: Four switches in a partial mesh. Each switch labeled with its Bridge ID showing Priority + MAC. The switch with the lowest BID is highlighted as the Root Bridge]
+## Section 2: Root Bridge Election and Bridge ID
 
 STP elects a single root bridge per VLAN. Every switch participates in the election by exchanging Bridge Protocol Data Units (BPDUs). The switch with the lowest Bridge ID (BID) wins.
 
@@ -64,9 +77,7 @@ The `root primary` macro sets the priority to 24576 (or lower if another switch 
 
 ---
 
-## Section 3: Port Roles and Path Cost [08:30 - 13:00]
-
-[SHOW DIAGRAM: Three-switch topology with one root bridge (SW1) and two non-root switches (SW2 and SW3). Ports labeled as Root Port (RP), Designated Port (DP), or Blocked (B) based on path costs]
+## Section 3: Port Roles and Path Cost
 
 Once the root bridge is elected, every other switch determines how to reach it by calculating path costs.
 
@@ -93,9 +104,7 @@ CCNA Exam Tip: In any STP diagram, identify the root bridge first (lowest BID). 
 
 ---
 
-## Section 4: STP Port States and 802.1D vs RSTP [13:00 - 18:00]
-
-[SHOW DIAGRAM: STP state machine showing the transition path from Blocking to Forwarding for 802.1D, with timers labeled at each transition]
+## Section 4: STP Port States and 802.1D vs RSTP
 
 ### 802.1D STP Port States
 
@@ -126,8 +135,7 @@ CCNA Exam Tip: Know both state sets. The exam tests you on the number of STP por
 
 ---
 
-## Section 5: PortFast, BPDU Guard, Root Guard, and Lab Preview [18:00 - 22:00]
-
+## Section 5: PortFast, BPDU Guard, Root Guard, and Lab Preview
 ### PortFast
 
 PortFast allows an access port connected to an end device to skip the Listening and Learning states and go directly to Forwarding. This eliminates the 30-second delay that would otherwise prevent a PC from getting a DHCP address quickly.
@@ -167,8 +175,6 @@ SW1# show spanning-tree
 SW1# show spanning-tree vlan 10
 SW1# show spanning-tree interface GigabitEthernet0/1 detail
 ```
-
-[SHOW DIAGRAM: Terminal output of show spanning-tree showing root bridge BID, local bridge BID, and per-port roles and states]
 
 For additional study, visit cisco.com/c/en/us/training-events/training-certifications and professormesser.com.
 

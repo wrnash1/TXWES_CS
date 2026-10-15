@@ -28,15 +28,9 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: Course banner — "CIS-3321 Network Administration | Module 07: WAN and Cloud Connectivity | Texas Wesleyan University"]
-
 ---
 
 ### Section 1: Introduction
-
-[00:00 – 01:00]
-
-[SHOW SLIDE: Professor Nash on camera with module title card]
 
 Welcome to Module 07. I'm Professor Nash. Up to this point in the course we have focused on local area networks — the devices, cables, protocols, and wireless standards that connect machines inside a single building or campus. This module expands the scope. Wide Area Networks connect sites across cities, countries, and continents. Cloud connectivity extends the enterprise network into provider-managed infrastructure. And VPN technologies allow remote users and branch offices to use public internet infrastructure securely as if they were inside the corporate network.
 
@@ -45,10 +39,6 @@ Part 1 covers WAN technology types — the physical and logical services carrier
 ---
 
 ### Section 2: WAN Technology Overview
-
-[01:00 – 04:30]
-
-[SHOW DIAGRAM: A map-style illustration showing two corporate buildings connected through a cloud labeled "Carrier WAN Network." Inside the carrier cloud, multiple labeled WAN technology types are shown: MPLS, DSL, Cable/DOCSIS, Metro Ethernet, and SD-WAN. Each is connected to the edge routers of the two buildings via labeled WAN links.]
 
 [Alt-text: A network topology diagram showing two corporate office buildings connected through a carrier WAN cloud. Inside the cloud are labeled technology boxes: MPLS, DSL, Cable/DOCSIS, Metro Ethernet, and SD-WAN. Each technology is shown as a possible WAN link connecting the two building edge routers through the carrier infrastructure.]
 
@@ -72,10 +62,6 @@ The key WAN technologies you need to know for the exam:
 
 ### Section 3: WAN Connection Types and Circuit Terms
 
-[04:30 – 07:30]
-
-[SHOW DIAGRAM: A comparison table showing three WAN circuit categories: Dedicated (T1/T3, leased line), Circuit-Switched (legacy PSTN/ISDN, dial-on-demand), and Packet-Switched (MPLS, Frame Relay, ATM). Each row shows typical speed, billing model, connection type, and a use case.]
-
 [Alt-text: A three-row comparison table. Row 1: Dedicated/Leased Line — T1 at 1.544 Mbps or T3 at 45 Mbps, always-on fixed bandwidth, billed monthly, used for private point-to-point site connectivity. Row 2: Circuit-Switched — PSTN/ISDN, on-demand connection established per call, billed per usage, legacy backup links. Row 3: Packet-Switched — MPLS, Frame Relay, ATM, shared carrier infrastructure, variable bandwidth, labeled or virtual-circuit forwarding, used for multi-site enterprise WANs.]
 
 Let me define the key circuit types you need to recognize:
@@ -94,10 +80,6 @@ Let me define the key circuit types you need to recognize:
 
 ### Section 4: Cloud Service Models — IaaS, PaaS, SaaS
 
-[07:30 – 11:00]
-
-[SHOW DIAGRAM: A stacked layer pyramid showing three cloud service models. At the base: IaaS (Infrastructure as a Service) — the customer manages OS and above. In the middle: PaaS (Platform as a Service) — the customer manages applications only. At the top: SaaS (Software as a Service) — the customer configures only. Each layer shows what the provider manages vs. what the customer manages.]
-
 [Alt-text: A three-tier pyramid diagram showing cloud service model responsibility. Bottom tier labeled IaaS: the provider manages physical hardware, hypervisor, and networking; the customer manages OS, middleware, runtime, application, and data. Middle tier labeled PaaS: the provider adds management of OS, middleware, and runtime; the customer manages only application and data. Top tier labeled SaaS: the provider manages everything including the application; the customer only configures settings and uses the software.]
 
 Cloud computing has transformed how organizations acquire and consume IT infrastructure. The three service models define who is responsible for what:
@@ -113,10 +95,6 @@ Cloud computing has transformed how organizations acquire and consume IT infrast
 ---
 
 ### Section 5: Cloud Deployment Models
-
-[11:00 – 13:30]
-
-[SHOW DIAGRAM: Four deployment model icons side by side. Public Cloud: single cloud with a padlock showing shared multi-tenant infrastructure. Private Cloud: cloud icon with a building showing exclusive organizational ownership. Hybrid Cloud: two arrows connecting public and private cloud. Community Cloud: shared cloud showing multiple organization logos with common interests.]
 
 [Alt-text: Four labeled icons arranged horizontally. First icon labeled Public Cloud shows a shared cloud with multiple user icons representing multi-tenant infrastructure owned by the provider. Second icon labeled Private Cloud shows a cloud within a building perimeter representing dedicated organizational infrastructure. Third icon labeled Hybrid Cloud shows bidirectional arrows connecting a public cloud icon to a private cloud icon. Fourth icon labeled Community Cloud shows a cloud shared by multiple organization logos representing organizations with common compliance or mission requirements.]
 

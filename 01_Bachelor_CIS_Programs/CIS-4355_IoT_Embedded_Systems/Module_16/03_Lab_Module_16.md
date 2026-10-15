@@ -288,9 +288,9 @@ Draw a four-tier architecture diagram (hand-drawn or digital) containing every c
 
 For each of the 10 OWASP IoT categories, write one sentence classifying your system:
 
-- "Fully mitigated — [specific control implemented]"
-- "Partially mitigated — [what is done, what gap remains]"
-- "Not yet addressed — [risk level and planned mitigation]"
+- "Fully mitigated — [specific control implemented]
+- "Partially mitigated — [what is done, what gap remains]
+- "Not yet addressed — [risk level and planned mitigation]
 
 ### Architecture Decision Records
 
@@ -372,13 +372,13 @@ Produce the documentation a production IoT system would require before receiving
    - **Scalability**: Architecture supports 100 devices without code changes; broker configured for concurrent connections
    - **Documentation**: Architecture diagram complete; three ADRs written; OWASP analysis complete; known limitations documented
 
-1. Assign each dimension a traffic-light status (Green/Yellow/Red) based on the capstone evaluation. A "Green" requires a full Pass; "Yellow" requires Partial; "Red" requires Fail. Write a one-sentence deployment recommendation: either "Approved for canary deployment (1% of fleet)" if all dimensions are Yellow or better, "Approved for pilot deployment (10% of fleet)" if all dimensions are Green, or "Not approved — remediate [list specific Red dimensions] before deployment."
+1. Assign each dimension a traffic-light status (Green/Yellow/Red) based on the capstone evaluation. A "Green" requires a full Pass; "Yellow" requires Partial; "Red" requires Fail. Write a one-sentence deployment recommendation: either "Approved for canary deployment (1% of fleet)" if all dimensions are Yellow or better, "Approved for pilot deployment (10% of fleet)" if all dimensions are Green, or "Not approved — remediate [list specific Red dimensions] before deployment.
 
 1. Simulate three ARB challenge questions. For each question, write a 3–5 sentence technical response that references specific capstone components, code, or documentation:
 
-   - Challenge A: "The z-score anomaly detector uses a 10-sample window. At a 30-second reporting interval, this means the detector has no valid history for the first 5 minutes of device operation. How does the system behave during this warm-up period, and is this acceptable for your use case?"
-   - Challenge B: "The decommissioning procedure in Module 15 marks the certificate as revoked in a local registry file. How does the broker know the certificate has been revoked if the CRL is not published to the broker? What is the lag between registry revocation and broker enforcement, and what attack is possible during that lag?"
-   - Challenge C: "The telemetry CSV grows indefinitely. At 30-second intervals, 100 devices would generate approximately 10,400 rows per hour. What is the projected storage consumption after 90 days, and what retention policy would you implement?"
+   - Challenge A: "The z-score anomaly detector uses a 10-sample window. At a 30-second reporting interval, this means the detector has no valid history for the first 5 minutes of device operation. How does the system behave during this warm-up period, and is this acceptable for your use case?
+   - Challenge B: "The decommissioning procedure in Module 15 marks the certificate as revoked in a local registry file. How does the broker know the certificate has been revoked if the CRL is not published to the broker? What is the lag between registry revocation and broker enforcement, and what attack is possible during that lag?
+   - Challenge C: "The telemetry CSV grows indefinitely. At 30-second intervals, 100 devices would generate approximately 10,400 rows per hour. What is the projected storage consumption after 90 days, and what retention policy would you implement?
 
 ---
 

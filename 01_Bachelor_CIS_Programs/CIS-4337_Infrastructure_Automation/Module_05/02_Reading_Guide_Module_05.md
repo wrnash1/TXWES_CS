@@ -336,7 +336,7 @@ Module resources appear in state with addresses like `module.network.aws_vpc.thi
 
 **Tip 1.** The only required argument in a `module` block is `source`. All other arguments are optional or are variable inputs.
 
-**Tip 2.** `terraform init` must be run after adding or changing a `module` block. Without it, Terraform errors with "module not installed."
+**Tip 2.** `terraform init` must be run after adding or changing a `module` block. Without it, Terraform errors with "module not installed.
 
 **Tip 3.** Module outputs are referenced as `module.<name>.<output_name>`. The exam tests this syntax. Do not confuse it with `var.<name>` (variable) or `local.<name>` (local value).
 
@@ -495,8 +495,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

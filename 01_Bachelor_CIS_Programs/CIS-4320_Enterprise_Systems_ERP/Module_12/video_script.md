@@ -100,8 +100,6 @@ Compare this to IDocs in SAP: both are asynchronous, message-based mechanisms. P
 
 You can also build custom REST endpoints in Salesforce using Apex REST classes. And Salesforce can call external systems using Apex HTTP callouts, which are essentially outbound REST or SOAP calls from within Salesforce logic.
 
-[PAUSE]
-
 ---
 
 ## Segment 4: Middleware Concepts (Lines 121–160)
@@ -132,15 +130,13 @@ Synchronous: use it when the caller needs an immediate answer — such as a cred
 
 Asynchronous: use it when immediate response is not required and reliability matters more than speed — such as sending a completed order to a fulfillment warehouse.
 
-[PAUSE]
-
 ---
 
 ## Segment 5: Data Mapping and ETL (Lines 161–200)
 
 [SLIDE: The data mapping challenge]
 
-Every integration project runs headlong into a data mapping problem. System A calls a field "Customer Number." System B calls it "Account ID." System A stores phone numbers as ten digits with no formatting. System B stores them as (XXX) XXX-XXXX. Before you can move data, you must create a field-level mapping — a document or configuration that says "System A field X maps to System B field Y, with this transformation applied."
+Every integration project runs headlong into a data mapping problem. System A calls a field "Customer Number." System B calls it "Account ID." System A stores phone numbers as ten digits with no formatting. System B stores them as (XXX) XXX-XXXX. Before you can move data, you must create a field-level mapping — a document or configuration that says "System A field X maps to System B field Y, with this transformation applied.
 
 [SLIDE: ETL — Extract, Transform, Load]
 
@@ -165,8 +161,6 @@ For the exam: Salesforce has native duplicate management rules. SAP has a Data Q
 [SLIDE: API versioning and governance]
 
 APIs change over time, which creates versioning challenges. The Salesforce API is versioned — you call `/services/data/v59.0/` or `/services/data/v62.0/`. When Salesforce retires an API version, integrations built on that version break. API governance means establishing policies for how APIs are versioned, documented, secured, and retired.
-
-[PAUSE]
 
 ---
 

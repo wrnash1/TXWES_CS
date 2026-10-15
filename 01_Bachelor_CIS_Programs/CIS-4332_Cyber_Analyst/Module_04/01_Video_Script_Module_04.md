@@ -28,19 +28,19 @@
 
 ---
 
-### [00:00 - 01:30] Introduction
+### Introduction
 
 Professor Nash on camera. Title card: Module 04 — Log Analysis and SIEM Operations.
 
-"Welcome to Module 04. Every security analyst's most fundamental daily skill is reading logs. Logs are the raw record of what happened on a system, a network device, or an application. They are the evidence trail that tells you whether something malicious occurred, when it started, what was affected, and how far it spread.
+Welcome to Module 04. Every security analyst's most fundamental daily skill is reading logs. Logs are the raw record of what happened on a system, a network device, or an application. They are the evidence trail that tells you whether something malicious occurred, when it started, what was affected, and how far it spread.
 
-In this module, we cover the anatomy of log entries across the most common source types, how a SIEM collects and correlates those logs, how to write effective SIEM queries, and how to identify suspicious patterns in log data. These skills map directly to Domain 1 of the CySA+ exam and appear in scenario questions throughout the entire exam. Let's get started."
+In this module, we cover the anatomy of log entries across the most common source types, how a SIEM collects and correlates those logs, how to write effective SIEM queries, and how to identify suspicious patterns in log data. These skills map directly to Domain 1 of the CySA+ exam and appear in scenario questions throughout the entire exam. Let's get started.
 
 ---
 
-### [01:30 - 05:30] Log Sources and Log Formats
+### Log Sources and Log Formats
 
-"Before you can analyze a log, you need to understand where it came from and what format it uses. Let me walk you through the major log sources a SOC analyst works with every day.
+Before you can analyze a log, you need to understand where it came from and what format it uses. Let me walk you through the major log sources a SOC analyst works with every day.
 
 Windows Event Logs are one of the most important sources for endpoint investigation. They are stored locally on Windows systems and use a structured format with an Event ID — a numeric code that identifies exactly what type of event occurred. You need to memorize the most important Windows Event IDs. Let me give you the critical ones:
 
@@ -72,13 +72,13 @@ Firewall logs record connection-level data: source IP, destination IP, source po
 
 Authentication logs from Active Directory or LDAP record user login activity centrally. These are invaluable for detecting credential abuse across the environment.
 
-Web server access logs (Apache, Nginx, IIS) record every HTTP request: timestamp, source IP, HTTP method, requested URL, HTTP status code, and response size. These are essential for detecting web application attacks."
+Web server access logs (Apache, Nginx, IIS) record every HTTP request: timestamp, source IP, HTTP method, requested URL, HTTP status code, and response size. These are essential for detecting web application attacks.
 
 ---
 
-### [05:30 - 09:30] How a SIEM Works
+### How a SIEM Works
 
-"Now let's talk about how all of these logs get consolidated and turned into actionable alerts.
+Now let's talk about how all of these logs get consolidated and turned into actionable alerts.
 
 The SIEM — Security Information and Event Management — is the centralized platform that collects, normalizes, correlates, and alerts on log data. Let me walk through the SIEM pipeline.
 
@@ -92,15 +92,15 @@ Step 4: Alerting. When a correlation rule fires, the SIEM generates an alert wit
 
 Step 5: Investigation. The analyst queries the SIEM to pull additional context — the full timeline around the event, other activity from the same source, related events on other systems.
 
-The SIEM does not block traffic. It detects and alerts. Automated response (blocking, isolation) requires integration with an EDR or SOAR platform acting on SIEM output."
+The SIEM does not block traffic. It detects and alerts. Automated response (blocking, isolation) requires integration with an EDR or SOAR platform acting on SIEM output.
 
 [SHOW SCREEN: Mock SIEM dashboard. Left panel: Alert Queue showing 5 alerts with severity badges (2 High, 2 Medium, 1 Low). Center: Log Source Health indicator — Firewall green, AD green, Endpoint green, DNS yellow (warning). Right panel: Top Source IPs bar chart and Authentication Failures Over Time line graph with a visible spike.]
 
 ---
 
-### [09:30 - 13:00] Writing SIEM Queries
+### Writing SIEM Queries
 
-"Writing effective SIEM queries is a core analyst skill. Different SIEM platforms use different query languages. Splunk uses SPL — Search Processing Language. Elastic uses KQL — Kibana Query Language. Microsoft Sentinel uses KQL — Kusto Query Language. The CySA+ exam is platform-agnostic, but you should understand the concepts that apply to all of them.
+Writing effective SIEM queries is a core analyst skill. Different SIEM platforms use different query languages. Splunk uses SPL — Search Processing Language. Elastic uses KQL — Kibana Query Language. Microsoft Sentinel uses KQL — Kusto Query Language. The CySA+ exam is platform-agnostic, but you should understand the concepts that apply to all of them.
 
 Every SIEM query has three components: the search scope (what index or data source), the filter conditions (what events you want), and the analysis operations (counting, grouping, sorting).
 
@@ -132,13 +132,13 @@ pipe sort -count
 
 This looks for new outbound network connections from known-but-unusual processes.
 
-The key discipline for query writing is starting broad and narrowing. Begin with a wide time window and basic filter. Review the results. Add conditions to remove known-good activity. This iterative process is called search refinement."
+The key discipline for query writing is starting broad and narrowing. Begin with a wide time window and basic filter. Review the results. Add conditions to remove known-good activity. This iterative process is called search refinement.
 
 ---
 
-### [13:00 - 16:30] Identifying Suspicious Patterns
+### Identifying Suspicious Patterns
 
-"Now let me walk you through the most important suspicious log patterns that a CySA+ exam question might present.
+Now let me walk you through the most important suspicious log patterns that a CySA+ exam question might present.
 
 Pattern 1: Brute-force authentication attack. Dozens to hundreds of Event ID 4625 failures for the same account from the same source IP, potentially followed by a 4624 success. The key indicator is the volume and velocity — legitimate failed logins are scattered; brute-force events are dense and rapid.
 
@@ -152,13 +152,13 @@ Pattern 5: Beaconing. A host making regular outbound connections to the same ext
 
 Pattern 6: Data staging and exfiltration. Large file transfers from a database server or file share to a single workstation (collection), followed by large outbound transfers from that workstation to an external IP (exfiltration). Look for unusually large DNS queries or HTTPS POST requests.
 
-Pattern 7: Lateral movement with RDP. Event ID 4624 logon type 10 (RemoteInteractive) on multiple internal systems in sequence, using the same credentials. An attacker pivoting from one system to others via RDP leaves a chain of Type 10 logon events."
+Pattern 7: Lateral movement with RDP. Event ID 4624 logon type 10 (RemoteInteractive) on multiple internal systems in sequence, using the same credentials. An attacker pivoting from one system to others via RDP leaves a chain of Type 10 logon events.
 
 ---
 
-### [16:30 - 19:30] Log Integrity and Retention
+### Log Integrity and Retention
 
-"Two operational topics that appear on the CySA+ exam: log integrity and log retention.
+Two operational topics that appear on the CySA+ exam: log integrity and log retention.
 
 Log integrity is the assurance that log records have not been tampered with. An attacker who gains system access will often try to delete or modify local logs to cover their tracks. Controls for log integrity include:
 
@@ -170,13 +170,13 @@ Cryptographic log signing — each log entry is signed at the time of creation; 
 
 Log retention is the policy governing how long logs are kept. Retention requirements vary by regulation and by incident investigation needs. General guidance for the exam: Authentication and access logs — minimum 90 days to 1 year. Security-relevant logs (SIEM events, firewall logs, endpoint security events) — 1 year is a common standard. Some regulations require longer: PCI DSS requires 12 months online with 3 months immediately available. HIPAA does not specify log retention but requires 6-year retention of security documentation.
 
-Short retention windows are a significant investigation problem. If an incident is discovered months after it occurred, log data that was deleted before the investigation began may make it impossible to reconstruct the attack timeline."
+Short retention windows are a significant investigation problem. If an incident is discovered months after it occurred, log data that was deleted before the investigation began may make it impossible to reconstruct the attack timeline.
 
 ---
 
-### [19:30 - 22:00] SIEM Use Cases and Exam Tips
+### SIEM Use Cases and Exam Tips
 
-"Let me close with practical SIEM use cases and key exam tips.
+Let me close with practical SIEM use cases and key exam tips.
 
 Common SIEM use cases beyond alert generation:
 
@@ -196,13 +196,13 @@ Know that the SIEM normalizes logs but does not change the original log content 
 
 Know that log retention is a compliance and investigation requirement, not just a storage question.
 
-For study resources: comptia.org for the official exam objectives, and professormesser.com for free video content mapped to every CS0-003 objective."
+For study resources: comptia.org for the official exam objectives, and professormesser.com for free video content mapped to every CS0-003 objective.
 
 ---
 
-### [22:00 - 24:00] Module Summary and Lab Preview
+### Module Summary and Lab Preview
 
-"Let's summarize Module 04.
+Let's summarize Module 04.
 
 Logs are the primary evidence source in security analysis. Major sources include Windows Event Logs, Sysmon, Linux syslog, firewall logs, authentication logs, and web server access logs.
 
@@ -216,7 +216,7 @@ Log integrity and retention are operational and compliance requirements.
 
 In the Module 04 lab, you will receive sample log entries for multiple source types, identify suspicious patterns, and write SIEM queries targeting those patterns. This is the core hands-on skill of a Tier 1 analyst. Read the Reading Guide first for the full event ID reference table and query syntax examples.
 
-See you in Module 05."
+See you in Module 05.
 
 ---
 

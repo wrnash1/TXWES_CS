@@ -98,7 +98,7 @@ Enter-PSSession -ComputerName "DNSServer01" `
     -Credential (Get-Credential)
 ```
 
-Once connected, the operator can run only the commands defined in the role capability file. Attempting to run any other command returns "the term is not recognized."
+Once connected, the operator can run only the commands defined in the role capability file. Attempting to run any other command returns "the term is not recognized.
 
 JEA also supports transcription — automatically logging every command entered and every output returned in the constrained session. This provides a complete audit trail of everything done through the JEA endpoint.
 

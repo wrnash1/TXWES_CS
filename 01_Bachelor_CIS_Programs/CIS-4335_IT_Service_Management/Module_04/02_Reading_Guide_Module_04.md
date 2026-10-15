@@ -115,7 +115,7 @@ Practical implications:
 * When designing services, keep the consumer's outcomes in mind, not just technical deliverables.
 * When reviewing existing activities, ask which ones genuinely contribute to value and which can be eliminated.
 
-Exam trigger phrases: "oriented around customer outcomes," "eliminating activities that don't contribute," "ensuring work traces back to business needs."
+Exam trigger phrases: "oriented around customer outcomes," "eliminating activities that don't contribute," "ensuring work traces back to business needs.
 
 ---
 
@@ -129,7 +129,7 @@ Practical implications:
 * Identify what is working and build on it rather than discarding it.
 * Use existing data, tools, and knowledge as inputs to improvement planning.
 
-Exam trigger phrases: "assessing current state," "building on existing capabilities," "not replacing functional tools unnecessarily," "conducting a baseline assessment."
+Exam trigger phrases: "assessing current state," "building on existing capabilities," "not replacing functional tools unnecessarily," "conducting a baseline assessment.
 
 ---
 
@@ -143,7 +143,7 @@ Practical implications:
 * Deliver in increments and gather feedback after each one.
 * Use feedback to adjust the next iteration before committing further resources.
 
-Exam trigger phrases: "piloting before scaling," "incremental delivery," "gathering feedback," "adjusting based on results," "small steps with review checkpoints."
+Exam trigger phrases: "piloting before scaling," "incremental delivery," "gathering feedback," "adjusting based on results," "small steps with review checkpoints.
 
 ---
 
@@ -157,7 +157,7 @@ Practical implications:
 * Share work-in-progress transparently rather than presenting only finished results.
 * Break down team silos that prevent information from reaching where it is needed.
 
-Exam trigger phrases: "involving stakeholders," "breaking down silos," "sharing information openly," "cross-functional participation," "making work visible."
+Exam trigger phrases: "involving stakeholders," "breaking down silos," "sharing information openly," "cross-functional participation," "making work visible.
 
 ---
 
@@ -171,7 +171,7 @@ Practical implications:
 * Consider all four dimensions when making service decisions.
 * Resist optimizing one component in isolation if it degrades the whole system.
 
-Exam trigger phrases: "considering downstream effects," "integrated system thinking," "impacts on connected practices," "end-to-end view."
+Exam trigger phrases: "considering downstream effects," "integrated system thinking," "impacts on connected practices," "end-to-end view.
 
 ---
 
@@ -185,7 +185,7 @@ Practical implications:
 * Challenge every approval step, report, and procedure: does this genuinely add value?
 * Design for the common case, not the rare exception.
 
-Exam trigger phrases: "eliminating unnecessary steps," "reducing complexity," "streamlining workflows," "challenging the value of existing activities."
+Exam trigger phrases: "eliminating unnecessary steps," "reducing complexity," "streamlining workflows," "challenging the value of existing activities.
 
 ---
 
@@ -199,7 +199,7 @@ Practical implications:
 * Identify repetitive, rule-based tasks as automation candidates.
 * Retain human judgment for novel situations, complex decisions, and relationship-dependent interactions.
 
-Exam trigger phrases: "automating repetitive tasks," "reducing manual effort," "freeing staff for higher-value work," "optimizing before automating."
+Exam trigger phrases: "automating repetitive tasks," "reducing manual effort," "freeing staff for higher-value work," "optimizing before automating.
 
 ---
 
@@ -267,7 +267,7 @@ Keep It Simple and Practical focuses on reducing unnecessary complexity in proce
 
 3. **Progress Iteratively with Feedback is about Agile-style delivery.** The principle incorporates feedback as an equal element with iteration. A question about "piloting before scaling" maps here.
 
-4. **Start Where You Are is not about accepting the status quo.** It is about assessing honestly before changing. The principle does not say "never change"; it says "understand what you have before deciding what to change."
+4. **Start Where You Are is not about accepting the status quo.** It is about assessing honestly before changing. The principle does not say "never change"; it says "understand what you have before deciding what to change.
 
 5. **Optimize and Automate has a sequence.** Optimize first, then automate. A scenario describing automation of a broken process violates this principle.
 
@@ -446,8 +446,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

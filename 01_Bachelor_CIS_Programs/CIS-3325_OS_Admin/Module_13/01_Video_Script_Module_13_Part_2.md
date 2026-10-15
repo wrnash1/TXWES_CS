@@ -261,7 +261,7 @@ Step syntax: `*/15` in the minute field = every 15 minutes. `*/2` in the hour fi
 hours. The `*` divides the entire range into equal steps.
 
 `at` vs cron: `at` runs once. cron runs repeatedly. The exam will test whether you choose the
-right tool for "run this once tonight" versus "run this every night."
+right tool for "run this once tonight" versus "run this every night.
 
 anacron vs cron: anacron handles missed jobs on systems that are not always running. Know that
 `Persistent=true` is the systemd timer equivalent.

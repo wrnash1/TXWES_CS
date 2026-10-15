@@ -99,7 +99,7 @@ In 175–225 words:
 
 ## Tips for a Strong Post
 
-**Be specific about errors.** Instead of "Python gave an error when I used input()," write "Python raised `TypeError: can only concatenate str (not 'int') to str` at line 6 because I forgot to wrap `input()` with `int()`."
+**Be specific about errors.** Instead of "Python gave an error when I used input()," write "Python raised `TypeError: can only concatenate str (not 'int') to str` at line 6 because I forgot to wrap `input()` with `int()`.
 
 **Connect to real software.** Scenarios A and C ask you to think beyond the lab. Think about apps you use every day — a banking app, a registration form, a grade calculator — and apply the concepts to those contexts.
 

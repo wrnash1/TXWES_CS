@@ -28,29 +28,25 @@
 
 ---
 
-### [00:00 - 02:30] Section 1: Introduction — Why Power and Cooling Are Critical
+### Section 1: Introduction — Why Power and Cooling Are Critical
 
-[INSTRUCTOR ON CAMERA — title card visible: "Module 06: Power Supplies and System Cooling"]
-
-"Welcome back, everyone. I'm Professor Nash, and today's module covers two topics that are absolutely foundational to every PC build and troubleshooting scenario: power supplies and system cooling.
+Welcome back, everyone. I'm Professor Nash, and today's module covers two topics that are absolutely foundational to every PC build and troubleshooting scenario: power supplies and system cooling.
 
 Here is a perspective I want you to carry through this whole lesson. Every single component in a PC — the CPU, the GPU, the RAM, the drives, the motherboard logic — runs on DC power converted from the AC power coming from the wall. If that conversion is done wrong, or if the power delivery is inadequate, nothing in the system works reliably. And once those components are running, they generate heat — and if that heat is not removed efficiently, those same components will throttle, fail, or catch fire.
-
-[PAUSE]
 
 Power and cooling are not glamorous topics. But they are the reason a system runs stably for five years or dies after six months. A good technician takes these seriously on every build.
 
 By the end of this module you will be able to calculate an appropriate PSU wattage for a given system, identify all major PSU connectors and what they power, explain 80 Plus efficiency ratings, distinguish modular from non-modular PSUs, and describe a correct case airflow strategy. Let's get into it.
 
-Exam Tip: Domain 3.5 and Domain 5.2 both reference PSU connectors and power-related troubleshooting. Connector identification — knowing which cable goes to which component — is a core A+ performance-based question skill."
+Exam Tip: Domain 3.5 and Domain 5.2 both reference PSU connectors and power-related troubleshooting. Connector identification — knowing which cable goes to which component — is a core A+ performance-based question skill.
 
 ---
 
-### [02:30 - 08:30] Section 2: PSU Wattage and Efficiency
+### Section 2: PSU Wattage and Efficiency
 
 [SLIDE: "Choosing the Right PSU"]
 
-"Let's start with wattage, because choosing the correct PSU capacity is the first decision in any build.
+Let's start with wattage, because choosing the correct PSU capacity is the first decision in any build.
 
 #### Wattage — How Much Power Does Your System Need?
 
@@ -59,8 +55,6 @@ Every component in a PC draws a certain amount of power, measured in watts. The 
 [SHOW COMPONENT: ATX PSU held up to camera — label 80 Plus Gold sticker, modular cable ports, fan grill]
 
 The standard practice is to add up the Thermal Design Power (TDP) ratings for all components, then add a 20 to 30 percent headroom buffer. That buffer ensures the PSU never operates near its maximum rated capacity, which would reduce its efficiency and lifespan. For example, a system with an estimated 420W total draw should have at least a 550-600W PSU.
-
-[PAUSE]
 
 Why not just buy a 1000W PSU for everything? Because a PSU operates most efficiently — and most quietly — when loaded to about 50-80% of its rated capacity. A massively oversized PSU running at 20% load actually operates less efficiently than a correctly sized one. It also wastes money on a component you do not need.
 
@@ -74,15 +68,15 @@ The tiers are: 80 Plus (80% efficient), Bronze (82-85%), Silver (85-88%), Gold (
 
 Here is the key exam trap. A 500W 80 Plus Gold PSU and a 500W 80 Plus Bronze PSU both deliver exactly 500W of DC output to the system components. The efficiency rating only affects how much AC power is drawn from the wall outlet. It does not make one PSU 'more powerful' than the other for the system. Both deliver 500W. The gold one just wastes less electricity getting there.
 
-Exam Tip: The A+ exam will describe an efficiency rating and ask what it means. The correct answer always involves how much AC power is drawn from the wall — not how much DC power is delivered to the system."
+Exam Tip: The A+ exam will describe an efficiency rating and ask what it means. The correct answer always involves how much AC power is drawn from the wall — not how much DC power is delivered to the system.
 
 ---
 
-### [08:30 - 13:30] Section 3: PSU Types and Connectors
+### Section 3: PSU Types and Connectors
 
 [SLIDE: "PSU Connectors — Know Every One"]
 
-"Let's go through the connector types. This is where the exam points live.
+Let's go through the connector types. This is where the exam points live.
 
 #### Modular vs. Non-Modular PSUs
 
@@ -91,8 +85,6 @@ A non-modular PSU has all cables permanently attached. The cable bundle can be l
 A semi-modular PSU has the essential cables — the 24-pin ATX and CPU power connector — permanently attached. All other cables (PCIe, SATA, Molex) are detachable. This is a reasonable compromise for most builds.
 
 A fully modular PSU has every cable detachable. You install only the cables your system actually needs, which dramatically improves cable management and airflow inside the case. Fully modular PSUs are more expensive but are the preferred choice for visible or performance-focused builds.
-
-[PAUSE]
 
 #### The 24-pin ATX Connector
 
@@ -126,15 +118,15 @@ The PCIe slot on the motherboard can only supply 75W to a graphics card through 
 
 The 15-pin SATA power connector supplies power to all SATA drives — hard drives and SATA SSDs. The 4-pin Molex connector is a legacy connector from the IDE era, still found on some case fans, optical drives in older systems, and LED controllers. You will not connect Molex to any modern drive, but the A+ exam still expects you to recognize it.
 
-Exam Tip: On the A+ exam, connector identification questions will describe a component and ask which PSU cable it requires. Memorize this: 24-pin for motherboard, 4/8-pin EPS for CPU, 6/8-pin PCIe for GPU, 15-pin SATA for drives, 4-pin Molex for legacy accessories."
+Exam Tip: On the A+ exam, connector identification questions will describe a component and ask which PSU cable it requires. Memorize this: 24-pin for motherboard, 4/8-pin EPS for CPU, 6/8-pin PCIe for GPU, 15-pin SATA for drives, 4-pin Molex for legacy accessories.
 
 ---
 
-### [13:30 - 19:00] Section 4: Case Airflow and Thermal Management
+### Section 4: Case Airflow and Thermal Management
 
 [SLIDE: "Cooling — Keep the Heat Moving"]
 
-"Now let's talk about case airflow. Thermal management is the difference between a system that runs stably for years and one that throttles under load or dies from heat stress.
+Now let's talk about case airflow. Thermal management is the difference between a system that runs stably for years and one that throttles under load or dies from heat stress.
 
 #### The Airflow Principle
 
@@ -157,8 +149,6 @@ Every case fan has a label on one side showing two arrows. One arrow indicates t
 
 When you install a fan, you need to know which direction the air moves so you can mount it correctly. A front intake fan should have its airflow arrow pointing into the case. A rear exhaust fan should have its airflow arrow pointing out of the case. Reversing a fan turns an intake into an exhaust and disrupts the entire thermal path.
 
-[PAUSE]
-
 #### Positive vs. Negative Pressure
 
 If a case has more intake fan area than exhaust fan area, it runs positive pressure — air is forced in faster than it exits, which means air exits only through filtered vents and not through random gaps. This reduces dust accumulation inside the case.
@@ -171,23 +161,21 @@ Balanced airflow — equal intake and exhaust — is a common recommendation, bu
 
 The CPU heatsink and fan (air cooler) or all-in-one liquid cooler (AIO) sits directly on the CPU and transfers heat away from the processor die. Thermal paste fills the microscopic air gaps between the CPU heat spreader and the cooler base, dramatically improving heat transfer. Most stock coolers come with pre-applied thermal paste. Aftermarket coolers require application of thermal paste before installation.
 
-Exam Tip: The A+ exam may describe a system that runs hot with all fans spinning normally. One common cause is incorrect fan orientation — an intake fan installed backwards. Another is a clogged air filter blocking the front intake. Both are scenario questions that require understanding of airflow direction."
+Exam Tip: The A+ exam may describe a system that runs hot with all fans spinning normally. One common cause is incorrect fan orientation — an intake fan installed backwards. Another is a clogged air filter blocking the front intake. Both are scenario questions that require understanding of airflow direction.
 
 ---
 
-### [19:00 - 22:30] Section 5: Lab Preview and Exam Wrap-Up
+### Section 5: Lab Preview and Exam Wrap-Up
 
 [SLIDE: "Module 06 Lab Overview"]
 
-"For this week's lab, you are going to do three things.
+For this week's lab, you are going to do three things.
 
 First, you will complete a PSU connector identification table, matching connector names to their pin counts, voltage rails, and the components they power. This mirrors the performance-based question format on the A+ exam.
 
 Second, you will work through a wattage calculation exercise. I give you the TDP specifications for a CPU, GPU, and peripherals, and you calculate the minimum recommended PSU wattage including a 25% headroom buffer. This is a skill every technician uses in real builds.
 
 Third, you will analyze a case airflow diagram with intentional errors — fans installed in the wrong orientation — and identify what the correct configuration should be, then explain the thermal consequence of each error.
-
-[PAUSE]
 
 Let me leave you with the key takeaways for the exam.
 
@@ -203,7 +191,7 @@ Five — fan orientation determines airflow direction. Use the label arrows to v
 
 [OUTRO — instructor on camera]
 
-That covers Module 06. Complete the reading guide and lab before attempting the quiz. Post your discussion response by Wednesday night. Take care, everyone."
+That covers Module 06. Complete the reading guide and lab before attempting the quiz. Post your discussion response by Wednesday night. Take care, everyone.
 
 ---
 

@@ -446,7 +446,7 @@ Write a shell script that:
 
 1. Runs `smartctl -H` on each disk listed by `lsblk -d`
 2. Writes the health status to a log file with a timestamp
-3. Exits with a non-zero status code if any disk reports "FAILED"
+3. Exits with a non-zero status code if any disk reports "FAILED
 
 ---
 

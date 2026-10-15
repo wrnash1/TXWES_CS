@@ -25,15 +25,9 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: Course banner — "CIS-3321 Network Administration | Module 05: Network Infrastructure — Cables, Switches, and Routers | Texas Wesleyan University"]
-
 ---
 
 ### Section 1: Introduction
-
-[00:00 – 01:00]
-
-[SHOW SLIDE: Professor Nash on camera with module title card]
 
 Welcome to Module 05. I'm Professor Nash. We have spent four modules on addressing models, protocols, and logical addressing. Now we get physical. In this module, we look at the actual hardware that makes networks run: the cables, the switches, and the routers. These are the devices and media you will physically install, configure, and troubleshoot throughout your career. They also appear heavily on the Network+ exam — both in theoretical questions and in troubleshooting scenarios.
 
@@ -42,10 +36,6 @@ Part 1 covers copper cabling standards and fiber optic fundamentals. Part 2 cove
 ---
 
 ### Section 2: Copper Cabling — Twisted Pair
-
-[01:00 – 05:30]
-
-[SHOW DIAGRAM: A cross-section diagram of a twisted-pair Ethernet cable. Shows the outer jacket, four pairs of twisted copper wires inside, with each pair color-coded (orange, blue, green, brown). Labels identify the RJ-45 plug at one end.]
 
 [Alt-text: A cross-section diagram of a Cat6 Ethernet cable. The outer jacket is removed to reveal four color-coded twisted wire pairs: orange and white-orange, blue and white-blue, green and white-green, brown and white-brown. An RJ-45 eight-position connector is shown at the end of the cable.]
 
@@ -69,10 +59,6 @@ All twisted-pair Ethernet uses 8P8C connectors — commonly called RJ-45. Both e
 
 ### Section 3: Fiber Optic Cabling
 
-[05:30 – 09:00]
-
-[SHOW DIAGRAM: Two fiber cross-sections side by side. Left: Single-mode fiber — narrow core (8–10 µm), one light ray traveling in a straight line, labeled "Long distance, laser light source." Right: Multi-mode fiber — wider core (50–62.5 µm), multiple light rays reflecting at angles, labeled "Shorter distance, LED/VCSEL light source."]
-
 [Alt-text: Two fiber optic cross-section diagrams shown side by side. The left diagram shows single-mode fiber with a very narrow core of 8 to 10 micrometers diameter. One light ray is shown traveling in a straight line through the center. The label reads "Single-mode: long distance (100+ km), laser light source, higher cost." The right diagram shows multi-mode fiber with a wider core of 50 to 62.5 micrometers. Multiple light rays are shown entering at different angles and reflecting off the inner cladding boundary. The label reads "Multi-mode: shorter distance (up to 550 m), LED or VCSEL source, lower cost for short runs."]
 
 Fiber optic cable transmits data as pulses of light through a glass or plastic core. It is immune to electromagnetic interference (EMI), can span much longer distances than copper, and provides higher bandwidth. However, it is more expensive to install and terminate than copper.
@@ -89,10 +75,6 @@ Common fiber connector types: LC (small form factor, most common in enterprise),
 
 ### Section 4: Cable Types — Straight-Through, Crossover, Rollover
 
-[09:00 – 11:30]
-
-[SHOW DIAGRAM: Three cable diagrams side by side. Left: Straight-through cable — both ends labeled T568B, connecting a PC to a Switch. Center: Crossover cable — one end T568A, one end T568B, connecting a Switch to a Switch. Right: Rollover/Console cable — labeled "console port access," shown connecting a laptop to a router's console port.]
-
 [Alt-text: Three cable diagrams. Left: A straight-through cable with T568B on both ends connecting a PC icon to a Switch icon. Center: A crossover cable with T568B on one end and T568A on the other connecting two Switch icons, with a note "Connect like devices." Right: A flat rollover cable connecting a laptop serial or USB port to a router's RJ-45 console port, labeled "Initial configuration access."]
 
 Beyond the category rating, cables are also differentiated by how the pairs are wired at each end.
@@ -106,10 +88,6 @@ Beyond the category rating, cables are also differentiated by how the pairs are 
 ---
 
 ### Section 5: Part 1 Summary
-
-[11:30 – 13:00]
-
-[SHOW SLIDE: Summary bullet list]
 
 In Part 1, we covered twisted-pair cable standards — Cat5e, Cat6, and Cat6a — with their speed and distance ratings. We examined single-mode fiber for long distances and multi-mode fiber for shorter campus and data center runs. We distinguished straight-through, crossover, and rollover cables by their wiring convention and use case.
 

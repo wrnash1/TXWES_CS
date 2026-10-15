@@ -30,13 +30,9 @@
 
 ## Pre-Roll Slate
 
-**[SHOW SLIDE: Course title card — "CIS-4328 Information Security | Module 11 | Texas Wesleyan University"]**
-
 ---
 
 ## Opening
-
-**[INSTRUCTOR ON CAMERA]**
 
 Welcome to Module 11 — Incident Response.
 
@@ -50,8 +46,6 @@ The Security+ exam devotes significant coverage to incident response in Domain 4
 
 ## Section 1 — Why Incident Response Exists
 
-**[SHOW SLIDE: Cost of a breach statistics graphic]**
-
 No security control is perfect. Attackers are creative, persistent, and well-resourced. The question is not whether your organization will experience an incident — it is whether you will respond effectively when you do.
 
 The IBM Cost of a Data Breach 2023 report found that organizations with a formal IR team and regularly tested IR plan saved an average of $1.49 million per breach compared to organizations without one. They also contained breaches 54 days faster. Those are not small numbers.
@@ -61,8 +55,6 @@ Incident response without a plan is triage without a doctor. People improvise, e
 ---
 
 ## Section 2 — NIST SP 800-61 IR Lifecycle
-
-**[SHOW SLIDE: NIST IR lifecycle diagram — four phases in a cycle]**
 
 The authoritative reference for incident response in the Security+ exam and in the field is NIST Special Publication 800-61, Computer Security Incident Handling Guide. NIST defines four phases that form a continuous cycle.
 
@@ -90,8 +82,6 @@ Not every alert is an incident. Analysis must determine the severity and scope o
 
 ## Section 3 — Incident Categories and Prioritization
 
-**[SHOW SLIDE: Incident severity matrix — impact vs. urgency]**
-
 IR teams use severity levels to prioritize response effort. NIST suggests a four-level scale: Low, Medium, High, Critical. The criteria for each level depend on business impact — what systems are affected, what data is involved, and how many users are impacted.
 
 Incident categories tested on Security+ include:
@@ -107,8 +97,6 @@ Incident categories tested on Security+ include:
 
 ## Section 4 — Phase 3: Containment
 
-**[SHOW SLIDE: Containment decision tree — short-term vs. long-term]**
-
 Once an incident is confirmed, the team must contain it. Containment stops the spread before eradication and recovery. NIST distinguishes between short-term and long-term containment.
 
 **Short-term containment** applies immediate measures to halt damage. Examples include isolating a compromised host from the network by disabling its network interface, blocking a source IP at the firewall, or locking a compromised account. The goal is to stop ongoing harm quickly, even if the system remains unusable.
@@ -121,8 +109,6 @@ A critical decision in containment is: **should we pull the plug?** Hard shutdow
 
 ## Section 5 — Phase 3 Continued: Eradication and Recovery
 
-**[SHOW SLIDE: Eradication and recovery phase diagram]**
-
 **Eradication** removes the root cause of the incident. This means removing malware, closing the exploited vulnerability, eliminating backdoors the attacker installed, and resetting credentials. Eradication must be thorough — partial eradication allows attackers to maintain persistence.
 
 **Recovery** restores systems to normal operation. This involves restoring from clean backups, rebuilding compromised systems from known-good images, re-enabling accounts with new credentials, and validating that systems are clean before returning them to production.
@@ -132,8 +118,6 @@ Recovery must include verification. Simply restoring a backup does not mean the 
 ---
 
 ## Section 6 — IR Team Roles
-
-**[SHOW SLIDE: IR team org chart]**
 
 The Security+ exam tests roles on an incident response team. Key roles include:
 
@@ -151,8 +135,6 @@ In smaller organizations, one person may fill multiple roles. The critical princ
 ---
 
 ## Closing — Part 1
-
-**[INSTRUCTOR ON CAMERA]**
 
 We have covered the NIST IR lifecycle and the four phases — Preparation, Detection and Analysis, Containment, and Eradication and Recovery. We also looked at IR team roles and the critical incident categorization and prioritization decisions that shape how a team responds.
 

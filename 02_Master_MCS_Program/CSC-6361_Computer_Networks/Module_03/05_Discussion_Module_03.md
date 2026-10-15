@@ -41,7 +41,7 @@ The chain has three requirements that cannot be compromised:
 ---
 
 ## Peer Response Guidance
-Challenge your classmates' migration phasing decisions. Consider: "You proposed migrating by region — what would happen if a store in a partially migrated region needs to communicate with a store in an un-migrated region? How does inter-domain routing work during the transition?"
+Challenge your classmates' migration phasing decisions. Consider: "You proposed migrating by region — what would happen if a store in a partially migrated region needs to communicate with a store in an un-migrated region? How does inter-domain routing work during the transition?
 
 ---
 

@@ -42,7 +42,7 @@ Sub-questions:
 
 ## Scenario C: DFD vs. ERD — The Right Tool at the Wrong Time
 
-A business stakeholder asks the BA to explain the data that the company's new order management system will store — specifically, how customers relate to orders, how orders relate to products, and how many products an order can contain. The BA responds by producing a Level 1 DFD showing four processes (Accept Order, Validate Payment, Update Inventory, Send Confirmation), three data stores (Customer Records, Order History, Product Catalog), and data flows between them. The stakeholder reviews the diagram and says: "This doesn't answer my question. I can see the data moves around, but I still don't know how customers and orders are actually related or how many products an order can have."
+A business stakeholder asks the BA to explain the data that the company's new order management system will store — specifically, how customers relate to orders, how orders relate to products, and how many products an order can contain. The BA responds by producing a Level 1 DFD showing four processes (Accept Order, Validate Payment, Update Inventory, Send Confirmation), three data stores (Customer Records, Order History, Product Catalog), and data flows between them. The stakeholder reviews the diagram and says: "This doesn't answer my question. I can see the data moves around, but I still don't know how customers and orders are actually related or how many products an order can have.
 
 Sub-questions:
 

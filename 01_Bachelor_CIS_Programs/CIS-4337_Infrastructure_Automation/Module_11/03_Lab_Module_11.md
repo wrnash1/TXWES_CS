@@ -323,7 +323,7 @@ Navigate to the `lab11-vcs` workspace in Terraform Cloud. Observe that a plan wa
 
 In the workspace **Runs** view, observe:
 
-- The trigger shows "VCS" rather than "CLI"
+- The trigger shows "VCS" rather than "CLI
 - The commit SHA is linked to the GitHub commit
 - The plan output matches what you would see locally
 

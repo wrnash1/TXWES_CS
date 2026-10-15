@@ -45,17 +45,17 @@ D. Generalization — solid inheritance arrow from Authenticate User to Transfer
 
 ### Question 2
 
-In a use case diagram for an online shopping system, the use case "Apply Discount Code"
+In a use case diagram for an online shopping system, the use case "Apply Discount Code
 only executes when a customer enters a valid promo code during checkout. "Apply Discount
 Code" should be modeled using which relationship to "Complete Purchase"?
 
 A. Include, because the behavior is triggered from within the base use case
 
-B. Generalization, because "Apply Discount Code" is a specialized version of "Complete Purchase"
+B. Generalization, because "Apply Discount Code" is a specialized version of "Complete Purchase
 
 C. Association, because both use cases involve the Customer actor
 
-D. Extend, because "Apply Discount Code" inserts optional behavior into "Complete Purchase"
+D. Extend, because "Apply Discount Code" inserts optional behavior into "Complete Purchase
    only when a condition is met
 
 **Correct Answer: D**
@@ -282,7 +282,7 @@ D. An actor who is not yet defined and will be identified in a later analysis ph
   authorization level or permissions.
 - B is incorrect because frequency of use is not the defining distinction; a batch job that
   runs nightly is secondary despite running repeatedly.
-- D is incorrect because an undefined actor is simply a gap in the model; "secondary"
+- D is incorrect because an undefined actor is simply a gap in the model; "secondary
   is a defined role, not a placeholder.
 
 ---
@@ -315,7 +315,7 @@ A use case specification for "Check Out Book" has the following postcondition in
 
 A. Remove the postcondition entirely — postconditions are optional elements in a use case specification
 
-B. Rewrite it to describe the observable state from the user's perspective: "The member receives a checkout confirmation showing the item title and due date; the item is no longer available for other members to borrow."
+B. Rewrite it to describe the observable state from the user's perspective: "The member receives a checkout confirmation showing the item title and due date; the item is no longer available for other members to borrow.
 
 C. Move the postcondition to the precondition section, since it describes what must be true before the use case can end
 

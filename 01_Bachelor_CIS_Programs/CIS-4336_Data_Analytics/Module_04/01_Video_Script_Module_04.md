@@ -147,7 +147,7 @@ FROM CUSTOMERS c
 INNER JOIN ORDERS o ON c.CUSTOMER_ID = o.CUSTOMER_ID;
 ```
 
-**LEFT JOIN** returns all rows from the left table and matched rows from the right. Where there is no match, right-table columns are NULL. This is the most commonly used join in analytics for "include all entities, with or without related records."
+**LEFT JOIN** returns all rows from the left table and matched rows from the right. Where there is no match, right-table columns are NULL. This is the most commonly used join in analytics for "include all entities, with or without related records.
 
 [SHOW CODE]
 

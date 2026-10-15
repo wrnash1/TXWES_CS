@@ -1,5 +1,23 @@
 # Video Script: Module 02 - Business Analysis Planning and Monitoring
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture &bull; Module 02</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=UI6lqHOVHic" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/UI6lqHOVHic" title="Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3312 Systems Analysis and Design
 **Estimated Duration:** 21 minutes
 **Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
@@ -7,11 +25,8 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 - 03:00]
-
+## Section 1: Welcome and Module Overview
 Welcome back to CIS-3312. I am Professor Nash, and this is Module 02: Business Analysis Planning and Monitoring. If Module 01 was about understanding what systems analysis is and how it fits into the SDLC, then Module 02 is about the very first thing a BA does when a project is officially approved — plan the BA work itself.
-
-[SHOW DIAGRAM: Title slide — "Module 02: Business Analysis Planning and Monitoring" with BABOK KA 2 label and IIBA ECBA badge]
 
 This module maps directly to BABOK Knowledge Area 2, which is simply called "Business Analysis Planning and Monitoring." On the ECBA exam, KA 2 questions are among the most commonly tested, and they tend to trip up students who think planning only belongs to project managers. It does not. BAs plan too — and BABOK tells us exactly what to plan.
 
@@ -19,13 +34,10 @@ Here is what we will cover today. First, we will understand the purpose of BA Pl
 
 ---
 
-## Section 2: Why BAs Plan — and What They Plan [03:00 - 07:30]
-
+## Section 2: Why BAs Plan — and What They Plan
 Let me address the question students most often ask about KA 2: "Isn't planning the project manager's job?" The answer is: project planning is the PM's job. BA planning is the BA's job. They overlap but are not the same.
 
-The project manager plans schedule, budget, resources, and risk. The business analyst plans something different: how BA activities will be conducted. That means planning which elicitation techniques to use, how requirements will be documented and organized, how stakeholders will be engaged, and how requirements changes will be governed. The BA plan answers the question: "Given this project, this team, and these stakeholders, how am I going to do my BA work?"
-
-[SHOW DIAGRAM: Two-column table — left column "Project Manager Plans" with rows: Schedule, Budget, Resources, Risk Register; right column "BA Plans" with rows: Elicitation Approach, Documentation Approach, Stakeholder Engagement, Governance]
+The project manager plans schedule, budget, resources, and risk. The business analyst plans something different: how BA activities will be conducted. That means planning which elicitation techniques to use, how requirements will be documented and organized, how stakeholders will be engaged, and how requirements changes will be governed. The BA plan answers the question: "Given this project, this team, and these stakeholders, how am I going to do my BA work?
 
 BABOK KA 2 contains five tasks:
 
@@ -41,11 +53,8 @@ The outputs of these tasks feed into everything that comes later. Before you can
 
 ---
 
-## Section 3: Stakeholder Analysis and the Power-Interest Grid [07:30 - 13:30]
-
+## Section 3: Stakeholder Analysis and the Power-Interest Grid
 Stakeholder analysis is the foundation of BA Planning. You cannot plan your elicitation approach until you know who your stakeholders are, what they care about, and how much influence they have over the project.
-
-[SHOW DIAGRAM: Power-Interest Grid — a 2x2 matrix. X-axis labeled "Level of Interest" (Low to High). Y-axis labeled "Level of Power/Influence" (Low to High). Four quadrants labeled: top-left "Keep Satisfied" (high power, low interest), top-right "Manage Closely" (high power, high interest), bottom-left "Monitor" (low power, low interest), bottom-right "Keep Informed" (low power, high interest)]
 
 This is the Power-Interest Grid, sometimes called the stakeholder analysis matrix. It helps the BA decide how to allocate engagement time and effort across a large stakeholder group.
 
@@ -59,19 +68,14 @@ Low power, high interest — Keep Informed. These are people who care deeply abo
 
 Low power, low interest — Monitor. These are peripheral stakeholders. They may be affected by the system indirectly, but they are not driving requirements and are not at risk of derailing the project. A quarterly briefing or summary email may be sufficient.
 
-[SHOW DIAGRAM: Stakeholder Register template table — columns: Stakeholder Name, Role, Organizational Unit, Power Level (H/M/L), Interest Level (H/M/L), Grid Quadrant, Preferred Communication, Notes]
-
 The BA records all stakeholders in a Stakeholder Register. This is a living document — stakeholders join and leave projects, their interest levels change, and new regulatory bodies may enter the picture. Update it throughout the project.
 
 > IIBA ECBA Exam Tip: Exam questions about stakeholder quadrants always give you the power and interest levels in the scenario description. Map them to the grid immediately: high power + high interest = Manage Closely. High power + low interest = Keep Satisfied. The "Keep Satisfied" quadrant is the most commonly tested trap — students instinctively want to "involve them closely" because of their high power, which is wrong. Their low interest means detailed engagement wastes their time and risks backlash.
 
 ---
 
-## Section 4: Choosing a BA Approach — Predictive vs. Adaptive [13:30 - 18:30]
-
+## Section 4: Choosing a BA Approach — Predictive vs. Adaptive
 One of the first decisions a BA makes in planning is choosing an overall approach that fits the project context. BABOK describes two broad approaches: predictive and adaptive.
-
-[SHOW DIAGRAM: Two-column comparison table — left column "Predictive (Waterfall)" with rows: Requirements fully defined before design, Formal documentation, Change control board, Best for stable scope; right column "Adaptive (Agile/Iterative)" with rows: Requirements evolve through iterations, Lightweight documentation, Product backlog and sprint planning, Best for evolving scope]
 
 A predictive approach — often called waterfall — works best when requirements are stable and well-understood, the solution technology is mature, regulatory constraints require complete documentation before construction, or a fixed deadline is non-negotiable. Think of a government contract with defined regulatory compliance requirements, or a banking system replacement where every rule must be documented and signed off before a single line of code is written.
 
@@ -83,8 +87,7 @@ Most real projects are hybrid. An organization might use Agile sprints for devel
 
 ---
 
-## Section 5: BA Performance Monitoring and Closing [18:30 - 21:00]
-
+## Section 5: BA Performance Monitoring and Closing
 The last task in KA 2 is Identify Business Analysis Performance Improvements. This is the monitoring function — it asks the BA to step back periodically and evaluate whether the BA work itself is going well.
 
 What does that look like in practice? The BA tracks metrics like: Are elicitation sessions producing useful information? Are stakeholder reviews happening on schedule? Are requirement defects being caught in review or discovered late in testing? Are stakeholders satisfied with the quality of requirements documentation?

@@ -403,8 +403,6 @@ Before the quiz and lab, confirm you can do all of the following without looking
 * Explain the difference between a Docker volume and a bind mount
 * Remove stopped containers and unused images with docker system prune
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

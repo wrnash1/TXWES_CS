@@ -36,7 +36,7 @@ Address the following: What specific legal and regulatory knowledge must you hav
 
 ## Scenario C: Responsible Disclosure Dilemma
 
-While participating in a public bug bounty program for a major social media company, you discover a vulnerability that is technically within scope (the mobile application) but the impact of exploitation is far larger than the bug bounty description anticipated: you can access the private direct message history of any user on the platform without authentication. The platform has 800 million users. The bug bounty policy promises "we will not pursue legal action for good faith research."
+While participating in a public bug bounty program for a major social media company, you discover a vulnerability that is technically within scope (the mobile application) but the impact of exploitation is far larger than the bug bounty description anticipated: you can access the private direct message history of any user on the platform without authentication. The platform has 800 million users. The bug bounty policy promises "we will not pursue legal action for good faith research.
 
 Address the following: How does the magnitude of the impact change your disclosure obligations compared to a typical bug bounty finding? What is the correct disclosure process, and what specific information do you include in your report to the vendor? How long should you wait before any additional escalation if the vendor does not respond? If the vendor responds with a $1,000 Low-severity reward for what you assess as a Critical finding, what professional options are available to you? What does this scenario illustrate about the boundaries of bug bounty programs as a substitute for comprehensive security testing?
 

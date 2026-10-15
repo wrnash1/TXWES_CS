@@ -95,7 +95,7 @@ For Part C, consider patterns like:
 - Using groups correctly instead of loosening individual file permissions
 - Using SGID on directories to ensure consistent group ownership
 - Using ACLs for surgical access grants that expire (can be scripted to remove after 90 days)
-- The difference between "temporarily loosening for debugging" and "permanently insecure"
+- The difference between "temporarily loosening for debugging" and "permanently insecure
 
 ---
 

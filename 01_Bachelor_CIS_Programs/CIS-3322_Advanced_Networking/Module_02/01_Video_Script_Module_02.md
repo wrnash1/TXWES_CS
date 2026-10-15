@@ -1,5 +1,23 @@
 # Video Script: Module 02 - Subnetting and VLSM Configurations
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course &bull; Module 02</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" title="Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 1: Network Fundamentals - 20%)
 **Estimated Duration:** 24 minutes
@@ -7,13 +25,10 @@
 
 ---
 
-## Section 1: Introduction and Why Subnetting Matters [00:00 - 03:00]
-
+## Section 1: Introduction and Why Subnetting Matters
 Welcome to Module 02. I am Professor Nash, and today we tackle one of the most important skills on the entire CCNA exam: subnetting and Variable Length Subnet Masking, or VLSM.
 
 The CCNA 200-301 exam includes multiple subnetting questions, and many of them require you to calculate subnet addresses, usable host ranges, and broadcast addresses under time pressure. Students who master the binary math early in this course consistently outperform those who skip it.
-
-[SHOW DIAGRAM: A network diagram showing a large 192.168.10.0/24 block being divided into four different-sized subnets, each labeled with a department name and host count]
 
 In this module we will cover:
 
@@ -27,11 +42,8 @@ By the end of this module you will be able to divide a given address block into 
 
 ---
 
-## Section 2: Binary, CIDR, and the Subnet Mask [03:00 - 08:00]
-
+## Section 2: Binary, CIDR, and the Subnet Mask
 Before we calculate subnets, you need to be comfortable reading and writing subnet masks in three forms: dotted decimal, prefix notation, and binary.
-
-[SHOW DIAGRAM: A table showing the same subnet mask expressed in all three formats across seven rows covering /24 through /30]
 
 A subnet mask is a 32-bit value. Every bit set to 1 represents a network bit. Every bit set to 0 represents a host bit. The boundary between 1s and 0s defines where the network portion ends and the host portion begins.
 
@@ -55,13 +67,10 @@ CCNA Exam Tip: Memorize the usable host counts for /24 through /30. The exam pro
 
 ---
 
-## Section 3: Classical Subnetting Worked Example [08:00 - 14:00]
-
+## Section 3: Classical Subnetting Worked Example
 Let us work through a complete subnetting example. You are assigned 192.168.1.0/24 and need to create four equal subnets.
 
 You need 4 subnets, so you borrow 2 bits (2^2 = 4). Starting from /24, borrowing 2 bits gives /26.
-
-[SHOW DIAGRAM: Full subnet breakdown table showing all four /26 subnets with network address, first usable host, last usable host, and broadcast address for each]
 
 ```text
 Subnet 1: 192.168.1.0/26
@@ -95,11 +104,8 @@ CCNA Exam Tip: Calculate the block size first, then add that block size to each 
 
 ---
 
-## Section 4: VLSM - Variable Length Subnet Masking [14:00 - 20:00]
-
+## Section 4: VLSM - Variable Length Subnet Masking
 VLSM allows different subnet sizes within the same address space. This is critical for efficient allocation because not every segment needs the same number of hosts.
-
-[SHOW DIAGRAM: A router with four interfaces connected to: a LAN of 50 hosts, a LAN of 25 hosts, a LAN of 10 hosts, and a WAN point-to-point link]
 
 Scenario: You are given 192.168.5.0/24 and must support four networks:
 
@@ -142,8 +148,7 @@ CCNA Exam Tip: Always start VLSM allocation with the subnet requiring the most h
 
 ---
 
-## Section 5: Cisco IOS Configuration and Lab Preview [20:00 - 24:00]
-
+## Section 5: Cisco IOS Configuration and Lab Preview
 After calculating your subnets, configure IP addresses on router interfaces:
 
 ```ios
@@ -160,8 +165,6 @@ Router# show ip interface brief
 Router# show interfaces GigabitEthernet0/0
 Router# show ip route
 ```
-
-[SHOW DIAGRAM: Terminal output of show ip interface brief showing four interfaces with correct IP addresses, all showing Up/Up status]
 
 If an interface shows "administratively down," you forgot the `no shutdown` command.
 

@@ -88,7 +88,7 @@ When responding to classmates, consider:
 
 ## Professor Nash Note
 
-Data quality and governance are often treated as IT problems — something the database team handles behind the scenes. In reality, the decisions that cause most data quality failures happen far upstream: in how forms are designed, how systems are integrated, how job roles are defined, and how business processes handle exceptions. The most effective data analysts understand that fixing data quality means changing business behavior, not just writing SQL cleanup scripts. As you discuss these scenarios, push your thinking past "run a data profile" toward "how do we prevent this from happening again?"
+Data quality and governance are often treated as IT problems — something the database team handles behind the scenes. In reality, the decisions that cause most data quality failures happen far upstream: in how forms are designed, how systems are integrated, how job roles are defined, and how business processes handle exceptions. The most effective data analysts understand that fixing data quality means changing business behavior, not just writing SQL cleanup scripts. As you discuss these scenarios, push your thinking past "run a data profile" toward "how do we prevent this from happening again?
 
 ---
 

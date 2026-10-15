@@ -61,7 +61,7 @@ A security operations team needs to investigate a potential data exfiltration in
 **Distractor Analysis:**
 
 - *Why C is correct:* Storage access logs (StorageBlobLogs) are written to a Log Analytics workspace when diagnostic settings are configured. KQL queries against this table can filter by identity, operation type, and time range to identify specific access patterns. This is exactly the investigation use case for Log Analytics — rich structured log data queried with KQL.
-- *Why A is incorrect:* Azure Monitor Metrics track aggregate counts (total transactions, total ingress bytes) but do not store per-request details including which identity made the request. Metrics cannot answer "which service principal performed this read."
+- *Why A is incorrect:* Azure Monitor Metrics track aggregate counts (total transactions, total ingress bytes) but do not store per-request details including which identity made the request. Metrics cannot answer "which service principal performed this read.
 - *Why B is incorrect:* Azure Service Health provides notifications about Azure infrastructure incidents. It does not provide access to your storage account's access logs.
 - *Why D is incorrect:* Application Insights dependency tracking monitors outbound calls FROM your application TO external services. It tracks your application's calls to storage, not all calls made to your storage account from any identity.
 
@@ -100,7 +100,7 @@ An organization has 15 Azure subscriptions. They want to be automatically notifi
 
 **Distractor Analysis:**
 
-- *Why C is correct:* Azure Service Health provides personalized, subscription-specific notifications about Azure service incidents. You can create a Service Health alert that filters to specific services (Azure SQL Database), specific regions (East US), and specific event types (Service issues) — and triggers an action group to notify your team when a matching incident is published. This is the purpose-built service for "notify me when Azure has a problem affecting my resources."
+- *Why C is correct:* Azure Service Health provides personalized, subscription-specific notifications about Azure service incidents. You can create a Service Health alert that filters to specific services (Azure SQL Database), specific regions (East US), and specific event types (Service issues) — and triggers an action group to notify your team when a matching incident is published. This is the purpose-built service for "notify me when Azure has a problem affecting my resources.
 - *Why A is incorrect:* A metric alert on SQL Database error rate monitors YOUR application's error rate, not Azure's service health. If Azure SQL itself has an outage, the error rate metric might increase, but the root cause is an Azure infrastructure event, not your configuration. Service Health provides the authoritative notification.
 - *Why B is incorrect:* Microsoft Sentinel is a SIEM for security threat detection. It does not provide Azure infrastructure health event monitoring. Azure incidents are not security threats in the Sentinel context.
 - *Why D is incorrect:* The AzureActivity table in Log Analytics captures control-plane events (who created/deleted/changed Azure resources). It does not capture Azure service health incidents published by Microsoft.

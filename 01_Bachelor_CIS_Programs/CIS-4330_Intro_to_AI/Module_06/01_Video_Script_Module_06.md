@@ -26,13 +26,13 @@
 
 ---
 
-## [00:00 - 01:30] Opening
+## Opening
 
 Welcome back. Professor Nash here, and this is Module 06. In the last module we covered NLP — how machines understand language. Today we turn to a different kind of perception: computer vision, specifically how machines understand images and video. Computer vision is one of the most mature and commercially deployed areas of AI, and the AI-900 exam dedicates a full domain to it. Let us get started.
 
 ---
 
-## [01:30 - 05:00] What Is Computer Vision?
+## What Is Computer Vision?
 
 Computer vision is the field of AI that enables machines to interpret and understand visual information from the world — photographs, video, medical scans, satellite imagery, and more. The human visual system makes this look effortless, but teaching machines to interpret visual scenes requires solving fundamentally hard problems.
 
@@ -44,9 +44,7 @@ The breakthrough enabling modern computer vision was the convolutional neural ne
 
 ---
 
-## [05:00 - 09:00] Core Computer Vision Tasks
-
-[SHOW DIAGRAM: Six panels showing different computer vision task types. Panel 1: a dog labeled "Image Classification." Panel 2: same dog with a bounding box labeled "Object Detection." Panel 3: dog with pixel-level mask labeled "Image Segmentation." Panel 4: document with highlighted text "OCR / Text Extraction." Panel 5: face with emotion overlay "Face Analysis." Panel 6: video frames with motion arrows "Video Analysis."]
+## Core Computer Vision Tasks
 
 Let me walk through the six core computer vision tasks you need to know for AI-900.
 
@@ -64,9 +62,7 @@ Let me walk through the six core computer vision tasks you need to know for AI-9
 
 ---
 
-## [09:00 - 12:30] How CNNs Process Images
-
-[SHOW DIAGRAM: A CNN pipeline. Input image on the left. A series of "Convolutional Layer + ReLU" blocks extract feature maps. A "Pooling Layer" reduces spatial dimensions. After several conv-pool pairs, a "Flatten" layer converts to a 1D vector. "Fully Connected Layers" produce class scores. Softmax outputs class probabilities.]
+## How CNNs Process Images
 
 Let me explain conceptually how a convolutional neural network processes an image. You do not need to implement this for AI-900, but understanding the architecture helps you reason about when computer vision is appropriate and why it works.
 
@@ -80,9 +76,7 @@ Deep CNNs stack many convolutional and pooling layers. Early layers detect low-l
 
 ---
 
-## [12:30 - 15:30] Azure Computer Vision Services
-
-[SHOW DIAGRAM: Table of Azure Computer Vision services with columns: Service Name, Primary Capability, Training Required, Best Use Case.]
+## Azure Computer Vision Services
 
 Microsoft Azure provides several computer vision services under the Cognitive Services umbrella. Let me walk through the most important ones for AI-900.
 
@@ -96,7 +90,7 @@ Microsoft Azure provides several computer vision services under the Cognitive Se
 
 ---
 
-## [15:30 - 18:30] Azure Custom Vision Walkthrough
+## Azure Custom Vision Walkthrough
 
 Custom Vision is the service you will interact with most directly in computer vision labs. Let me walk through the workflow.
 
@@ -112,7 +106,7 @@ Step five: publish and call the endpoint. Once published, your model is availabl
 
 ---
 
-## [18:30 - 20:30] Responsible AI in Computer Vision
+## Responsible AI in Computer Vision
 
 Computer vision raises serious responsible AI concerns. The AI-900 exam addresses several of them.
 
@@ -124,7 +118,7 @@ Content safety: computer vision deployed for content moderation must accurately 
 
 ---
 
-## [20:30 - 22:30] Module Summary and Lab Preview
+## Module Summary and Lab Preview
 
 Let me recap Module 06.
 

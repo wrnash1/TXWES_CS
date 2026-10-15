@@ -30,21 +30,15 @@
 
 ## Pre-Roll Slate
 
-**[SHOW SLIDE: Course title card — "CIS-4328 Information Security | Module 12 | Texas Wesleyan University"]**
-
 ---
 
 ## Opening — Part 2
-
-**[INSTRUCTOR ON CAMERA]**
 
 Welcome back to Module 12. In Part 1 we covered the forensic process, write blockers, and disk imaging tools. In Part 2 we turn to what happens after collection: memory analysis, log analysis, and the legal and ethical framework that governs the entire discipline.
 
 ---
 
 ## Section 1 — Memory Analysis
-
-**[SHOW SLIDE: Memory analysis diagram — RAM contents taxonomy]**
 
 RAM analysis is one of the highest-value forensic activities in modern investigations. In RAM at the moment of capture you can find:
 
@@ -80,8 +74,6 @@ Key Volatility commands:
 ---
 
 ## Section 2 — Log Analysis
-
-**[SHOW SLIDE: Log analysis diagram — log sources and correlation]**
 
 Logs are the narrative record of what happened on a system. Without logs, an investigation is working blind. With comprehensive logs, an investigator can reconstruct an attacker's actions step by step.
 
@@ -138,8 +130,6 @@ A SIEM performs this correlation automatically during operations. In forensic in
 
 ## Section 3 — File System Forensics
 
-**[SHOW SLIDE: File system metadata diagram — MAC times]**
-
 File systems record metadata about every file. This metadata is valuable forensic evidence.
 
 **MAC times** refer to three timestamps:
@@ -157,8 +147,6 @@ Attackers and forensic investigators both pay close attention to MAC times. Time
 ---
 
 ## Section 4 — Legal Considerations
-
-**[SHOW SLIDE: Legal framework diagram — authorization sources]**
 
 Digital forensic investigations operate within a legal framework that defines what investigators may access and how. Unauthorized access — even by a well-meaning investigator — can constitute a crime and render evidence inadmissible.
 
@@ -188,8 +176,6 @@ Investigations involving suspected crimes — fraud, intellectual property theft
 
 ## Section 5 — Forensic Report Writing
 
-**[SHOW SLIDE: Forensic report structure template]**
-
 The forensic report is the examiner's testimony on paper. It must be:
 
 - **Complete**: All methods, tools, and findings documented.
@@ -211,8 +197,6 @@ A forensic report structure typically includes:
 ---
 
 ## Closing
-
-**[INSTRUCTOR ON CAMERA]**
 
 Digital forensics is the science that turns raw technical evidence into actionable, defensible conclusions. Every technique we covered — memory acquisition, log analysis, file carving, MAC time analysis — serves the ultimate goal: producing findings that can withstand the most adversarial examination.
 

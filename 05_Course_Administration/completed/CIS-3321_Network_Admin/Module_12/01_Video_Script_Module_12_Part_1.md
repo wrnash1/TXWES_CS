@@ -36,8 +36,6 @@ By the end of these two videos, you will understand virtual networking component
 
 ### [SECTION 1: WHY VIRTUALIZATION MATTERS]
 
-[SHOW DIAGRAM: Traditional data center — one application per server — versus virtualized data center with multiple VMs per physical host]
-
 For most of computing history, one application ran on one physical server. An email server was a box. A file server was a box. A database was a box. This was simple but wasteful. A typical server ran at 5–15% CPU utilization most of the time, but occupied the same rack space, power, and cooling as a fully utilized server.
 
 Virtualization changes this. Virtualization allows multiple operating system instances — called virtual machines (VMs) — to run simultaneously on a single physical host. Each VM believes it has its own dedicated hardware. A single modern server can run 20, 50, or 100 VMs simultaneously, depending on workload.
@@ -54,8 +52,6 @@ The benefits:
 
 ### [SECTION 2: HYPERVISORS — TYPE 1 AND TYPE 2]
 
-[SHOW DIAGRAM: Type 1 hypervisor running directly on hardware with VMs above it; Type 2 hypervisor running inside a host OS]
-
 The software layer that creates and manages VMs is called a hypervisor — also called a Virtual Machine Monitor (VMM).
 
 Type 1 Hypervisor (Bare-Metal Hypervisor) — Runs directly on the physical hardware. There is no host operating system — the hypervisor is the base layer. Examples: VMware ESXi, Microsoft Hyper-V (server version), Citrix Hypervisor (XenServer), KVM (Linux kernel-based). Used in enterprise data centers. Best performance because no intermediate OS overhead.
@@ -67,8 +63,6 @@ For the CompTIA Network+ exam: know the difference between Type 1 (bare-metal, d
 ---
 
 ### [SECTION 3: VIRTUAL MACHINES AND VIRTUAL HARDWARE]
-
-[SHOW DIAGRAM: Inside a VM — virtual CPU, virtual RAM, virtual NIC, virtual disk all shown as software components]
 
 Each virtual machine has virtualized versions of physical hardware components:
 
@@ -86,8 +80,6 @@ Virtual machine templates and snapshots: A template is a VM image used to rapidl
 
 ### [SECTION 4: VIRTUAL SWITCHES]
 
-[SHOW DIAGRAM: Physical server with hypervisor — vSwitch connecting multiple VMs internally, and uplinks to physical network switches]
-
 When VMs on the same host communicate with each other, they do not need to go through a physical switch. The hypervisor includes a virtual switch (vSwitch) that handles inter-VM traffic entirely in software.
 
 A virtual switch operates like a physical switch: it learns MAC addresses and forwards frames only to the appropriate virtual port. This allows VMs to communicate at Layer 2 speeds without hitting the physical network.
@@ -103,8 +95,6 @@ VMware vSphere uses the vSphere Standard Switch (VSS) and the more advanced vSph
 ---
 
 ### [SECTION 5: NETWORK FUNCTION VIRTUALIZATION (NFV)]
-
-[SHOW DIAGRAM: Traditional hardware appliances — physical firewall, physical load balancer, physical IDS — versus NFV running the same functions as VMs]
 
 Network Function Virtualization (NFV) takes physical network appliances — firewalls, routers, load balancers, IDS/IPS, WAN accelerators — and replaces them with software instances running on commodity hardware.
 
@@ -123,8 +113,6 @@ NFV is deployed and managed using orchestration systems such as VMware NSX, Open
 
 ### [SECTION 6: CONTAINERS AND MICROSERVICES]
 
-[SHOW DIAGRAM: VM stack (hypervisor → OS → app) versus container stack (OS → container runtime → multiple containers sharing the OS kernel)]
-
 Containers are a lighter-weight form of virtualization compared to VMs. Where a VM includes a full OS installation plus the application, a container shares the host OS kernel and includes only the application and its dependencies.
 
 Key differences from VMs:
@@ -141,8 +129,6 @@ For the Network+ exam, understand that containers share the host OS kernel while
 ---
 
 ### [SECTION 7: VIRTUAL NETWORKING COMPONENTS SUMMARY]
-
-[SHOW DIAGRAM: Complete virtualized data center stack — physical servers at bottom, hypervisor, VMs, vSwitch, physical switches, and WAN connection]
 
 Let's summarize the virtual networking components you need to know:
 

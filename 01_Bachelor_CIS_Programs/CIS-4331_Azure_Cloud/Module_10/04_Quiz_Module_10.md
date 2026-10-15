@@ -27,7 +27,7 @@ D. Azure Database for PostgreSQL
 **Distractor Analysis:**
 
 - **A (Azure SQL Database):** Azure SQL Database does not fully support SQL Server Agent, linked servers to external servers, or Service Broker. The migration would require significant application refactoring. Incorrect.
-- **B (Azure SQL Managed Instance) — CORRECT:** Azure SQL Managed Instance provides near-100% compatibility with on-premises SQL Server 2017+, including full SQL Server Agent, linked servers, Service Broker, and cross-database queries. It is a fully managed PaaS service — no OS management required. This is the correct answer for "migrate complex SQL Server with advanced features to PaaS."
+- **B (Azure SQL Managed Instance) — CORRECT:** Azure SQL Managed Instance provides near-100% compatibility with on-premises SQL Server 2017+, including full SQL Server Agent, linked servers, Service Broker, and cross-database queries. It is a fully managed PaaS service — no OS management required. This is the correct answer for "migrate complex SQL Server with advanced features to PaaS.
 - **C (SQL Server on Azure VM):** SQL Server on Azure VM would also support all these features, but it is IaaS — the team would manage the OS, apply patches, and configure HA manually. The requirement is "fully managed PaaS." Incorrect.
 - **D (Azure Database for PostgreSQL):** PostgreSQL is an entirely different database engine. It does not support T-SQL, SQL Server Agent, linked servers, or Service Broker. Incorrect.
 

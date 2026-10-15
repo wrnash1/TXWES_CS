@@ -158,9 +158,9 @@ Cosmos DB provides a 99.999% SLA (five nines) for multi-region read and write av
 
 Azure provides fully managed versions of the three major open-source relational databases: PostgreSQL, MySQL, and MariaDB.
 
-**Azure Database for PostgreSQL** — Fully managed PostgreSQL with automatic backups, scaling, and high availability. Flexible Server is the current recommended deployment model. PostgreSQL is known for its ANSI SQL compliance and extensive extension ecosystem (including PostGIS for geospatial data). Scenario signal: "PostgreSQL," "open-source relational," "advanced SQL compliance."
+**Azure Database for PostgreSQL** — Fully managed PostgreSQL with automatic backups, scaling, and high availability. Flexible Server is the current recommended deployment model. PostgreSQL is known for its ANSI SQL compliance and extensive extension ecosystem (including PostGIS for geospatial data). Scenario signal: "PostgreSQL," "open-source relational," "advanced SQL compliance.
 
-**Azure Database for MySQL** — Fully managed MySQL. Flexible Server deployment. Supports MySQL 5.7 and 8.0. MySQL is the dominant open-source database for web applications and the "M" in the LAMP stack (Linux, Apache, MySQL, PHP). Scenario signal: "MySQL," "LAMP stack," "WordPress," "PHP web application."
+**Azure Database for MySQL** — Fully managed MySQL. Flexible Server deployment. Supports MySQL 5.7 and 8.0. MySQL is the dominant open-source database for web applications and the "M" in the LAMP stack (Linux, Apache, MySQL, PHP). Scenario signal: "MySQL," "LAMP stack," "WordPress," "PHP web application.
 
 **Azure Database for MariaDB** — Fully managed MariaDB, a community fork of MySQL. Note: Azure Database for MariaDB is being retired — Microsoft recommends migrating to Azure Database for MySQL Flexible Server. It may appear on older AZ-900 exam versions.
 

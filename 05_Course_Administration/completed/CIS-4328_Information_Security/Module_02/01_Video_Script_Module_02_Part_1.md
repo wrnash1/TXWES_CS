@@ -28,8 +28,6 @@
 
 ## Opening
 
-**[INSTRUCTOR ON CAMERA]**
-
 Welcome to Module 02 — Social Engineering and Phishing. I'm Professor Nash.
 
 Here is the most important sentence I will say in this entire module: the most sophisticated firewall in the world cannot stop an employee who willingly hands their password to an attacker who asked nicely. Social engineering is the exploitation of human psychology rather than technical vulnerabilities — and it is the most commonly used attack vector in real-world breaches. Industry data breach reports consistently show that over 70 percent of breaches involve a human element, and phishing is the leading delivery mechanism.
@@ -39,8 +37,6 @@ The SY0-701 exam maps social engineering heavily to Domain 2 — Threats, Vulner
 ---
 
 ## Section 1 — What Is Social Engineering?
-
-**[SHOW DIAGRAM: Central circle labeled Social Engineering. Six satellite circles labeled: Phishing, Vishing, Smishing, Pretexting, Tailgating, Baiting. Each satellite circle includes a one-line description of its delivery method.]**
 
 **[Alt-text: Hub-and-spoke diagram. Center: Social Engineering. Six spokes extending to: Phishing — email-based deception targeting credentials or malware delivery; Vishing — voice call impersonation of trusted authorities; Smishing — SMS text messages with malicious links; Pretexting — attacker fabricates a believable identity or scenario; Tailgating — following authorized personnel through secured doors; Baiting — infected USB drives or fraudulent offers.]**
 
@@ -58,8 +54,6 @@ Social engineering attacks are effective because they exploit deeply wired human
 ---
 
 ## Section 2 — Phishing Attack Taxonomy
-
-**[SHOW DIAGRAM: Hierarchy tree titled Phishing Attack Types. Root: Phishing. Four child nodes: Spear Phishing, Whaling, Vishing, Smishing. Each child has two sub-node tags describing the target profile and delivery method.]**
 
 **[Alt-text: Hierarchy diagram. Root: Phishing — mass email deception. Child 1: Spear Phishing — targeted personalized email using OSINT. Child 2: Whaling — spear phishing targeting executives. Child 3: Vishing — voice call impersonation. Child 4: Smishing — SMS text message deception. Each child has two sub-node tags.]**
 
@@ -81,8 +75,6 @@ Social engineering attacks are effective because they exploit deeply wired human
 
 ## Section 3 — Pretexting and Impersonation
 
-**[SHOW DIAGRAM: Five-step process flow titled Pretexting Attack Lifecycle. Step 1: Research — OSINT gathering. Step 2: Pretext Creation — building a believable false identity. Step 3: Contact — approaching target via chosen channel. Step 4: Exploitation — extracting information or access. Step 5: Exit — disengaging without raising suspicion. Arrows connect each step left to right.]**
-
 **[Alt-text: Five-step horizontal process flow. Step 1 Research, Step 2 Pretext Creation, Step 3 Contact, Step 4 Exploitation, Step 5 Exit. Each step has a one-line description. Arrows connect each step in sequence.]**
 
 **Pretexting** is the creation of a fabricated scenario that provides a believable reason for the attacker's request. The attacker adopts a false identity: an IT auditor, a new vendor representative, a regulatory compliance officer, a colleague from another office.
@@ -98,8 +90,6 @@ Classic pretexting scenarios:
 ---
 
 ## Section 4 — Tailgating and Physical Social Engineering
-
-**[SHOW DIAGRAM: Top-down floor plan of a secured building entrance. A badge reader is on the left wall. An authorized employee badge figure is shown passing through the security door. Directly behind the authorized employee, an attacker figure follows without badging. Dashed arrow shows the attacker's path through the open door. Label: Tailgating / Piggybacking.]**
 
 **[Alt-text: Top-down floor plan. Badge reader on the left wall. Security door in the center. Authorized employee figure shown using badge reader as door opens. Attacker figure immediately behind, passing through without a badge. Dashed line traces attacker's path. Caption: Tailgating or Piggybacking.]**
 
@@ -117,14 +107,12 @@ Physical social engineering attacks bypass technical controls by exploiting cour
 
 ## Section 5 — Indicators and Defenses
 
-**[SHOW DIAGRAM: Two-column table titled Social Engineering Red Flags and Countermeasures. Left column: Red Flags. Right column: Countermeasure. Five rows covering the most common indicators.]**
-
 **[Alt-text: Two-column table. Left: Red Flags — Unsolicited urgency or fear; Request to bypass security procedures; Request for credentials via email or phone; Unknown person requesting physical access; Mismatched sender domain. Right: Countermeasures — Slow down and verify through official channels; Never bypass; escalate to supervisor; Credential requests are never valid via phone or email; Challenge without authorization or escort policy; Verify via independent callback.]**
 
 Key indicators of a social engineering attempt:
 
 - Unsolicited contact creating urgency or fear.
-- Requests to bypass normal security procedures "just this once."
+- Requests to bypass normal security procedures "just this once.
 - Requests for passwords, PINs, or account credentials via phone or email.
 - An unknown person requesting physical access or escort through secured areas.
 - Sender email address that appears close to but does not exactly match a trusted domain.
@@ -140,8 +128,6 @@ Primary defenses:
 ---
 
 ## Closing — Part 1
-
-**[INSTRUCTOR ON CAMERA]**
 
 In Part 1 we covered social engineering fundamentals and psychological principles, the complete phishing taxonomy including spear phishing, whaling, vishing, and smishing, pretexting and impersonation, physical social engineering techniques, and recognition and defense strategies.
 

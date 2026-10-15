@@ -84,7 +84,7 @@ Transaction **CR01** creates a Work Center. Transaction **CR03** displays it.
 
 ## SEGMENT 4 — Routing (8:30–11:00)
 
-If the BOM answers "what do I need," the Routing answers "how do I make it — step by step."
+If the BOM answers "what do I need," the Routing answers "how do I make it — step by step.
 
 A **Routing** is the sequence of production operations required to manufacture a product, specifying which Work Center performs each operation and how long each step takes.
 
@@ -103,7 +103,7 @@ Transaction **CA01** creates a Routing. Transaction **CA03** displays it. Transa
 
 ## SEGMENT 5 — Material Requirements Planning (11:00–15:30)
 
-MRP is the computational engine that answers the question every production planner faces every day: "What do I need to order or produce, in what quantity, and by when?"
+MRP is the computational engine that answers the question every production planner faces every day: "What do I need to order or produce, in what quantity, and by when?
 
 [SHOW SCREEN: MRP logic diagram showing three inputs: Independent Requirements (planned production quantities from demand plan), Dependent Requirements (BOM explosion — components needed), Current Stock and Open POs/PRs. Output: Planned Orders and Purchase Requisitions]
 

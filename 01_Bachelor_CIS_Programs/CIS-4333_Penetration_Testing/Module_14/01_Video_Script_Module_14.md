@@ -188,8 +188,8 @@ components.
 The title should be specific, informative, and searchable. Poor titles include "SQL Injection
 Found" or "Weak Authentication." Strong titles include:
 
-- "Unauthenticated SQL Injection in Login Form Allows Database Extraction (CVE-2023-XXXX)"
-- "Default Credentials on VMware ESXi 7.0 Host (10.10.1.50) Grant Full Hypervisor Control"
+- "Unauthenticated SQL Injection in Login Form Allows Database Extraction (CVE-2023-XXXX)
+- "Default Credentials on VMware ESXi 7.0 Host (10.10.1.50) Grant Full Hypervisor Control
 
 The title tells the reader what was found, where, and how serious it is — before they read
 a single body word.
@@ -205,7 +205,7 @@ The description explains the vulnerability in technical terms. A good descriptio
 Keep descriptions to three to five sentences for most findings. Reference CVE numbers and CWE
 identifiers where applicable. For example: "The application fails to parameterize SQL queries
 in the authentication endpoint (CWE-89). User-supplied input in the `username` field is
-concatenated directly into a database query, allowing an attacker to manipulate query logic."
+concatenated directly into a database query, allowing an attacker to manipulate query logic.
 
 ### Component 3: Evidence
 
@@ -227,9 +227,9 @@ The impact section answers "so what?" in business terms. Connect the technical v
 to its business consequence. Examples:
 
 - "An unauthenticated attacker could extract the full customer database, resulting in
-  regulatory exposure under GDPR and PCI-DSS and potential financial penalties."
+  regulatory exposure under GDPR and PCI-DSS and potential financial penalties.
 - "Full hypervisor control allows an attacker to shut down all virtual machines, resulting
-  in a complete service outage for all hosted applications."
+  in a complete service outage for all hosted applications.
 
 Quantify where possible. Vague impact statements like "could lead to data exposure" add no
 value to a decision-maker.
@@ -250,7 +250,7 @@ firewall; not externally reachable at time of testing)
 
 The remediation section tells the client exactly how to fix the vulnerability. It should be:
 
-- **Specific**: "Apply Microsoft patch KB5014692" not "Update your software"
+- **Specific**: "Apply Microsoft patch KB5014692" not "Update your software
 - **Actionable**: Provide configuration steps or code changes where practical
 - **Prioritized**: Distinguish immediate mitigations from permanent fixes
 - **Referenced**: Link to vendor advisories, CIS benchmarks, OWASP guidance, or NIST SP 800
@@ -350,7 +350,7 @@ for leadership, and a technical debrief (1–2 hours) for the security and IT te
 ### Executive Debrief Techniques
 
 - Open with the overall risk posture in one sentence: "Based on our assessment, your
-  organization is at High risk, with three critical findings that require immediate attention."
+  organization is at High risk, with three critical findings that require immediate attention.
 - Use visual risk matrices and charts — a heat map of findings by likelihood vs. impact
   is immediately intuitive to business stakeholders
 - Avoid tool names and CVE numbers in this session — use business language
@@ -369,7 +369,7 @@ for leadership, and a technical debrief (1–2 hours) for the security and IT te
 Sometimes clients are surprised, defensive, or argumentative about findings. Techniques:
 
 - Lead with data, not opinion: "The CVSS score of 9.8 reflects these specific characteristics
-  of the vulnerability — network-accessible, no authentication required."
+  of the vulnerability — network-accessible, no authentication required.
 - Acknowledge compensating controls when present
 - Avoid blame language — findings are system and process issues, not personal failures
 

@@ -99,7 +99,7 @@ By completing this reading guide, you will be able to:
 
 ## Required Free Readings
 
-### 1. Cisco OSPF Troubleshooting Guide — "OSPF Neighbor Problems Explained"
+### 1. Cisco OSPF Troubleshooting Guide — "OSPF Neighbor Problems Explained
 
 **URL:** [https://www.cisco.com/c/en/us/support/docs/ip/open-shortest-path-first-ospf/13733-26.html](https://www.cisco.com/c/en/us/support/docs/ip/open-shortest-path-first-ospf/13733-26.html)
 
@@ -380,8 +380,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

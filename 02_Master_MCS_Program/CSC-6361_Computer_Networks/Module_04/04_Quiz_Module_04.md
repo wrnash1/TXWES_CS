@@ -262,7 +262,7 @@ Which command verifies that BGP MD5 authentication is active and functioning bet
 - C) `show ip route bgp` — the routing table flags indicate MD5-authenticated routes with a special marker. ❌
 - D) `debug ip bgp [peer-IP] events` — the debug output logs each MD5 hash exchange. ❌
 
-**Answer:** B — `show ip bgp neighbors [peer-IP]` displays the full neighbor session details, including "MD5 Message Digests" in the Options field and "External BGP neighbor configured for session open authentication" when MD5 is active. If the session is in Established state with MD5 listed, authentication is working. If the password is mismatched, the session will be in Idle/Active state with TCP connection failures, and `debug ip bgp` would show "MD5 digest is wrong."
+**Answer:** B — `show ip bgp neighbors [peer-IP]` displays the full neighbor session details, including "MD5 Message Digests" in the Options field and "External BGP neighbor configured for session open authentication" when MD5 is active. If the session is in Established state with MD5 listed, authentication is working. If the password is mismatched, the session will be in Idle/Active state with TCP connection failures, and `debug ip bgp` would show "MD5 digest is wrong.
 
 **Distractor Analysis:**
 - A: `show ip bgp summary` does not show authentication details — only prefix counts and session state.

@@ -363,7 +363,7 @@ Which tool in the Cloud Console provides this analysis?
 - **Correct Answer:** B
 - **Distractor Analysis:**
   - A) Audit logs show historical actions performed, not the current effective permissions of a principal.
-  - C) Cloud Asset Inventory tracks resource configuration and IAM policies in aggregate, but IAM Policy Analyzer is purpose-built for answering "does this principal have access to this resource and why?"
+  - C) Cloud Asset Inventory tracks resource configuration and IAM policies in aggregate, but IAM Policy Analyzer is purpose-built for answering "does this principal have access to this resource and why?
   - D) VPC Service Controls manages service perimeter policies; it does not analyze IAM role assignments.
 
 ---

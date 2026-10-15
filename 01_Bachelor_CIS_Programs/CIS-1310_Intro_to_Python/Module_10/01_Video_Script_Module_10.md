@@ -26,25 +26,19 @@
 
 ---
 
-## [00:00 – 00:45] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 09 | Dictionaries | CIS-1310"]**
-
-"Welcome back. In Module 07 we covered tuples and sets. In Module 09 we explored scopes and recursion. Now we arrive at one of Python's most used and most powerful data structures — the **dictionary**.
+Welcome back. In Module 07 we covered tuples and sets. In Module 09 we explored scopes and recursion. Now we arrive at one of Python's most used and most powerful data structures — the **dictionary**.
 
 Dictionaries are everywhere. JSON data from web APIs is a dictionary. Configuration files are dictionaries. Every Python object's attributes are stored in a dictionary under the hood. The PCAP exam tests dictionary creation, all the key access methods, iteration patterns, comprehensions, and the difference between a missing-key error and a safe lookup.
 
-Let's work through all of it."
+Let's work through all of it.
 
 ---
 
-## [00:45 – 03:00] Creating Dictionaries
+## Creating Dictionaries
 
-**[SHOW SLIDE: "Dictionaries — Key-Value Pairs"]**
-
-"A **dictionary** maps **keys** to **values**. Think of it like a contact list — each contact name is a key, and the phone number is the value. Looking up a contact by name is instant — you do not scan from the top, you go directly to the name.
-
-**[DEMO]**
+A **dictionary** maps **keys** to **values**. Think of it like a contact list — each contact name is a key, and the phone number is the value. Looking up a contact by name is instant — you do not scan from the top, you go directly to the name.
 
 ```python
 # Literal syntax — curly braces, colon separates key from value
@@ -67,8 +61,6 @@ Output:
 3
 ```
 
-**[DEMO — dict() constructor]**
-
 ```python
 # dict() constructor with keyword arguments
 config = dict(host='localhost', port=5432, debug=True)
@@ -81,28 +73,20 @@ Output:
 {'host': 'localhost', 'port': 5432, 'debug': True}
 ```
 
-**[DEMO — empty dictionary]**
-
 ```python
 empty = {}
 print(type(empty))    # <class 'dict'> — NOT a set
 ```
 
-[PAUSE]
-
 An important reminder from Module 07 — `{}` creates an empty **dictionary**, not an empty set. `set()` creates an empty set. This distinction appears on the PCAP exam.
 
-**Keys must be hashable** — strings, integers, floats, and tuples work as keys. Lists and dictionaries cannot be keys because they are mutable and therefore not hashable."
+**Keys must be hashable** — strings, integers, floats, and tuples work as keys. Lists and dictionaries cannot be keys because they are mutable and therefore not hashable.
 
 ---
 
-## [03:00 – 05:30] Reading, Adding, and Updating Values
+## Reading, Adding, and Updating Values
 
-**[SHOW SLIDE: "CRUD Operations on Dictionaries"]**
-
-"Once you have a dictionary, you need to read values, add new keys, update existing keys, and delete keys. Python's dictionary supports all four operations cleanly.
-
-**[DEMO — reading values]**
+Once you have a dictionary, you need to read values, add new keys, update existing keys, and delete keys. Python's dictionary supports all four operations cleanly.
 
 ```python
 grades = {'Alice': 92, 'Bob': 85, 'Carol': 78}
@@ -120,8 +104,6 @@ Output:
 
 Bracket notation reads a value by key. If the key does not exist, Python raises `KeyError`.
 
-**[DEMO — KeyError]**
-
 ```python
 print(grades['Dave'])
 ```
@@ -133,8 +115,6 @@ KeyError: 'Dave'
 ```
 
 The safe alternative is `.get()`:
-
-**[DEMO — .get()]**
 
 ```python
 print(grades.get('Dave'))          # None — key missing, no crash
@@ -152,8 +132,6 @@ None
 
 `d.get(key)` returns `None` for missing keys. `d.get(key, default)` returns your chosen default. Neither raises `KeyError`. This is a critical PCAP distinction — know when to use bracket notation versus `.get()`.
 
-**[DEMO — adding and updating]**
-
 ```python
 grades['Dave'] = 90        # add new key
 grades['Alice'] = 95       # update existing key
@@ -166,17 +144,13 @@ Output:
 {'Alice': 95, 'Bob': 85, 'Carol': 78, 'Dave': 90}
 ```
 
-Assignment adds a new key if it does not exist, or overwrites the value if it does. There is no separate `add` method — the same syntax handles both cases."
+Assignment adds a new key if it does not exist, or overwrites the value if it does. There is no separate `add` method — the same syntax handles both cases.
 
 ---
 
-## [05:30 – 07:00] Deleting Keys
+## Deleting Keys
 
-**[SHOW SLIDE: "Removing Keys — del, pop, clear"]**
-
-"Three ways to remove entries from a dictionary:
-
-**[DEMO]**
+Three ways to remove entries from a dictionary:
 
 ```python
 scores = {'a': 10, 'b': 20, 'c': 30, 'd': 40}
@@ -199,19 +173,13 @@ scores.clear()
 print(scores)    # {}
 ```
 
-[PAUSE]
-
-`pop()` is especially useful when you need the value AND want to remove the key in one operation. It is the dictionary equivalent of `list.pop()` — except you pop by key, not by index."
+`pop()` is especially useful when you need the value AND want to remove the key in one operation. It is the dictionary equivalent of `list.pop()` — except you pop by key, not by index.
 
 ---
 
-## [07:00 – 09:30] Dictionary Methods and Iteration
+## Dictionary Methods and Iteration
 
-**[SHOW SLIDE: "keys(), values(), items() — View Objects"]**
-
-"Dictionaries have three essential iteration methods. Each returns a **view object** — a live window into the dictionary that updates automatically if the dictionary changes.
-
-**[DEMO — keys, values, items]**
+Dictionaries have three essential iteration methods. Each returns a **view object** — a live window into the dictionary that updates automatically if the dictionary changes.
 
 ```python
 student = {'name': 'Alice', 'grade': 92, 'city': 'Dallas'}
@@ -220,8 +188,6 @@ print(student.keys())     # dict_keys(['name', 'grade', 'city'])
 print(student.values())   # dict_values(['Alice', 92, 'Dallas'])
 print(student.items())    # dict_items([('name', 'Alice'), ('grade', 92), ('city', 'Dallas')])
 ```
-
-**[DEMO — iterating]**
 
 ```python
 # Keys only (default loop behavior)
@@ -257,11 +223,7 @@ grade: 92
 city: Dallas
 ```
 
-[PAUSE]
-
 Memorize this: `for k in d` gives you keys. `for v in d.values()` gives you values. `for k, v in d.items()` gives you both. The PCAP exam will show you a loop and ask what it prints — knowing which iteration pattern produces which output is essential.
-
-**[DEMO — membership testing]**
 
 ```python
 print('name' in student)     # True — tests KEYS
@@ -269,19 +231,15 @@ print('Alice' in student)    # False — 'Alice' is a value, not a key
 print('Alice' in student.values())    # True
 ```
 
-`in` on a dictionary tests for membership in the **keys**. To test values, you must use `in student.values()`."
+`in` on a dictionary tests for membership in the **keys**. To test values, you must use `in student.values()`.
 
 ---
 
-## [09:30 – 11:00] Dictionary Comprehensions
+## Dictionary Comprehensions
 
-**[SHOW SLIDE: "Dictionary Comprehensions"]**
-
-"Just like list comprehensions build lists, **dictionary comprehensions** build dictionaries in one expression.
+Just like list comprehensions build lists, **dictionary comprehensions** build dictionaries in one expression.
 
 Syntax: `{key_expression: value_expression for item in iterable}`
-
-**[DEMO — basic comprehension]**
 
 ```python
 squares = {n: n**2 for n in range(1, 6)}
@@ -293,8 +251,6 @@ Output:
 ```text
 {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
 ```
-
-**[DEMO — comprehension with filter]**
 
 ```python
 grades = {'Alice': 92, 'Bob': 65, 'Carol': 78, 'Dave': 55, 'Eve': 88}
@@ -309,8 +265,6 @@ Output:
 {'Alice': 92, 'Carol': 78, 'Eve': 88}
 ```
 
-**[DEMO — inverting a dictionary]**
-
 ```python
 original = {'a': 1, 'b': 2, 'c': 3}
 inverted = {v: k for k, v in original.items()}
@@ -323,19 +277,13 @@ Output:
 {1: 'a', 2: 'b', 3: 'c'}
 ```
 
-[PAUSE]
-
-Dictionary comprehensions follow the same logic as list comprehensions — iterable, optional filter, expression for the key, expression for the value. They are concise and readable once the pattern is familiar."
+Dictionary comprehensions follow the same logic as list comprehensions — iterable, optional filter, expression for the key, expression for the value. They are concise and readable once the pattern is familiar.
 
 ---
 
-## [11:00 – 13:00] Nested Dictionaries and Word Counter
+## Nested Dictionaries and Word Counter
 
-**[SHOW SLIDE: "Nested Dictionaries and the Accumulator Pattern"]**
-
-"Dictionaries can contain dictionaries as values. This is how JSON data from APIs is typically structured.
-
-**[DEMO — nested dict]**
+Dictionaries can contain dictionaries as values. This is how JSON data from APIs is typically structured.
 
 ```python
 students = {
@@ -350,8 +298,6 @@ print(students['Bob']['city'])       # Austin
 students['Carol'] = {'grade': 78, 'city': 'Houston'}
 print(len(students))    # 3
 ```
-
-**[DEMO — word frequency counter]**
 
 The classic dictionary problem: count how many times each word appears in a string.
 
@@ -375,8 +321,6 @@ Output:
 {'the': 3, 'quick': 1, 'brown': 1, 'fox': 2, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1}
 ```
 
-[PAUSE]
-
 This is the most important dictionary pattern on the PCAP exam. Walk through it: if the word is already a key, increment its count. If it is new, initialize the count to 1.
 
 There is a cleaner version using `.get()`:
@@ -387,15 +331,13 @@ for word in words:
     frequency[word] = frequency.get(word, 0) + 1
 ```
 
-Same result, one line. `.get(word, 0)` returns 0 if the word is new, or the current count if it exists. Then add 1 and assign back."
+Same result, one line. `.get(word, 0)` returns 0 if the word is new, or the current count if it exists. Then add 1 and assign back.
 
 ---
 
-## [13:00 – 14:15] update() and Merging Dictionaries
+## update() and Merging Dictionaries
 
-**[SHOW SLIDE: "Merging Dictionaries — update() and **unpacking"]**
-
-"**[DEMO]**
+"
 
 ```python
 defaults = {'color': 'blue', 'size': 'medium', 'font': 'Arial'}
@@ -425,15 +367,13 @@ For older Python, use double-star unpacking:
 result = {**defaults, **overrides}
 ```
 
-Both create a new dictionary rather than modifying either original."
+Both create a new dictionary rather than modifying either original.
 
 ---
 
-## [14:15 – 15:00] PCAP Exam Tips and Wrap-Up
+## PCAP Exam Tips and Wrap-Up
 
-**[SHOW SLIDE: "Module 10 — PCAP Alignment"]**
-
-"Key exam take-aways:
+Key exam take-aways:
 
 **1.** `d[key]` raises `KeyError` for missing keys. `d.get(key)` returns `None`. `d.get(key, default)` returns your default.
 
@@ -449,7 +389,7 @@ Both create a new dictionary rather than modifying either original."
 
 **7.** `{}` is an empty dictionary, not an empty set. Use `set()` for an empty set.
 
-Module 11 covers string methods — Python's deep library of built-in tools for working with text. See you there."
+Module 11 covers string methods — Python's deep library of built-in tools for working with text. See you there.
 
 ---
 

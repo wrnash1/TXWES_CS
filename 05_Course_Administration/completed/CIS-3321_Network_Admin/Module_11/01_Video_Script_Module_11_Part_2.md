@@ -34,8 +34,6 @@ Welcome back. In Part 1 we covered how switches work, VLANs, 802.1Q trunking, an
 
 ### [SECTION 1: ETHERCHANNEL — THE PROBLEM IT SOLVES]
 
-[SHOW DIAGRAM: Two switches connected by four physical links — STP blocking three of them, only one active]
-
 Here is a common scenario: you have two distribution switches connected by four physical links. You want to use all four links for throughput. The problem is STP. With four links between the same two switches, STP sees a loop and blocks three of the four ports. Only one link is active. You have four times the hardware but one-quarter the potential bandwidth.
 
 EtherChannel solves this. EtherChannel bundles multiple physical links into a single logical link. STP sees the bundle as one link, so no ports are blocked. All physical links are active and carry traffic simultaneously.
@@ -45,8 +43,6 @@ Additional benefits: if one physical link in the bundle fails, EtherChannel auto
 ---
 
 ### [SECTION 2: ETHERCHANNEL LOAD BALANCING]
-
-[SHOW DIAGRAM: EtherChannel bundle with four physical links — traffic flows shown distributed across links based on source/destination MAC hash]
 
 EtherChannel does not send each frame down all four links at once. It selects which physical link to use for each flow based on a hashing algorithm. The hash can be based on:
 
@@ -65,8 +61,6 @@ EtherChannel does not load-balance on a per-packet basis — it load-balances on
 
 ### [SECTION 3: LACP AND PAGP]
 
-[SHOW DIAGRAM: Two switches with LACP messages being exchanged to negotiate the EtherChannel bundle]
-
 Two protocols negotiate EtherChannel formation:
 
 LACP (Link Aggregation Control Protocol) — IEEE 802.3ad standard. Works between devices from any vendor. Preferred in multi-vendor environments. Port modes: Active (sends LACP negotiation messages) and Passive (responds but does not initiate). Both sides cannot be Passive — at least one must be Active.
@@ -80,8 +74,6 @@ For the CompTIA Network+ exam, know that LACP is the open-standard protocol and 
 ---
 
 ### [SECTION 4: CISCO VLAN CONFIGURATION COMMANDS]
-
-[SHOW DIAGRAM: Cisco IOS CLI window with VLAN configuration commands]
 
 Now let's look at the actual commands for configuring VLANs on a Cisco switch.
 
@@ -130,8 +122,6 @@ show interfaces FastEthernet0/1 switchport
 
 ### [SECTION 5: CISCO STP CONFIGURATION AND VERIFICATION]
 
-[SHOW DIAGRAM: show spanning-tree output with Root Bridge, port roles, and port states highlighted]
-
 Viewing STP topology:
 
 ```cisco
@@ -173,8 +163,6 @@ spanning-tree portfast bpduguard default
 
 ### [SECTION 6: CISCO ETHERCHANNEL CONFIGURATION]
 
-[SHOW DIAGRAM: Two switches — EtherChannel bundle using four Fa0/1–Fa0/4 ports, configured with LACP]
-
 Configuring an LACP EtherChannel on interfaces Fa0/1 through Fa0/4:
 
 ```cisco
@@ -205,8 +193,6 @@ The summary output shows the channel group number, protocol (LACP/PAgP), and whe
 
 ### [SECTION 7: STP MANIPULATION ATTACKS]
 
-[SHOW DIAGRAM: Attacker injecting superior BPDUs to become Root Bridge — traffic redirected through attacker's device]
-
 Just as DHCP has rogue server attacks and OSPF has rogue route injection, STP has its own attack: Root Bridge manipulation.
 
 An attacker connects a device to the network and sends BPDU packets with a very low Bridge Priority — lower than the legitimate Root Bridge. Other switches accept these as superior BPDUs and elect the attacker's device as the new Root Bridge.
@@ -224,8 +210,6 @@ BPDU Filter — Suppresses BPDUs on PortFast ports (use with caution — disabli
 ---
 
 ### [SECTION 8: LAYER 2 SWITCH SECURITY — PORT SECURITY]
-
-[SHOW DIAGRAM: MAC flooding attack — attacker generating thousands of fake MAC addresses, filling the CAM table, causing the switch to flood like a hub]
 
 MAC address flooding is a Layer 2 attack. An attacker sends frames with thousands of fake source MAC addresses. The switch's MAC address table fills up. When the table is full, the switch can no longer learn new addresses and begins flooding all traffic to all ports — essentially turning the switch into a hub. The attacker receives a copy of all traffic.
 
@@ -253,8 +237,6 @@ The `sticky` keyword causes the switch to automatically learn and permanently re
 ---
 
 ### [SECTION 9: TROUBLESHOOTING VLAN AND TRUNK ISSUES]
-
-[SHOW DIAGRAM: Flowchart — troubleshooting a VLAN connectivity problem step by step]
 
 Common VLAN and trunk issues and the commands to diagnose them:
 

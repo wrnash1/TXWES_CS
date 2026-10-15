@@ -194,7 +194,7 @@ USB drives are a significant endpoint threat vector — both for malware deliver
 
 #### Trap 1: AV vs. EDR Purpose
 
-"An organization experienced a breach. They need a tool that can show them a complete timeline of what happened on the endpoint — every file accessed, every process spawned, every network connection made."
+An organization experienced a breach. They need a tool that can show them a complete timeline of what happened on the endpoint — every file accessed, every process spawned, every network connection made.
 
 Wrong answer: antivirus, SIEM (for this specific endpoint detail).
 
@@ -202,35 +202,35 @@ Correct answer: **EDR**. EDR provides continuous telemetry recording with forens
 
 #### Trap 2: FDE and Physical Theft
 
-"A laptop with full disk encryption is reported stolen. The encryption key is managed by the TPM on the laptop. Is the data at risk?"
+A laptop with full disk encryption is reported stolen. The encryption key is managed by the TPM on the laptop. Is the data at risk?
 
 Correct answer: No — the data is protected. The TPM on the stolen laptop will not release the key without the correct boot chain and PIN (if configured). If the attacker removes the drive and inserts it in another system, the TPM is absent and the drive remains encrypted.
 
-"A laptop is stolen. It uses a self-encrypting drive with factory default key configuration. Is the data at risk?"
+A laptop is stolen. It uses a self-encrypting drive with factory default key configuration. Is the data at risk?
 
 Correct answer: Yes — without a user-defined key or credential, the SED offers no real protection.
 
 #### Trap 3: Allowlisting vs. Blacklisting
 
-"An organization in an ICS environment wants to ensure that no unauthorized software can execute, including zero-day malware."
+An organization in an ICS environment wants to ensure that no unauthorized software can execute, including zero-day malware.
 
 Correct answer: **application allowlisting**. Blacklisting cannot block unknown malware. Allowlisting blocks anything not approved — including zero-days.
 
 #### Trap 4: MDM vs. MAM for BYOD
 
-"Employees want to use personal smartphones to access corporate email. The organization wants to protect corporate data but cannot mandate full control over personal devices."
+Employees want to use personal smartphones to access corporate email. The organization wants to protect corporate data but cannot mandate full control over personal devices.
 
 Correct answer: **MAM** (Mobile Application Management). MDM manages the full device; MAM manages only the corporate application container — appropriate for personal device scenarios.
 
 #### Trap 5: Patch Priority
 
-"A new vulnerability is published with a CVSS score of 6.5 (Medium). The same day, an older vulnerability with a CVSS of 5.2 (Medium) is added to the CISA KEV catalog. Which should be patched first?"
+A new vulnerability is published with a CVSS score of 6.5 (Medium). The same day, an older vulnerability with a CVSS of 5.2 (Medium) is added to the CISA KEV catalog. Which should be patched first?
 
 Correct answer: **the KEV catalog vulnerability** — because active exploitation in the wild is a higher practical risk indicator than CVSS score alone. CVSS measures severity in theory; the KEV catalog means attackers are exploiting it now.
 
 #### Trap 6: Host Firewall vs. Network Firewall
 
-"An employee connects their laptop to a hotel Wi-Fi network and needs to be protected from other devices on the same network."
+An employee connects their laptop to a hotel Wi-Fi network and needs to be protected from other devices on the same network.
 
 Correct answer: **host-based firewall**. The corporate network firewall provides no protection when the device is on an external network. The host-based firewall travels with the device.
 

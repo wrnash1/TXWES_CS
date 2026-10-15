@@ -1,5 +1,23 @@
 # Video Script: Module 02 – Project Lifecycle and Process Groups
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Google Career Certificates &bull; IT Project Management &bull; Module 02</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" title="Google Career Certificates &bull; IT Project Management" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Google Career Certificates &bull; IT Project Management</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3310 IT Project Management
 **Estimated Duration:** 23 minutes
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
@@ -7,13 +25,12 @@
 
 ---
 
-## Section 1: Welcome and Module Roadmap [00:00 – 03:30]
-
+## Section 1: Welcome and Module Roadmap
 Welcome back, everyone. This is Module 02 of CIS-3310 IT Project Management. I am Professor Nash, and today we go deeper into the PMI framework by examining the project lifecycle and all five Process Groups in detail.
 
 If Module 01 was about understanding what a project is, Module 02 is about understanding how a project progresses. We will cover how the five Process Groups interact, what the critical outputs of each group are, and how lifecycle models differ for different types of IT projects.
 
-[SHOW SLIDE] Module 02 title card: "Project Lifecycle and Process Groups"
+ Module 02 title card: "Project Lifecycle and Process Groups
 
 Today's four sections:
 
@@ -23,9 +40,8 @@ Let's begin.
 
 ---
 
-## Section 2: Lifecycle vs. Process Groups — The Critical Distinction [03:30 – 08:30]
-
-[SHOW SLIDE] Side-by-side table: Project Lifecycle vs. Process Groups
+## Section 2: Lifecycle vs. Process Groups — The Critical Distinction
+ Side-by-side table: Project Lifecycle vs. Process Groups
 
 I want to start here because this is the number-one source of confusion for students and a very common exam trap.
 
@@ -35,15 +51,14 @@ Process Groups, by contrast, are a universal management framework that PMI appli
 
 Here is the key insight: Process Groups do not map one-to-one to phases. In a multi-phase project, each phase typically has its own Initiating, Planning, and Closing activities. And Monitoring and Controlling does not happen at the end — it runs in parallel with Executing from the moment work begins.
 
-[SHOW SLIDE] Multi-phase project diagram showing Process Groups repeating within each phase
+ Multi-phase project diagram showing Process Groups repeating within each phase
 
 > **Project+ Exam Tip:** If an exam question asks "which comes last — Executing or Monitoring and Controlling?" the answer is that they run in parallel, and Closing is the final Process Group. Many students incorrectly say Monitoring and Controlling is last.
 
 ---
 
-## Section 3: The Five Process Groups in Depth [08:30 – 16:00]
-
-[SHOW SLIDE] Five Process Groups — overlapping circles with M&C spanning the middle
+## Section 3: The Five Process Groups in Depth
+ Five Process Groups — overlapping circles with M&C spanning the middle
 
 Let me walk through each Process Group, its purpose, and its most important outputs.
 
@@ -56,7 +71,7 @@ Key outputs:
 - Project Charter — authorizes the project and names the PM
 - Stakeholder Register — identifies all stakeholders
 
-The charter is signed by the project sponsor, not the PM. Initiating answers the question: "Do we have permission to do this project?"
+The charter is signed by the project sponsor, not the PM. Initiating answers the question: "Do we have permission to do this project?
 
 ### Planning
 
@@ -91,7 +106,7 @@ Purpose: track performance, identify variances, and take corrective or preventiv
 
 Key activities: monitoring project performance against baselines, performing integrated change control, validating and controlling scope, controlling the schedule and cost, monitoring risk and communications.
 
-[SHOW SLIDE] M&C running in parallel with Executing diagram
+ M&C running in parallel with Executing diagram
 
 This Process Group is unique because it runs continuously throughout the project, not just at a specific time. While the team is executing work, the PM is simultaneously monitoring and controlling.
 
@@ -109,9 +124,8 @@ The Closing Process Group produces the Lessons Learned Register — the organiza
 
 ---
 
-## Section 4: Project Lifecycle Models [16:00 – 19:30]
-
-[SHOW SLIDE] Predictive vs. Adaptive lifecycle comparison table
+## Section 4: Project Lifecycle Models
+ Predictive vs. Adaptive lifecycle comparison table
 
 Not all projects use the same lifecycle structure. PMI recognizes three primary lifecycle types.
 
@@ -135,9 +149,8 @@ Best for: software development projects with rapidly changing requirements and h
 
 ---
 
-## Section 5: The Project Charter in Depth [19:30 – 22:00]
-
-[SHOW SLIDE] Project Charter components diagram
+## Section 5: The Project Charter in Depth
+ Project Charter components diagram
 
 The Project Charter is the single most tested document in the Initiating Process Group, so let me walk through every component.
 
@@ -151,8 +164,7 @@ The charter serves three functions: it formally authorizes the project, it names
 
 ---
 
-## End Card [22:00 – 23:00]
-
+## End Card
 That is Module 02. Here is your assignment list before Module 03.
 
 Complete the Module 02 Reading Guide, which expands on the Process Groups and introduces the Stakeholder Register in detail. Complete the Module 02 Lab, where you will write a full Project Charter for a server migration scenario. Take the Module 02 Quiz. Post your Module 02 Discussion initial response by Wednesday at 11:59 PM.

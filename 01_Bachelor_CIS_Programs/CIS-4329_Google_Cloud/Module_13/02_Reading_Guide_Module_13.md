@@ -456,8 +456,6 @@ Hands-on lab demonstrating a complete CI/CD pipeline using Cloud Build for the C
 <https://cloud.google.com/artifact-registry/docs/overview>
 Overview of Artifact Registry covering supported artifact formats (Docker, Maven, npm, Python), repository creation, cleanup policies, Container Analysis vulnerability scanning integration, and the image URL format used in Cloud Build and Cloud Run deployments.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Learning Objectives
+## Opening and Learning Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -27,8 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-**[INSTRUCTOR ON CAMERA — title card: "Module 01: Cloud Computing Concepts"]**
-
 Welcome to CIS-4331 Azure Cloud. I am Professor Nash, and this is Module 01, where we lay the entire foundation for everything that follows in this course and on the AZ-900 certification exam.
 
 Before we look at a single Azure service, we need to understand *why cloud computing exists*, what problem it solves, and the vocabulary that Microsoft expects you to command on exam day. The AZ-900 domain called "Describe Cloud Concepts" accounts for roughly 25 to 30 percent of your exam score. If you master this module, you start your exam with a significant head start.
@@ -45,7 +43,7 @@ Let's get started.
 
 ---
 
-## [01:30 - 04:30] What Is Cloud Computing?
+## What Is Cloud Computing?
 
 **[SLIDE: "Cloud Computing Definition"]**
 
@@ -75,7 +73,7 @@ Microsoft identifies several core benefits that AZ-900 tests specifically. Let m
 
 ---
 
-## [04:30 - 08:30] Service Models: IaaS, PaaS, and SaaS
+## Service Models: IaaS, PaaS, and SaaS
 
 **[SLIDE: "The Three Cloud Service Models"]**
 
@@ -122,7 +120,7 @@ The key question to ask yourself: does the scenario mention managing an OS? If y
 
 ---
 
-## [08:30 - 11:30] Deployment Models: Public, Private, and Hybrid Cloud
+## Deployment Models: Public, Private, and Hybrid Cloud
 
 **[SLIDE: "Cloud Deployment Models"]**
 
@@ -140,7 +138,7 @@ AZ-900 sometimes asks whether "on-premises data center" is the same as "private 
 
 ---
 
-## [11:30 - 15:30] The Shared Responsibility Model
+## The Shared Responsibility Model
 
 **[SHOW PORTAL — navigate to learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility]**
 
@@ -162,7 +160,7 @@ This framework is critical because it defines accountability. When a breach occu
 
 ---
 
-## [15:30 - 18:30] CAPEX vs. OPEX and the Cloud Economics Model
+## CAPEX vs. OPEX and the Cloud Economics Model
 
 **[SLIDE: "Capital Expenditure vs. Operational Expenditure"]**
 
@@ -187,7 +185,7 @@ AZ-900 occasionally tests awareness of Reserved Instances. If you know you will 
 
 ---
 
-## [18:30 - 21:00] Putting It Together — Scenario Walkthroughs
+## Putting It Together — Scenario Walkthroughs
 
 **[SLIDE: "Scenario Practice"]**
 
@@ -207,7 +205,7 @@ The answer is **SaaS**. The signal is "without managing any servers, operating s
 
 ---
 
-## [21:00 - 23:30] Lab Preview and Exam Alignment
+## Lab Preview and Exam Alignment
 
 **[SLIDE: "This Week's Lab"]**
 
@@ -221,9 +219,7 @@ The AZ-900 "Describe Cloud Concepts" domain covers everything in this module plu
 
 ---
 
-## [23:30 - 24:00] Closing
-
-**[INSTRUCTOR ON CAMERA]**
+## Closing
 
 That wraps up Module 01. You now have the vocabulary and conceptual framework to speak confidently about cloud computing, and you have the analytical tools to classify service models and deployment models on the AZ-900 exam.
 

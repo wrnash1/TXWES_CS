@@ -1,5 +1,23 @@
 # Video Script: Module 03 - Requirements Elicitation Techniques
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture &bull; Module 03</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=UI6lqHOVHic" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/UI6lqHOVHic" title="Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3312 Systems Analysis and Design
 **Estimated Duration:** 23 minutes
 **Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
@@ -7,11 +25,8 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 - 03:30]
-
+## Section 1: Welcome and Module Overview
 Welcome to Module 03. I am Professor Nash, and today we are moving from planning into action. This module covers Requirements Elicitation Techniques, which maps to BABOK Knowledge Area 4: Elicitation and Collaboration.
-
-[SHOW DIAGRAM: Title slide — "Module 03: Requirements Elicitation Techniques" with BABOK KA 4 label and IIBA ECBA badge]
 
 Elicitation is where the BA actually gathers information from stakeholders. It is the most visible part of a BA's job — interviews, workshops, document reviews, observing people at work. But there is a lot of nuance here that the ECBA exam tests heavily. Not every technique works in every situation. Choosing the wrong technique wastes time, produces incomplete information, and frustrates stakeholders.
 
@@ -19,13 +34,11 @@ Here is our roadmap for today. We will cover the eight most tested elicitation t
 
 ---
 
-## Section 2: The Eight Core Elicitation Techniques [03:30 - 13:30]
-
-[SHOW DIAGRAM: Eight-cell grid with one technique per cell — Interview, Workshop, Survey/Questionnaire, Observation, Document Analysis, Prototyping, Focus Group, Brainstorming — each with a one-line description and a best-use icon]
+## Section 2: The Eight Core Elicitation Techniques
 
 Let me walk through each technique.
 
-Interviews are the BA's most fundamental tool. A structured interview follows a pre-planned set of questions in a fixed order — good for collecting consistent data across many stakeholders. An unstructured interview is more conversational — good for exploring new topics or complex processes where you do not yet know what questions to ask. The risk with interviews is that stakeholders sometimes describe how things should work rather than how they actually work. Always follow up by asking "Can you walk me through a specific recent example?"
+Interviews are the BA's most fundamental tool. A structured interview follows a pre-planned set of questions in a fixed order — good for collecting consistent data across many stakeholders. An unstructured interview is more conversational — good for exploring new topics or complex processes where you do not yet know what questions to ask. The risk with interviews is that stakeholders sometimes describe how things should work rather than how they actually work. Always follow up by asking "Can you walk me through a specific recent example?
 
 Facilitated workshops bring multiple stakeholders together in the same room — or virtual session — to elicit, discuss, and reach consensus on requirements simultaneously. JAD sessions (Joint Application Development) are a specific workshop format used in traditional SDLC contexts. The advantage is efficiency: in a two-day workshop you can accomplish what might take weeks of individual interviews. The risk is group dynamics — dominant personalities can suppress quieter stakeholders' input. The BA must actively facilitate to ensure all voices are heard.
 
@@ -45,11 +58,8 @@ Brainstorming is a structured creativity technique used to generate a large volu
 
 ---
 
-## Section 3: Choosing the Right Technique [13:30 - 17:30]
-
+## Section 3: Choosing the Right Technique
 Choosing the right technique depends on four factors: the nature of the knowledge you need to capture, the number and availability of stakeholders, the budget and timeline, and the current stage of the project.
-
-[SHOW DIAGRAM: Technique Selection Matrix — rows: Interview, Workshop, Survey, Observation, Document Analysis, Prototyping, Focus Group, Brainstorming; columns: Best for Tacit Knowledge, Best for Large Groups, Best for Consensus, Best for Early Exploration; cells with checkmarks where applicable]
 
 For deep, complex knowledge from a small number of expert stakeholders, use interviews. For cross-departmental consensus on shared requirements, use workshops. For broad input from hundreds of people, use surveys. For undocumented procedural or tacit knowledge, use observation. For understanding the current state without interrupting stakeholders, start with document analysis as preparation.
 
@@ -57,11 +67,8 @@ One important point: elicitation techniques are rarely used in isolation. A prof
 
 ---
 
-## Section 4: Elicitation vs. Confirmation of Results [17:30 - 20:30]
-
+## Section 4: Elicitation vs. Confirmation of Results
 BABOK KA 4 contains two distinct stages: elicitation activities and confirmation of elicitation results.
-
-[SHOW DIAGRAM: Two-step process diagram — Step 1 box: "Conduct Elicitation" with output arrow to "Raw Elicitation Output (notes, recordings, sketches)"; Step 2 box: "Confirm Elicitation Results" with output arrow to "Confirmed Elicitation Results (stakeholder-validated)"]
 
 Raw elicitation output — interview notes, workshop whiteboards, observation field notes — is not the same as confirmed requirements. The BA must go back to stakeholders and verify that the captured information accurately represents what they communicated. This confirmation step catches two types of errors: BA misunderstandings (the BA misinterpreted what the stakeholder said) and stakeholder recollection gaps (a detail was missed or mis-stated during the session).
 
@@ -71,8 +78,7 @@ Both types introduce defects into requirements if not caught here. A defect foun
 
 ---
 
-## Section 5: Lab Preview and Closing [20:30 - 23:00]
-
+## Section 5: Lab Preview and Closing
 This week's lab gives you a realistic elicitation planning scenario. You will be given a project case study and asked to select the most appropriate technique for six different information-gathering situations, justify each choice, and write five interview questions for one of the stakeholders.
 
 Three closing exam reminders. First: know all eight techniques and be able to match each to the scenario that calls for it. Second: observation is the go-to answer for tacit knowledge and undocumented processes. Third: confirmation of elicitation results is a required step before analysis begins — never skip it on an exam question.

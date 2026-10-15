@@ -32,8 +32,6 @@
 
 Welcome back to CIS-3322 Advanced Networking. I'm Professor Nash. Module 11 covers two services that every IP network depends on: DHCP — the Dynamic Host Configuration Protocol — and DNS — the Domain Name System.
 
-[SHOW SLIDE: "Module 11 — DHCP and DNS Configuration"]
-
 DHCP automates IP address assignment so that administrators do not manually configure every device on the network. DNS translates human-readable hostnames into IP addresses so users can type names instead of memorizing numbers. These two services are so fundamental that a network without them is nearly unusable, regardless of how well-designed the routing and switching infrastructure might be.
 
 By the end of this module you will be able to:
@@ -58,8 +56,6 @@ Let's start with DHCP.
 
 ## Section 1: DHCP Fundamentals (1:30–4:00)
 
-[SHOW SLIDE: "DHCP — The DORA Process"]
-
 DHCP uses a four-message exchange to assign an IP address to a client. The process is called DORA:
 
 **Discover**: the client broadcasts to find a DHCP server. Source 0.0.0.0, destination 255.255.255.255.
@@ -70,8 +66,6 @@ DHCP uses a four-message exchange to assign an IP address to a client. The proce
 
 **Acknowledge**: the server confirms the assignment and provides the full configuration: IP address, subnet mask, default gateway, DNS server, and lease time.
 
-[SHOW SLIDE: "DORA Packet Flow Diagram"]
-
 Because DHCP Discover and Request are broadcasts, they do not cross router boundaries by default. This is why each subnet typically needs either a local DHCP server or a relay agent — also called a DHCP helper — to forward DHCP broadcasts to a centralized server.
 
 [PAUSE — 3 seconds]
@@ -79,8 +73,6 @@ Because DHCP Discover and Request are broadcasts, they do not cross router bound
 ---
 
 ## Section 2: Cisco IOS DHCP Server Configuration (4:00–8:00)
-
-[SHOW SLIDE: "Cisco DHCP Server — Pool Configuration"]
 
 Cisco IOS routers can function as DHCP servers. The configuration centers on defining one or more DHCP pools, each representing a subnet's address allocation.
 
@@ -103,8 +95,6 @@ Router(dhcp-config)# domain-name txwes.edu
 Router(dhcp-config)# lease 7
 ```
 
-[SHOW SLIDE: "DHCP Pool Parameters Explained"]
-
 The `network` command defines which subnet this pool serves. `default-router` is the gateway IP sent to clients. `dns-server` specifies one or more DNS server addresses. `domain-name` sets the DNS search domain appended to unqualified hostnames. `lease` sets the duration in days (default is 1 day).
 
 Verification commands:
@@ -123,8 +113,6 @@ Router# show ip dhcp conflict
 
 ## Section 3: DHCP Relay Agent (8:00–11:00)
 
-[SHOW SLIDE: "DHCP Relay — ip helper-address"]
-
 When a DHCP server serves multiple subnets, you need a relay agent on each subnet's gateway router to forward DHCP broadcasts to the server. The Cisco IOS command is `ip helper-address`.
 
 [SHOW TOPOLOGY: Three subnets. Central DHCP server at 10.0.0.5. R1 Gi0/0 connected to 192.168.1.0/24. R1 Gi0/1 connected to 192.168.2.0/24. DHCP server on separate segment.]
@@ -140,15 +128,11 @@ When a DHCP Discover broadcast arrives on Gi0/0, the router converts it from a b
 
 The server responds directly to the relay agent, which then delivers the Offer back to the client subnet.
 
-[SHOW SLIDE: "ip helper-address Details"]
-
 `ip helper-address` by default forwards eight UDP broadcast services, not just DHCP. It also forwards DNS (53), TFTP (69), time (37), NetBIOS name service (137), NetBIOS datagram service (138), and a few others. If you want to restrict it to DHCP only, you can configure `no ip forward-protocol` for each unwanted service, but for most environments the default forwarding is acceptable.
 
 ---
 
 ## Section 4: DHCP Snooping (11:00–13:30)
-
-[SHOW SLIDE: "DHCP Snooping — Preventing Rogue DHCP Servers"]
 
 DHCP snooping is a Layer 2 security feature on Cisco switches that prevents rogue DHCP servers from handing out invalid IP configurations to clients. Without snooping, any device on the network could respond to DHCP Discover messages — sending clients incorrect gateways for man-in-the-middle attacks.
 
@@ -168,15 +152,11 @@ Switch(config-if)# ip dhcp snooping trust
 
 All other ports default to untrusted after enabling snooping.
 
-[SHOW SLIDE: "DHCP Snooping Binding Table"]
-
 DHCP snooping builds a binding table mapping client MAC addresses to their assigned IP addresses and switch port. This table is used by downstream security features like Dynamic ARP Inspection (DAI) and IP Source Guard.
 
 ---
 
 ## Section 5: DNS Resolution Process (13:30–17:00)
-
-[SHOW SLIDE: "DNS Resolution — Step by Step"]
 
 The Domain Name System translates fully qualified domain names (FQDNs) into IP addresses. Here is the step-by-step resolution process for a client querying `www.example.com`:
 
@@ -194,8 +174,6 @@ The Domain Name System translates fully qualified domain names (FQDNs) into IP a
 
 **Step 7**: The resolver caches the result and returns it to the client. The client connects to the resolved IP address.
 
-[SHOW SLIDE: "DNS Record Types"]
-
 Common DNS record types tested on the CCNA:
 
 | Record Type | Purpose                                           |
@@ -211,8 +189,6 @@ Common DNS record types tested on the CCNA:
 
 ## Section 6: Split-Horizon DNS (17:00–19:00)
 
-[SHOW SLIDE: "Split-Horizon DNS — Two Views of the Same Name"]
-
 Split-horizon DNS, also called split-brain DNS, provides different DNS responses to queries depending on the source of the query. Internal clients get the internal IP address of a resource. External clients get the public IP address.
 
 Example: a company hosts `mail.company.com`. Internally, the mail server is at 10.1.5.20. Externally, the public IP is 203.0.113.20.
@@ -222,15 +198,11 @@ With split-horizon DNS:
 - Internal clients querying `mail.company.com` receive 10.1.5.20 — they connect directly to the internal server without traversing NAT.
 - External clients querying `mail.company.com` receive 203.0.113.20 — they connect to the public IP which NAT forwards to the internal server.
 
-[SHOW SLIDE: "Why Split-Horizon DNS Matters"]
-
 Without split-horizon DNS, internal clients querying a public DNS server would receive 203.0.113.20. Their traffic would exit to the router's outside interface, hit NAT, and either fail (if hairpin NAT is not configured) or take a suboptimal path back to the internal server. Split-horizon eliminates this by ensuring internal clients always get the optimal (internal) path.
 
 ---
 
 ## Section 7: DHCP and DNS Troubleshooting (19:00–21:30)
-
-[SHOW SLIDE: "DHCP Troubleshooting Commands"]
 
 Key DHCP troubleshooting commands on a Cisco IOS router:
 
@@ -245,8 +217,6 @@ Router# debug ip dhcp server events
 
 `debug ip dhcp server events` shows the DISCOVER, OFFER, REQUEST, and ACK message exchange in real time. This is invaluable when a client claims it is not receiving an offer.
 
-[SHOW SLIDE: "DNS Troubleshooting — nslookup and ping"]
-
 Key DNS troubleshooting steps:
 
 - `nslookup <hostname>` from a client — resolves a name and shows which DNS server answered
@@ -259,8 +229,6 @@ Key DNS troubleshooting steps:
 ---
 
 ## Conclusion (21:30–23:00)
-
-[SHOW SLIDE: "Module 11 Summary"]
 
 Let's wrap up Module 11. Today you learned:
 
@@ -277,8 +245,6 @@ Let's wrap up Module 11. Today you learned:
 - Split-horizon DNS provides different responses to internal and external clients
 
 - Troubleshoot with `show ip dhcp binding`, `debug ip dhcp server events`, and nslookup
-
-[SHOW SLIDE: "CCNA Exam Focus Areas"]
 
 For the exam: know the ip helper-address command, the DORA process, DHCP snooping trusted/untrusted port distinction, and the DNS resolution sequence. These all appear frequently in scenario-based questions.
 

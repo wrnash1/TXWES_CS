@@ -14,7 +14,7 @@ This lab develops your ability to analyze financial ERP scenarios, map financial
 
 **Estimated Time:** 90 minutes
 
-**Submission:** Upload to Canvas under "Lab 05 — Financial Management Modules."
+**Submission:** Upload to Canvas under "Lab 05 — Financial Management Modules.
 
 ---
 
@@ -183,7 +183,7 @@ Crestview's Controller tells you that before SAP, the month-end close required 1
 
 1. Compile all responses into a single document.
 2. Name your file: `Lab05_LastName_FirstName.pdf`
-3. Upload to Canvas under "Lab 05 — Financial Management Modules."
+3. Upload to Canvas under "Lab 05 — Financial Management Modules.
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
 
 ---

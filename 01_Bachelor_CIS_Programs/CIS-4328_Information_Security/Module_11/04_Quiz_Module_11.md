@@ -146,7 +146,7 @@ D) Notification is only required if the encrypted data was exfiltrated outside t
 
 ## Question 7
 
-During a post-incident review, the IR manager asks: "We first detected this incident on Day 14. The earliest evidence in our logs shows the attacker was present on Day 1. What does the gap between Day 1 and Day 14 represent?"
+During a post-incident review, the IR manager asks: "We first detected this incident on Day 14. The earliest evidence in our logs shows the attacker was present on Day 1. What does the gap between Day 1 and Day 14 represent?
 
 A) The recovery window
 

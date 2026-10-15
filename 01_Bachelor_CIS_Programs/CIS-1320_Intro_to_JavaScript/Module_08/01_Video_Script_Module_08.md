@@ -26,21 +26,17 @@
 
 ---
 
-## [00:00 – 01:00] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 08 | Arrays and Array Methods | CIS-1320"]**
+Module 08 is about arrays. You have already seen arrays used as property values in objects and as the return type of `Object.keys()`. Now we go deep. Arrays are ordered, indexed collections — the most common data structure in JavaScript programs. Nearly every real application processes arrays: lists of users, search results, shopping cart items, chart data points.
 
-"Module 08 is about arrays. You have already seen arrays used as property values in objects and as the return type of `Object.keys()`. Now we go deep. Arrays are ordered, indexed collections — the most common data structure in JavaScript programs. Nearly every real application processes arrays: lists of users, search results, shopping cart items, chart data points.
-
-JavaScript arrays come with a rich set of built-in methods. We will cover the core set: `push`, `pop`, `shift`, `unshift`, `splice`, `slice`, `indexOf`, `includes`, and then the three most powerful higher-order methods — `map`, `filter`, and `reduce`. We will also cover the spread operator and array destructuring. Let us start with the fundamentals."
+JavaScript arrays come with a rich set of built-in methods. We will cover the core set: `push`, `pop`, `shift`, `unshift`, `splice`, `slice`, `indexOf`, `includes`, and then the three most powerful higher-order methods — `map`, `filter`, and `reduce`. We will also cover the spread operator and array destructuring. Let us start with the fundamentals.
 
 ---
 
-## [01:00 – 05:00] Part 1 — Array Basics
+## Part 1 — Array Basics
 
-**[SHOW SLIDE: "Array Fundamentals"]**
-
-"An array is created with square brackets and contains comma-separated values:
+An array is created with square brackets and contains comma-separated values:
 
 ```javascript
 const fruits = ['apple', 'banana', 'cherry'];
@@ -55,8 +51,6 @@ console.log(fruits[2]);   // 'cherry'
 console.log(fruits[3]);   // undefined — out of bounds, no error
 ```
 
-**[DEMO]**
-
 ```javascript
 const nums = [10, 20, 30, 40, 50];
 
@@ -65,8 +59,6 @@ console.log('Last element:', nums[nums.length - 1]);   // 50
 ```
 
 `nums.length - 1` is the standard idiom for the last index. It adapts automatically when the array changes.
-
-[PAUSE]
 
 **Mutating methods — these change the original array:**
 
@@ -86,8 +78,6 @@ console.log(first, stack);   // 'z' ['a', 'b']
 ```
 
 `push`/`pop` work at the end — think of a stack. `unshift`/`shift` work at the beginning — they are slower on large arrays because every element must be re-indexed.
-
-[PAUSE]
 
 **`splice` — insert, remove, or replace at any position:**
 
@@ -115,17 +105,13 @@ console.log(portion);   // [2, 3, 4]
 console.log(arr);       // [1, 2, 3, 4, 5] — unchanged
 ```
 
-`splice` modifies; `slice` does not. Know this distinction."
+`splice` modifies; `slice` does not. Know this distinction.
 
 ---
 
-## [05:00 – 08:00] Part 2 — Searching and Checking
+## Part 2 — Searching and Checking
 
-**[SHOW SLIDE: "Searching Arrays"]**
-
-"**`indexOf`** returns the index of the first occurrence of a value, or `-1` if not found:
-
-**[DEMO]**
+**`indexOf`** returns the index of the first occurrence of a value, or `-1` if not found:
 
 ```javascript
 const colors = ['red', 'green', 'blue', 'green'];
@@ -146,8 +132,6 @@ console.log(colors.includes('purple')); // false
 
 Use `includes` when you need a yes/no answer. Use `indexOf` when you need the position.
 
-[PAUSE]
-
 **`find` and `findIndex`** — search by condition (covered more in Module 09, but introduced here):
 
 ```javascript
@@ -161,8 +145,6 @@ console.log(firstPassingIndex);   // 2
 ```
 
 `find` returns the first element that satisfies the callback. `findIndex` returns its index. Both return `undefined` / `-1` if nothing matches.
-
-[PAUSE]
 
 **`join`** — convert array to string:
 
@@ -181,19 +163,15 @@ nums.sort((a, b) => a - b);   // ascending numeric sort
 console.log(nums);             // [1, 1, 2, 3, 4, 5, 6, 9]
 ```
 
-The comparator `(a, b) => a - b` returns negative when `a` should come first, positive when `b` should come first. Without a comparator, `sort` converts elements to strings and sorts lexicographically — `[10, 9, 2]` would sort as `[10, 2, 9]` because `'10'` comes before `'2'` in Unicode."
+The comparator `(a, b) => a - b` returns negative when `a` should come first, positive when `b` should come first. Without a comparator, `sort` converts elements to strings and sorts lexicographically — `[10, 9, 2]` would sort as `[10, 2, 9]` because `'10'` comes before `'2'` in Unicode.
 
 ---
 
-## [08:00 – 14:00] Part 3 — `map`, `filter`, and `reduce`
+## Part 3 — `map`, `filter`, and `reduce`
 
-**[SHOW SLIDE: "Higher-Order Array Methods"]**
-
-"These three methods are the heart of functional-style JavaScript. They all accept a callback function and return a new array or value — they do not modify the original.
+These three methods are the heart of functional-style JavaScript. They all accept a callback function and return a new array or value — they do not modify the original.
 
 **`map`** transforms every element and returns a new array of the same length:
-
-**[DEMO]**
 
 ```javascript
 const prices = [10, 25, 50, 75];
@@ -210,8 +188,6 @@ const names = ['alice', 'bob', 'carol'];
 const capitalized = names.map(name => name[0].toUpperCase() + name.slice(1));
 console.log(capitalized);   // ['Alice', 'Bob', 'Carol']
 ```
-
-[PAUSE]
 
 **`filter`** tests every element with a predicate and returns a new array containing only the elements that pass:
 
@@ -235,8 +211,6 @@ const users = [
 const activeUsers = users.filter(user => user.active);
 console.log(activeUsers.map(u => u.name));   // ['Alice', 'Carol']
 ```
-
-[PAUSE]
 
 **`reduce`** accumulates all elements into a single value:
 
@@ -276,17 +250,13 @@ const counts = letters.reduce((acc, letter) => {
 console.log(counts);   // { a: 3, b: 2, c: 1 }
 ```
 
-`reduce` is the most general — it can implement `map` and `filter`, but `map` and `filter` are more readable for their specific cases."
+`reduce` is the most general — it can implement `map` and `filter`, but `map` and `filter` are more readable for their specific cases.
 
 ---
 
-## [14:00 – 17:00] Part 4 — Spread Operator and Array Destructuring
+## Part 4 — Spread Operator and Array Destructuring
 
-**[SHOW SLIDE: "Spread and Destructuring"]**
-
-"**The spread operator `...`** expands an array into individual elements:
-
-**[DEMO]**
+**The spread operator `...`** expands an array into individual elements:
 
 ```javascript
 const a = [1, 2, 3];
@@ -310,8 +280,6 @@ console.log(copy);   // [1, 2, 3, 99]
 const nums = [3, 1, 4, 1, 5];
 console.log(Math.max(...nums));   // 5 — spreads array as individual arguments
 ```
-
-[PAUSE]
 
 **Array destructuring** extracts elements by position:
 
@@ -350,11 +318,9 @@ console.log(a, b);   // 2, 1 — swapped without a temp variable
 
 ---
 
-## [17:00 – 18:30] Closing — Lab Preview
+## Closing — Lab Preview
 
-**[SHOW SLIDE: "Module 08 Lab Preview"]**
-
-"The Module 08 lab has four parts.
+The Module 08 lab has four parts.
 
 Part 1 covers the mutating methods — `push`, `pop`, `shift`, `unshift`, `splice` — and the non-mutating `slice`. You will verify which methods change the original and which do not.
 
@@ -364,7 +330,7 @@ Part 3 is the core of the module — `map`, `filter`, and `reduce`. You will imp
 
 Part 4 covers the spread operator and array destructuring, including the swap pattern.
 
-The quiz focuses heavily on `map`/`filter`/`reduce` return values and on `splice` vs `slice`. Read the reading guide before the lab. Good luck."
+The quiz focuses heavily on `map`/`filter`/`reduce` return values and on `splice` vs `slice`. Read the reading guide before the lab. Good luck.
 
 ---
 

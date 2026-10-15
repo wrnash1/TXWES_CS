@@ -22,7 +22,7 @@ TDD and BDD are discipline problems as much as they are technical problems. Ever
 
 ## Scenario A: The Test-First Resistance
 
-A Scrum team of six developers is adopting TDD for the first time. By Sprint 3, three developers are following the Red-Green-Refactor cycle consistently. The other three are writing tests after their implementation code — or not writing tests at all for "simple" methods. In the Sprint Retrospective, the three resisters argue: "TDD slows us down. We are missing Sprint goals because we spend too much time on tests before we even know if the feature design is right. We should write the code first, get it working, and then write tests to document what we built."
+A Scrum team of six developers is adopting TDD for the first time. By Sprint 3, three developers are following the Red-Green-Refactor cycle consistently. The other three are writing tests after their implementation code — or not writing tests at all for "simple" methods. In the Sprint Retrospective, the three resisters argue: "TDD slows us down. We are missing Sprint goals because we spend too much time on tests before we even know if the feature design is right. We should write the code first, get it working, and then write tests to document what we built.
 
 The Scrum Master asks the team to examine the evidence: in the last three Sprints, 70 percent of defects found during Sprint Review were in code written by developers who did not follow TDD. Code written TDD-style has required fewer bug fixes in subsequent Sprints. Story points completed per Sprint are slightly lower for TDD stories in the first two Sprints but equal by Sprint 3.
 
@@ -42,7 +42,7 @@ The Definition of Done is the correct mechanism to resolve this team disagreemen
 
 A product team at FinEdge is attempting BDD for the first time. The Product Owner writes acceptance criteria in user stories. A QA analyst writes Gherkin scenarios after reading the stories. Developers receive the Gherkin files and implement the features. At the Sprint Review, the Product Owner sees the demos and raises three issues: the interest calculation feature works correctly according to the test scenarios, but it calculates interest based on a 365-day year when the Product Owner expected a 360-day banking year; the early withdrawal scenario passes all tests but does not match how early withdrawal actually works in the target market; the error message for an invalid account number is technically tested but is not the message the compliance team approved.
 
-The QA analyst says: "All of my scenarios pass. This is a requirements problem, not a test problem." The Product Owner says: "This is a testing problem — the tests did not catch the real requirements." The Scrum Master says: "This is a collaboration problem."
+The QA analyst says: "All of my scenarios pass. This is a requirements problem, not a test problem." The Product Owner says: "This is a testing problem — the tests did not catch the real requirements." The Scrum Master says: "This is a collaboration problem.
 
 Who is right, and why? What does this scenario reveal about how BDD is supposed to work compared to how the team used it? What should have happened during Sprint refinement? Your post should be 175–225 words.
 
@@ -58,7 +58,7 @@ The passing tests are not wrong — they correctly test the behavior that was sp
 
 ## Scenario C: The Definition of Done Drift
 
-The Velocity team has a Definition of Done that includes: "Unit tests written," "Integration tests passing," "Code reviewed by one peer," and "CI pipeline green." In Sprint 7, the team is under pressure to deliver a major feature before a client demonstration. With two days left in the Sprint, two user stories are complete by all DoD criteria except the integration tests, which are failing because a dependency service is down in the test environment. The team lead says: "These features work — we tested them manually. The integration tests are failing because of the test environment, not our code. Let's ship them and fix the test environment next Sprint."
+The Velocity team has a Definition of Done that includes: "Unit tests written," "Integration tests passing," "Code reviewed by one peer," and "CI pipeline green." In Sprint 7, the team is under pressure to deliver a major feature before a client demonstration. With two days left in the Sprint, two user stories are complete by all DoD criteria except the integration tests, which are failing because a dependency service is down in the test environment. The team lead says: "These features work — we tested them manually. The integration tests are failing because of the test environment, not our code. Let's ship them and fix the test environment next Sprint.
 
 Three team members agree. Two team members object. The Scrum Master does not override the decision — the team votes to ship.
 
@@ -68,7 +68,7 @@ Analyze what went wrong from a TDD and Definition of Done perspective. What shou
 
 ### Sample Response — Scenario C
 
-The team made a decision they were not authorized to make — they unilaterally lowered the quality standard of their Definition of Done under deadline pressure. The Definition of Done is a Scrum artifact, and while the team owns it, it cannot be selectively suspended for individual Stories. A Story that does not meet the Definition of Done is not done. Shipping it anyway does not change the DoD — it creates undeclared technical debt with a warranty that "we think it works."
+The team made a decision they were not authorized to make — they unilaterally lowered the quality standard of their Definition of Done under deadline pressure. The Definition of Done is a Scrum artifact, and while the team owns it, it cannot be selectively suspended for individual Stories. A Story that does not meet the Definition of Done is not done. Shipping it anyway does not change the DoD — it creates undeclared technical debt with a warranty that "we think it works.
 
 The Scrum Master's error was framing the decision as the team's to make by vote. The Scrum Master is accountable for the Scrum Team's effectiveness, which includes protecting the validity of the DoD as a quality guarantee. The correct action was to clearly state that the Stories are not done, move them to the next Sprint, and help the team communicate to stakeholders that the demo scope is smaller than planned. That is a harder conversation than shipping — and it is the Scrum value of courage.
 

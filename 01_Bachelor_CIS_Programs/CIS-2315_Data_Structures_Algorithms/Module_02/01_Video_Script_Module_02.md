@@ -26,21 +26,17 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 02 | Singly and Doubly Linked Lists | CIS-2315"]**
+Module 01 gave you the tools to measure algorithmic quality. Now we start building data structures. A linked list is the simplest dynamic data structure — a sequence of nodes connected by references — and it teaches you the pointer manipulation skills that appear in trees, graphs, and almost every interview problem involving in-place modification.
 
-"Module 01 gave you the tools to measure algorithmic quality. Now we start building data structures. A linked list is the simplest dynamic data structure — a sequence of nodes connected by references — and it teaches you the pointer manipulation skills that appear in trees, graphs, and almost every interview problem involving in-place modification.
-
-By the end of this module, you will be able to implement both singly and doubly linked lists from scratch in Python, perform all standard operations, and apply the two-pointer technique to solve classic linked list interview problems. Let us start with the mental model."
+By the end of this module, you will be able to implement both singly and doubly linked lists from scratch in Python, perform all standard operations, and apply the two-pointer technique to solve classic linked list interview problems. Let us start with the mental model.
 
 ---
 
-## [01:30 – 05:30] Part 1 — The Linked List Mental Model
+## Part 1 — The Linked List Mental Model
 
-**[SHOW SLIDE: "Linked Lists vs Arrays"]**
-
-"An array stores elements in contiguous memory. You access element i in O(1) — just compute the address. The trade-off: inserting or deleting in the middle requires shifting, which is O(n).
+An array stores elements in contiguous memory. You access element i in O(1) — just compute the address. The trade-off: inserting or deleting in the middle requires shifting, which is O(n).
 
 A linked list stores elements in nodes scattered anywhere in memory. Each node holds a value and a reference to the next node.
 
@@ -49,10 +45,6 @@ A linked list stores elements in nodes scattered anywhere in memory. Each node h
 ```
 
 No contiguous memory. No O(1) index access — to reach the third element, you start at the head and follow two next pointers. That is O(n) access. The trade-off: inserting or deleting is O(1) once you have a pointer to the location — no shifting required.
-
-[PAUSE]
-
-**[DEMO — Node class in Python]**
 
 ```python
 class Node:
@@ -70,17 +62,13 @@ class SinglyLinkedList:
         self.size = 0
 ```
 
-Notice: there is no array, no pre-allocated memory. The list grows by creating new `Node` objects and linking them together."
+Notice: there is no array, no pre-allocated memory. The list grows by creating new `Node` objects and linking them together.
 
 ---
 
-## [05:30 – 10:00] Part 2 — Core Operations
+## Part 2 — Core Operations
 
-**[SHOW SLIDE: "Singly Linked List Operations"]**
-
-"The fundamental operations are: insert at head, insert at tail, delete by value, and search.
-
-**[DEMO]**
+The fundamental operations are: insert at head, insert at tail, delete by value, and search.
 
 ```python
 def prepend(self, value):
@@ -92,8 +80,6 @@ def prepend(self, value):
 ```
 
 Prepend is O(1) — no traversal needed. The key step: link the new node to the existing head before reassigning `self.head`. If you assign `self.head` first, you lose the reference to the rest of the list.
-
-[PAUSE]
 
 ```python
 def append(self, value):
@@ -111,8 +97,6 @@ def append(self, value):
 ```
 
 Append requires traversing to the tail: O(n). Adding a `self.tail` pointer makes this O(1) — we will add that shortly.
-
-[PAUSE]
 
 ```python
 def delete(self, value):
@@ -134,8 +118,6 @@ def delete(self, value):
 
 Deletion requires finding the node before the target so you can bypass it. This is O(n). The head special case is critical — always handle it explicitly.
 
-[PAUSE]
-
 ```python
 def to_list(self):
     # Convert to Python list for printing — O(n)
@@ -147,23 +129,19 @@ def to_list(self):
     return result
 ```
 
-The traversal pattern — `current = self.head; while current: ...; current = current.next` — appears in virtually every linked list operation. Internalize it."
+The traversal pattern — `current = self.head; while current: ...; current = current.next` — appears in virtually every linked list operation. Internalize it.
 
 ---
 
-## [10:00 – 13:30] Part 3 — Doubly Linked Lists
+## Part 3 — Doubly Linked Lists
 
-**[SHOW SLIDE: "Doubly Linked List"]**
-
-"A doubly linked list adds a `prev` pointer to each node, allowing traversal in both directions.
+A doubly linked list adds a `prev` pointer to each node, allowing traversal in both directions.
 
 ```text
 None ← [5 | prev | next] ↔ [12 | prev | next] ↔ [8 | prev | next] → None
 ```
 
 Each node has `prev` (pointing left) and `next` (pointing right). The list has both a `head` and a `tail` pointer.
-
-**[DEMO]**
 
 ```python
 class DNode:
@@ -204,15 +182,13 @@ class DoublyLinkedList:
         self.size -= 1
 ```
 
-`delete_node` is O(1) if you already have the node — no traversal. This is the key advantage of doubly linked lists: you can delete the current node without knowing the previous node."
+`delete_node` is O(1) if you already have the node — no traversal. This is the key advantage of doubly linked lists: you can delete the current node without knowing the previous node.
 
 ---
 
-## [13:30 – 17:30] Part 4 — Two-Pointer Technique
+## Part 4 — Two-Pointer Technique
 
-**[SHOW SLIDE: "Two Pointers on Linked Lists"]**
-
-"Two of the most common linked list interview problems are: detecting a cycle, and finding the middle node. Both use the same technique: two pointers moving at different speeds.
+Two of the most common linked list interview problems are: detecting a cycle, and finding the middle node. Both use the same technique: two pointers moving at different speeds.
 
 **Finding the middle node:**
 
@@ -227,8 +203,6 @@ def find_middle(head):
 ```
 
 When `fast` has traversed the full list, `slow` has traversed half. For a list of length 5, `fast` takes 2 full steps and hits the end; `slow` is at position 3 — the middle. This runs in O(n) time with O(1) space.
-
-[PAUSE]
 
 **Cycle detection (Floyd's algorithm):**
 
@@ -246,8 +220,6 @@ def has_cycle(head):
 
 If there is no cycle, `fast` will reach `None`. If there is a cycle, `fast` laps `slow` — they will meet at the same node. This is O(n) time and O(1) space — no visited set required.
 
-[PAUSE]
-
 **Reversing a linked list:**
 
 ```python
@@ -262,15 +234,13 @@ def reverse(head):
     return prev   # prev is now the new head
 ```
 
-Three-pointer technique: `prev`, `current`, `next_node`. Every reversal problem reduces to this pattern. The key: save `current.next` before overwriting it."
+Three-pointer technique: `prev`, `current`, `next_node`. Every reversal problem reduces to this pattern. The key: save `current.next` before overwriting it.
 
 ---
 
-## [17:30 – 20:30] Part 5 — Complexity Summary
+## Part 5 — Complexity Summary
 
-**[SHOW SLIDE: "Linked List Complexity"]**
-
-"Let me summarize the complexity of each operation. This is what you say in an interview.
+Let me summarize the complexity of each operation. This is what you say in an interview.
 
 | Operation | Singly (no tail) | Singly (with tail) | Doubly |
 |---|---|---|---|
@@ -284,19 +254,15 @@ Three-pointer technique: `prev`, `current`, `next_node`. Every reversal problem 
 
 Space: O(n) for n nodes.
 
-[PAUSE]
-
 The most important comparison: array vs linked list. Arrays give O(1) random access but O(n) insert/delete (shifting). Linked lists give O(n) access but O(1) insert/delete at a known position.
 
-When do you choose a linked list over an array? When you are frequently inserting or deleting and rarely need index access. In practice, Python lists dominate — but linked lists appear constantly in interviews because they test pointer manipulation skills."
+When do you choose a linked list over an array? When you are frequently inserting or deleting and rarely need index access. In practice, Python lists dominate — but linked lists appear constantly in interviews because they test pointer manipulation skills.
 
 ---
 
-## [20:30 – 22:00] Closing — Lab Preview
+## Closing — Lab Preview
 
-**[SHOW SLIDE: "Module 02 Lab Preview"]**
-
-"The Module 02 lab has three parts.
+The Module 02 lab has three parts.
 
 Part 1 has you implement a complete singly linked list with all standard operations and a tail pointer for O(1) appends.
 
@@ -304,7 +270,7 @@ Part 2 has you implement a doubly linked list and use it to build an LRU cache �
 
 Part 3 covers linked list interview patterns: reversing a list, finding the middle, detecting a cycle, and removing the nth node from the end.
 
-The quiz covers all operations and their complexities, the two-pointer technique, and array vs linked list trade-offs. Read the guide before the lab. Good luck."
+The quiz covers all operations and their complexities, the two-pointer technique, and array vs linked list trade-offs. Read the guide before the lab. Good luck.
 
 ---
 

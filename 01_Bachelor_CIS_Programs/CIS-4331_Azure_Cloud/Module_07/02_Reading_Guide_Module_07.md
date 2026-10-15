@@ -200,10 +200,10 @@ Slot settings can be "sticky" (slot-specific) or swapped with the slot. Connecti
 
 Scenario signals that indicate App Service is the correct answer:
 
-- "Host a web application without managing servers"
-- "Deploy a REST API with auto-scaling"
-- "Zero-downtime deployment for a web app"
-- "PaaS hosting for .NET / Java / Node.js / Python web app"
+- "Host a web application without managing servers
+- "Deploy a REST API with auto-scaling
+- "Zero-downtime deployment for a web app
+- "PaaS hosting for .NET / Java / Node.js / Python web app
 
 ---
 
@@ -239,11 +239,11 @@ Every Azure Function is triggered by a specific event type.
 
 Scenario signals for Azure Functions:
 
-- "Execute code in response to an event"
-- "Serverless" or "pay only when code runs"
-- "HTTP trigger / timer trigger / queue trigger"
-- "No infrastructure to manage"
-- "Short-lived code execution"
+- "Execute code in response to an event
+- "Serverless" or "pay only when code runs
+- "HTTP trigger / timer trigger / queue trigger
+- "No infrastructure to manage
+- "Short-lived code execution
 
 ---
 
@@ -306,11 +306,11 @@ The AKS control plane (Kubernetes master) is free — Microsoft manages and host
 
 Scenario signals for AKS:
 
-- "Container orchestration"
-- "Microservices with multiple containers"
-- "Auto-scale containers based on demand"
-- "Rolling deployment of containerized application"
-- "Managed Kubernetes"
+- "Container orchestration
+- "Microservices with multiple containers
+- "Auto-scale containers based on demand
+- "Rolling deployment of containerized application
+- "Managed Kubernetes
 
 ---
 
@@ -578,8 +578,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

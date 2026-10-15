@@ -32,8 +32,6 @@
 
 Welcome back to CIS-3322 Advanced Networking. I'm Professor Nash, and in Module 09 we are covering one of the most operationally critical topics on the CCNA exam: Access Control Lists, or ACLs.
 
-[SHOW SLIDE: "Module 09 — Access Control Lists"]
-
 ACLs are the primary packet-filtering mechanism on Cisco IOS routers and Layer 3 switches. They allow you to permit or deny traffic based on source address, destination address, protocol, and port number. Every enterprise network uses ACLs to enforce security policy at the network layer.
 
 By the end of this module you will be able to:
@@ -58,15 +56,11 @@ Let's start with the fundamentals.
 
 ## Section 1: ACL Processing Logic (1:30–4:00)
 
-[SHOW SLIDE: "ACL Fundamentals — Permit and Deny Logic"]
-
 An ACL is an ordered list of statements. When a packet arrives at an interface where an ACL is applied, the router tests the packet against each statement from top to bottom. The first match wins. If the packet matches a permit statement, it is forwarded. If it matches a deny statement, it is dropped. If no statement matches, the packet is dropped by the implicit deny any at the end of every ACL.
 
 That implicit deny is invisible — you will not see it in the running configuration — but it is always there.
 
-[SHOW SLIDE: "Implicit Deny — The Hidden Rule"]
-
-Think of ACL processing like a bouncer checking a list. The bouncer reads from the top. The first rule that fits the guest either lets them in or turns them away. Once a decision is made, the bouncer stops reading. That last invisible rule is "turn away anyone not on the list."
+Think of ACL processing like a bouncer checking a list. The bouncer reads from the top. The first rule that fits the guest either lets them in or turns them away. Once a decision is made, the bouncer stops reading. That last invisible rule is "turn away anyone not on the list.
 
 [PAUSE — 3 seconds]
 
@@ -83,8 +77,6 @@ ACLs can be applied to:
 ---
 
 ## Section 2: Standard ACLs (4:00–7:30)
-
-[SHOW SLIDE: "Standard ACLs — Number Range and Syntax"]
 
 Standard ACLs filter traffic based solely on the **source IP address**. They use access list numbers 1–99 and 1300–1999 in the expanded range.
 
@@ -108,8 +100,6 @@ Router(config)# access-list 10 permit 10.0.0.0 0.255.255.255
 
 The `0.255.255.255` is the wildcard mask. A zero bit means "must match." A one bit means "ignore." We will cover wildcard masks in detail shortly.
 
-[SHOW SLIDE: "Standard ACL Placement Rule"]
-
 **Critical placement rule for standard ACLs**: place them as close to the destination as possible. Because standard ACLs filter only on source address, placing them close to the source could block traffic from that source to ALL destinations, not just the one you intend.
 
 [PAUSE — 3 seconds]
@@ -127,8 +117,6 @@ Named ACLs allow you to delete individual lines using sequence numbers, which is
 ---
 
 ## Section 3: Extended ACLs (7:30–11:00)
-
-[SHOW SLIDE: "Extended ACLs — Number Range and Syntax"]
 
 Extended ACLs filter on multiple fields simultaneously:
 
@@ -163,8 +151,6 @@ Router(config)# access-list 110 deny tcp any 10.0.0.0 0.255.255.255 eq 23
 Router(config)# access-list 110 permit ip any any
 ```
 
-[SHOW SLIDE: "Extended ACL Placement Rule"]
-
 **Critical placement rule for extended ACLs**: place them as close to the source as possible. This drops unwanted traffic early before it consumes bandwidth traversing the network toward its destination.
 
 [PAUSE — 3 seconds]
@@ -183,8 +169,6 @@ Sequence numbers 10, 20, 30 allow you to insert a new rule between existing ones
 ---
 
 ## Section 4: Wildcard Masks (11:00–13:30)
-
-[SHOW SLIDE: "Wildcard Masks — Match and Ignore Bits"]
 
 Wildcard masks are the inverse of subnet masks in concept but they are used differently. Think of them as match masks:
 
@@ -208,15 +192,11 @@ The keywords `host` and `any` are useful shortcuts:
 
 - `any` is equivalent to `0.0.0.0 255.255.255.255`
 
-[SHOW SLIDE: "Non-Contiguous Wildcard Masks"]
-
 You can also write non-contiguous wildcard masks to match specific bit patterns across octets. These are less common on the CCNA but you should understand the concept because the exam occasionally presents scenarios that test whether you can read an unusual mask correctly.
 
 ---
 
 ## Section 5: Applying ACLs to Interfaces (13:30–15:30)
-
-[SHOW SLIDE: "ip access-group Command"]
 
 After creating an ACL, you must apply it to an interface to activate it. The command is `ip access-group`:
 
@@ -246,8 +226,6 @@ Note: `access-class` is used for VTY lines, not `access-group`. This is a freque
 
 ## Section 6: IPv6 ACLs (15:30–18:00)
 
-[SHOW SLIDE: "IPv6 ACLs — Key Differences"]
-
 IPv6 ACLs work differently from IPv4 ACLs in three important ways.
 
 First, all IPv6 ACLs are named. There are no numbered IPv6 ACLs.
@@ -267,8 +245,6 @@ Router(config)# interface GigabitEthernet0/0
 Router(config-if)# ipv6 traffic-filter BLOCK_TELNET_V6 in
 ```
 
-[SHOW SLIDE: "IPv6 NDP Implicit Permits"]
-
 If you write an IPv6 ACL that accidentally denies all ICMPv6, you will break IPv6 neighbor resolution. The network will appear to be down even though routing is configured correctly. Always remember the hidden NDP permit statements when troubleshooting IPv6 connectivity failures.
 
 [PAUSE — 3 seconds]
@@ -276,8 +252,6 @@ If you write an IPv6 ACL that accidentally denies all ICMPv6, you will break IPv
 ---
 
 ## Section 7: ACL Troubleshooting (18:00–21:30)
-
-[SHOW SLIDE: "ACL Troubleshooting Commands"]
 
 The most important verification and troubleshooting commands for ACLs are:
 
@@ -292,8 +266,6 @@ Router# debug ip packet detail
 `show access-lists` displays every configured ACL along with match counters showing how many packets matched each line. A counter incrementing when you expect a permit confirms that traffic is matching the correct rule.
 
 `show ip interface` shows which ACL is applied to each interface in each direction. Always verify this when troubleshooting to confirm the correct ACL is active in the correct direction.
-
-[SHOW SLIDE: "Top Five ACL Mistakes"]
 
 The most common ACL mistakes in production and on the CCNA exam:
 
@@ -319,8 +291,6 @@ Router# clear access-list counters 110
 
 ## Conclusion (21:30–23:00)
 
-[SHOW SLIDE: "Module 09 Summary"]
-
 Let's wrap up Module 09. Today you learned:
 
 - Standard ACLs filter on source IP only and should be placed close to the destination
@@ -334,8 +304,6 @@ Let's wrap up Module 09. Today you learned:
 - IPv6 ACLs are always named, applied with `ipv6 traffic-filter`, and include implicit NDP permit statements
 
 - Troubleshoot with `show access-lists` and `show ip interface`
-
-[SHOW SLIDE: "CCNA Exam Focus Areas"]
 
 For the CCNA exam, pay close attention to ACL placement rules, the implicit deny any, and the difference between `access-group` and `access-class`. These are consistently tested.
 

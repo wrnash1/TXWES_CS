@@ -58,7 +58,7 @@ D. A rule-based expert system that applies predefined criteria to both inputs
 - **A** is incorrect. While RNNs can process sequences, they do not provide the joint multimodal representation that enables simultaneous reasoning. Modern multimodal models use transformers, not RNNs.
 - **B** is correct. Cross-modal projection layers translate the output of vision encoders into the embedding space of the language model backbone, enabling the language model to attend to image content as if it were text tokens.
 - **C** is incorrect. Decision tree ensembles evaluate features independently or in combination but do not produce the joint semantic representations needed for language-vision reasoning.
-- **D** is incorrect. Rule-based systems use predefined logic, not learned representations. They do not qualify as AI models that "reason jointly."
+- **D** is incorrect. Rule-based systems use predefined logic, not learned representations. They do not qualify as AI models that "reason jointly.
 
 ---
 

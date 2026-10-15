@@ -26,19 +26,15 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 14 | Dynamic Programming Basics | CIS-2315"]**
-
-"Dynamic programming — DP for short — is the technique behind some of the most important interview questions in software engineering. Where greedy makes one locally optimal choice and moves on, DP systematically solves every subproblem and stores the results, combining them to solve the original problem. It applies when two properties hold: the problem has optimal substructure — the optimal solution to the problem contains optimal solutions to subproblems — and overlapping subproblems — the same subproblems arise repeatedly. This module covers the foundations: memoization versus tabulation, and four canonical DP problems — Fibonacci, Coin Change, House Robber, and Longest Common Subsequence."
+Dynamic programming — DP for short — is the technique behind some of the most important interview questions in software engineering. Where greedy makes one locally optimal choice and moves on, DP systematically solves every subproblem and stores the results, combining them to solve the original problem. It applies when two properties hold: the problem has optimal substructure — the optimal solution to the problem contains optimal solutions to subproblems — and overlapping subproblems — the same subproblems arise repeatedly. This module covers the foundations: memoization versus tabulation, and four canonical DP problems — Fibonacci, Coin Change, House Robber, and Longest Common Subsequence.
 
 ---
 
-## [01:30 – 06:00] Part 1 — What Makes a Problem DP
+## Part 1 — What Makes a Problem DP
 
-**[SHOW SLIDE: "Two Properties of Dynamic Programming"]**
-
-"Every DP problem has two properties.
+Every DP problem has two properties.
 
 **Property 1 — Optimal Substructure:** The optimal solution to the problem can be built from optimal solutions to its subproblems.
 
@@ -48,10 +44,6 @@ Example: the shortest path from A to C through B consists of the shortest path f
 
 Example: Fibonacci. `fib(5)` calls `fib(4)` and `fib(3)`. `fib(4)` calls `fib(3)` and `fib(2)`. `fib(3)` is computed multiple times. A pure divide-and-conquer algorithm (like merge sort) does NOT have overlapping subproblems — the subproblems are independent.
 
-[PAUSE]
-
-**[SHOW DIAGRAM: naive fib(5) recursion tree with duplicate nodes highlighted]**
-
 The naive recursive Fibonacci has exponential time — O(2^n) — because of this repeated work. DP eliminates it.
 
 There are two styles:
@@ -60,15 +52,13 @@ There are two styles:
 
 - **Tabulation (bottom-up):** Fill a table iteratively from the smallest subproblems to the largest. No recursion. No cache.
 
-Both styles give the same answer. Tabulation avoids Python's recursion depth limit (1000 by default) and is usually preferred for larger inputs."
+Both styles give the same answer. Tabulation avoids Python's recursion depth limit (1000 by default) and is usually preferred for larger inputs.
 
 ---
 
-## [06:00 – 11:00] Part 2 — Fibonacci and Coin Change
+## Part 2 — Fibonacci and Coin Change
 
-**[SHOW SLIDE: "Fibonacci — From O(2^n) to O(n)"]**
-
-"Let's start with Fibonacci.
+Let's start with Fibonacci.
 
 ```python
 # Naive recursive — O(2^n)
@@ -107,11 +97,7 @@ def fib_opt(n):
     return prev1
 ```
 
-**[DEMO: `fib_tab(6)` — fill the table: dp=[0,1,1,2,3,5,8]]**
-
-[PAUSE]
-
-**[SHOW SLIDE: \"Coin Change — LeetCode #322\"]**
+**]**
 
 \"Given coins of certain denominations and a target amount, return the minimum number of coins needed. Return -1 if impossible.
 
@@ -136,7 +122,7 @@ def coin_change(coins, amount):
     return dp[amount] if dp[amount] != float('inf') else -1
 ```
 
-**[DEMO: `coin_change([1,5,6,9], 11)` — trace the dp array]**
+**, 11)` — trace the dp array]**
 
 ```text
 coins=[1,5,6,9], amount=11
@@ -150,13 +136,11 @@ dp[10]: coin=1: dp[9]+1=2; coin=5: dp[5]+1=2 → dp[10]=2
 dp[11]: coin=1: dp[10]+1=3; coin=5: dp[6]+1=2; coin=6: dp[5]+1=2 → dp[11]=2
 ```
 
-Result: 2 coins (5+6 or 6+5). Greedy (largest coin first: 9+1+1 = 3) would give 3 coins — suboptimal.\""
+Result: 2 coins (5+6 or 6+5). Greedy (largest coin first: 9+1+1 = 3) would give 3 coins — suboptimal.\"
 
 ---
 
-## [11:00 – 16:00] Part 3 — Climbing Stairs and House Robber
-
-**[SHOW SLIDE: \"Climbing Stairs — LeetCode #70\"]**
+## Part 3 — Climbing Stairs and House Robber
 
 \"You can climb 1 or 2 stairs at a time. How many distinct ways to reach the nth stair?
 
@@ -177,11 +161,7 @@ def climb_stairs(n):
     return prev1
 ```
 
-**[DEMO: n=5 — dp=[1,2,3,5,8] → 8 ways]**
-
-[PAUSE]
-
-**[SHOW SLIDE: \"House Robber — LeetCode #198\"]**
+** → 8 ways]**
 
 \"You are a robber. Houses in a line, each with some money. You cannot rob two adjacent houses (alarm triggers). Maximize the total amount robbed.
 
@@ -207,7 +187,7 @@ def rob(nums):
     return prev1
 ```
 
-**[DEMO: `rob([2,7,9,3,1])` — trace:]**
+**)` — trace:]**
 
 ```text
 nums = [2,7,9,3,1]
@@ -224,9 +204,7 @@ Return 12 ✓ (rob houses 0,2,4: 2+9+1=12)
 
 ---
 
-## [16:00 – 22:00] Part 4 — Longest Common Subsequence
-
-**[SHOW SLIDE: \"Longest Common Subsequence — LeetCode #1143\"]**
+## Part 4 — Longest Common Subsequence
 
 \"Given two strings, return the length of their longest common subsequence. A subsequence maintains relative order but need not be contiguous.
 
@@ -257,8 +235,6 @@ def longest_common_subsequence(text1, text2):
     return dp[m][n]
 ```
 
-**[DEMO: `longest_common_subsequence('abcde', 'ace')` — fill the 6×4 table]**
-
 ```text
     ''  a  c  e
 ''   0  0  0  0
@@ -271,15 +247,11 @@ e    0  1  2  3
 dp[5][3] = 3. LCS is 'ace'. ✓
 ```
 
-[PAUSE]
-
-**Why both recurrences?** When characters match, we extend the LCS from both strings minus those characters: `dp[i-1][j-1] + 1`. When they don't match, we take the best we can get by either skipping the current character of text1 (`dp[i-1][j]`) or text2 (`dp[i][j-1]`).\"
+**Why both recurrences?** When characters match, we extend the LCS from both strings minus those characters: `dp[i-1][j-1] + 1`. When they don't match, we take the best we can get by either skipping the current character of text1 (`dp[i-1][j]`) or text2 (`dp[i][j-1]`).\
 
 ---
 
-## [22:00 – 27:00] Part 5 — 0/1 Knapsack
-
-**[SHOW SLIDE: \"0/1 Knapsack — The DP Solution\"]**
+## Part 5 — 0/1 Knapsack
 
 \"In Module 13 we saw greedy fails for 0/1 knapsack. Here's the DP solution.
 
@@ -312,7 +284,7 @@ def knapsack_01(items, capacity):
     return dp[n][capacity]
 ```
 
-**[DEMO: items=[(60,10),(100,20),(120,30)], capacity=50]**
+**, capacity=50]**
 
 ```text
 Items: A(60,10), B(100,20), C(120,30)
@@ -327,7 +299,7 @@ dp[3][w]: for w>=30, can add C(120);
 Return 220 ✓ (B+C, matching the optimal from Module 13)
 ```
 
-The Module 14 lab covers all four canonical DP problems, plus 0/1 knapsack. Fibonacci is the entry point — trace it both ways. Coin Change is the LeetCode interview staple. Good luck.\"
+The Module 14 lab covers all four canonical DP problems, plus 0/1 knapsack. Fibonacci is the entry point — trace it both ways. Coin Change is the LeetCode interview staple. Good luck.\
 
 ---
 

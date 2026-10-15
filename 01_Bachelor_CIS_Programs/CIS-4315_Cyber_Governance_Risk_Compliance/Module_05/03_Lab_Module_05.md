@@ -22,7 +22,7 @@ TexCore Logistics is a mid-sized freight brokerage company headquartered in Fort
 
 The company's security team recently completed a comprehensive risk assessment. The risk register now contains twelve assessed risks. Your job is to serve as the risk analyst responsible for developing and documenting risk treatment recommendations for the eight risks in this lab.
 
-TexCore's board-approved risk appetite statement reads: "TexCore will accept risks with an ALE below $50,000 per year. Risks with an ALE between $50,000 and $250,000 require documented mitigation or transfer. Risks with an ALE exceeding $250,000 require immediate treatment action and executive-level risk acceptance if residual risk remains above $50,000."
+TexCore's board-approved risk appetite statement reads: "TexCore will accept risks with an ALE below $50,000 per year. Risks with an ALE between $50,000 and $250,000 require documented mitigation or transfer. Risks with an ALE exceeding $250,000 require immediate treatment action and executive-level risk acceptance if residual risk remains above $50,000.
 
 ---
 

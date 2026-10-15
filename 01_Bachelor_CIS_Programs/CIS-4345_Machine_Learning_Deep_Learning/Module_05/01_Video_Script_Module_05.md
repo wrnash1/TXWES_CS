@@ -414,7 +414,7 @@ Both are identical in what they compute. Use Sequential when simplicity is suffi
 
 Today we covered TensorFlow and Keras fundamentals: installation and environment verification, tensors and variables, eager execution versus graph mode with `@tf.function`, the Sequential API, the Functional API including multi-input and skip connection patterns, and model compilation with optimizer, loss, and metrics.
 
-In Module 6, we go deep into the training process itself — callbacks, learning rate schedules, batch normalization, dropout, early stopping, and model evaluation. These are the techniques that take a model from "it runs" to "it works well."
+In Module 6, we go deep into the training process itself — callbacks, learning rate schedules, batch normalization, dropout, early stopping, and model evaluation. These are the techniques that take a model from "it runs" to "it works well.
 
 Your lab this week has you build three models — one Sequential, one Functional, and one multi-input Functional — and verify that all three compile correctly and produce the expected output shapes from `model.summary()`.
 

@@ -34,7 +34,7 @@ Respond to the following in 175–225 words: Which framework — or combination 
 
 ## Scenario C — Zero Trust in a Legacy Environment
 
-A state government agency manages a network built over 25 years. It includes modern Windows 11 workstations, Windows Server 2012 systems that cannot be patched or upgraded due to legacy application dependencies, and several Internet of Things devices that cannot support agent-based security software. The agency's CIO has read about Zero Trust Architecture and has directed the security team to "implement Zero Trust."
+A state government agency manages a network built over 25 years. It includes modern Windows 11 workstations, Windows Server 2012 systems that cannot be patched or upgraded due to legacy application dependencies, and several Internet of Things devices that cannot support agent-based security software. The agency's CIO has read about Zero Trust Architecture and has directed the security team to "implement Zero Trust.
 
 Respond to the following in 175–225 words: What are the practical challenges of implementing Zero Trust principles in an environment with legacy systems and unmanageable devices? Identify two specific Zero Trust principles and explain how each could be applied even within these constraints. Your response should be realistic — acknowledge what is not immediately achievable — while showing how incremental progress toward Zero Trust is still possible and valuable.
 

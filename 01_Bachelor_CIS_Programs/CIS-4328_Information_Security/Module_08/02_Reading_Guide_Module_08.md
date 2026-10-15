@@ -110,7 +110,7 @@ Read: The introduction and methodology, then browse any 10 entries to understand
 
 Focus areas:
 
-- How CISA classifies vulnerabilities as "known exploited."
+- How CISA classifies vulnerabilities as "known exploited.
 
 - The remediation deadlines CISA sets for federal agencies and the rationale for those timelines.
 
@@ -435,8 +435,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

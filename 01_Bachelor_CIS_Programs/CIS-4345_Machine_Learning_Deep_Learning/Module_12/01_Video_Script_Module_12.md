@@ -30,8 +30,6 @@
 
 ## SEGMENT 1 — Introduction (0:00–2:00)
 
-**[ON CAMERA]**
-
 Welcome back. I'm Professor Nash, and this is Module 12 of CIS-4345.
 
 In the previous two modules we built sequence models with LSTMs and image classifiers with transfer learning. Both of those modules focused on getting a model working. This module is about getting a model working *well* — and then getting it small enough and fast enough to actually deploy.
@@ -378,8 +376,6 @@ You do not need to implement a full TFX pipeline for this course or the certific
 ---
 
 ## SEGMENT 8 — Wrap-Up and Certification Alignment (22:00–24:00)
-
-**[ON CAMERA]**
 
 Let's bring everything together.
 

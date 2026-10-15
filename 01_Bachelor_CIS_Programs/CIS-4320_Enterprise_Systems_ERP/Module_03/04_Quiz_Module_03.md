@@ -210,7 +210,7 @@ Salesforce delivers three major platform releases per year. Which of the followi
 
 (5 points)
 
-A company is selecting an ERP system. The selection committee asks: "Which industry analyst firm publishes the Magic Quadrant report that ranks ERP vendors on 'Completeness of Vision' and 'Ability to Execute'?"
+A company is selecting an ERP system. The selection committee asks: "Which industry analyst firm publishes the Magic Quadrant report that ranks ERP vendors on 'Completeness of Vision' and 'Ability to Execute'?
 
 - A) Forrester Research
 - B) IDC (International Data Corporation)

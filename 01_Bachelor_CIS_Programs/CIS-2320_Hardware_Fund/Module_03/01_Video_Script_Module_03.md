@@ -26,24 +26,22 @@
 
 ---
 
-## Section 1: Introduction and Certification Alignment [00:00 - 03:00]
-
+## Section 1: Introduction and Certification Alignment
 **[CAMERA: Instructor on camera, title card "Module 03 — Processors (CPUs) and Cooling"]**
 
-"Welcome back, everyone. Professor Nash here. This is Module 03 of CIS-2320 Hardware Fundamentals at Texas Wesleyan University: Processors and Cooling.
+Welcome back, everyone. Professor Nash here. This is Module 03 of CIS-2320 Hardware Fundamentals at Texas Wesleyan University: Processors and Cooling.
 
 This module maps directly to CompTIA A+ Core 1 Domain 3.5 and covers two topics that every technician encounters constantly: installing CPUs correctly, and keeping them cool. These are also areas where mistakes are expensive — a bent pin on an LGA socket can destroy a motherboard, and insufficient cooling will kill a CPU over time through heat degradation.
 
 Today we will cover four areas. First, CPU socket types — LGA and PGA — and how they differ. Second, CPU architecture: cores, threads, and what those specs actually mean for system performance. Third, thermal management: thermal paste application, heat sink installation, and active versus passive cooling. And fourth, a walkthrough of what you will do in the lab this week.
 
-Let's get started."
+Let's get started.
 
 **[PAUSE — 3 seconds]**
 
 ---
 
-## Section 2: CPU Socket Types — LGA vs. PGA vs. BGA [03:00 - 08:30]
-
+## Section 2: CPU Socket Types — LGA vs. PGA vs. BGA
 **[CAMERA: Cut to component table]**
 
 <div style="text-align: center; margin: 24px 0;">
@@ -140,7 +138,7 @@ Let's get started."
 
 **[SHOW COMPONENT: Intel LGA socket on motherboard — overhead close-up of the socket showing the dense grid of pin contacts]**
 
-"Let's start with the two primary socket types you will work with in the field and see on the exam: LGA and PGA.
+Let's start with the two primary socket types you will work with in the field and see on the exam: LGA and PGA.
 
 LGA stands for Land Grid Array. In an LGA socket, the pins are on the motherboard socket itself — that dense field of tiny spring-loaded pins you see here. The CPU has flat gold contact pads on its underside — no pins. Intel uses LGA exclusively for desktop processors. LGA1700, the current Intel mainstream socket, has 1,700 of those socket pins.
 
@@ -158,15 +156,14 @@ There is a third type you need to know for the exam: BGA — Ball Grid Array. BG
 
 **[PAUSE — 3 seconds]**
 
-Exam mnemonic: LGA — the **L**andscape has the pins (the motherboard). PGA — the **P**rocessor has the pins. BGA — the ball solder means it is **B**onded permanently."
+Exam mnemonic: LGA — the **L**andscape has the pins (the motherboard). PGA — the **P**rocessor has the pins. BGA — the ball solder means it is **B**onded permanently.
 
 ---
 
-## Section 3: CPU Architecture — Cores, Threads, Cache, and Clock Speed [08:30 - 13:30]
-
+## Section 3: CPU Architecture — Cores, Threads, Cache, and Clock Speed
 **[CAMERA: Slide showing a CPU die diagram with cores labeled]**
 
-"Now let's talk about what is inside the CPU and how to read the specifications that matter for the exam and for real system selection.
+Now let's talk about what is inside the CPU and how to read the specifications that matter for the exam and for real system selection.
 
 **[SHOW COMPONENT: Hold up a CPU package]**
 
@@ -182,17 +179,16 @@ Clock speed — measured in GHz — describes how many instruction cycles the CP
 
 Cache is fast memory built directly into the CPU die, arranged in levels: L1 (smallest, fastest, one per core), L2 (medium, one per core or shared), and L3 (largest, shared across all cores). Cache stores recently used data and instructions so the CPU does not have to wait for slower main RAM. L3 cache size is a meaningful spec for tasks like gaming and data processing.
 
-**[PAUSE — 3 seconds]**"
+**[PAUSE — 3 seconds]**
 
 ---
 
-## Section 4: Thermal Management — Paste, Heat Sinks, and Fans [13:30 - 19:00]
-
+## Section 4: Thermal Management — Paste, Heat Sinks, and Fans
 **[CAMERA: Return to component table]**
 
 **[SHOW COMPONENT: Tube of thermal paste]**
 
-"Heat management is arguably the most practical skill in this module because it is something you will do on every CPU installation. Let's walk through it carefully.
+Heat management is arguably the most practical skill in this module because it is something you will do on every CPU installation. Let's walk through it carefully.
 
 Thermal paste — also called thermal compound or TIM, Thermal Interface Material — fills microscopic surface imperfections between the CPU's integrated heat spreader and the base of the heat sink. Even surfaces that look perfectly flat under the eye have microscopic valleys and peaks. Air caught in those gaps is a terrible conductor of heat. Thermal paste displaces the air with a thermally conductive material, dramatically improving heat transfer.
 
@@ -210,15 +206,14 @@ The fan connects to the CPU_FAN header on the motherboard — a 4-pin connector.
 
 Beyond stock HSF coolers, technicians encounter two other cooling types worth knowing. Air coolers — tower-style coolers with heat pipes — offer significantly better thermal performance than stock HSF and are common in workstation builds. Liquid cooling, specifically AIO (All-In-One) liquid coolers, routes coolant from a cold plate on the CPU to a radiator mounted at a case vent. AIOs offer excellent thermal performance and are common in high-end gaming and content creation builds. The pump head on an AIO connects to the CPU_FAN header; the radiator fans connect to SYS_FAN headers.
 
-**[PAUSE — 3 seconds]**"
+**[PAUSE — 3 seconds]**
 
 ---
 
-## Section 5: Lab Walkthrough and Closing [19:00 - 22:30]
-
+## Section 5: Lab Walkthrough and Closing
 **[CAMERA: Instructor on camera]**
 
-"Let me walk you through what the lab covers this week so you know what to expect.
+Let me walk you through what the lab covers this week so you know what to expect.
 
 In Part 1 you will examine a CPU and motherboard and complete an identification table: socket type, number of cores, physical pin count, and socket release mechanism. You are practicing the visual identification skill the exam tests with scenario-based questions.
 
@@ -230,15 +225,14 @@ Your deliverable is the completed lab document submitted to Canvas with photos o
 
 To close: remember the key points from this module. LGA pins are on the motherboard; PGA pins are on the CPU; BGA is soldered. Pea-sized dot of thermal paste in the center — do not spread. Connect the CPU_FAN header or the BIOS will shut the system down on detected fan failure. More cores and threads improve parallel workload performance, but clock speed drives single-threaded tasks.
 
-I will see you in Module 04 for RAM. See you then."
+I will see you in Module 04 for RAM. See you then.
 
 ---
 
-## End Card [22:30 - 23:00]
-
+## End Card
 **[CAMERA: Title card with course info]**
 
-"This has been Module 03 of CIS-2320 Hardware Fundamentals at Texas Wesleyan University. Complete the reading guide, take the quiz, and post your discussion response by Wednesday at 11:59 PM."
+This has been Module 03 of CIS-2320 Hardware Fundamentals at Texas Wesleyan University. Complete the reading guide, take the quiz, and post your discussion response by Wednesday at 11:59 PM.
 
 ---
 

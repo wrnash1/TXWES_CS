@@ -1,5 +1,23 @@
 # Video Script: Module 07 – Resource Management and Team Building
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Google Career Certificates &bull; IT Project Management &bull; Module 07</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" title="Google Career Certificates &bull; IT Project Management" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Google Career Certificates &bull; IT Project Management</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3310 IT Project Management
 **Estimated Duration:** 22 minutes
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
@@ -7,20 +25,18 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 – 03:00]
-
+## Section 1: Welcome and Module Overview
 Welcome back to CIS-3310. I am Professor Nash, and this is Module 07: Resource Management and Team Building. Every project runs on people. You can have the best scope statement and the most detailed schedule in the world, but if you cannot acquire, develop, and manage a team effectively, nothing gets done.
 
 This module covers two complementary areas: the mechanics of resource management (RACI, resource planning, resolving conflicts) and the human side of team building (Tuckman's stages, leadership approaches, and conflict resolution).
 
-[SHOW SLIDE] Module 07 title: "Resource Management and Team Building"
+ Module 07 title: "Resource Management and Team Building
 
 Today we cover: the resource management process flow; organizational and team structure; the RACI responsibility assignment matrix; Tuckman's team development model; and conflict resolution techniques.
 
 ---
 
-## Section 2: Resource Management Process Flow [03:00 – 06:30]
-
+## Section 2: Resource Management Process Flow
 PMI defines six processes in Resource Management.
 
 Plan Resource Management creates the Resource Management Plan — the guide for how physical and team resources will be acquired, managed, and controlled.
@@ -35,13 +51,12 @@ Manage Team tracks performance, provides feedback, resolves issues, and manages 
 
 Control Resources monitors the planned versus actual use of physical resources and takes corrective action as needed.
 
-[SHOW SLIDE] Resource management process chain
+ Resource management process chain
 
 ---
 
-## Section 3: Organizational Structures and PM Authority [06:30 – 10:00]
-
-[SHOW SLIDE] Three organizational structures: Functional, Matrix, Projectized
+## Section 3: Organizational Structures and PM Authority
+ Three organizational structures: Functional, Matrix, Projectized
 
 The structure of the organization determines how much authority the project manager has.
 
@@ -55,9 +70,8 @@ In a Matrix Organization, employees report to both functional managers and proje
 
 ---
 
-## Section 4: RACI Matrix [10:00 – 13:30]
-
-[SHOW SLIDE] RACI matrix example
+## Section 4: RACI Matrix
+ RACI matrix example
 
 The RACI matrix is a Responsibility Assignment Matrix that maps each project task or deliverable to the team members responsible for it.
 
@@ -75,9 +89,8 @@ The RACI matrix is one of the most frequently tested tools in both resource mana
 
 ---
 
-## Section 5: Tuckman's Team Development Model [13:30 – 18:00]
-
-[SHOW SLIDE] Tuckman's five stages with characteristics and PM actions
+## Section 5: Tuckman's Team Development Model
+ Tuckman's five stages with characteristics and PM actions
 
 Bruce Tuckman identified five stages of team development. Every project team moves through these stages, and the PM's leadership approach must adapt at each stage.
 
@@ -95,9 +108,8 @@ Adjourning: The project ends. Team members are released to other assignments or 
 
 ---
 
-## Section 6: Conflict Resolution Techniques [18:00 – 21:00]
-
-[SHOW SLIDE] Conflict resolution techniques ranked by PMI preference
+## Section 6: Conflict Resolution Techniques
+ Conflict resolution techniques ranked by PMI preference
 
 PMI recognizes five conflict resolution techniques, listed here from most preferred to least preferred.
 
@@ -115,8 +127,7 @@ Force/Direct: one party imposes their position on the other. Win-lose. Generates
 
 ---
 
-## End Card [21:00 – 22:00]
-
+## End Card
 Module 07 is complete. Complete the Reading Guide, complete the Lab where you will build a RACI matrix and apply Tuckman's model to a team scenario, take the Quiz, and post your Discussion by Wednesday.
 
 Module 08 covers Communications Management — stakeholder communication planning, the communication channels formula, and push/pull/interactive communication methods. See you there.

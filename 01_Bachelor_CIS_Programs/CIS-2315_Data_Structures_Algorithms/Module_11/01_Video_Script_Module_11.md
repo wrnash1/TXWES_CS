@@ -26,19 +26,15 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 11 | Dijkstra's Shortest Path | CIS-2315"]**
-
-"Dijkstra's algorithm finds the shortest path from a source node to all other nodes in a weighted graph with non-negative edge weights. It is the engine behind GPS navigation, network routing, and any system that needs to find optimal paths through a cost graph. Conceptually, Dijkstra is BFS with a priority queue: instead of processing nodes in FIFO order, we always process the node with the currently known shortest distance. This greedy choice guarantees optimality when all edge weights are non-negative."
+Dijkstra's algorithm finds the shortest path from a source node to all other nodes in a weighted graph with non-negative edge weights. It is the engine behind GPS navigation, network routing, and any system that needs to find optimal paths through a cost graph. Conceptually, Dijkstra is BFS with a priority queue: instead of processing nodes in FIFO order, we always process the node with the currently known shortest distance. This greedy choice guarantees optimality when all edge weights are non-negative.
 
 ---
 
-## [01:30 – 08:00] Part 1 — The Algorithm
+## Part 1 — The Algorithm
 
-**[SHOW SLIDE: "Dijkstra's Algorithm — Greedy Shortest Path"]**
-
-"**[SHOW DIAGRAM: weighted graph with nodes A, B, C, D, E]**
+"
 
 ```text
         4       8
@@ -53,8 +49,6 @@
 Nodes: A, B, C, D, E, F
 Edge weights shown on each edge.
 
-[PAUSE]
-
 Dijkstra's algorithm:
 
 1. Initialize `dist[source] = 0`, `dist[all others] = infinity`.
@@ -65,8 +59,6 @@ Dijkstra's algorithm:
    c. For each neighbor: if `dist[node] + weight < dist[neighbor]`, update `dist[neighbor]` and push `(new_dist, neighbor)` onto the heap.
 
 The key insight: the first time a node is popped from the heap, its distance is finalized. Any later entries for that node in the heap are stale and skipped.
-
-[PAUSE]
 
 ```python
 import heapq
@@ -94,8 +86,6 @@ def dijkstra(graph, start):
 
     return dist
 ```
-
-**[DEMO: trace Dijkstra on the graph above from source A. Show dist table and heap state at each step]**
 
 ```text
 Initial: dist={A:0, B:inf, C:inf, D:inf, E:inf, F:inf}, heap=[(0,A)]
@@ -125,11 +115,9 @@ Final: dist={A:0, B:4, C:12, D:2, E:5, F:6}
 
 ---
 
-## [08:00 – 13:00] Part 2 — Shortest Path Reconstruction
+## Part 2 — Shortest Path Reconstruction
 
-**[SHOW SLIDE: "Recovering the Shortest Path (not just the distance)"]**
-
-"The `dijkstra` function above returns only distances. To recover the actual path, track which node each node was reached from using a `prev` (predecessor) dictionary.
+The `dijkstra` function above returns only distances. To recover the actual path, track which node each node was reached from using a `prev` (predecessor) dictionary.
 
 ```python
 def dijkstra_path(graph, start, end):
@@ -163,21 +151,13 @@ def dijkstra_path(graph, start, end):
     return path, dist[end]
 ```
 
-**[DEMO: dijkstra_path from A to F in the graph above — expected path A→D→E→F, distance 6]**
-
-[PAUSE]
-
-The reconstruction walks backward through `prev` pointers: F → prev[F]=E → prev[E]=D → prev[D]=A → None. Reversing gives the forward path A→D→E→F."
+The reconstruction walks backward through `prev` pointers: F → prev[F]=E → prev[E]=D → prev[D]=A → None. Reversing gives the forward path A→D→E→F.
 
 ---
 
-## [13:00 – 18:00] Part 3 — Why Dijkstra Fails on Negative Weights
+## Part 3 — Why Dijkstra Fails on Negative Weights
 
-**[SHOW SLIDE: "Negative Weights — The Fatal Assumption"]**
-
-"Dijkstra's greedy property assumes: once a node is popped from the heap, its distance is final. This holds only when all edge weights are non-negative.
-
-**[SHOW DIAGRAM: small graph with a negative edge]**
+Dijkstra's greedy property assumes: once a node is popped from the heap, its distance is final. This holds only when all edge weights are non-negative.
 
 ```text
 A ─── 1 ─── B
@@ -189,19 +169,15 @@ A ─── 1 ─── B
 
 Dijkstra from A: would finalize dist[B]=1 early (B popped first). But the path A→C→B = 3 + (-3) = 0 < 1 is shorter. Dijkstra misses this because B was already finalized.
 
-[PAUSE]
-
 **For negative edge weights, use Bellman-Ford:** it iterates V-1 times over all edges, relaxing distances, and detects negative cycles. Time: O(V · E) — slower than Dijkstra but correct for any weights.
 
-For interview problems: if the problem says "non-negative weights" or uses concepts like travel time or cost, Dijkstra is the right choice. If negative weights appear, mention Bellman-Ford."
+For interview problems: if the problem says "non-negative weights" or uses concepts like travel time or cost, Dijkstra is the right choice. If negative weights appear, mention Bellman-Ford.
 
 ---
 
-## [18:00 – 22:00] Part 4 — Network Delay Time (LeetCode #743)
+## Part 4 — Network Delay Time (LeetCode #743)
 
-**[SHOW SLIDE: "LeetCode #743 — Network Delay Time"]**
-
-"Given a network of n nodes and directed edges `(u, v, weight)` representing signal travel times, and a source node `k`, find the minimum time for a signal from k to reach all nodes. If some node is unreachable, return -1.
+Given a network of n nodes and directed edges `(u, v, weight)` representing signal travel times, and a source node `k`, find the minimum time for a signal from k to reach all nodes. If some node is unreachable, return -1.
 
 This is exactly Dijkstra from source k. The answer is `max(dist.values())` — the time for the last node to receive the signal.
 
@@ -235,11 +211,11 @@ def network_delay_time(times, n, k):
     return max_dist if max_dist < float('inf') else -1
 ```
 
-**[DEMO: times=[(2,1,1),(2,3,1),(3,4,1)], n=4, k=2 → expected output 2]**
+**, n=4, k=2 → expected output 2]**
 
 The maximum distance from 2 to all other nodes: dist={1:1, 2:0, 3:1, 4:2}. Max = 2.
 
-The Module 11 lab has you implement Dijkstra, add path reconstruction, handle disconnected graphs, and solve LeetCode #743. Good luck."
+The Module 11 lab has you implement Dijkstra, add path reconstruction, handle disconnected graphs, and solve LeetCode #743. Good luck.
 
 ---
 

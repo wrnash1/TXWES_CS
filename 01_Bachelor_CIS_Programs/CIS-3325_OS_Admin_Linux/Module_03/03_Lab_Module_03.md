@@ -20,7 +20,7 @@ In this lab you will explore the Linux Filesystem Hierarchy Standard directories
 
 ## Pre-Lab
 
-Take a VirtualBox snapshot before starting: Machine → Take Snapshot → "Pre-Lab Module 03."
+Take a VirtualBox snapshot before starting: Machine → Take Snapshot → "Pre-Lab Module 03.
 
 ---
 

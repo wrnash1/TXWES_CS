@@ -264,9 +264,9 @@ After completing this module's readings you will be able to:
 
 #### Trace and Profiler ACE Exam Focus Points
 
-- Cloud Trace is for latency analysis — "which part of the request is slow?"
+- Cloud Trace is for latency analysis — "which part of the request is slow?
 - Cloud Profiler is for performance optimization — "which function uses the most CPU
-  or memory?"
+  or memory?
 - App Engine, Cloud Run, and GKE integrate with Cloud Trace automatically when using
   supported frameworks
 - Cloud Profiler requires a client library and a brief initialization call in application
@@ -465,8 +465,6 @@ Hands-on lab covering Ops Agent installation on a Compute Engine VM, creating cu
 **3. Google Cloud Documentation — Logging Query Language**
 <https://cloud.google.com/logging/docs/view/logging-query-language>
 Reference for the Logging Query Language (LQL) including comparison operators, severity filtering with `>=`, resource type filters, and structured log field extraction — essential for both the ACE exam and the log-based metrics lab exercises.
-
-
 
 ---
 

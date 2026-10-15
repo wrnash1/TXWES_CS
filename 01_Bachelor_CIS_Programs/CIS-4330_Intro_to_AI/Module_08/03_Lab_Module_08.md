@@ -236,7 +236,7 @@ Write your schema in your lab document before moving to Step E2.
 
 ### Step E2: Create the CLU Project
 
-1. In Language Studio, click **Conversational Language Understanding** under "Understand questions and conversational language."
+1. In Language Studio, click **Conversational Language Understanding** under "Understand questions and conversational language.
 2. Click **Create new project**.
 3. Name your project `lab08-clu-<your-initials>`.
 4. Select **Conversation** project type.
@@ -252,11 +252,11 @@ Write your schema in your lab document before moving to Step E2.
 
 Examples for the library scenario:
 
-- SearchBook: "Do you have anything by Stephen King?"
-- SearchBook: "I am looking for a book about machine learning"
-- ReserveBook: "Can I reserve The Great Gatsby for next week?"
-- ReturnBook: "I need to return two books by Friday"
-- CheckFines: "How much do I owe in late fees?"
+- SearchBook: "Do you have anything by Stephen King?
+- SearchBook: "I am looking for a book about machine learning
+- ReserveBook: "Can I reserve The Great Gatsby for next week?
+- ReturnBook: "I need to return two books by Friday
+- CheckFines: "How much do I owe in late fees?
 
 ### Step E4: Train and Evaluate
 

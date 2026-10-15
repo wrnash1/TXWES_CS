@@ -38,7 +38,7 @@ In your initial post, address the following:
 
 A regional electric utility monitors 2.4 million smart meters that transmit readings every 15 minutes. Each reading includes meter ID, timestamp, kilowatt-hours consumed, voltage level, and any fault codes. The utility's existing Oracle database is struggling to handle the insert volume and the analytical queries simultaneously, causing reporting delays and data loss during peak transmission windows.
 
-The utility's IT director asks the analytics team to evaluate Apache Hadoop and Apache Spark as replacement technologies. The IT director has a traditional database background and is skeptical: "We already have a perfectly good database. Why do we need a completely different system?"
+The utility's IT director asks the analytics team to evaluate Apache Hadoop and Apache Spark as replacement technologies. The IT director has a traditional database background and is skeptical: "We already have a perfectly good database. Why do we need a completely different system?
 
 In your initial post, address the following:
 

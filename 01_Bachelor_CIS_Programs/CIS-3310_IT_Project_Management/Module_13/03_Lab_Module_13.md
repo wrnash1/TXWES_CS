@@ -66,7 +66,7 @@ Construct an Ishikawa diagram identifying the root causes of SLA breaches.
 
 ### Part 1 Instructions
 
-Using the defect category data and the scenario background, construct an Ishikawa diagram for the effect: "Help desk tickets consistently exceed the 4-hour SLA target."
+Using the defect category data and the scenario background, construct an Ishikawa diagram for the effect: "Help desk tickets consistently exceed the 4-hour SLA target.
 
 Your Ishikawa diagram must include at least four major cause category branches. Suggested categories for this IT service context: Methods, Machines, Manpower, Management. You may add additional categories. For each category, identify at least two specific contributing causes drawn from or logically inferred from the scenario data.
 

@@ -28,7 +28,7 @@ Your initial post should be 175–225 words and address all three sub-questions.
 
 ## Scenario B: The Reserve Dispute
 
-A university is replacing its library management system. The project budget is $350,000. The project manager has documented 8 risks in the risk register, for which $35,000 in contingency reserve has been allocated. The provost's office holds an additional $25,000 for completely unexpected situations. Midway through the project, two documented risks materialize simultaneously: a vendor delay that costs $12,000 and a data migration error that costs $9,000. The project manager requests $21,000 from the provost's office. The provost's office replies: "Use your own reserve — that is what it is there for."
+A university is replacing its library management system. The project budget is $350,000. The project manager has documented 8 risks in the risk register, for which $35,000 in contingency reserve has been allocated. The provost's office holds an additional $25,000 for completely unexpected situations. Midway through the project, two documented risks materialize simultaneously: a vendor delay that costs $12,000 and a data migration error that costs $9,000. The project manager requests $21,000 from the provost's office. The provost's office replies: "Use your own reserve — that is what it is there for.
 
 Sub-questions for Scenario B:
 

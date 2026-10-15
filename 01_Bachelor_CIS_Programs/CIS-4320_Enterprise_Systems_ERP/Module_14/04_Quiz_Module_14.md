@@ -446,8 +446,8 @@ A company wants to implement a sales performance scorecard that includes both Sa
 A Salesforce administrator creates a report using a custom report type. The manager complains that the report is not showing accounts that have no cases at all. The report only shows accounts that have at least one case. How should the custom report type be reconfigured to include accounts with no related cases?
 
 - A) Change the report type from Summary to Tabular — tabular reports show all records
-- B) In the custom report type definition, change the Accounts-to-Cases relationship from "Each 'A' record must have at least one related 'B' record" to "Each 'A' record may or may not have related 'B' records"
-- C) Add a cross-filter to the report: "Accounts without Cases"
+- B) In the custom report type definition, change the Accounts-to-Cases relationship from "Each 'A' record must have at least one related 'B' record" to "Each 'A' record may or may not have related 'B' records
+- C) Add a cross-filter to the report: "Accounts without Cases
 - D) Set the Opportunity OWD to Public Read Only to expose all account records
 
 - **Correct Answer:** B

@@ -14,7 +14,7 @@ This lab places you in the role of a junior business systems analyst assisting a
 
 **Estimated Time:** 90 minutes
 
-**Submission:** Upload to Canvas under "Lab 03 — ERP Selection and Vendor Landscape."
+**Submission:** Upload to Canvas under "Lab 03 — ERP Selection and Vendor Landscape.
 
 ---
 
@@ -182,7 +182,7 @@ Write a 250-300 word executive memo addressed to Cornerstone's CEO recommending 
 
 1. Compile all responses into a single document.
 2. Name your file: `Lab03_LastName_FirstName.pdf`
-3. Upload to Canvas under "Lab 03 — ERP Selection and Vendor Landscape."
+3. Upload to Canvas under "Lab 03 — ERP Selection and Vendor Landscape.
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
 
 ---
@@ -202,7 +202,7 @@ A rapidly growing e-commerce company (250 employees, $40M revenue, projecting 3x
 
 You are advising a client who has received a 150-page software license and services agreement from an ERP vendor. The client's legal team has flagged three clauses but does not understand their business implications.
 
-1. For each of the following clause descriptions, explain the business risk in plain language and suggest one negotiation position the client should take: (a) "Vendor may modify pricing upon 90-day written notice" — (b) "Customer data may be used by vendor for product improvement purposes in anonymized form" — (c) "Service level credits shall not exceed 10% of monthly subscription fees regardless of downtime duration."
+1. For each of the following clause descriptions, explain the business risk in plain language and suggest one negotiation position the client should take: (a) "Vendor may modify pricing upon 90-day written notice" — (b) "Customer data may be used by vendor for product improvement purposes in anonymized form" — (c) "Service level credits shall not exceed 10% of monthly subscription fees regardless of downtime duration.
 2. Write a short checklist (minimum 6 items) of contract provisions that any ERP buyer should review before signing, with a one-sentence explanation of why each matters.
 
 ### Reflection Questions

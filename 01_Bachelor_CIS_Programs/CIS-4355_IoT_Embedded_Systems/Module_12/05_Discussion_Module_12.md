@@ -24,7 +24,7 @@ Discuss the following:
 - What is the most likely attack path an adversary would use to move from a compromised HVAC sensor to the EHR system? Describe the attack steps in plain language.
 - Propose a prioritized remediation plan. Which control should be implemented first, and why?
 
-Your initial post should be 175–225 words and address all three points. Support your remediation priority decision with a specific technical justification — not just "best practice."
+Your initial post should be 175–225 words and address all three points. Support your remediation priority decision with a specific technical justification — not just "best practice.
 
 ---
 

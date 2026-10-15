@@ -384,7 +384,7 @@ B) The system shall display an order confirmation page after checkout is complet
 
 C) The system shall respond to all database queries within 2 seconds under peak load of 500 concurrent users
 
-D) The system shall send an automated shipping notification when an order status changes to "Shipped"
+D) The system shall send an automated shipping notification when an order status changes to "Shipped
 
 Correct Answer: C
 

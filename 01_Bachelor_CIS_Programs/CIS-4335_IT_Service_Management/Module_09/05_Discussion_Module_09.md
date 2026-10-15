@@ -26,7 +26,7 @@ least two classmates with substantive feedback.
 Greenfield Insurance has maintained a Known Error Database for three years. It currently
 contains 214 entries. However, a recent audit found that service desk agents almost never
 consult it. When asked why, agents said: "It takes too long to search," "The entries are
-out of date," and "Half the workarounds don't work anymore."
+out of date," and "Half the workarounds don't work anymore.
 
 The Problem Management team blames the service desk for not using the tool. The service
 desk blames Problem Management for maintaining a low-quality database.
@@ -44,7 +44,7 @@ that would improve KEDB utilization and effectiveness.
 
 A software development team at a retail company has started bypassing the Change Advisory
 Board. They deploy small code updates directly to production on Friday afternoons, arguing
-that "the CAB adds two weeks to every release and our competitors are shipping daily."
+that "the CAB adds two weeks to every release and our competitors are shipping daily.
 
 The IT Service Manager discovers this practice after a Friday deployment causes a P1
 incident that affects the online checkout system for four hours on a Saturday morning —
@@ -72,7 +72,7 @@ Each incident type is resolved individually by the service desk. No problem reco
 been raised for any of these categories, even though the same issues recur week after week.
 
 The IT Director reviews this data and says: "We spend 80% of our incident response time
-on issues we have already solved before. Something is wrong with our process."
+on issues we have already solved before. Something is wrong with our process.
 
 Using ITIL 4 Problem Management concepts, explain what the IT Director is observing in
 structural terms. Which specific aspect of the problem management lifecycle is absent?

@@ -21,7 +21,7 @@ This week's discussion scenarios ask you to apply the full risk treatment decisi
 
 ## Scenario A — When Risk Acceptance Goes Wrong
 
-CrownTech Solutions is a software-as-a-service company that provides project management tools to mid-market enterprises. Two years ago, a junior security analyst flagged a known SQL injection vulnerability in the company's API layer in a routine assessment report. The report was reviewed by the then-CISO, who noted the risk but did not formally document a treatment decision, assign an owner, or enter the vulnerability in the risk register. No controls were implemented. Six months ago, CrownTech hired a new CISO. Last week, an attacker exploited the SQL injection vulnerability to extract the personal data of 180,000 customers. During the post-incident review, the new CISO discovers the two-year-old assessment report. Senior leadership asks: "Did we formally accept this risk two years ago?"
+CrownTech Solutions is a software-as-a-service company that provides project management tools to mid-market enterprises. Two years ago, a junior security analyst flagged a known SQL injection vulnerability in the company's API layer in a routine assessment report. The report was reviewed by the then-CISO, who noted the risk but did not formally document a treatment decision, assign an owner, or enter the vulnerability in the risk register. No controls were implemented. Six months ago, CrownTech hired a new CISO. Last week, an attacker exploited the SQL injection vulnerability to extract the personal data of 180,000 customers. During the post-incident review, the new CISO discovers the two-year-old assessment report. Senior leadership asks: "Did we formally accept this risk two years ago?
 
 In 175–225 words, respond to the following questions in complete sentences.
 
@@ -31,7 +31,7 @@ Was the previous CISO's inaction formal risk acceptance, informal acceptance, or
 
 ## Scenario B — The Insurance Debate
 
-Magnolia Mortgage Company processes approximately $2.4 billion in residential mortgage applications annually and stores extensive personal and financial data on applicants. The CISO has completed a risk assessment that places the ransomware risk at an ALE of $890,000. The CISO proposes a combination of endpoint detection and response (EDR) software, immutable cloud backups, and a security awareness training program at a combined annual cost of $185,000 — which would reduce the ALE to $120,000. The CFO pushes back: "Instead of spending $185,000 on controls, let's just buy a $2 million cyber insurance policy for $95,000 per year. That's cheaper, and if something happens, we're covered."
+Magnolia Mortgage Company processes approximately $2.4 billion in residential mortgage applications annually and stores extensive personal and financial data on applicants. The CISO has completed a risk assessment that places the ransomware risk at an ALE of $890,000. The CISO proposes a combination of endpoint detection and response (EDR) software, immutable cloud backups, and a security awareness training program at a combined annual cost of $185,000 — which would reduce the ALE to $120,000. The CFO pushes back: "Instead of spending $185,000 on controls, let's just buy a $2 million cyber insurance policy for $95,000 per year. That's cheaper, and if something happens, we're covered.
 
 In 175–225 words, respond to the following questions in complete sentences.
 

@@ -278,7 +278,7 @@ A managed event data store with SQL-based querying. Retention up to 7 years. Eli
 
 ### 6.1 Configuration Items and History
 
-A **configuration item** is a point-in-time snapshot of a resource's full configuration, relationships, and associated CloudTrail events. Config retains these items for the configured retention period (default 7 years). Use configuration history to answer: "What was the security group configuration on this instance last Tuesday?"
+A **configuration item** is a point-in-time snapshot of a resource's full configuration, relationships, and associated CloudTrail events. Config retains these items for the configured retention period (default 7 years). Use configuration history to answer: "What was the security group configuration on this instance last Tuesday?
 
 ### 6.2 Rule Trigger Types
 
@@ -527,8 +527,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

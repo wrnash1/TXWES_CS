@@ -1,5 +1,23 @@
 # Video Script: Module 03 - Responsive Design
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Full Stack Web Development for Beginners &bull; Module 03</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=nu_pCVPKzTk" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/nu_pCVPKzTk" title="freeCodeCamp &bull; Full Stack Web Development for Beginners" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Full Stack Web Development for Beginners</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3340 Full Stack Web Development
 **Estimated Duration:** 21 minutes
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
@@ -7,8 +25,7 @@
 
 ---
 
-## Section 1: Introduction - Responsive Design as a Production Requirement [00:00 - 03:30]
-
+## Section 1: Introduction - Responsive Design as a Production Requirement
 Welcome to Module 03. I am Professor Nash. Today we complete the front-end trilogy — HTML structure in Module 01, CSS layout in Module 02, and now in Module 03 we make everything responsive across every device.
 
 Responsive design is not optional. As of 2024, over 60 percent of global web traffic originates from mobile devices. Google uses mobile-first indexing — it crawls and ranks the mobile version of your site, not the desktop version. When you deploy to AWS and serve traffic through CloudFront, your users arrive on phones, tablets, laptops, and ultrawide monitors. Your layout needs to work on all of them with a single codebase.
@@ -23,8 +40,7 @@ Let me start by opening the page we built in Lab 02 and simulating a mobile devi
 
 ---
 
-## Section 2: The Viewport and Mobile-First Strategy [03:30 - 08:00]
-
+## Section 2: The Viewport and Mobile-First Strategy
 [SHOW BROWSER]
 
 Here is our two-column layout at full desktop width. Now let me open DevTools, press Ctrl+Shift+M to enter device simulation, and select iPhone SE at 375 pixels.
@@ -70,8 +86,7 @@ Read this as: by default, `.main-layout` is a single-column block layout. At 768
 
 ---
 
-## Section 3: Media Query Syntax and Breakpoints [08:00 - 13:30]
-
+## Section 3: Media Query Syntax and Breakpoints
 [SHOW CODE]
 
 The `@media` rule syntax:
@@ -112,14 +127,13 @@ Standard breakpoints used in this course:
 - 1200px — desktop
 - 1440px — wide desktop
 
-You do not need to use all of them. Add a breakpoint only when the layout actually breaks at that size — not because a specific pixel value is "standard."
+You do not need to use all of them. Add a breakpoint only when the layout actually breaks at that size — not because a specific pixel value is "standard.
 
 **AWS Exam Tip:** `prefers-reduced-motion` is a WCAG 2.3.3 AAA guideline. For enterprise applications deployed on AWS that serve users with vestibular disorders, disabling animations under this media query is a legal and accessibility best practice.
 
 ---
 
-## Section 4: Responsive Navigation and Typography [13:30 - 18:00]
-
+## Section 4: Responsive Navigation and Typography
 [SHOW CODE]
 
 The navigation is the component that most frequently breaks on mobile. Let us implement a hamburger-style toggle navigation.
@@ -197,8 +211,7 @@ h1 {
 
 ---
 
-## Section 5: Fluid Images and Lab Preview [18:00 - 21:00]
-
+## Section 5: Fluid Images and Lab Preview
 [SHOW CODE]
 
 Images need one rule to become responsive:

@@ -100,7 +100,7 @@ In 175–225 words:
 
 ## Tips for a Strong Post
 
-**Be specific.** Instead of "floats can cause errors in financial software," say "if a customer purchases three items at $0.10 each, `0.10 + 0.10 + 0.10` might display as `$0.30000000000000004` instead of `$0.30`."
+**Be specific.** Instead of "floats can cause errors in financial software," say "if a customer purchases three items at $0.10 each, `0.10 + 0.10 + 0.10` might display as `$0.30000000000000004` instead of `$0.30`.
 
 **Use your lab.** Every scenario asks you to reference lab results. Students who draw on actual experiments they ran write more convincing, more accurate posts.
 

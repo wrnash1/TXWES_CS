@@ -101,13 +101,13 @@ An administrator runs `find /var/log -type f -size +50M`. What will this command
 A. All files and directories in `/var/log` that are smaller than 50 MB.
 B. All regular files in `/var/log` that are larger than 50 MB.
 C. All files in `/var/log` modified in the last 50 minutes.
-D. All files in `/var/log` with names containing "50M."
+D. All files in `/var/log` with names containing "50M.
 
 **Correct Answer: B**
 
 **Distractor Analysis**:
 
-- **A** is incorrect. The `+` before a size value means "greater than." `-` would mean "less than." No prefix would mean "exactly."
+- **A** is incorrect. The `+` before a size value means "greater than." `-` would mean "less than." No prefix would mean "exactly.
 - **B** is correct. `-type f` restricts results to regular files (not directories or symlinks). `-size +50M` means larger than 50 megabytes.
 - **C** is incorrect. Size and modification time are different criteria. `-mmin -50` would find files modified in the last 50 minutes; `-size +50M` finds files by size.
 - **D** is incorrect. `-size` does not search file names. That would be `-name "*50M*"`.
@@ -268,8 +268,8 @@ D. `find /var -name "*.log" -ctime -2`
 **Distractor Analysis**:
 
 - **A** is incorrect. `-size -2M` finds files smaller than 2 MB — it has nothing to do with modification time.
-- **B** is correct. `-mtime -2` means "modified less than 2 days ago" (i.e., within the last 2 days). The minus sign means "within the last N days."
-- **C** is incorrect. `-mtime +2` means "modified MORE than 2 days ago" — the opposite of what was requested. The plus sign means "older than N days."
+- **B** is correct. `-mtime -2` means "modified less than 2 days ago" (i.e., within the last 2 days). The minus sign means "within the last N days.
+- **C** is incorrect. `-mtime +2` means "modified MORE than 2 days ago" — the opposite of what was requested. The plus sign means "older than N days.
 - **D** is partially correct in intent (ctime is "change time") but `-ctime` tracks inode change time (permissions, ownership changes), not content modification time. `-mtime` is the correct predicate for content modification.
 
 ---

@@ -302,7 +302,7 @@ Prioritize remediation by residual risk, not by finding severity as assessed by 
 
 The following example illustrates how a single encryption control can satisfy multiple regulatory obligations simultaneously.
 
-**Control Statement**: "All sensitive data stored in production databases is encrypted using AES-256. Encryption keys are managed through a dedicated key management system with quarterly rotation."
+**Control Statement**: "All sensitive data stored in production databases is encrypted using AES-256. Encryption keys are managed through a dedicated key management system with quarterly rotation.
 
 | Regulatory Obligation | Satisfied Requirement | Notes |
 |---|---|---|
@@ -549,8 +549,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

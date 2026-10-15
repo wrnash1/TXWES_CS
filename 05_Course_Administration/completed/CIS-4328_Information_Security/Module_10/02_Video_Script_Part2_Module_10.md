@@ -40,7 +40,7 @@ Authentication vulnerabilities allow attackers to compromise passwords, keys, or
 - Weak session tokens that are predictable or short enough to brute force
 - Sessions that do not expire after a reasonable idle period
 - Insecure session token transmission (sent over HTTP, stored in localStorage where XSS can steal it)
-- Improper logout — session remains valid on the server after the user clicks "Log out"
+- Improper logout — session remains valid on the server after the user clicks "Log out
 
 **Credential stuffing** deserves special mention. Attackers purchase or download breach databases containing email/password pairs and try those credentials against other services. Because users reuse passwords, this attack is highly effective. Detection: monitor for high volumes of failed logins across many accounts from distributed IP addresses.
 
@@ -77,7 +77,7 @@ Every component of your application should operate with the minimum permissions 
 - Internal server paths or hostnames
 - Version information for servers or frameworks
 
-Log detailed error information server-side where only administrators can access it. Return a generic user-facing message: "An error occurred. Please try again or contact support."
+Log detailed error information server-side where only administrators can access it. Return a generic user-facing message: "An error occurred. Please try again or contact support.
 
 **Security-relevant logging** should capture:
 

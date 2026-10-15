@@ -102,7 +102,7 @@ The seventeen signatories were not revolutionaries — they were experienced, pr
 
 ## 2. The Four Values — Full Analysis
 
-The Manifesto's core statement: "We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value..."
+The Manifesto's core statement: "We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value...
 
 ### Value 1: Individuals and Interactions over Processes and Tools
 
@@ -185,7 +185,7 @@ Misinterpretation 4: "Agile means no processes." Value 1 says individuals and in
 
 ---
 
-## 6. The Manifesto's Self-Description — "Uncovering Better Ways"
+## 6. The Manifesto's Self-Description — "Uncovering Better Ways
 
 The opening phrase of the Manifesto — "We are uncovering better ways of developing software by doing it and helping others do it" — is itself significant. The word "uncovering" implies empiricism: you discover truth through experience, not through reasoning from first principles. This is the same epistemological commitment that underlies Scrum's empirical pillars of Transparency, Inspection, and Adaptation.
 
@@ -227,10 +227,7 @@ A comprehensive essay by a Manifesto signatory explaining the intellectual origi
 
 **3. Agile Alliance Glossary — Agile Alliance**
 <https://www.agilealliance.org/agile101/agile-glossary/>
-A curated, free glossary of Agile terms maintained by the Agile Alliance. Useful for cross-checking definitions of terms used in PSM I exam questions. Pay particular attention to entries for "Sustainable Pace," "Self-Organizing Team," and "Working Software."
-
----
-
+A curated, free glossary of Agile terms maintained by the Agile Alliance. Useful for cross-checking definitions of terms used in PSM I exam questions. Pay particular attention to entries for "Sustainable Pace," "Self-Organizing Team," and "Working Software.
 
 ---
 
@@ -316,7 +313,6 @@ Before proceeding to this module's laboratory exercises, synthesize concise, rig
 1. **First-Principles Invariant Defense:** How does the theoretical model in this module ensure state correctness under adverse operating conditions? What mathematical proof or telemetry metric validates this behavior?
 2. **Architectural Trade-Off Analysis:** If forced to reduce execution latency by 50%, what specific compromises in consistency, redundancy, or capital expenditure would your architecture be forced to accept?
 3. **Failure Mode Pathology:** Explain the exact mechanistic chain of events that occurs when this module's primary subsystem experiences an unhandled resource starvation condition.
-
 
 ## 8. Study Checklist
 

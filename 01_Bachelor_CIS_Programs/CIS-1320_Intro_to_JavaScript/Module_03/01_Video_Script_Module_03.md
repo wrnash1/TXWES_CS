@@ -26,21 +26,17 @@
 
 ---
 
-## [00:00 – 01:00] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 03 | Data Types and Operators | CIS-1320"]**
+Module 03 is about how JavaScript represents data. Every value in a JavaScript program has a type — a category that determines what operations are valid on it and how it behaves when you combine it with other values. JavaScript has seven primitive types plus objects, and it has a system called type coercion that converts between types automatically in certain situations.
 
-"Module 03 is about how JavaScript represents data. Every value in a JavaScript program has a type — a category that determines what operations are valid on it and how it behaves when you combine it with other values. JavaScript has seven primitive types plus objects, and it has a system called type coercion that converts between types automatically in certain situations.
-
-Type coercion is where most of the surprising behavior in JavaScript comes from — and it is one of the most tested areas on the JSE exam. By the end of today you will understand all the primitive types, the operators used to work with them, and the coercion rules that produce results that catch developers off guard. Let us get started."
+Type coercion is where most of the surprising behavior in JavaScript comes from — and it is one of the most tested areas on the JSE exam. By the end of today you will understand all the primitive types, the operators used to work with them, and the coercion rules that produce results that catch developers off guard. Let us get started.
 
 ---
 
-## [01:00 – 04:00] Part 1 — The Seven Primitive Types
+## Part 1 — The Seven Primitive Types
 
-**[SHOW SLIDE: "JavaScript's Seven Primitive Types"]**
-
-"JavaScript has seven primitive types. Let me go through each one.
+JavaScript has seven primitive types. Let me go through each one.
 
 **Number** — represents all numeric values, both integers and decimals. JavaScript has only one number type — there is no separate int or float. `42`, `3.14`, `-7`, and `0.001` are all numbers.
 
@@ -56,10 +52,6 @@ Type coercion is where most of the surprising behavior in JavaScript comes from 
 
 **BigInt** — for integers too large for the standard Number type. You write it with an `n` suffix: `9007199254740993n`.
 
-[PAUSE]
-
-**[DEMO — DevTools Console]**
-
 ```javascript
 typeof 42           // 'number'
 typeof 3.14         // 'number'
@@ -73,8 +65,6 @@ typeof 42n          // 'bigint'
 
 Let me run these live. Notice the result for `typeof null` — it returns `'object'`. This is a well-known bug in JavaScript that has existed since the language was created. It was never fixed because fixing it would break millions of existing websites that depend on this behavior. So you need to know it: `typeof null` is `'object'`, not `'null'`. This appears on the JSE exam.
 
-[PAUSE]
-
 The other result worth noting: `typeof undefined` returns the string `'undefined'`. So `typeof` on an undefined variable is safe — it returns a string rather than throwing an error. This is useful for feature detection:
 
 ```javascript
@@ -85,13 +75,9 @@ if (typeof someVariable === 'undefined') {
 
 ---
 
-## [04:00 – 07:00] Part 2 — Arithmetic and String Operators
+## Part 2 — Arithmetic and String Operators
 
-**[SHOW SLIDE: "Operators: Math and String Operations"]**
-
-"JavaScript has the standard arithmetic operators: `+` for addition, `-` for subtraction, `*` for multiplication, `/` for division, `%` for the modulo remainder, and `**` for exponentiation.
-
-**[DEMO]**
+JavaScript has the standard arithmetic operators: `+` for addition, `-` for subtraction, `*` for multiplication, `/` for division, `%` for the modulo remainder, and `**` for exponentiation.
 
 ```javascript
 10 + 3     // 13
@@ -104,11 +90,7 @@ if (typeof someVariable === 'undefined') {
 
 The `%` operator returns the remainder of division. `10 % 3` is `1` because 10 divided by 3 is 3 with remainder 1. This is useful for things like checking whether a number is even or odd — `n % 2 === 0` is true for even numbers.
 
-[PAUSE]
-
 Now, the `+` operator has a dual role. It performs numeric addition when both operands are numbers. But when at least one operand is a string, it performs **string concatenation** — it joins the strings together.
-
-**[DEMO — predict before running]**
 
 ```javascript
 5 + 3          // 8 — both numbers, addition
@@ -117,8 +99,6 @@ Now, the `+` operator has a dual role. It performs numeric addition when both op
 5 + 3 + '1'    // '81' — left to right: 5+3=8, then 8+'1'='81'
 '1' + 5 + 3    // '153' — left to right: '1'+5='15', then '15'+3='153'
 ```
-
-[PAUSE]
 
 This left-to-right evaluation is critical. `5 + 3 + '1'` gives `'81'` because the engine evaluates `5 + 3` first, getting `8`, then concatenates `8` with `'1'` to get `'81'`. But `'1' + 5 + 3` gives `'153'` because the first operation is string concatenation — `'1' + 5 = '15'` — and once you are in string mode, `'15' + 3 = '153'`.
 
@@ -131,21 +111,17 @@ The `-`, `*`, `/`, and `%` operators do not concatenate — they always attempt 
 'hello' - 1 // NaN — 'hello' cannot be converted to a number
 ```
 
-`NaN` stands for Not-a-Number. It is the result of an invalid numeric operation. Importantly, `NaN` is of type `number` — `typeof NaN === 'number'` is `true`."
+`NaN` stands for Not-a-Number. It is the result of an invalid numeric operation. Importantly, `NaN` is of type `number` — `typeof NaN === 'number'` is `true`.
 
 ---
 
-## [07:00 – 10:30] Part 3 — Comparison Operators and Type Coercion
+## Part 3 — Comparison Operators and Type Coercion
 
-**[SHOW SLIDE: "`==` vs `===`: The Most Important Distinction"]**
-
-"This is the most important section of Module 03. JavaScript has two equality operators — loose equality `==` and strict equality `===`. They look similar but behave very differently.
+This is the most important section of Module 03. JavaScript has two equality operators — loose equality `==` and strict equality `===`. They look similar but behave very differently.
 
 **Strict equality `===`** compares both the value and the type. No coercion is performed. If the types are different, the result is `false`.
 
 **Loose equality `==`** compares values after performing type coercion. JavaScript attempts to convert the operands to the same type before comparing.
-
-**[DEMO]**
 
 ```javascript
 5 === 5        // true — same value, same type
@@ -158,11 +134,7 @@ The `-`, `*`, `/`, and `%` operators do not concatenate — they always attempt 
 0 == ''        // true — both coerce to 0
 ```
 
-[PAUSE]
-
 These `==` results are surprising. `0 == false` is `true`? `'' == false` is `true`? `0 == ''` is `true`? These pass through a coercion table that is complicated and non-obvious. This is exactly why modern JavaScript best practice is to **always use `===`** and never use `==`. Strict equality has no surprises.
-
-[PAUSE]
 
 Two special cases with `null` and `undefined`:
 
@@ -188,21 +160,15 @@ Number.isNaN(42)          // false
 Number.isNaN('hello')     // false — 'hello' is not NaN, it is a string
 ```
 
-[PAUSE]
-
-The inequality operators `!=` and `!==` follow the same rule: `!==` is strict, `!=` is loose. Always prefer `!==`."
+The inequality operators `!=` and `!==` follow the same rule: `!==` is strict, `!=` is loose. Always prefer `!==`.
 
 ---
 
-## [10:30 – 13:00] Part 4 — Logical Operators and Falsy Values
+## Part 4 — Logical Operators and Falsy Values
 
-**[SHOW SLIDE: "Logical Operators and Truthiness"]**
-
-"JavaScript has three logical operators: `&&` (AND), `||` (OR), and `!` (NOT).
+JavaScript has three logical operators: `&&` (AND), `||` (OR), and `!` (NOT).
 
 `&&` returns `true` if both operands are truthy. `||` returns `true` if at least one operand is truthy. `!` inverts a boolean.
-
-**[DEMO]**
 
 ```javascript
 true && true     // true
@@ -212,8 +178,6 @@ false || false   // false
 !true            // false
 !false           // true
 ```
-
-[PAUSE]
 
 Now the important nuance: JavaScript's logical operators do not always return booleans — they return one of the operands based on **short-circuit evaluation**.
 
@@ -225,8 +189,6 @@ Now the important nuance: JavaScript's logical operators do not always return bo
 ```
 
 `||` is commonly used to provide a default value: `const name = userInput || 'Anonymous'`. If `userInput` is empty (falsy), you get `'Anonymous'`.
-
-[PAUSE]
 
 This connects to **falsy values** — values that JavaScript treats as `false` in a boolean context. There are exactly six falsy values in JavaScript:
 
@@ -248,15 +210,13 @@ Boolean([])        // true — empty array is truthy
 Boolean({})        // true — empty object is truthy
 ```
 
-The `Boolean()` function explicitly converts a value to `true` or `false`. In practice you rarely need to call it — JavaScript does this conversion automatically in `if` conditions and logical operators."
+The `Boolean()` function explicitly converts a value to `true` or `false`. In practice you rarely need to call it — JavaScript does this conversion automatically in `if` conditions and logical operators.
 
 ---
 
-## [13:00 – 15:30] Part 5 — `null` vs `undefined` and Assignment Operators
+## Part 5 — `null` vs `undefined` and Assignment Operators
 
-**[SHOW SLIDE: "null vs undefined — Two Different 'Nothings'"]**
-
-"I want to spend a minute on the distinction between `null` and `undefined` because they confuse students and appear regularly on the exam.
+I want to spend a minute on the distinction between `null` and `undefined` because they confuse students and appear regularly on the exam.
 
 **`undefined`** means a variable exists but has never been assigned. It is the default state. When you declare a variable with `var` and do not assign it, JavaScript sets it to `undefined`. When a function does not explicitly return a value, it returns `undefined`. When you access a property that does not exist on an object, you get `undefined`.
 
@@ -272,8 +232,6 @@ console.log(user);               // null — explicitly set to nothing
 const obj = { name: 'Alice' };
 console.log(obj.age);            // undefined — property does not exist
 ```
-
-[PAUSE]
 
 **Assignment operators** — a quick summary:
 
@@ -298,9 +256,7 @@ count--;   // post-decrement: use value (1), then decrement to 0
 
 The difference between `count++` and `++count` matters when the expression's value is used in another expression — but in practice, `count++` is far more common and you will see it in every `for` loop.
 
-[PAUSE]
-
-That is Module 03. The lab will walk you through type coercion experiments, `==` vs `===` comparisons, and falsy value testing — all in the browser console. Make sure you complete the reading guide before the lab, specifically the coercion table and the falsy values list. Good luck."
+That is Module 03. The lab will walk you through type coercion experiments, `==` vs `===` comparisons, and falsy value testing — all in the browser console. Make sure you complete the reading guide before the lab, specifically the coercion table and the falsy values list. Good luck.
 
 ---
 

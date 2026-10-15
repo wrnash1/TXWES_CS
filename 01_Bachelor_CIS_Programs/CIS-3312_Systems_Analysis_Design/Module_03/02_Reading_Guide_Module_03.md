@@ -211,7 +211,7 @@ Elicitation is most intensive during the Systems Analysis phase of the SDLC, but
 
 7. Focus groups are for gathering opinions and attitudes, not for reaching consensus on requirements. If the goal is consensus, use a workshop. If the goal is understanding user sentiment, use a focus group.
 
-8. The ECBA exam will present scenarios where a BA has completed elicitation and asks "what should the BA do next?" The answer is always "confirm the results with stakeholders" — not "begin writing requirements" or "move to design."
+8. The ECBA exam will present scenarios where a BA has completed elicitation and asks "what should the BA do next?" The answer is always "confirm the results with stakeholders" — not "begin writing requirements" or "move to design.
 
 ---
 
@@ -377,8 +377,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

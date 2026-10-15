@@ -109,7 +109,7 @@ What is the purpose of the `exp` claim in a JWT payload, and what happens on the
 
 **Correct Answer:** B
 
-**Explanation:** The `exp` claim is a standard JWT claim containing a Unix timestamp. `jsonwebtoken`'s `jwt.verify()` automatically checks the current time against `exp`. If the token has expired, it throws `TokenExpiredError` — a subclass of `JsonWebTokenError`. Catching it separately allows the server to return a specific error message like "Token expired — please log in again" instead of a generic "Invalid token."
+**Explanation:** The `exp` claim is a standard JWT claim containing a Unix timestamp. `jsonwebtoken`'s `jwt.verify()` automatically checks the current time against `exp`. If the token has expired, it throws `TokenExpiredError` — a subclass of `JsonWebTokenError`. Catching it separately allows the server to return a specific error message like "Token expired — please log in again" instead of a generic "Invalid token.
 
 **Distractor Analysis:**
 

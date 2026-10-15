@@ -312,7 +312,7 @@ Key rule: You cannot use an aggregate function (SUM, COUNT, AVG, etc.) in a WHER
 
 5. **Window functions keep all rows.** GROUP BY collapses rows into one per group. Window functions compute group-level values while keeping every individual row. This is a key conceptual distinction the exam tests.
 
-6. **RANK vs. ROW_NUMBER.** RANK skips ranks after ties: 1, 2, 2, 4. ROW_NUMBER assigns unique integers always: 1, 2, 3, 4. Know which to use when the requirement specifies "no ties allowed."
+6. **RANK vs. ROW_NUMBER.** RANK skips ranks after ties: 1, 2, 2, 4. ROW_NUMBER assigns unique integers always: 1, 2, 3, 4. Know which to use when the requirement specifies "no ties allowed.
 
 7. **CTEs improve readability.** The exam may ask you to identify the purpose of a WITH clause. CTEs define named temporary result sets that can be referenced in the main query, improving readability and enabling reuse.
 
@@ -466,8 +466,6 @@ A free, database-agnostic guide to writing efficient SQL queries. Covers index u
 **3. SQLZoo — Interactive SQL Exercises**
 <https://sqlzoo.net>
 Browser-based SQL practice covering SELECT, JOIN, GROUP BY, subqueries, and window functions. Immediate feedback with no setup required — ideal for drilling SQL syntax before the lab and quiz.
-
-
 
 ---
 

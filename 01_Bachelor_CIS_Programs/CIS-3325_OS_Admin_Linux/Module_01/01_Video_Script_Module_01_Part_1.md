@@ -58,7 +58,7 @@ Minix was a small Unix-like operating system written by professor Andrew Tanenba
 
 ### Linus Torvalds and the Linux Kernel
 
-In 1991, Linus Torvalds was a 21-year-old student at the University of Helsinki. Frustrated by the limitations of Minix and unable to afford a commercial Unix license, he began writing his own Unix-like kernel. On August 25, 1991, he posted the now-famous message to the comp.os.minix newsgroup: "I'm doing a (free) operating system (just a hobby, won't be big and professional like gnu) for 386 AT clones."
+In 1991, Linus Torvalds was a 21-year-old student at the University of Helsinki. Frustrated by the limitations of Minix and unable to afford a commercial Unix license, he began writing his own Unix-like kernel. On August 25, 1991, he posted the now-famous message to the comp.os.minix newsgroup: "I'm doing a (free) operating system (just a hobby, won't be big and professional like gnu) for 386 AT clones.
 
 That hobby became the Linux kernel. Torvalds released the kernel under the GPL license, which meant that anyone could use, study, modify, and distribute it — but modifications had to be shared back under the same license. This decision was transformative. Within months, developers around the world began contributing. Within years, the Linux kernel was running on servers, workstations, and eventually almost every computing platform on Earth.
 

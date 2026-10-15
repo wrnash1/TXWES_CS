@@ -20,7 +20,7 @@ Peer Responses: Due Sunday at 11:59 PM (minimum two responses)
 
 ## Scenario A — The CVSS Score Debate
 
-Your vulnerability management platform has completed its quarterly scan. The report shows 143 Critical findings, 412 High findings, and 1,847 Medium findings. Your IT operations manager pushes back: "This is the same CVSS-based report we got last quarter. Nothing is actually different. We're going to work our way through the list in score order — Critical first, then High."
+Your vulnerability management platform has completed its quarterly scan. The report shows 143 Critical findings, 412 High findings, and 1,847 Medium findings. Your IT operations manager pushes back: "This is the same CVSS-based report we got last quarter. Nothing is actually different. We're going to work our way through the list in score order — Critical first, then High.
 
 You know that three of the 143 Critical findings are in the CISA KEV catalog and appear on internet-facing systems. You also know that 22 of the 412 High findings have EPSS scores above 0.60, and two of those have been actively discussed in threat intelligence reports as being exploited by the threat actor group most commonly targeting your industry sector.
 
@@ -36,7 +36,7 @@ In 175–225 words, address all three of the following points:
 
 ## Scenario B — The Patch That Breaks Things
 
-A Critical vulnerability (CVE-2023-XXXX, CVSS 9.8, CISA KEV) is identified on the organization's primary order management application server. The vendor patch is available. Your patch management team tests the patch in a staging environment and discovers it breaks a critical integration with the ERP system, causing order processing to fail. The application owner says: "We cannot deploy this patch until the vendor provides a compatibility fix — that could be four to six weeks."
+A Critical vulnerability (CVE-2023-XXXX, CVSS 9.8, CISA KEV) is identified on the organization's primary order management application server. The vendor patch is available. Your patch management team tests the patch in a staging environment and discovers it breaks a critical integration with the ERP system, causing order processing to fail. The application owner says: "We cannot deploy this patch until the vendor provides a compatibility fix — that could be four to six weeks.
 
 The CISO asks you to propose a solution.
 

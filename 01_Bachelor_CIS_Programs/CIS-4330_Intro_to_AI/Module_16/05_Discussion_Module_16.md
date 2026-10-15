@@ -33,7 +33,7 @@ Reflect on your journey through CIS-4330. Identify the single concept, technolog
 
 Think about the industry or professional field you plan to enter after graduation. Based on what you have learned in this course, describe one high-value AI application in that field that does not yet exist (or does not yet exist at scale). The application can draw on any AI capability covered in the course — computer vision, NLP, generative AI, MLOps, etc.
 
-**Prompt:** Describe your proposed AI application in enough detail that a reader understands the problem it solves, the AI capability it uses, and the primary obstacle to building or deploying it. Apply the ROI framework from Module 13 or the build-vs-buy analysis to evaluate feasibility. Be specific — avoid vague claims like "AI will transform healthcare."
+**Prompt:** Describe your proposed AI application in enough detail that a reader understands the problem it solves, the AI capability it uses, and the primary obstacle to building or deploying it. Apply the ROI framework from Module 13 or the build-vs-buy analysis to evaluate feasibility. Be specific — avoid vague claims like "AI will transform healthcare.
 
 ---
 

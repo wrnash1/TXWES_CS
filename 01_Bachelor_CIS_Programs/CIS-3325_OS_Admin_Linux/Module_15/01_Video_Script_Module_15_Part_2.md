@@ -146,7 +146,7 @@ sudo aureport --login
 
 1. fail2ban reads log files (SSH, Apache, etc.)
 2. It matches lines against patterns (called "filters")
-3. When an IP exceeds a threshold (e.g., 5 failures in 10 minutes), it becomes "jailed"
+3. When an IP exceeds a threshold (e.g., 5 failures in 10 minutes), it becomes "jailed
 4. A jail action blocks the IP using iptables, firewalld, or nftables
 5. After the ban time expires, the IP is unblocked
 

@@ -138,7 +138,7 @@ ls /nonexistent_path 2>/dev/null
 
 A. The PID of the `ls` process
 
-B. The string "No such file or directory"
+B. The string "No such file or directory
 
 C. A non-zero integer indicating the command failed
 

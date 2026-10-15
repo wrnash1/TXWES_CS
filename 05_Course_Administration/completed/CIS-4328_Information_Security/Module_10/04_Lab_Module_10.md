@@ -89,7 +89,7 @@ In WebGoat, open **SQL Injection (intro)** and complete the introductory lessons
 
 ### Step 2.2 — String SQL Injection
 
-Open **SQL Injection (intro)** lesson 9 — "String SQL Injection."
+Open **SQL Injection (intro)** lesson 9 — "String SQL Injection.
 
 1. Read the scenario: you are asked to retrieve employee data for all employees
 2. The form has an employee name field and submits a SQL query
@@ -102,7 +102,7 @@ Open **SQL Injection (intro)** lesson 9 — "String SQL Injection."
 
 ### Step 2.3 — Numeric SQL Injection
 
-Open lesson 10 — "Numeric SQL Injection."
+Open lesson 10 — "Numeric SQL Injection.
 
 1. Read the scenario: a form retrieves weather data based on a station number
 2. The station field accepts a number
@@ -113,7 +113,7 @@ Open lesson 10 — "Numeric SQL Injection."
 
 ### Step 2.4 — Query String Parameter Injection
 
-Open lesson 11 — "Compromising Confidentiality with String SQL Injection."
+Open lesson 11 — "Compromising Confidentiality with String SQL Injection.
 
 Follow the lesson instructions to retrieve employee data you should not have access to. The lesson provides guidance.
 

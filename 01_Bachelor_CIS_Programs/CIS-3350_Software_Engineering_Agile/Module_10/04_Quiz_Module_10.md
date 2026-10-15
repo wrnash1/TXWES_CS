@@ -257,7 +257,7 @@ In Scrum, what is the recommended approach for capturing a significant non-funct
 
 - A) Add it to the Definition of Done only, since performance standards always belong there
 - B) Add it both to the Definition of Done (as a quality gate) and as a Product Backlog Item requiring specific development effort if the current architecture cannot meet the standard
-- C) Write it as a user story: "As a user, I can experience fast queries so that the app feels responsive"
+- C) Write it as a user story: "As a user, I can experience fast queries so that the app feels responsive
 - D) Ignore it until a Sprint Review stakeholder complains about performance
 
 - **Correct Answer:** B
@@ -306,10 +306,10 @@ A use case includes the following step: "4a. If the entered email does not match
 
 Which of the following Product Backlog items best captures a non-functional requirement as a user story?
 
-- A) "As a developer, I will optimize database indexes to improve query performance."
-- B) "As a user, I can search for products and receive results within 2 seconds so that I can find what I need without waiting."
-- C) "The system shall maintain 99.9% uptime during peak hours."
-- D) "Performance: all API endpoints must respond within 500ms (P99)."
+- A) "As a developer, I will optimize database indexes to improve query performance.
+- B) "As a user, I can search for products and receive results within 2 seconds so that I can find what I need without waiting.
+- C) "The system shall maintain 99.9% uptime during peak hours.
+- D) "Performance: all API endpoints must respond within 500ms (P99).
 
 - **Correct Answer:** B
 - **Distractor Analysis:**

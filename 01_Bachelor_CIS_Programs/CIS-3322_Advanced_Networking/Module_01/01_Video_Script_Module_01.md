@@ -1,5 +1,23 @@
 # Video Script: Module 01 - Network Architectures & Topologies
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course &bull; Module 01</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" title="Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 1: Network Fundamentals - 20%)
 **Estimated Duration:** 22 minutes
@@ -7,13 +25,10 @@
 
 ---
 
-## Section 1: Introduction and Course Roadmap [00:00 - 03:30]
-
+## Section 1: Introduction and Course Roadmap
 Welcome to Module 01 of CIS-3322 Advanced Networking. I am Professor Nash, and this module lays the architectural foundation for everything that follows in this course.
 
 Before we touch a single CLI command, we need to understand why networks are designed the way they are. The Cisco CCNA 200-301 exam allocates a full 20% of its points to Network Fundamentals, and topology knowledge is one of the first concepts tested.
-
-[SHOW DIAGRAM: Course roadmap showing all 16 modules with Module 01 highlighted as the foundation layer]
 
 Here is what we will cover today:
 
@@ -26,9 +41,7 @@ By the end of this video you should be able to identify each tier in a three-tie
 
 ---
 
-## Section 2: Three-Tier Enterprise Architecture [03:30 - 09:00]
-
-[SHOW DIAGRAM: Three-tier hierarchy with labeled layers - Core (top), Distribution (middle), Access (bottom) with end devices at the bottom edge]
+## Section 2: Three-Tier Enterprise Architecture
 
 The three-tier model is the gold standard for medium-to-large campus networks. Think of it as a highway system. The Core layer is the interstate: high speed, no detours, no traffic lights. The Distribution layer is the on-ramp and off-ramp: it connects the fast interstate to local roads and enforces the rules. The Access layer is the local street where individual homes, offices, and devices connect.
 
@@ -47,8 +60,6 @@ Key characteristics:
 
 The Distribution layer is the policy enforcement point. This is where routing happens between VLANs, where ACLs filter traffic between subnets, and where QoS policies are applied before traffic hits the Core.
 
-[SHOW DIAGRAM: Distribution layer switch with uplinks to Core and downlinks to Access, with ACL and VLAN routing labels on the uplinks]
-
 Cisco multilayer switches at this layer — such as the Catalyst 3850 or 9300 — run both Layer 2 and Layer 3 functions. A typical Distribution switch might have:
 
 - SVI (Switched Virtual Interface) routing for 10 to 20 VLANs
@@ -64,9 +75,7 @@ CCNA Exam Tip: The CCNA frequently presents a network description and asks you t
 
 ---
 
-## Section 3: Collapsed Core and Spine-Leaf Designs [09:00 - 14:30]
-
-[SHOW DIAGRAM: Side-by-side comparison - left shows three-tier with separate Core and Distribution; right shows collapsed core with merged layer labeled "Core/Distribution"]
+## Section 3: Collapsed Core and Spine-Leaf Designs
 
 ### Collapsed Core Design
 
@@ -77,8 +86,6 @@ Cost savings are significant: instead of purchasing six to eight switches for a 
 CCNA Exam Tip: When you read "small campus network" or "single building" in a CCNA scenario, that is the exam hinting at a collapsed core design. When you read "large enterprise" or "multi-building campus," think three-tier.
 
 ### Spine-Leaf Topology
-
-[SHOW DIAGRAM: Spine-leaf data center topology - two spine switches at top, four leaf switches below, every leaf connected to every spine with equal-cost links, no connections between leaf switches]
 
 The spine-leaf topology is the dominant design for modern data centers. It replaces the old three-tier model that was common in data centers before hyperscale workloads created new demands.
 
@@ -95,9 +102,7 @@ CCNA Exam Tip: The CCNA tests your conceptual understanding of spine-leaf, not i
 
 ---
 
-## Section 4: Physical and Logical Topologies [14:30 - 19:00]
-
-[SHOW DIAGRAM: Grid of six topology diagrams - star, full mesh, partial mesh, hub-and-spoke, point-to-point, ring - each labeled]
+## Section 4: Physical and Logical Topologies
 
 Network topology describes how nodes are interconnected. The CCNA tests both physical topology (how cables and hardware are actually connected) and logical topology (how data flows through the network, which may differ from physical connections).
 
@@ -121,12 +126,9 @@ All remote sites connect to a central hub. No direct spoke-to-spoke connections 
 
 A dedicated link between exactly two devices. WAN leased lines are a classic example. On the CCNA, serial interfaces on Cisco routers represent point-to-point WAN connections.
 
-[SHOW DIAGRAM: Cisco router with a serial interface labeled s0/0/0 connected via a WAN cloud symbol to another router's serial interface]
-
 ---
 
-## Section 5: Lab Preview and Exam Readiness [19:00 - 22:00]
-
+## Section 5: Lab Preview and Exam Readiness
 This week's Packet Tracer lab walks you through building a three-tier topology from scratch. You will place Core, Distribution, and Access layer switches, configure trunk links between layers, and verify the topology using show commands.
 
 Here is a preview of the key verification commands you will use:
@@ -136,8 +138,6 @@ SW-CORE# show interfaces trunk
 SW-DIST# show ip route
 SW-ACCESS# show vlan brief
 ```
-
-[SHOW DIAGRAM: Packet Tracer screenshot of completed three-tier topology with device labels]
 
 CCNA Exam Tip: On exam day, if a scenario asks you to choose between a three-tier design and a collapsed core, always consider the scale of the network described. Also remember that the spine-leaf design belongs to the data center domain, not the campus network domain.
 

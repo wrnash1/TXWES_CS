@@ -494,8 +494,6 @@ The authoritative public knowledge base of adversary tactics and techniques. Bro
 <https://www.cisa.gov/resources-tools/resources/free-cybersecurity-services-and-tools>
 A curated list of no-cost tools recommended by the Cybersecurity and Infrastructure Security Agency, including threat feeds, vulnerability scanners, and log analysis tools. Reviewing this page builds familiarity with the operational toolset that real SOC teams use alongside their SIEM platforms.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

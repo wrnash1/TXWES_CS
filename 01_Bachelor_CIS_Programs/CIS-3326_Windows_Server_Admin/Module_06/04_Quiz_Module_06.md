@@ -16,7 +16,7 @@ Select the best answer for each question. Each question is worth 10 points. Revi
 
 A Windows Server DNS administrator wants to ensure that only domain-joined computers can dynamically register DNS records in the company's internal DNS zones, preventing rogue or non-domain devices from polluting the zone with false records. Which DNS zone configuration satisfies this requirement?
 
-A) A standard primary zone stored as a text file on the primary DNS server, with dynamic updates set to "Nonsecure and Secure."
+A) A standard primary zone stored as a text file on the primary DNS server, with dynamic updates set to "Nonsecure and Secure.
 
 B) An Active Directory-integrated zone with dynamic updates set to "Secure only," so only authenticated domain computers can register records.
 

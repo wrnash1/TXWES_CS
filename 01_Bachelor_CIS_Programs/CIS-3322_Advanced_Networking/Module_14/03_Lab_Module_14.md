@@ -383,7 +383,7 @@ Navigate to WLC GUI: Security > Wireless Protection Policies > AP Authentication
 
 **SSID Cloaking (evaluate the tradeoff):** Configure the GUEST-WLAN SSID to be hidden (broadcast SSID disabled):
 
-Navigate to WLANs > GUEST-WLAN > General. Uncheck "Broadcast SSID."
+Navigate to WLANs > GUEST-WLAN > General. Uncheck "Broadcast SSID.
 
 Attempt to connect Laptop-2 to GUEST-WLAN after hiding the SSID. Document whether the client can still connect by manually specifying the SSID. Then re-enable SSID broadcast.
 

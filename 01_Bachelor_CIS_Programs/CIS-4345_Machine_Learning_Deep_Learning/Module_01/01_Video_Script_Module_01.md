@@ -30,7 +30,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Welcome
+## Opening and Welcome
 
 **[VISUAL: Title card — "Module 01: ML Fundamentals | CIS-4345 | Professor Nash"]**
 
@@ -44,7 +44,7 @@ Let's get started.
 
 ---
 
-## [01:30 - 05:00] What Is Machine Learning?
+## What Is Machine Learning?
 
 **[VISUAL: Slide — "Traditional Programming vs. Machine Learning"]**
 
@@ -62,7 +62,7 @@ The key insight is: machine learning is useful when the mapping from input to ou
 
 ---
 
-## [05:00 - 10:00] The Three Learning Paradigms
+## The Three Learning Paradigms
 
 **[VISUAL: Slide — "Three Learning Paradigms"]**
 
@@ -98,7 +98,7 @@ Reinforcement learning drives breakthroughs in game playing, robotics control, a
 
 ---
 
-## [10:00 - 16:00] The ML Pipeline
+## The ML Pipeline
 
 **[VISUAL: Slide — "The ML Pipeline: 7 Stages"]**
 
@@ -148,7 +148,7 @@ A model that lives only in a notebook delivers no business value. Deployment mea
 
 ---
 
-## [16:00 - 19:30] Bias-Variance Tradeoff and Generalization
+## Bias-Variance Tradeoff and Generalization
 
 **[VISUAL: Slide — "Bias-Variance Tradeoff"]**
 
@@ -166,7 +166,7 @@ A critical diagnostic habit: always compare training accuracy to validation accu
 
 ---
 
-## [19:30 - 22:00] TensorFlow Developer Certificate Connection
+## TensorFlow Developer Certificate Connection
 
 **[VISUAL: Slide — "TensorFlow Developer Certificate — What It Tests"]**
 
@@ -180,7 +180,7 @@ The official certification page is at tensorflow.org/certificate. I encourage yo
 
 ---
 
-## [22:00 - 24:00] Module Summary and Lab Preview
+## Module Summary and Lab Preview
 
 **[VISUAL: Slide — "Module 01 Summary"]**
 

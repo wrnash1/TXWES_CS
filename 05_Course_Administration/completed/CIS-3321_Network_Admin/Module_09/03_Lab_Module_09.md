@@ -47,7 +47,7 @@ On Linux/macOS:
 nslookup google.com
 ```
 
-Record the output: the server address, the response IP addresses, and whether the answer is labeled "Non-authoritative answer."
+Record the output: the server address, the response IP addresses, and whether the answer is labeled "Non-authoritative answer.
 
 #### Step 2: Query an MX Record
 

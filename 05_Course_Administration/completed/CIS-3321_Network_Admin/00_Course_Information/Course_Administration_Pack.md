@@ -15,7 +15,7 @@ Every week, you will find bite-sized video lectures, targeted reading guides, an
 **Estimated Duration:** 3 minutes
 **Visual:** Instructor on camera in a professional setting.
 **Audio:** "Hello everyone, and welcome to CIS 3321, Network Administration. I'm your instructor, Professor Nash. In this class, we aren't just learning theory from a textbook; we are building the skills required to physically and logically connect the world. By the end of this semester, you will understand how data travels from your smartphone to a data center across the globe.
-More importantly, this entire course is mapped directly to the CompTIA Network+ certification. Your final exam for this class *is* the certification exam, which you will take proctored at ComputerMinds. To succeed, you need to watch the weekly micro-lectures, complete the VirtualBox labs, and actively study the distractor analyses in the quizzes. If you put in the work, you will leave this class not just with a grade, but with an industry-recognized credential. I look forward to working with you all."
+More importantly, this entire course is mapped directly to the CompTIA Network+ certification. Your final exam for this class *is* the certification exam, which you will take proctored at ComputerMinds. To succeed, you need to watch the weekly micro-lectures, complete the VirtualBox labs, and actively study the distractor analyses in the quizzes. If you put in the work, you will leave this class not just with a grade, but with an industry-recognized credential. I look forward to working with you all.
 
 ---
 

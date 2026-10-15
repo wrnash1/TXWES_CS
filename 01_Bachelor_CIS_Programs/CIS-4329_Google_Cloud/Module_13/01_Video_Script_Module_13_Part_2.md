@@ -241,7 +241,7 @@ Key ACE exam scenarios for Module 13:
 step is missing or what a specific field does. Know the `name`, `args`, `id`, `waitFor`,
 `entrypoint`, and substitution variable patterns.
 
-**Artifact storage** — "Where should Docker images built by Cloud Build be stored?"
+**Artifact storage** — "Where should Docker images built by Cloud Build be stored?
 Answer: Artifact Registry. The old answer was Container Registry (gcr.io) but Artifact
 Registry is now recommended and tested.
 

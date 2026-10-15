@@ -516,8 +516,6 @@ ISACA practitioner article covering BCP program governance, the relationship bet
 <https://drii.org/resources/professionalpractices/EN>
 The DRI International Professional Practices document defines the ten subject areas of business continuity management, including BIA, strategy development, plan development, and exercising/testing. Widely recognized as a companion standard to NIST SP 800-34 for CISM candidates.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

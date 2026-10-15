@@ -22,7 +22,7 @@ Read all three scenarios below. Choose ONE scenario to respond to in your initia
 
 A regional bank is three weeks from the planned go-live date for a new mortgage origination system. The project manager asks the BA for the Requirements Traceability Matrix to assess release readiness. The BA discovers that no RTM was ever created. Requirements were written, the system was built, and testing was conducted — but nobody ever formally linked requirements to test cases or tracked which requirements had been verified.
 
-The project manager's response: "We ran all the test cases and most of them passed. We know the system works. Why do we need the RTM now? It's too late anyway."
+The project manager's response: "We ran all the test cases and most of them passed. We know the system works. Why do we need the RTM now? It's too late anyway.
 
 The QA lead privately tells the BA that she believes several requirements were never tested at all because the test suite was built informally and she cannot confirm coverage.
 
@@ -34,7 +34,7 @@ For your initial post, address the following questions. What specific risks does
 
 A state government agency is implementing a new benefits enrollment system that will be used by thousands of social workers and case managers statewide. The project director has proposed the following UAT plan: the agency's IT department will conduct UAT over two weeks, using IT staff who have been involved in the project since the beginning. The director argues this will be faster and less disruptive than involving frontline social workers.
 
-The BA objects, explaining that having IT staff conduct UAT defeats the purpose of the activity. The project director pushes back: "Our IT people know this system better than anyone. They'll catch more problems."
+The BA objects, explaining that having IT staff conduct UAT defeats the purpose of the activity. The project director pushes back: "Our IT people know this system better than anyone. They'll catch more problems.
 
 The BA knows from research and prior experience that IT-conducted UAT consistently misses usability problems, workflow mismatches, and business rule gaps that only real end users would encounter.
 

@@ -66,9 +66,9 @@ Priority action items — 3 to 5 recommended actions stated in business terms.
 
 Writing an executive summary requires translating technical findings into business language. Consider the difference:
 
-Technical: "The web application at 192.168.1.45 is vulnerable to SQL injection via the username parameter (CVE-2021-27850), enabling unauthenticated read access to the user credentials table."
+Technical: "The web application at 192.168.1.45 is vulnerable to SQL injection via the username parameter (CVE-2021-27850), enabling unauthenticated read access to the user credentials table.
 
-Executive: "The customer portal's login page has a flaw that allows an attacker to access the entire customer database without requiring a password. This could expose 45,000 customer records including payment information."
+Executive: "The customer portal's login page has a flaw that allows an attacker to access the entire customer database without requiring a password. This could expose 45,000 customer records including payment information.
 
 Both describe the same finding. The executive version communicates the business impact. Lead with the consequence, not the mechanism.
 
@@ -82,7 +82,7 @@ Both describe the same finding. The executive version communicates the business 
 
 Each technical finding follows a standard structure. This structure is important for both clarity and for comparing findings across the report.
 
-Finding Title: Brief, descriptive, and consistent. "SQL Injection in Customer Portal Login" is better than "SQLi" or "Web App Vulnerability #3."
+Finding Title: Brief, descriptive, and consistent. "SQL Injection in Customer Portal Login" is better than "SQLi" or "Web App Vulnerability #3.
 
 Risk Rating: Critical, High, Medium, Low, or Informational. The basis for this rating should be documented (CVSS score, business impact).
 
@@ -108,7 +108,7 @@ The standard for a well-written finding:
 
 Reproducibility: A technical person reading the finding should be able to reproduce the vulnerability and verify the fix.
 
-Specificity: Findings reference specific systems, versions, and parameters — not "a web server" but "the Apache 2.4.48 instance at webprod01.internal:443."
+Specificity: Findings reference specific systems, versions, and parameters — not "a web server" but "the Apache 2.4.48 instance at webprod01.internal:443.
 
 Evidence integrity: Screenshots must show the testing machine's IP and timestamp. Command output must be unedited. Manipulated evidence is career-ending.
 
@@ -212,7 +212,7 @@ A Critical CVSS base score vulnerability on a non-critical test system with no s
 
 Remediation recommendations are where the report delivers practical value. A good remediation recommendation is:
 
-Specific: Not "improve authentication" but "enforce MFA on all privileged account logins using FIDO2 hardware tokens."
+Specific: Not "improve authentication" but "enforce MFA on all privileged account logins using FIDO2 hardware tokens.
 
 Actionable: The client's technical team can implement this recommendation without further research.
 
@@ -250,7 +250,7 @@ Report language should inform without creating panic. Specific guidance:
 
 Do not use fear-based language: "This vulnerability will certainly be exploited" is speculation. "This vulnerability is easily exploitable and represents significant risk" is accurate.
 
-Quantify where possible: "Exploitation takes less than 5 minutes with freely available tools" is more informative than "this is trivial to exploit."
+Quantify where possible: "Exploitation takes less than 5 minutes with freely available tools" is more informative than "this is trivial to exploit.
 
 Focus on remediation: Frame findings with the solution in mind. "This vulnerability can be eliminated by applying the available patch" is more actionable than dwelling on the impact.
 

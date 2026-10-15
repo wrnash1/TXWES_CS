@@ -159,11 +159,11 @@ A good Sprint Goal:
 - States a user-facing outcome, not a task list
 - Is achievable within the Sprint's timebox
 - Allows the Developers some flexibility about implementation
-- Is testable — at the Sprint Review you can answer yes or no to "Did we achieve the Sprint Goal?"
+- Is testable — at the Sprint Review you can answer yes or no to "Did we achieve the Sprint Goal?
 
 Poor Sprint Goal example: "Complete stories 12, 14, and 17." (This is a task list, not a goal.)
 
-Better Sprint Goal example: "Enable customers to browse and filter the product catalog by category and price so that the holiday marketing campaign can launch."
+Better Sprint Goal example: "Enable customers to browse and filter the product catalog by category and price so that the holiday marketing campaign can launch.
 
 ---
 
@@ -406,8 +406,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

@@ -16,7 +16,7 @@ Read all three scenarios below. Choose one scenario for your initial post. Ident
 
 ## Scenario A: The Misclassified Use Case
 
-A regional hospital is planning an AI initiative to help radiologists review chest X-rays. The project sponsor describes the initiative to the board as follows: "We are automating radiology. This AI will read X-rays and free up our radiologists to focus on other work." The technology lead, however, describes the same system differently: "The AI flags regions of interest for the radiologist to prioritize. Radiologists still review and sign off on every scan."
+A regional hospital is planning an AI initiative to help radiologists review chest X-rays. The project sponsor describes the initiative to the board as follows: "We are automating radiology. This AI will read X-rays and free up our radiologists to focus on other work." The technology lead, however, describes the same system differently: "The AI flags regions of interest for the radiologist to prioritize. Radiologists still review and sign off on every scan.
 
 The board approves the project based on the sponsor's description and expects a 40 percent reduction in radiology staffing costs within two years. After deployment, radiologists are more efficient and catch more findings, but no staff reductions occur — the same team is now reviewing more scans per shift with fewer missed findings.
 
@@ -36,9 +36,9 @@ A mid-sized insurance company is launching a claims triage project. When a claim
 
 Two teams disagree on the approach:
 
-Team A argues for Azure AI Language CLU. They say: "CLU can learn any intent categories we define. We just label utterances for our seven queues and train the model."
+Team A argues for Azure AI Language CLU. They say: "CLU can learn any intent categories we define. We just label utterances for our seven queues and train the model.
 
-Team B argues for Azure OpenAI with a detailed system message. They say: "GPT-4 is powerful enough to understand claim descriptions and route them correctly with a well-designed prompt. No training data needed."
+Team B argues for Azure OpenAI with a detailed system message. They say: "GPT-4 is powerful enough to understand claim descriptions and route them correctly with a well-designed prompt. No training data needed.
 
 The company has 12,000 labeled historical claim descriptions already categorized into the seven queues.
 
@@ -58,7 +58,7 @@ A logistics company deployed an Azure Machine Learning demand forecasting model 
 
 The data science team reports a positive ROI: they cite $280,000 in annualized labor savings from more efficient driver scheduling and $95,000 in avoided overtime costs. Total investment was $210,000 in Year 1 (development, compute, and data labeling). They calculate ROI at 178 percent.
 
-The CFO challenges the ROI claim: "We did not actually reduce headcount. No one was laid off. The same number of drivers are working. Where is the savings?" The data science team responds: "We're doing the same volume with 11 percent fewer overtime hours. The savings are real — we're just not seeing them in the headcount line."
+The CFO challenges the ROI claim: "We did not actually reduce headcount. No one was laid off. The same number of drivers are working. Where is the savings?" The data science team responds: "We're doing the same volume with 11 percent fewer overtime hours. The savings are real — we're just not seeing them in the headcount line.
 
 In your initial post (175–225 words), address all of the following:
 

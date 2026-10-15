@@ -70,13 +70,13 @@ grep -v "200" /var/log/access.log
 
 What does this command display?
 
-A. Only lines that contain exactly the string "200"
+A. Only lines that contain exactly the string "200
 
-B. All lines except those containing "200"
+B. All lines except those containing "200
 
-C. Line numbers for every occurrence of "200"
+C. Line numbers for every occurrence of "200
 
-D. A count of lines that do not contain "200"
+D. A count of lines that do not contain "200
 
 **Correct Answer: B**
 

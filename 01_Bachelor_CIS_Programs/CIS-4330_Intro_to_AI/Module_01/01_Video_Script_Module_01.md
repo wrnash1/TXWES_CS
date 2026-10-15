@@ -26,7 +26,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Welcome
+## Opening and Welcome
 
 Good morning, good afternoon, or good evening — wherever you are joining from, welcome to CIS-4330, Introduction to Artificial Intelligence, here at Texas Wesleyan University. I am Professor Nash, and I am genuinely excited to work through this material with you.
 
@@ -38,7 +38,7 @@ Let us get started.
 
 ---
 
-## [01:30 - 04:00] What Is Artificial Intelligence?
+## What Is Artificial Intelligence?
 
 The term artificial intelligence has been used since 1956, when computer scientist John McCarthy coined it at the Dartmouth Conference. But the concept has evolved dramatically. For our purposes — and specifically for the AI-900 exam — here is the definition you need to internalize:
 
@@ -60,9 +60,7 @@ Here is an analogy I use. Think of AI as the category "vehicle." Under that cate
 
 ---
 
-## [04:00 - 07:00] The AI, Machine Learning, and Deep Learning Hierarchy
-
-[SHOW DIAGRAM: Three concentric circles. Outermost circle labeled "Artificial Intelligence." Middle circle labeled "Machine Learning." Innermost circle labeled "Deep Learning."]
+## The AI, Machine Learning, and Deep Learning Hierarchy
 
 This nested diagram is one of the most tested visuals on the AI-900 exam. Let me walk through each layer.
 
@@ -76,13 +74,11 @@ Here is the AI-900 trap I want you to avoid. The exam sometimes presents scenari
 
 ---
 
-## [07:00 - 10:30] How Machine Learning Actually Works
-
-[SHOW DIAGRAM: ML Workflow diagram with five boxes connected by arrows: "Training Data" → "Feature Extraction" → "Algorithm Training" → "Trained Model" → "Predictions on New Data"]
+## How Machine Learning Actually Works
 
 Let me walk through this workflow because it underpins everything we do in this course.
 
-Step one is training data. A machine learning model learns from examples. Those examples are called training data. If we are building a model to detect spam email, our training data would be thousands of emails already labeled as "spam" or "not spam."
+Step one is training data. A machine learning model learns from examples. Those examples are called training data. If we are building a model to detect spam email, our training data would be thousands of emails already labeled as "spam" or "not spam.
 
 Step two is feature extraction. A feature is a measurable property of the data. In the spam example, features might include the number of exclamation points, whether the word "urgent" appears, the length of the email, and whether the sender's domain is recognized. The quality of features dramatically affects model performance.
 
@@ -96,7 +92,7 @@ This five-step workflow applies whether you are predicting housing prices, diagn
 
 ---
 
-## [10:30 - 13:30] The Three Learning Paradigms
+## The Three Learning Paradigms
 
 Machine learning is typically divided into three paradigms, and the AI-900 exam tests all three.
 
@@ -110,9 +106,7 @@ The AI-900 exam will present you with a scenario and ask which learning paradigm
 
 ---
 
-## [13:30 - 16:30] How Azure Delivers AI
-
-[SHOW DIAGRAM: Three-tier pyramid. Bottom tier: "Azure Machine Learning (custom models)." Middle tier: "Azure Cognitive Services (prebuilt APIs)." Top tier: "Azure Applied AI Services (task-specific solutions)."]
+## How Azure Delivers AI
 
 Microsoft Azure organizes its AI offerings into three tiers, and understanding this hierarchy is essential for AI-900.
 
@@ -126,7 +120,7 @@ The key insight for AI-900: when a scenario describes a business problem, ask yo
 
 ---
 
-## [16:30 - 19:00] Responsible AI — An Introduction
+## Responsible AI — An Introduction
 
 AI-900 devotes an entire exam domain to responsible AI, and we will cover it fully in Module 10. But I want to introduce the framework now because it should inform how you think about every module in this course.
 
@@ -145,7 +139,7 @@ Memorize these six principles by name. Understand what each one means in a concr
 
 ---
 
-## [19:00 - 21:00] Module 01 Summary and Lab Preview
+## Module 01 Summary and Lab Preview
 
 Let us recap what we covered today.
 

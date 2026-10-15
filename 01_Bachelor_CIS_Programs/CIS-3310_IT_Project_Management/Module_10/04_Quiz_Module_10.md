@@ -223,7 +223,7 @@ Distractor Analysis:
 
 - **Why B is correct:** This reflects the empirical finding that CPI tends to stabilize after 20% project completion. A CPI of 0.88 means the project is getting only 88 cents of value per dollar spent. If this efficiency level persists, `EAC = BAC / 0.88`, which is approximately 14% over budget at completion.
 - **Why A is incorrect:** SPI proximity to 1.0 addresses schedule, not cost. The sponsor's question about recovery almost certainly concerns whether the project will come in within budget. SPI does not answer cost recovery questions.
-- **Why C is incorrect:** Being a positive number is not the same as performing well. Indices of 0.92 and 0.88 are both below 1.0, indicating below-target performance on both dimensions — this is not "good shape."
+- **Why C is incorrect:** Being a positive number is not the same as performing well. Indices of 0.92 and 0.88 are both below 1.0, indicating below-target performance on both dimensions — this is not "good shape.
 - **Why D is incorrect:** CPI becomes more reliable and meaningful as the project progresses. It is most informative and most predictive after the 20% completion mark — the opposite of what this distractor claims.
 
 ---

@@ -133,9 +133,9 @@ Document your choice in a markdown cell at the top of your notebook, including: 
 
 Define one clear, answerable business question. Examples:
 
-* "Which product categories generate the highest profit margin and how has this changed over the last four quarters?"
-* "Which customer segments have the highest churn risk based on purchase frequency and support ticket history?"
-* "What factors are most strongly correlated with employee tenure at this organization?"
+* "Which product categories generate the highest profit margin and how has this changed over the last four quarters?
+* "Which customer segments have the highest churn risk based on purchase frequency and support ticket history?
+* "What factors are most strongly correlated with employee tenure at this organization?
 
 Your question must be answerable from the data you have selected. Write it in a markdown cell.
 

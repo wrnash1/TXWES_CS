@@ -202,7 +202,7 @@ D. Change the finding's severity from Critical to Informational since the client
 
 **Question 9**
 
-Which PT0-002 exam domain would MOST directly address the question: "A tester uses sqlmap --dbs to enumerate database names and recovers a list of databases including `customer_pii`. What should the tester do next?"
+Which PT0-002 exam domain would MOST directly address the question: "A tester uses sqlmap --dbs to enumerate database names and recovers a list of databases including `customer_pii`. What should the tester do next?
 
 A. Domain 1 — Planning and Scoping: The tester must confirm the database is within the authorized scope.
 

@@ -26,17 +26,15 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 01 | Introduction to PC Hardware & Safety | CIS-2320"]**
+Welcome to CIS-2320 — Hardware Fundamentals. I'm Professor Nash, and this course is built around the CompTIA A+ certification — the industry-standard credential for IT support technicians. Every module maps directly to the A+ Core 1 (220-1101) and Core 2 (220-1102) exam objectives. Module 16 is your certification exam.
 
-"Welcome to CIS-2320 — Hardware Fundamentals. I'm Professor Nash, and this course is built around the CompTIA A+ certification — the industry-standard credential for IT support technicians. Every module maps directly to the A+ Core 1 (220-1101) and Core 2 (220-1102) exam objectives. Module 16 is your certification exam.
-
-Today we cover the foundation: what's inside a desktop PC, why electrostatic discharge is the silent killer of computer hardware, and the exact safety procedure you follow every single time you open a computer case. These topics appear on Domain 3 of the A+ Core 1 exam — Hardware — and they show up in scenario questions throughout the test. Let's get into it."
+Today we cover the foundation: what's inside a desktop PC, why electrostatic discharge is the silent killer of computer hardware, and the exact safety procedure you follow every single time you open a computer case. These topics appear on Domain 3 of the A+ Core 1 exam — Hardware — and they show up in scenario questions throughout the test. Let's get into it.
 
 ---
 
-## [01:30 – 06:00] Part 1 — Internal PC Components Overview
+## Part 1 — Internal PC Components Overview
 
 <div style="text-align: center; margin: 24px 0;">
 <svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
@@ -122,13 +120,11 @@ Today we cover the foundation: what's inside a desktop PC, why electrostatic dis
 
 **[SHOW COMPONENT: Desktop PC case with side panel removed]**
 
-"Before you can work on a PC, you need to know what you're looking at. Let me walk you through the major internal components.
+Before you can work on a PC, you need to know what you're looking at. Let me walk you through the major internal components.
 
 **[SHOW COMPONENT: Motherboard]**
 
 This is the **motherboard** — the main circuit board. Everything connects to it: CPU, RAM, storage, graphics card, power supply. The motherboard determines which CPU generation you can use, how much RAM you can install, and which expansion cards are supported.
-
-[PAUSE]
 
 **[SHOW COMPONENT: CPU/Processor]**
 
@@ -150,23 +146,15 @@ Storage drives — either an **HDD** (hard disk drive, mechanical, spinning plat
 
 And the **GPU** — graphics processing unit, or graphics card. It inserts into the PCIe x16 slot on the motherboard. On systems with integrated graphics, this card may be absent.
 
-[PAUSE]
-
-The A+ exam uses scenario-based questions. You might be told: 'A user's PC powers on but shows no video output.' You need to know: check the monitor cable, check the GPU seating in the PCIe slot, check whether integrated graphics is disabled in BIOS. Knowing what each component does and where it is physically located is non-negotiable for that exam."
+The A+ exam uses scenario-based questions. You might be told: 'A user's PC powers on but shows no video output.' You need to know: check the monitor cable, check the GPU seating in the PCIe slot, check whether integrated graphics is disabled in BIOS. Knowing what each component does and where it is physically located is non-negotiable for that exam.
 
 ---
 
-## [06:00 – 12:00] Part 2 — Electrostatic Discharge (ESD)
+## Part 2 — Electrostatic Discharge (ESD)
 
-**[SHOW SLIDE: "ESD — The Invisible Hardware Killer"]**
-
-"Electrostatic discharge — ESD — is the silent threat in hardware work. It is the sudden flow of static electricity between two objects at different electrical potentials. You know the feeling when you shuffle across carpet in socks and then touch a doorknob — that spark is ESD. On your body, you need thousands of volts to feel it. On a computer chip, 10 volts is enough to cause damage.
-
-[PAUSE]
+Electrostatic discharge — ESD — is the silent threat in hardware work. It is the sudden flow of static electricity between two objects at different electrical potentials. You know the feeling when you shuffle across carpet in socks and then touch a doorknob — that spark is ESD. On your body, you need thousands of volts to feel it. On a computer chip, 10 volts is enough to cause damage.
 
 **Why is this serious?** The integrated circuits on a CPU, RAM module, or graphics card have traces that are nanometers wide. A static discharge destroys those traces — permanently. The component may still appear to work, or it may fail intermittently for months before dying completely. You cannot see the damage. You cannot repair it.
-
-**[SHOW DIAGRAM: Human body model — static charge paths]**
 
 ESD protection works by keeping the technician and the components at the same electrical potential — no potential difference, no discharge.
 
@@ -176,17 +164,13 @@ ESD protection works by keeping the technician and the components at the same el
 
 **Anti-static bags:** Components are shipped and stored in metallized anti-static bags. When you receive a new RAM module or CPU, it arrives in one of these bags. Do not remove it until you are grounded and ready to install.
 
-[PAUSE]
-
-**A+ exam tip:** A common distractor is 'the ESD wrist strap protects the technician from electrical shock.' That is wrong. The wrist strap protects the PC components, not the person. The 1-megaohm resistor actually prevents any dangerous current from flowing through the strap to the technician. The exam will offer that distractor — do not select it."
+**A+ exam tip:** A common distractor is 'the ESD wrist strap protects the technician from electrical shock.' That is wrong. The wrist strap protects the PC components, not the person. The 1-megaohm resistor actually prevents any dangerous current from flowing through the strap to the technician. The exam will offer that distractor — do not select it.
 
 ---
 
-## [12:00 – 17:00] Part 3 — Safety Procedures
+## Part 3 — Safety Procedures
 
-**[SHOW SLIDE: "PC Hardware Safety Procedure — In Order"]**
-
-"Let's talk about the correct safety procedure for opening a PC. The order matters — the A+ exam tests this.
+Let's talk about the correct safety procedure for opening a PC. The order matters — the A+ exam tests this.
 
 **Step 1: Power down the system properly.** Shut down the OS — don't just press the power button for a hard shutdown unless necessary.
 
@@ -198,23 +182,19 @@ ESD protection works by keeping the technician and the components at the same el
 
 **Step 5: Open the case and begin work.**
 
-[PAUSE]
-
 **Additional safety notes for the A+ exam:**
 
 **PSU capacitors:** Never open a PSU. Even when unplugged, the capacitors inside a PSU can store lethal voltage for extended periods. If a PSU fails, replace it — do not attempt to repair it.
 
 **Sharp edges:** PC cases — especially low-cost steel cases — have sharp metal edges, especially around the case opening and near the power supply mounting area. Use work gloves when necessary and be deliberate about hand placement.
 
-**Lifting heavy equipment:** Servers and large desktop towers can weigh 20–40 pounds. Use proper lifting technique: bend at the knees, not the waist. Get assistance for heavier equipment."
+**Lifting heavy equipment:** Servers and large desktop towers can weigh 20–40 pounds. Use proper lifting technique: bend at the knees, not the waist. Get assistance for heavier equipment.
 
 ---
 
-## [17:00 – 21:00] Part 4 — Component Identification for the A+ Exam
+## Part 4 — Component Identification for the A+ Exam
 
-**[SHOW SLIDE: "A+ Core 1 — What You Must Identify by Sight"]**
-
-"The A+ exam uses images and scenario descriptions. You must be able to identify these by sight:
+The A+ exam uses images and scenario descriptions. You must be able to identify these by sight:
 
 **Connectors and ports:**
 
@@ -233,11 +213,9 @@ ESD protection works by keeping the technician and the components at the same el
 - CMOS battery (small coin cell on the motherboard — CR2032 — stores BIOS settings)
 - POST diagnostic LED indicators and speaker header
 
-[PAUSE]
-
 The Module 01 lab has you open a PC case (physical or virtual) and identify each of these components. You will sketch a component map, label each part, and document the connector type for the PSU-to-motherboard connection and the PSU-to-drive connections.
 
-This course builds on itself. Motherboards are Module 02, CPUs are Module 03, RAM is Module 04. Today's identification exercise is the foundation for all of those. Come back and review this video whenever you need a visual anchor for those topics. Good luck."
+This course builds on itself. Motherboards are Module 02, CPUs are Module 03, RAM is Module 04. Today's identification exercise is the foundation for all of those. Come back and review this video whenever you need a visual anchor for those topics. Good luck.
 
 ---
 

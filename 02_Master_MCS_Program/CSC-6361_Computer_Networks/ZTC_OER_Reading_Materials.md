@@ -27,7 +27,7 @@ This course operates under a **Zero Textbook Cost (ZTC)** model. No commercial t
 ### Module 01 — Advanced IP Routing: OSPF & EIGRP
 - **IETF RFC 2328** — OSPF Version 2: https://datatracker.ietf.org/doc/html/rfc2328
 - **IETF RFC 7868** — Cisco's EIGRP Informational RFC: https://datatracker.ietf.org/doc/html/rfc7868
-- **Cisco IOS OSPF Configuration Guide** (free): https://www.cisco.com/c/en/us/support/index.html → search "OSPF Configuration Guide"
+- **Cisco IOS OSPF Configuration Guide** (free): https://www.cisco.com/c/en/us/support/index.html → search "OSPF Configuration Guide
 
 ### Module 02 — Campus Network Design: VLANs, STP & EtherChannel
 - **IEEE 802.1Q** (VLAN Tagging) overview via Cisco docs

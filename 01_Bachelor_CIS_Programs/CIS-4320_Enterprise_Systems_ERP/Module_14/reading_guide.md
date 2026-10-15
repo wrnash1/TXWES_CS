@@ -320,8 +320,6 @@ SAP BI topics to review:
 
 *Document prepared for CIS-4320 instructional use. Texas Wesleyan University. Proprietary and Confidential.*
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

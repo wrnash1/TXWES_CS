@@ -113,7 +113,7 @@ Always offer to connect the user with a human agent if you cannot help.
 
 ### Zero-Shot, Few-Shot, and Chain-of-Thought
 
-**Zero-shot prompting** provides only the instruction with no examples. "Translate the following sentence to French."
+**Zero-shot prompting** provides only the instruction with no examples. "Translate the following sentence to French.
 
 **Few-shot prompting** provides one or more examples of the desired input-output pattern before presenting the actual request. This is highly effective for tasks with a specific output format.
 
@@ -152,9 +152,9 @@ Enterprises generate enormous volumes of text: meeting transcripts, legal docume
 
 Summarization prompt patterns include:
 
-- "Summarize the following in three bullet points for a non-technical executive."
-- "Write a one-paragraph abstract of the following research paper."
-- "Identify the action items and decisions from the following meeting transcript."
+- "Summarize the following in three bullet points for a non-technical executive.
+- "Write a one-paragraph abstract of the following research paper.
+- "Identify the action items and decisions from the following meeting transcript.
 
 The key to reliable summarization is **grounding** — always providing the source text in the prompt. Never ask the model to summarize something it has to recall from training. Provide the document and ask it to summarize what you provided.
 
@@ -169,11 +169,11 @@ GPT-4 and GPT-3.5 were trained on billions of lines of code across dozens of pro
 Practical code generation use cases include:
 
 - **Code completion**: Given a function signature and docstring, generate the implementation
-- **Code explanation**: "Explain what this function does in plain English"
-- **Code translation**: "Convert this Python function to JavaScript"
-- **Debugging**: "What is wrong with this code? Here is the error message."
-- **Unit test generation**: "Write pytest unit tests for the following function"
-- **SQL generation**: "Write a SQL query that returns the top 10 customers by revenue this quarter"
+- **Code explanation**: "Explain what this function does in plain English
+- **Code translation**: "Convert this Python function to JavaScript
+- **Debugging**: "What is wrong with this code? Here is the error message.
+- **Unit test generation**: "Write pytest unit tests for the following function
+- **SQL generation**: "Write a SQL query that returns the top 10 customers by revenue this quarter
 
 **[SHOW DEMO]** In the Azure AI Studio Playground, prompt: "Write a Python function that takes a list of integers and returns the second largest unique value. Include docstring and type hints." Show the generated code. Then prompt: "Now write three pytest test cases for this function, including edge cases." Show how the model generates meaningful tests for the code it just wrote.
 

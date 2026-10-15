@@ -26,21 +26,17 @@
 
 ---
 
-## [00:00 – 01:00] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 05 | Loops and Iteration | CIS-1320"]**
+Module 05 is about repetition. Real programs rarely execute each line of code exactly once — they process all items in a shopping cart, validate each field in a form, retry a failed request, count through a range of numbers. Loops are the tool for all of that.
 
-"Module 05 is about repetition. Real programs rarely execute each line of code exactly once — they process all items in a shopping cart, validate each field in a form, retry a failed request, count through a range of numbers. Loops are the tool for all of that.
-
-JavaScript has three traditional loop constructs — `for`, `while`, and `do-while` — plus two modern iteration forms: `for...of` and `for...in`. Each is suited to different situations. We will cover all five, plus `break` and `continue` for controlling loop flow. Let us start with the most common one."
+JavaScript has three traditional loop constructs — `for`, `while`, and `do-while` — plus two modern iteration forms: `for...of` and `for...in`. Each is suited to different situations. We will cover all five, plus `break` and `continue` for controlling loop flow. Let us start with the most common one.
 
 ---
 
-## [01:00 – 05:30] Part 1 — The `for` Loop
+## Part 1 — The `for` Loop
 
-**[SHOW SLIDE: "The for Loop"]**
-
-"The `for` loop is the most commonly used loop in JavaScript. Its header has three parts separated by semicolons:
+The `for` loop is the most commonly used loop in JavaScript. Its header has three parts separated by semicolons:
 
 ```javascript
 for (initialization; condition; update) {
@@ -49,8 +45,6 @@ for (initialization; condition; update) {
 ```
 
 The **initialization** runs once before the loop starts. The **condition** is checked before every iteration — if it is truthy, the body runs; if it is falsy, the loop ends. The **update** runs after every iteration.
-
-**[DEMO]**
 
 ```javascript
 for (let i = 0; i < 5; i++) {
@@ -70,8 +64,6 @@ The engine executes this as:
 
 Output: `0`, `1`, `2`, `3`, `4` — five values.
 
-[PAUSE]
-
 **The most-tested JSE exam concept in this module: `<` vs `<=`.**
 
 ```javascript
@@ -83,10 +75,6 @@ for (let i = 1; i < 5; i++) {}   // runs 4 times: i = 1,2,3,4
 
 Before you write a `for` loop, ask two questions: where does my counter start — at `0` or at `1`? And do I want to include the last value — `<` or `<=`? Getting this wrong produces off-by-one errors.
 
-[PAUSE]
-
-**[DEMO — counting down]**
-
 ```javascript
 for (let i = 10; i >= 1; i--) {
   console.log(i);
@@ -96,10 +84,6 @@ console.log('Liftoff!');
 
 You can count down by starting high and using `i--`. The condition `i >= 1` keeps the loop running until `i` reaches `0`.
 
-[PAUSE]
-
-**[DEMO — iterating an array]**
-
 ```javascript
 const fruits = ['apple', 'banana', 'cherry'];
 
@@ -108,15 +92,13 @@ for (let i = 0; i < fruits.length; i++) {
 }
 ```
 
-Using `i < fruits.length` is the standard idiom for iterating an array by index. Never hardcode the length — use `.length` so the loop adapts if the array changes."
+Using `i < fruits.length` is the standard idiom for iterating an array by index. Never hardcode the length — use `.length` so the loop adapts if the array changes.
 
 ---
 
-## [05:30 – 08:30] Part 2 — `while` and `do-while`
+## Part 2 — `while` and `do-while`
 
-**[SHOW SLIDE: "`while` and `do-while`"]**
-
-"The `while` loop checks its condition before each iteration:
+The `while` loop checks its condition before each iteration:
 
 ```javascript
 while (condition) {
@@ -125,8 +107,6 @@ while (condition) {
 ```
 
 If the condition is initially false, the body never runs. Use `while` when you do not know in advance how many iterations you need.
-
-**[DEMO]**
 
 ```javascript
 let attempts = 0;
@@ -138,8 +118,6 @@ while (attempts < MAX_ATTEMPTS) {
 }
 console.log('Done after', attempts, 'attempts');
 ```
-
-[PAUSE]
 
 The critical mistake with `while` is forgetting the update. Without `attempts++`, `attempts` stays at `0` forever and you get an infinite loop:
 
@@ -154,8 +132,6 @@ while (x < 5) {
 **[BRIEF DEMO — show in console, then immediately close or Ctrl+C]**
 
 The browser tab freezes when you run this. Always make sure your while loop modifies the variable the condition depends on.
-
-[PAUSE]
 
 The `do-while` loop runs the body first, then checks the condition:
 
@@ -178,19 +154,15 @@ do {
 // Output: 'count is 10' — runs once, then 10 < 5 is false, loop ends
 ```
 
-`do-while` is useful when you need to perform an action at least once and then decide whether to repeat — like showing a dialog and asking the user to try again."
+`do-while` is useful when you need to perform an action at least once and then decide whether to repeat — like showing a dialog and asking the user to try again.
 
 ---
 
-## [08:30 – 11:00] Part 3 — `break` and `continue`
+## Part 3 — `break` and `continue`
 
-**[SHOW SLIDE: "`break` and `continue`"]**
-
-"`break` and `continue` control loop flow.
+`break` and `continue` control loop flow.
 
 **`break`** immediately exits the entire loop:
-
-**[DEMO]**
 
 ```javascript
 for (let i = 0; i < 10; i++) {
@@ -203,8 +175,6 @@ for (let i = 0; i < 10; i++) {
 ```
 
 When `i === 5`, `break` exits the loop immediately. The loop never reaches `6`, `7`, `8`, or `9`. This is commonly used to search for a value — once found, stop searching.
-
-[PAUSE]
 
 **`continue`** skips the rest of the current iteration and jumps to the next one:
 
@@ -219,8 +189,6 @@ for (let i = 0; i < 10; i++) {
 ```
 
 When `i` is odd, `continue` skips the `console.log` for that iteration and jumps back to `i++`, then the condition check. The loop continues — only that one iteration is skipped.
-
-[PAUSE]
 
 `break` exits the loop entirely. `continue` skips one iteration. Know this distinction for the exam.
 
@@ -238,15 +206,11 @@ for (let i = 0; i < 3; i++) {
 
 ---
 
-## [11:00 – 14:00] Part 4 — `for...of` and `for...in`
+## Part 4 — `for...of` and `for...in`
 
-**[SHOW SLIDE: "Modern Iteration: for...of and for...in"]**
-
-"ES6 introduced two new loop forms that are more convenient for specific use cases.
+ES6 introduced two new loop forms that are more convenient for specific use cases.
 
 **`for...of`** iterates over the **values** of any iterable — arrays, strings, and others:
-
-**[DEMO]**
 
 ```javascript
 const colors = ['red', 'green', 'blue'];
@@ -270,8 +234,6 @@ for (const char of word) {
 
 `for...of` works on strings too — it iterates each character.
 
-[PAUSE]
-
 **`for...in`** iterates over the **keys** (property names) of an object:
 
 ```javascript
@@ -285,8 +247,6 @@ for (const key in person) {
 
 `key` holds each property name as a string. Use `person[key]` to access the value.
 
-[PAUSE]
-
 **The critical trap:** do not use `for...in` on arrays. It gives you the **index as a string**, not the value, and it can include inherited properties:
 
 ```javascript
@@ -297,15 +257,13 @@ for (const i in arr) {
 }
 ```
 
-The indexes `0`, `1`, `2` come back as strings `'0'`, `'1'`, `'2'`. Use `for...of` for arrays, `for...in` for objects. This distinction appears on the JSE exam."
+The indexes `0`, `1`, `2` come back as strings `'0'`, `'1'`, `'2'`. Use `for...of` for arrays, `for...in` for objects. This distinction appears on the JSE exam.
 
 ---
 
-## [14:00 – 16:00] Closing — Lab Preview
+## Closing — Lab Preview
 
-**[SHOW SLIDE: "Module 05 Lab Preview"]**
-
-"The Module 05 lab has four parts.
+The Module 05 lab has four parts.
 
 Part 1 uses `for` loops — counting up, counting down, iterating arrays by index, and demonstrating the `<` vs `<=` off-by-one difference with a comparison table.
 
@@ -315,7 +273,7 @@ Part 3 uses `break` and `continue` — searching for a value in an array, filter
 
 Part 4 uses `for...of` and `for...in` — iterating array values, string characters, and object key-value pairs — and demonstrates why `for...in` on arrays produces string keys.
 
-The quiz focuses heavily on off-by-one errors and the `break` vs `continue` distinction. Read the reading guide before the lab. Good luck."
+The quiz focuses heavily on off-by-one errors and the `break` vs `continue` distinction. Read the reading guide before the lab. Good luck.
 
 ---
 

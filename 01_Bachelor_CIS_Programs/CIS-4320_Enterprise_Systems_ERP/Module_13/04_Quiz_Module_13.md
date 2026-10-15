@@ -33,7 +33,7 @@ In Salesforce, which of the following best describes a **Permission Set**?
 
 * **Correct Answer:** C) A Permission Set is an additive permission bundle that can be assigned to individual users to extend their access beyond what their Profile provides, without creating a new Profile for every edge case.
 * **Distractor Analysis:**
-  * *Why C is correct:* Permission Sets are the Salesforce best-practice solution when one or a few users need access to something that others on the same Profile don't. The Associate exam frequently tests this: "use a Permission Set, not a new Profile."
+  * *Why C is correct:* Permission Sets are the Salesforce best-practice solution when one or a few users need access to something that others on the same Profile don't. The Associate exam frequently tests this: "use a Permission Set, not a new Profile.
   * *Why A is incorrect:* This describes a Profile — the required baseline security assignment for every Salesforce user that sets login restrictions, default app, and object CRUD permissions.
   * *Why B is incorrect:* This describes Organization-Wide Defaults (OWD) — the baseline record sharing setting (Public Read/Write, Public Read Only, or Private) that determines the floor of record visibility before roles and sharing rules apply.
   * *Why D is incorrect:* This describes the Salesforce Role Hierarchy — roles grant upward record visibility so managers can see subordinates' records, but they do not control object/field permissions (that is Profiles and Permission Sets).
@@ -129,7 +129,7 @@ A Salesforce administrator needs to grant a specific set of users the ability to
 - **Correct Answer:** B
 
 - **Distractor Analysis:**
-  - *Why B is correct:* Permission Sets are the correct tool for granting additive, targeted permissions to a subset of users without creating new Profiles. The administrator creates one Permission Set with the specific field-level security setting and assigns it to the affected users. This is the Salesforce best-practice pattern: "use Permission Sets for exceptions, not new Profiles."
+  - *Why B is correct:* Permission Sets are the correct tool for granting additive, targeted permissions to a subset of users without creating new Profiles. The administrator creates one Permission Set with the specific field-level security setting and assigns it to the affected users. This is the Salesforce best-practice pattern: "use Permission Sets for exceptions, not new Profiles.
   - *Why A is incorrect:* Creating a new Profile for a single field-level difference violates the Salesforce best practice of minimizing Profile proliferation. If these users otherwise share the same Profile, the correct solution is a Permission Set, not a new Profile.
   - *Why C is incorrect:* Changing OWD affects record-level visibility (who can see which records), not field-level security. OWD to Public Read/Write would open all Opportunity records to all users, which is far broader than the requirement and a security risk.
   - *Why D is incorrect:* Sharing Rules control which records a user can access, not which fields within a record they can see or edit. Field-level security is controlled through Profiles and Permission Sets, not sharing rules.

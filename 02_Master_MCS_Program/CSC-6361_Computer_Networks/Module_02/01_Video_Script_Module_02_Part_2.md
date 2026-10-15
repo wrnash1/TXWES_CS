@@ -25,14 +25,10 @@
 ---
 
 ### Pre-Roll Slide
-[SHOW SLIDE: "CSC-6361 — Module 02 Part 2: EtherChannel, MST & Campus Troubleshooting | Texas Wesleyan University"]
 
 ---
 
 ### Section 1: EtherChannel — Link Aggregation at CCNP Depth
-
-[00:00 – 05:30]
-[SHOW DIAGRAM: Two distribution switches connected by 4 individual 1G links bundled into one 4G EtherChannel (Port-Channel 1)]
 
 [Alt-text: Diagram showing Distribution Switch 1 connected to Distribution Switch 2 via four parallel lines labeled "Gi0/0, Gi0/1, Gi0/2, Gi0/3" that converge into a single thick line labeled "Port-Channel 1 (4 Gbps logical link)."]
 
@@ -101,9 +97,6 @@ show lacp neighbor                 ! LACP partner information
 
 ### Section 2: Multiple Spanning Tree (MST — 802.1S)
 
-[05:30 – 10:00]
-[SHOW DIAGRAM: MST region with 20 VLANs mapped to 2 MST instances]
-
 In an enterprise with 50 VLANs running Rapid PVST+, the switch runs **50 separate STP instances** — one per VLAN. Each instance has its own BPDU flooding, topology database, and CPU load. For large VLAN counts, this overhead becomes significant.
 
 **MST (802.1S)** solves this by allowing you to map **multiple VLANs to a single STP instance**. Instead of 50 STP instances, you might run 2 or 3.
@@ -133,9 +126,6 @@ spanning-tree mst 2 priority 8192   ! Secondary for VLANs 60-100
 ---
 
 ### Section 3: Campus STP Troubleshooting Scenarios
-
-[10:00 – 13:30]
-[SHOW SLIDE: Troubleshooting methodology diagram]
 
 At CCNP level, you need to diagnose STP problems from show command output alone. Here are the most common scenarios:
 
@@ -181,9 +171,6 @@ errdisable recovery interval 300
 ---
 
 ### Section 4: Module 02 Lab Preview
-
-[13:30 – 15:30]
-[SHOW SLIDE: Module 02 Lab Topology]
 
 In the Module 02 lab, you will build a campus switching topology in Cisco Packet Tracer:
 

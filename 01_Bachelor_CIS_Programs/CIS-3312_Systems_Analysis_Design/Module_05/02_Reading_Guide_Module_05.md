@@ -106,7 +106,7 @@ A use case diagram is a UML behavioral diagram showing the system boundary, acto
 
 ### 1.4 Include Relationship
 
-The include relationship between two use cases indicates that the base use case always invokes the included use case as a mandatory part of its execution. The arrow points from the base use case to the included use case, labeled with the stereotype. Example: "Process Order" always includes "Validate Payment."
+The include relationship between two use cases indicates that the base use case always invokes the included use case as a mandatory part of its execution. The arrow points from the base use case to the included use case, labeled with the stereotype. Example: "Process Order" always includes "Validate Payment.
 
 ### 1.5 Extend Relationship
 
@@ -176,7 +176,7 @@ A complete use case specification contains:
 
 ## 5. User Story Format and Acceptance Criteria
 
-The standard user story format: "As a [role], I want [goal] so that [value]."
+The standard user story format: "As a [role], I want [goal] so that [value].
 
 The three parts serve distinct purposes:
 
@@ -190,7 +190,7 @@ Acceptance criteria in Given/When/Then format:
 - When: the action the user or system takes
 - Then: the expected outcome
 
-Example: "Given a registered customer is on the login page and has clicked Forgot Password, when they enter a valid registered email and click Submit, then they receive a password reset email within 60 seconds."
+Example: "Given a registered customer is on the login page and has clicked Forgot Password, when they enter a valid registered email and click Submit, then they receive a password reset email within 60 seconds.
 
 ---
 
@@ -224,7 +224,7 @@ An epic is a large user story that is too big to complete in a single sprint. It
 
 2. The arrow direction for extend is often tested as a trap. The arrow points from the extending use case to the base use case — not the other way around.
 
-3. INVEST violations are tested by presenting a badly written user story and asking which criterion is violated. The most common violation tested is "not Small enough" (the story is actually an epic). Look for stories that bundle multiple features with "and."
+3. INVEST violations are tested by presenting a badly written user story and asking which criterion is violated. The most common violation tested is "not Small enough" (the story is actually an epic). Look for stories that bundle multiple features with "and.
 
 4. Acceptance criteria make user stories testable. When a question asks what element of a user story ensures it meets the Testable criterion, the answer is acceptance criteria.
 
@@ -400,8 +400,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

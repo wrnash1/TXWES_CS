@@ -242,7 +242,7 @@ What does the "Rule of Seven" indicate when applied to a Control Chart?
 - *Why A is correct:* The Rule of Seven is a statistical process control principle. Even when all points fall within the upper and lower control limits, a run of seven consecutive points on the same side of the mean (or trending in one direction) indicates a non-random pattern — a signal that the process has shifted and investigation is warranted.
 - *Why B is incorrect:* Seven defects per week is a performance measurement, not the Rule of Seven. The rule is about run patterns in the data, not absolute defect counts.
 - *Why C is incorrect:* There is no PMI rule requiring seven corrective actions. This confuses the Rule of Seven with a corrective action workflow.
-- *Why D is incorrect:* The seven basic quality tools are a set of analytical techniques. Their application is not governed by a "Rule of Seven."
+- *Why D is incorrect:* The seven basic quality tools are a set of analytical techniques. Their application is not governed by a "Rule of Seven.
 
 ---
 

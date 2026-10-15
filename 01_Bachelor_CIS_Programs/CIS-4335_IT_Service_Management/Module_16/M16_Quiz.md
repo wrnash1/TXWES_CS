@@ -79,7 +79,7 @@ D. A service design team interviews customer representatives to understand desir
 **Distractor Analysis:**
 
 - **A** is a correct application of "Optimize and Automate" and indirectly "Focus on Value" by freeing capacity for value work.
-- **B** is correct. Requiring 14 forms and three approvals for a low-risk restart is bureaucratic overhead that consumes resources without delivering proportional value. "Focus on Value" requires eliminating activities that do not contribute to value creation. This is also a violation of "Keep It Simple and Practical."
+- **B** is correct. Requiring 14 forms and three approvals for a low-risk restart is bureaucratic overhead that consumes resources without delivering proportional value. "Focus on Value" requires eliminating activities that do not contribute to value creation. This is also a violation of "Keep It Simple and Practical.
 - **C** is a correct application of "Collaborate and Promote Visibility" and measuring value perception.
 - **D** is a direct application of "Focus on Value" — understanding what customers value before designing.
 

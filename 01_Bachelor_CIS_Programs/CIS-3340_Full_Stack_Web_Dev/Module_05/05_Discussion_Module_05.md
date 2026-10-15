@@ -84,7 +84,7 @@ searchInput.addEventListener('input', async function() {
 });
 ```
 
-During testing, the developer types "javascript" quickly. The console shows that API calls fire for "j", "ja", "jav", "java", and "javascript" in sequence. But sometimes the results from "java" arrive after the results from "javascript" — and the page displays Java results when the user typed "javascript."
+During testing, the developer types "javascript" quickly. The console shows that API calls fire for "j", "ja", "jav", "java", and "javascript" in sequence. But sometimes the results from "java" arrive after the results from "javascript" — and the page displays Java results when the user typed "javascript.
 
 Address all three of the following in your post:
 

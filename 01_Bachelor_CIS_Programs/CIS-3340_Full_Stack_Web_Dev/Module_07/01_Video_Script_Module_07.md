@@ -1,5 +1,23 @@
 # Video Script: Module 07 - Node.js & Express Server
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Full Stack Web Development for Beginners &bull; Module 07</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=nu_pCVPKzTk" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/nu_pCVPKzTk" title="freeCodeCamp &bull; Full Stack Web Development for Beginners" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Full Stack Web Development for Beginners</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3340 Full Stack Web Development
 **Estimated Duration:** 22 minutes
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
@@ -7,8 +25,7 @@
 
 ---
 
-## Section 1: Introduction - Node.js and the Server Side [00:00 - 04:00]
-
+## Section 1: Introduction - Node.js and the Server Side
 Welcome to Module 07. I am Professor Nash. Last module we designed REST APIs on paper — specified endpoints, methods, status codes, and error formats. This module we build the server that implements those designs.
 
 Node.js is a JavaScript runtime built on Chrome's V8 engine. It lets you run JavaScript outside the browser — on a server, in a terminal, or inside an AWS Lambda function. Before Node.js, the back end was a different language: PHP, Ruby, Java, Python. Node brought JavaScript to the full stack.
@@ -36,8 +53,7 @@ And the server responds with JSON. By the end of this module you will be able to
 
 ---
 
-## Section 2: Setting Up a Node.js Project [04:00 - 08:30]
-
+## Section 2: Setting Up a Node.js Project
 [SHOW TERMINAL]
 
 Every Node.js project starts with a `package.json` file. This file describes the project, lists dependencies, and defines scripts.
@@ -109,8 +125,7 @@ Run `npm run dev`. The terminal shows `Server running on port 3000`. Open Postma
 
 ---
 
-## Section 3: Routing - GET, POST, PUT, DELETE [08:30 - 14:00]
-
+## Section 3: Routing - GET, POST, PUT, DELETE
 [SHOW CODE]
 
 Let us build a complete in-memory REST API for books. We will implement all four primary HTTP methods.
@@ -215,8 +230,7 @@ Notice the pattern: every route handler follows the same structure — validate 
 
 ---
 
-## Section 4: Request Object, Response Object, and Middleware [14:00 - 18:30]
-
+## Section 4: Request Object, Response Object, and Middleware
 [SHOW CODE]
 
 The two objects passed to every route handler — `req` and `res` — contain everything you need.
@@ -273,8 +287,7 @@ Watch the terminal as I make requests — the logger prints every incoming reque
 
 ---
 
-## Section 5: Error Handling and Lab Preview [18:30 - 22:00]
-
+## Section 5: Error Handling and Lab Preview
 [SHOW CODE]
 
 Express has a built-in mechanism for centralized error handling: a middleware function with four parameters `(err, req, res, next)`.

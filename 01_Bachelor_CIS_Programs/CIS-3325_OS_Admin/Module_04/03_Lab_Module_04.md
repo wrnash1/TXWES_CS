@@ -150,7 +150,7 @@ sudo chage -d 0 dev2
 sudo chage -l dev2
 ```
 
-The "Last password change" should show as "password must be changed."
+The "Last password change" should show as "password must be changed.
 
 ---
 

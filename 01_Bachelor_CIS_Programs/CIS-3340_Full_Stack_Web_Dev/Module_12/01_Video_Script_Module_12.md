@@ -106,7 +106,7 @@ HTTP status codes communicate the outcome. Know these cold.
   500 Internal Server Error → unhandled exception
 ```
 
-The `401` vs `403` distinction is frequently tested on the AWS Developer Associate exam. 401 means "I do not know who you are — please authenticate." 403 means "I know who you are, but you are not allowed to do this."
+The `401` vs `403` distinction is frequently tested on the AWS Developer Associate exam. 401 means "I do not know who you are — please authenticate." 403 means "I know who you are, but you are not allowed to do this.
 
 [PAUSE — slide: 401 vs 403 side-by-side comparison]
 

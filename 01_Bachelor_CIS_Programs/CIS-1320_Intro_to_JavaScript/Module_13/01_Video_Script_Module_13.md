@@ -26,15 +26,11 @@
 
 ---
 
-## [00:00 – 02:00] Opening — The Single-Threaded Event Loop
+## Opening — The Single-Threaded Event Loop
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 13 | Asynchronous JavaScript | CIS-1320"]**
-
-"JavaScript runs on a single thread. That means it can only do one thing at a time — it cannot run two pieces of code simultaneously. So how does a web page stay responsive while waiting for a network request to complete? How does `setTimeout` delay execution without freezing the page?
+JavaScript runs on a single thread. That means it can only do one thing at a time — it cannot run two pieces of code simultaneously. So how does a web page stay responsive while waiting for a network request to complete? How does `setTimeout` delay execution without freezing the page?
 
 The answer is the **event loop** — JavaScript's mechanism for handling tasks that take time without blocking the rest of the program.
-
-**[SHOW DIAGRAM: Call stack + event queue + web APIs]**
 
 Here is the model:
 
@@ -43,21 +39,15 @@ Here is the model:
 - When the Web API finishes (timer expires, data arrives), it places the callback in the **event queue**.
 - The **event loop** checks: is the call stack empty? If yes, take the next item from the queue and run it.
 
-[PAUSE]
-
 This is why asynchronous code does not block. You tell the browser 'go get this data, and call me back when you have it' — the browser handles the waiting; your JavaScript stays free to respond to user input.
 
-Let us see this in code."
+Let us see this in code.
 
 ---
 
-## [02:00 – 06:00] Part 1 — `setTimeout` and `setInterval`
+## Part 1 — `setTimeout` and `setInterval`
 
-**[SHOW SLIDE: "setTimeout and setInterval"]**
-
-"`setTimeout` and `setInterval` are the simplest asynchronous operations. They hand off to the browser's timer API and schedule callbacks.
-
-**[DEMO — `setTimeout`]**
+`setTimeout` and `setInterval` are the simplest asynchronous operations. They hand off to the browser's timer API and schedule callbacks.
 
 ```javascript
 console.log('before');
@@ -79,8 +69,6 @@ inside setTimeout — runs after 1 second
 
 `'after'` prints before `'inside setTimeout'` even though it is written after the `setTimeout` call. JavaScript does not wait for the timer — it registers the callback with the browser and immediately continues to the next synchronous line.
 
-[PAUSE]
-
 **Zero delay — still async:**
 
 ```javascript
@@ -90,10 +78,6 @@ console.log('C');
 ```
 
 Output: `A`, `C`, `B` — even with a zero millisecond delay. The callback goes into the event queue and runs only after the current synchronous code finishes.
-
-[PAUSE]
-
-**[DEMO — `setInterval`]**
 
 ```javascript
 let count = 0;
@@ -110,8 +94,6 @@ const intervalId = setInterval(() => {
 
 `setInterval` fires repeatedly every 500ms until `clearInterval` is called. Store the return value (the interval ID) so you can cancel it.
 
-[PAUSE]
-
 **`clearTimeout` and `clearInterval`:**
 
 ```javascript
@@ -119,25 +101,19 @@ const timerId = setTimeout(() => console.log('will not run'), 5000);
 clearTimeout(timerId);   // cancelled before it fires
 ```
 
-Both return a numeric ID. Pass that ID to `clearTimeout` or `clearInterval` to cancel."
+Both return a numeric ID. Pass that ID to `clearTimeout` or `clearInterval` to cancel.
 
 ---
 
-## [06:00 – 12:00] Part 2 — Promises
+## Part 2 — Promises
 
-**[SHOW SLIDE: "Promises"]**
-
-"A **Promise** is an object that represents the eventual result of an asynchronous operation. It is in one of three states:
-
-**[SHOW DIAGRAM: Three states]**
+A **Promise** is an object that represents the eventual result of an asynchronous operation. It is in one of three states:
 
 - **Pending** — the operation is in progress, result not yet known
 - **Fulfilled** — the operation succeeded; the Promise has a value
 - **Rejected** — the operation failed; the Promise has an error reason
 
 A Promise transitions from pending to either fulfilled or rejected — once settled, it stays there.
-
-**[DEMO — Creating a Promise]**
 
 ```javascript
 const myPromise = new Promise((resolve, reject) => {
@@ -154,10 +130,6 @@ const myPromise = new Promise((resolve, reject) => {
 ```
 
 The `Promise` constructor receives an **executor function** with two arguments: `resolve` (call to fulfill) and `reject` (call to reject).
-
-[PAUSE]
-
-**[DEMO — Consuming a Promise with `.then` and `.catch`]**
 
 ```javascript
 myPromise
@@ -176,8 +148,6 @@ myPromise
 `.catch(onRejected)` — runs when the Promise rejects; receives the error.
 `.finally(onSettled)` — runs in both cases; good for cleanup (hiding a loading spinner, for example).
 
-[PAUSE]
-
 **Promise chaining:**
 
 `.then` returns a new Promise, so you can chain:
@@ -190,8 +160,6 @@ fetch('https://jsonplaceholder.typicode.com/todos/1')
 ```
 
 Each `.then` receives the value returned by the previous one.
-
-[PAUSE]
 
 **`Promise.all` — run multiple Promises in parallel:**
 
@@ -207,17 +175,13 @@ Promise.all([p1, p2, p3])
   .catch(error => console.error('One failed:', error));
 ```
 
-`Promise.all` takes an array of Promises. It resolves when **all** fulfill (with an array of results), or rejects as soon as **any** one rejects."
+`Promise.all` takes an array of Promises. It resolves when **all** fulfill (with an array of results), or rejects as soon as **any** one rejects.
 
 ---
 
-## [12:00 – 17:00] Part 3 — `async` / `await`
+## Part 3 — `async` / `await`
 
-**[SHOW SLIDE: "async / await"]**
-
-"`async` and `await` are syntactic sugar over Promises. They let you write asynchronous code that reads like synchronous code — no `.then` chains, no callback nesting.
-
-**[DEMO — An `async` function]**
+`async` and `await` are syntactic sugar over Promises. They let you write asynchronous code that reads like synchronous code — no `.then` chains, no callback nesting.
 
 ```javascript
 async function getData() {
@@ -233,10 +197,6 @@ Two rules:
 
 1. `await` can only be used inside an `async` function.
 2. `await` pauses execution of the `async` function until the Promise settles — but does NOT block the rest of the program. Other code continues running.
-
-[PAUSE]
-
-**[DEMO — side-by-side comparison]**
 
 Promise chain version:
 
@@ -264,10 +224,6 @@ async function getDataAsync() {
 
 Same behavior — different syntax. `async/await` reads top to bottom like synchronous code, making it easier to follow and debug.
 
-[PAUSE]
-
-**[DEMO — Error handling with `try/catch`]**
-
 ```javascript
 async function safeFetch(url) {
   try {
@@ -289,8 +245,6 @@ safeFetch('https://jsonplaceholder.typicode.com/todos/1')
 
 Notice `!response.ok` — `fetch` only rejects on network errors (no connection). A 404 or 500 HTTP response still **resolves** the Promise. You must check `response.ok` (true for 200–299 status codes) and throw manually if needed.
 
-[PAUSE]
-
 **`async` functions always return a Promise:**
 
 ```javascript
@@ -301,17 +255,13 @@ async function add(a, b) {
 add(2, 3).then(result => console.log(result));   // 5
 ```
 
-Even if the body is synchronous, calling an `async` function returns a Promise."
+Even if the body is synchronous, calling an `async` function returns a Promise.
 
 ---
 
-## [17:00 – 20:00] Part 4 — `fetch` in Practice
+## Part 4 — `fetch` in Practice
 
-**[SHOW SLIDE: "fetch API"]**
-
-"The `fetch` API is the standard browser tool for making HTTP requests. Let us build a complete working example.
-
-**[DEMO — Fetching and rendering data]**
+The `fetch` API is the standard browser tool for making HTTP requests. Let us build a complete working example.
 
 ```javascript
 async function loadUser(id) {
@@ -346,8 +296,6 @@ This function:
 3. Renders the result as HTML on success
 4. Displays the error message on failure
 
-[PAUSE]
-
 **`Promise.all` for parallel fetches:**
 
 ```javascript
@@ -365,15 +313,13 @@ async function loadMultiple() {
 }
 ```
 
-`Promise.all` fires all three requests at the same time — total wait time is the duration of the slowest request, not the sum."
+`Promise.all` fires all three requests at the same time — total wait time is the duration of the slowest request, not the sum.
 
 ---
 
-## [20:00 – 22:00] Closing — Lab Preview
+## Closing — Lab Preview
 
-**[SHOW SLIDE: "Module 13 Lab Preview"]**
-
-"The Module 13 lab has four parts.
+The Module 13 lab has four parts.
 
 Part 1 covers `setTimeout` and `setInterval` — you will observe the async execution order, build a countdown timer, and practice `clearInterval`.
 
@@ -383,7 +329,7 @@ Part 3 covers `async/await` — you will rewrite Promise chains as `async/await`
 
 Part 4 is the integration — a fetch-driven page that loads data from a public API, renders it to the DOM, and handles loading and error states.
 
-The quiz focuses on the event loop execution order, Promise states, `.then/.catch` vs `try/catch`, `async/await` syntax rules, and the `response.ok` check. Read the reading guide — asynchronous JavaScript is one of the densest topics in the course and the guide covers it carefully. Good luck."
+The quiz focuses on the event loop execution order, Promise states, `.then/.catch` vs `try/catch`, `async/await` syntax rules, and the `response.ok` check. Read the reading guide — asynchronous JavaScript is one of the densest topics in the course and the guide covers it carefully. Good luck.
 
 ---
 

@@ -118,7 +118,7 @@ In a multi-domain forest, you extend this to **AGUDLP** — Account, Global grou
 
 Every Windows computer that joins a domain gets a computer account in Active Directory. Computer accounts are security principals just like user accounts — they have a SID, can be members of groups, and are subject to Group Policy.
 
-Computer accounts have a password too, even though users never see it. Every 30 days, a domain-joined computer automatically changes its machine account password with the Domain Controller. This password is stored locally and in AD. If these passwords get out of sync — which can happen if a computer is offline for more than 30 days — the machine account password becomes stale and domain logon fails with the error "trust relationship failed."
+Computer accounts have a password too, even though users never see it. Every 30 days, a domain-joined computer automatically changes its machine account password with the Domain Controller. This password is stored locally and in AD. If these passwords get out of sync — which can happen if a computer is offline for more than 30 days — the machine account password becomes stale and domain logon fails with the error "trust relationship failed.
 
 **Resetting a stale computer account secure channel** can be done two ways.
 

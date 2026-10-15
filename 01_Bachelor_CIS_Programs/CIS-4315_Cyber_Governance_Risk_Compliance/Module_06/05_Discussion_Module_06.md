@@ -30,7 +30,7 @@ Respond to the following in 175–225 words: What specific governance failure do
 
 A financial services firm is building out its security documentation. The security team has drafted the following statement and is debating which policy hierarchy tier it belongs in:
 
-"All customer-facing web applications must disable TLS 1.0 and TLS 1.1 and must support only TLS 1.2 or higher with forward secrecy cipher suites. Certificates must use RSA 2048-bit or ECDSA 256-bit keys with SHA-256 or higher signature algorithms."
+All customer-facing web applications must disable TLS 1.0 and TLS 1.1 and must support only TLS 1.2 or higher with forward secrecy cipher suites. Certificates must use RSA 2048-bit or ECDSA 256-bit keys with SHA-256 or higher signature algorithms.
 
 The team is split. One analyst says this belongs in a policy because it protects customer data. Another says it belongs in a standard because it names specific versions and algorithms. A third suggests it could be a guideline since developers should have flexibility.
 

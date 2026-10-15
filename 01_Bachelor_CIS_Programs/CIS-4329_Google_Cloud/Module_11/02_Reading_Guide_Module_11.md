@@ -475,8 +475,6 @@ Step-by-step tutorial series from HashiCorp covering Terraform installation, wri
 <https://cloud.google.com/deployment-manager/docs/fundamentals>
 Comprehensive reference for Deployment Manager covering YAML configuration syntax, Jinja2 and Python templates, the `$(ref.RESOURCE.PROPERTY)` dependency syntax, preview mode, and deployment lifecycle management.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

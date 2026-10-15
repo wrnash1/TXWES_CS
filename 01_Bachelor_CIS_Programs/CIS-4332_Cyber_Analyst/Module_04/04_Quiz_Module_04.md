@@ -239,7 +239,7 @@ Distractor Analysis:
 An analyst reads the following Linux syslog entry: `Nov 14 03:22:11 webserver sshd[2847]: Accepted publickey for deploy from 10.10.1.5 port 52341 ssh2`. Which field confirms this was a successful authentication using a cryptographic key rather than a password?
 
 - A) The port number 52341
-- B) The word "Accepted" combined with the method "publickey"
+- B) The word "Accepted" combined with the method "publickey
 - C) The timestamp 03:22:11
 - D) The process ID 2847
 

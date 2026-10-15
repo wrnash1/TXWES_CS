@@ -32,11 +32,11 @@ Sub-questions:
 
 A government agency is building a new grants management system. The BA has produced the following list of requirements and asked you to review them:
 
-- "The system shall allow grants administrators to review and approve grant applications."
-- "All grant awards over $500,000 require certification by the agency's Inspector General office — this is a federal regulation."
-- "All historical grant records from the last seven years must be imported from the legacy system before the new system goes live."
-- "The system shall process grant disbursement calculations within 4 seconds."
-- "The new system must enable the agency to process 25% more grant applications per year than the current system."
+- "The system shall allow grants administrators to review and approve grant applications.
+- "All grant awards over $500,000 require certification by the agency's Inspector General office — this is a federal regulation.
+- "All historical grant records from the last seven years must be imported from the legacy system before the new system goes live.
+- "The system shall process grant disbursement calculations within 4 seconds.
+- "The new system must enable the agency to process 25% more grant applications per year than the current system.
 
 Sub-questions:
 

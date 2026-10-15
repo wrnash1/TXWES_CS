@@ -467,8 +467,6 @@ Before the quiz and lab, confirm you can do all of the following without looking
 * Explain the difference between cron.allow and cron.deny and their precedence
 * Troubleshoot a cron job that silently fails (PATH, permissions, filename extension)
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

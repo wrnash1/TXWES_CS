@@ -26,25 +26,19 @@
 
 ---
 
-## [00:00 – 00:45] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 07 | Tuples, Sets, and Advanced Sorting | CIS-1310"]**
-
-"Welcome back. Module 06 gave you a deep understanding of lists — Python's mutable, ordered sequence. This module introduces two more sequence types that complete the picture: **tuples** and **sets**.
+Welcome back. Module 06 gave you a deep understanding of lists — Python's mutable, ordered sequence. This module introduces two more sequence types that complete the picture: **tuples** and **sets**.
 
 Tuples are lists you cannot change — immutable sequences that carry a guarantee: the data stays exactly as it was created. Sets are unordered collections that enforce uniqueness — no duplicates allowed. Both are tested on the PCAP exam, and both solve real problems that lists cannot solve cleanly.
 
-We will also cover advanced sorting — using the `key` parameter with `sorted()` and `lambda` functions to sort by computed criteria rather than just natural order. Let's go."
+We will also cover advanced sorting — using the `key` parameter with `sorted()` and `lambda` functions to sort by computed criteria rather than just natural order. Let's go.
 
 ---
 
-## [00:45 – 03:30] Tuples — Immutable Sequences
+## Tuples — Immutable Sequences
 
-**[SHOW SLIDE: "Tuples — Ordered, Immutable Sequences"]**
-
-"A **tuple** is an ordered, immutable sequence. It looks like a list but uses parentheses instead of square brackets.
-
-**[DEMO — creating tuples]**
+A **tuple** is an ordered, immutable sequence. It looks like a list but uses parentheses instead of square brackets.
 
 ```python
 >>> point = (3, 7)
@@ -64,8 +58,6 @@ That trailing comma for a single-item tuple is a very common PCAP exam question.
 <class 'tuple'>
 ```
 
-**[DEMO — indexing and slicing work the same]**
-
 ```python
 >>> rgb = (255, 128, 0)
 >>> rgb[0]
@@ -79,8 +71,6 @@ That trailing comma for a single-item tuple is a very common PCAP exam question.
 ### Immutability
 
 You cannot change a tuple after creation. Trying to assign to an index raises `TypeError`:
-
-**[DEMO]**
 
 ```python
 >>> rgb[0] = 100
@@ -109,15 +99,13 @@ This is by design. Tuples are used when data should not change — coordinates, 
 7
 ```
 
-This is the same swap syntax from Module 03: `a, b = b, a`. Python creates a tuple on the right, then unpacks it into the variables on the left."
+This is the same swap syntax from Module 03: `a, b = b, a`. Python creates a tuple on the right, then unpacks it into the variables on the left.
 
 ---
 
-## [03:30 – 04:45] Tuples vs. Lists — When to Use Each
+## Tuples vs. Lists — When to Use Each
 
-**[SHOW SLIDE: "Tuple vs. List — Choosing the Right Type"]**
-
-"| Feature | List | Tuple |
+| Feature | List | Tuple |
 |---|---|---|
 | Mutable | Yes | No |
 | Syntax | `[...]` | `(...)` |
@@ -127,17 +115,13 @@ This is the same swap syntax from Module 03: `a, b = b, a`. Python creates a tup
 
 Use tuples for data that represents a fixed record — a coordinate, a date, a database row. Use lists when you need to add, remove, or modify items after creation.
 
-A practical rule: if the collection has semantic meaning where order and position matter and never changes — like `(latitude, longitude)` — use a tuple. If it's a dynamic collection of similar items that may grow or shrink — use a list."
+A practical rule: if the collection has semantic meaning where order and position matter and never changes — like `(latitude, longitude)` — use a tuple. If it's a dynamic collection of similar items that may grow or shrink — use a list.
 
 ---
 
-## [04:45 – 07:30] Sets — Unordered Collections of Unique Items
+## Sets — Unordered Collections of Unique Items
 
-**[SHOW SLIDE: "Sets — No Duplicates, No Order"]**
-
-"A **set** is an unordered collection of unique items. The key word is unique — if you add the same value twice, it only appears once.
-
-**[DEMO — creating sets]**
+A **set** is an unordered collection of unique items. The key word is unique — if you add the same value twice, it only appears once.
 
 ```python
 >>> colors = {'red', 'green', 'blue'}
@@ -171,8 +155,6 @@ This is one of the most useful set tricks: `set(list)` removes all duplicates in
 ### Set Operations
 
 Sets support the mathematical operations from set theory:
-
-**[DEMO]**
 
 ```python
 >>> a = {1, 2, 3, 4}
@@ -208,17 +190,13 @@ True
 {'green', 'blue'}
 ```
 
-Sets are unordered — you cannot index them. Use sets when you need uniqueness guarantees, fast membership testing, or set arithmetic."
+Sets are unordered — you cannot index them. Use sets when you need uniqueness guarantees, fast membership testing, or set arithmetic.
 
 ---
 
-## [07:30 – 09:30] Sorting with the key Parameter
+## Sorting with the key Parameter
 
-**[SHOW SLIDE: "Advanced Sorting — key Parameter"]**
-
-"The built-in `sorted()` function and `list.sort()` accept an optional `key` parameter — a function that computes a sort key for each element.
-
-**[DEMO — sort strings by length]**
+The built-in `sorted()` function and `list.sort()` accept an optional `key` parameter — a function that computes a sort key for each element.
 
 ```python
 >>> words = ['banana', 'apple', 'fig', 'cherry', 'date']
@@ -231,31 +209,25 @@ Sets are unordered — you cannot index them. Use sets when you need uniqueness 
 
 `key=len` tells `sorted()` to call `len(word)` on each word and sort by that computed value, rather than by the word itself.
 
-**[DEMO — sort by a specific field in a list of tuples]**
-
 ```python
 >>> students = [('Alice', 88), ('Bob', 72), ('Carol', 95)]
 >>> sorted(students, key=lambda s: s[1])
 [('Bob', 72), ('Alice', 88), ('Carol', 95)]    # sort by score
 ```
 
-That `lambda` is a new concept — let me explain it."
+That `lambda` is a new concept — let me explain it.
 
 ---
 
-## [09:30 – 11:00] Lambda Functions
+## Lambda Functions
 
-**[SHOW SLIDE: "Lambda — Anonymous Functions"]**
-
-"A **lambda** is a small, anonymous (unnamed) function defined in a single expression. The syntax is:
+A **lambda** is a small, anonymous (unnamed) function defined in a single expression. The syntax is:
 
 ```python
 lambda parameters: expression
 ```
 
 It is not a complete function definition — it is a shorthand for a simple one-liner that you only need in one place.
-
-**[DEMO]**
 
 ```python
 >>> double = lambda x: x * 2
@@ -279,15 +251,13 @@ You would not normally assign a lambda to a variable like `double = lambda x: x 
 
 The negation `-s[1]` flips the sort order for the score so that higher scores come first, while `s[0]` (the name) sorts alphabetically as a tiebreaker.
 
-Lambda functions are tested on the PCAP exam — you need to be able to read a lambda and predict what it returns."
+Lambda functions are tested on the PCAP exam — you need to be able to read a lambda and predict what it returns.
 
 ---
 
-## [11:00 – 12:30] Comprehensions — Set and Generator
+## Comprehensions — Set and Generator
 
-**[SHOW SLIDE: "Set Comprehensions and Generators"]**
-
-"Module 06 introduced list comprehensions. The same syntax works for sets — replace square brackets with curly braces:
+Module 06 introduced list comprehensions. The same syntax works for sets — replace square brackets with curly braces:
 
 ```python
 >>> squares_set = {x**2 for x in range(1, 6)}
@@ -312,15 +282,13 @@ A set comprehension automatically removes duplicates:
 [1, 4, 9, 16, 25]
 ```
 
-Generators are memory-efficient for large sequences — they compute each value only when needed. This is important in production code processing millions of records."
+Generators are memory-efficient for large sequences — they compute each value only when needed. This is important in production code processing millions of records.
 
 ---
 
-## [12:30 – 13:45] Putting It Together — Student Roster Analyzer
+## Putting It Together — Student Roster Analyzer
 
-**[DEMO — live code]**
-
-"Let me write a program that uses tuples, sets, and advanced sorting together:
+Let me write a program that uses tuples, sets, and advanced sorting together:
 
 ```python
 # roster_analyzer.py
@@ -350,15 +318,13 @@ average = total / len(students)
 print(f'\nClass average: {average:.1f}')
 ```
 
-This uses tuple unpacking in `for` loops, set comprehensions, lambda sort keys, `enumerate()`, and a generator expression for the sum — all in one concise program."
+This uses tuple unpacking in `for` loops, set comprehensions, lambda sort keys, `enumerate()`, and a generator expression for the sum — all in one concise program.
 
 ---
 
-## [13:45 – 15:00] PCAP Exam Tips and Wrap-Up
+## PCAP Exam Tips and Wrap-Up
 
-**[SHOW SLIDE: "Module 07 — PCAP Alignment"]**
-
-"Key exam take-aways:
+Key exam take-aways:
 
 **1.** Single-item tuple requires a trailing comma: `(42,)` is a tuple. `(42)` is just an integer.
 
@@ -374,7 +340,7 @@ This uses tuple unpacking in `for` loops, set comprehensions, lambda sort keys, 
 
 **7.** `key=` parameter in `sorted()`: the function is called on each element; elements are sorted by the result.
 
-Module 08 covers functions — the most important module for writing reusable, organized code. See you there."
+Module 08 covers functions — the most important module for writing reusable, organized code. See you there.
 
 ---
 

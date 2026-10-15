@@ -46,15 +46,15 @@ This part is completed entirely in the AWS Console — no code yet.
 
 1. Sign in to the AWS Console and navigate to IoT Core
 2. In the left panel: Manage > All devices > Things
-3. Click "Create things" > "Create single thing"
+3. Click "Create things" > "Create single thing
 4. Name the Thing: `esp32-sensor-01`
 5. Leave device shadow as "No shadow" for now (we add it in Part C)
 6. Click Next
 
 **Step 2: Create and download certificates**
 
-1. Choose "Auto-generate a new certificate"
-2. Click "Create thing"
+1. Choose "Auto-generate a new certificate
+2. Click "Create thing
 3. Download all four files:
    - Device certificate: `esp32-sensor-01.pem.crt`
    - Private key: `esp32-sensor-01.private.pem.key`
@@ -292,7 +292,7 @@ In the AWS IoT Core console:
 
 1. Navigate to Manage > All devices > Things > `esp32-sensor-01`
 2. Click the "Device Shadow" tab
-3. Click "Classic Shadow"
+3. Click "Classic Shadow
 4. You should see the shadow document with your reported state updating
 
 ### Part C Deliverables
@@ -332,7 +332,7 @@ FROM 'sensors/+/telemetry'
 WHERE temp_f > 80
 ```
 
-4. Set rule action: "Simple Notification Service (SNS)"
+4. Set rule action: "Simple Notification Service (SNS)
 5. Select the `iot-temp-alerts` topic
 6. Create or select an IAM role that allows IoT to publish to SNS
 7. Create the rule

@@ -229,7 +229,7 @@ demo_branch = tf.keras.layers.Dense(32, activation='relu', name='demo_dense')(de
 txn_branch = tf.keras.layers.Dense(64, activation='relu', name='txn_dense')(txn_input)
 
 # Merge the two streams
-merged = tf.keras.layers.Concatenate(name='merge')([demo_branch, txn_branch])
+merged = tf.keras.layers.Concatenate(name='merge')()
 
 # Shared layers after merge
 x = tf.keras.layers.Dense(32, activation='relu', name='shared_dense')(merged)
@@ -237,7 +237,7 @@ output = tf.keras.layers.Dense(1, activation='sigmoid', name='output')(x)
 
 # Build model
 model_multi = tf.keras.Model(
-    inputs=[demo_input, txn_input],
+    inputs=,
     outputs=output,
     name='multi_input_model'
 )
@@ -263,7 +263,7 @@ demo_data = tf.random.normal([10, 12])    # batch of 10 demographic samples
 txn_data = tf.random.normal([10, 25])     # batch of 10 transaction samples
 
 # Pass inputs as a list in the same order as model inputs
-preds = model_multi.predict([demo_data, txn_data], verbose=0)
+preds = model_multi.predict(, verbose=0)
 print("Multi-input predictions shape:", preds.shape)    # should be (10, 1)
 print("Sample prediction (probability):", preds[0][0])
 ```

@@ -294,8 +294,6 @@ Know the following for the PT0-002 exam:
 - RFC 1928 — SOCKS Protocol Version 5.
 - Nmap Reference Guide: https://nmap.org/book/man.html
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

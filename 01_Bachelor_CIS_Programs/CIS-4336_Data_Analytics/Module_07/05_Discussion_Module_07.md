@@ -34,7 +34,7 @@ In your initial post, address the following:
 
 ## Scenario B: The E-Commerce Conversion Rate Mystery
 
-An e-commerce company tracks website visitors, time spent on product pages, number of items viewed, cart abandonment rate, and final purchase amount. A marketing analyst notices that ad spend and weekly revenue appear to move together — when ad spend goes up, revenue goes up too. The VP of Marketing concludes: "We just need to keep increasing the ad budget and revenue will keep growing."
+An e-commerce company tracks website visitors, time spent on product pages, number of items viewed, cart abandonment rate, and final purchase amount. A marketing analyst notices that ad spend and weekly revenue appear to move together — when ad spend goes up, revenue goes up too. The VP of Marketing concludes: "We just need to keep increasing the ad budget and revenue will keep growing.
 
 The analytics manager asks you to evaluate this conclusion before it becomes company strategy.
 

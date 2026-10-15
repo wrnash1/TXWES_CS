@@ -228,7 +228,7 @@ Hardware write blockers are preferred in legal proceedings because they operate 
 
 ### Chain of Custody
 
-Chain of custody is the documented, unbroken record of who handled evidence, when, and under what circumstances. It answers the question: "How do we know this evidence has not been modified since collection?"
+Chain of custody is the documented, unbroken record of who handled evidence, when, and under what circumstances. It answers the question: "How do we know this evidence has not been modified since collection?
 
 Chain of custody documentation includes:
 
@@ -459,8 +459,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

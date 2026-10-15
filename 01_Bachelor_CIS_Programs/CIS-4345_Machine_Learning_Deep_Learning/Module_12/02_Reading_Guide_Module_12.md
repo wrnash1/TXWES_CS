@@ -88,7 +88,7 @@
 
 ## Overview
 
-This reading guide covers four interconnected topics that bridge model development and production deployment: learning rate tuning, automated hyperparameter search with Keras Tuner, model compression with TensorFlow Lite quantization and pruning, and an introduction to TFX production pipelines. These topics represent the final stage of the ML development lifecycle — moving from "model works in a notebook" to "model is optimized, compressed, and running on real hardware."
+This reading guide covers four interconnected topics that bridge model development and production deployment: learning rate tuning, automated hyperparameter search with Keras Tuner, model compression with TensorFlow Lite quantization and pruning, and an introduction to TFX production pipelines. These topics represent the final stage of the ML development lifecycle — moving from "model works in a notebook" to "model is optimized, compressed, and running on real hardware.
 
 ---
 
@@ -726,8 +726,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

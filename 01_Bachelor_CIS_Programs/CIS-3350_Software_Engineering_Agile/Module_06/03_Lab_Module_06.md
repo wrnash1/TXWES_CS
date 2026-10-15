@@ -23,7 +23,7 @@ Estimated time: 90–120 minutes
 
 You are the Product Owner for PetConnect — a mobile app that helps pet owners track their pets' veterinary appointments, vaccination records, medication schedules, and connect with a community of local pet owners.
 
-Write a Product Backlog with exactly 10 user stories for PetConnect. Your user stories must follow the standard format: "As a [user type], I can [action] so that [benefit]."
+Write a Product Backlog with exactly 10 user stories for PetConnect. Your user stories must follow the standard format: "As a [user type], I can [action] so that [benefit].
 
 For each story, provide:
 

@@ -499,8 +499,6 @@ The following free resources supplement Module 12 content on network infrastruct
    URL: [https://www.subnet-calculator.com/](https://www.subnet-calculator.com/)
    Relevance: Free browser-based tool for calculating subnet masks, network addresses, broadcast addresses, and host ranges. Understanding subnetting is a prerequisite for router configuration and VLAN design, both of which are core topics in Module 12 and on the A+ Core 1 exam.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

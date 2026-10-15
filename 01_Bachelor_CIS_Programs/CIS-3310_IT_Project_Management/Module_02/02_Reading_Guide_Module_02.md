@@ -213,7 +213,7 @@ The Business Case justifies whether to invest. The Project Charter formally auth
 The Stakeholder Register (Initiating) records who the stakeholders are. The Stakeholder Engagement Plan (Planning) defines how the PM will engage them. Both documents are frequently confused on exam questions.
 
 **Tip 8 — Lessons learned timing:**
-Lessons Learned should be captured throughout the project, not only at closure. However, the formal Lessons Learned Register is a Closing output. If a question asks "when are lessons learned documented?" the correct answer is "throughout the project but formalized during Closing."
+Lessons Learned should be captured throughout the project, not only at closure. However, the formal Lessons Learned Register is a Closing output. If a question asks "when are lessons learned documented?" the correct answer is "throughout the project but formalized during Closing.
 
 ---
 
@@ -224,9 +224,6 @@ Complete the following before the lab and quiz:
 - Read the project initiation and lifecycle chapters in the course OER textbook (linked in Canvas).
 - Review the CompTIA Project+ PK0-005 exam objectives at comptia.org, focusing on the Process Groups domain.
 - For supplemental video study, visit professormesser.com for Project+ coverage of the project lifecycle.
-
----
-
 
 ---
 
@@ -312,7 +309,6 @@ Before proceeding to this module's laboratory exercises, synthesize concise, rig
 1. **First-Principles Invariant Defense:** How does the theoretical model in this module ensure state correctness under adverse operating conditions? What mathematical proof or telemetry metric validates this behavior?
 2. **Architectural Trade-Off Analysis:** If forced to reduce execution latency by 50%, what specific compromises in consistency, redundancy, or capital expenditure would your architecture be forced to accept?
 3. **Failure Mode Pathology:** Explain the exact mechanistic chain of events that occurs when this module's primary subsystem experiences an unhandled resource starvation condition.
-
 
 ## 8. Study Checklist
 

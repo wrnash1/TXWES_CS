@@ -379,7 +379,7 @@ awk '{ count[$3]++ } END { for (ip in count) print count[ip], ip }' ~/lab04/acce
 
 ### Task 5.4 — The Full Analysis Pipeline
 
-Build a pipeline that answers: "Which IP addresses made the most 401 requests?"
+Build a pipeline that answers: "Which IP addresses made the most 401 requests?
 
 ```bash
 grep "401" ~/lab04/access.log \

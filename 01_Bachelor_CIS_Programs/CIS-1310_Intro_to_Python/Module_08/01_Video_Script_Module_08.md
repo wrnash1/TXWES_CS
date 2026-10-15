@@ -26,31 +26,25 @@
 
 ---
 
-## [00:00 – 00:45] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 08 | Functions and Parameter Passing | CIS-1310"]**
-
-"Welcome back. We are now at one of the most important modules in the course — functions.
+Welcome back. We are now at one of the most important modules in the course — functions.
 
 Everything we have built so far works, but every program has been one long linear script. Functions change that. Functions are reusable named blocks of code that you can call from anywhere in your program, any number of times, with different data each time.
 
-A good programmer does not write the same logic twice. They put it in a function and call it. That is the foundation of every professional codebase. The PCAP exam tests function definitions, parameters, default arguments, keyword arguments, return values, and the `*args`/`**kwargs` mechanisms in significant depth. This module covers all of it."
+A good programmer does not write the same logic twice. They put it in a function and call it. That is the foundation of every professional codebase. The PCAP exam tests function definitions, parameters, default arguments, keyword arguments, return values, and the `*args`/`**kwargs` mechanisms in significant depth. This module covers all of it.
 
 ---
 
-## [00:45 – 02:30] Defining and Calling Functions
+## Defining and Calling Functions
 
-**[SHOW SLIDE: "def — Define a Function"]**
-
-"A function is defined with the `def` keyword, a name, a parameter list in parentheses, and a colon. The body is indented.
+A function is defined with the `def` keyword, a name, a parameter list in parentheses, and a colon. The body is indented.
 
 ```python
 def function_name(parameters):
     body
     return value    # optional
 ```
-
-**[DEMO — simplest function]**
 
 ```python
 def greet():
@@ -66,8 +60,6 @@ Hello, World!
 ```
 
 `greet()` is the **function call** — it executes the body. `def greet():` is the **function definition** — it tells Python what to do when `greet()` is called.
-
-**[DEMO — function with parameter]**
 
 ```python
 def greet(name):
@@ -86,17 +78,13 @@ Hello, Bob!
 
 `name` is a **parameter** — a variable that holds the value passed to the function. `'Alice'` and `'Bob'` are **arguments** — the actual values passed in each call.
 
-Functions can be called as many times as needed with different arguments. The body runs each time."
+Functions can be called as many times as needed with different arguments. The body runs each time.
 
 ---
 
-## [02:30 – 04:15] Return Values
+## Return Values
 
-**[SHOW SLIDE: "return — Send a Value Back"]**
-
-"A function that uses `print()` displays output but produces no value. A function that uses `return` sends a value back to the caller.
-
-**[DEMO]**
+A function that uses `print()` displays output but produces no value. A function that uses `return` sends a value back to the caller.
 
 ```python
 def add(a, b):
@@ -149,15 +137,13 @@ Output:
 None
 ```
 
-If a function has no `return` statement, or a bare `return` with no value, it returns `None`."
+If a function has no `return` statement, or a bare `return` with no value, it returns `None`.
 
 ---
 
-## [04:15 – 06:30] Default Parameters and Keyword Arguments
+## Default Parameters and Keyword Arguments
 
-**[SHOW SLIDE: "Default and Keyword Parameters"]**
-
-"### Default Parameter Values
+### Default Parameter Values
 
 You can give a parameter a default value that is used if the caller does not provide one.
 
@@ -165,8 +151,6 @@ You can give a parameter a default value that is used if the caller does not pro
 def greet(name, greeting='Hello'):
     print(f'{greeting}, {name}!')
 ```
-
-**[DEMO]**
 
 ```python
 >>> greet('Alice')            # uses default greeting
@@ -196,19 +180,15 @@ Output:
 Alice, age 30, from Dallas
 ```
 
-Keyword arguments improve readability, especially for functions with many parameters. You can mix positional and keyword arguments — but positional arguments must come before keyword arguments."
+Keyword arguments improve readability, especially for functions with many parameters. You can mix positional and keyword arguments — but positional arguments must come before keyword arguments.
 
 ---
 
-## [06:30 – 08:15] *args and **kwargs
+## *args and **kwargs
 
-**[SHOW SLIDE: "*args and **kwargs — Variable-Length Arguments"]**
-
-"### *args — Collect Extra Positional Arguments
+### *args — Collect Extra Positional Arguments
 
 `*args` lets a function accept any number of positional arguments. Inside the function, `args` is a tuple.
-
-**[DEMO]**
 
 ```python
 def total(*args):
@@ -233,8 +213,6 @@ The `*` before `args` is the syntax — the name `args` is a convention, not a k
 
 `**kwargs` lets a function accept any number of keyword arguments. Inside the function, `kwargs` is a dictionary.
 
-**[DEMO]**
-
 ```python
 def show_info(**kwargs):
     for key, value in kwargs.items():
@@ -258,21 +236,17 @@ def full_example(a, b, *args, x=0, **kwargs):
     ...
 ```
 
-The PCAP exam tests this ordering rule."
+The PCAP exam tests this ordering rule.
 
 ---
 
-## [08:15 – 09:30] Scope — Where Variables Live
+## Scope — Where Variables Live
 
-**[SHOW SLIDE: "Scope — Local vs. Global"]**
-
-"Every variable in Python has a **scope** — the region of the program where it is visible.
+Every variable in Python has a **scope** — the region of the program where it is visible.
 
 Variables created inside a function are **local** — they exist only while the function is running and are destroyed when it returns.
 
 Variables created at the top level of a module (outside any function) are **global** — they are visible throughout the module.
-
-**[DEMO]**
 
 ```python
 x = 10    # global
@@ -305,15 +279,13 @@ change_global()
 print(x)    # 99
 ```
 
-Using `global` is generally discouraged — it makes programs harder to reason about. Pass values through parameters instead."
+Using `global` is generally discouraged — it makes programs harder to reason about. Pass values through parameters instead.
 
 ---
 
-## [09:30 – 11:00] Docstrings
+## Docstrings
 
-**[SHOW SLIDE: "Docstrings — Self-Documenting Functions"]**
-
-"A **docstring** is a string literal on the first line of a function body that documents what the function does. Use triple quotes.
+A **docstring** is a string literal on the first line of a function body that documents what the function does. Use triple quotes.
 
 ```python
 def add(a, b):
@@ -322,8 +294,6 @@ def add(a, b):
 ```
 
 Access a docstring with `help()` or the `__doc__` attribute:
-
-**[DEMO]**
 
 ```python
 >>> def celsius_to_fahrenheit(c):
@@ -341,15 +311,13 @@ Access a docstring with `help()` or the `__doc__` attribute:
 
 Output shows the docstring formatted as help text.
 
-Docstrings are part of professional Python — every public function should have one. They are also how tools like IDEs and documentation generators work."
+Docstrings are part of professional Python — every public function should have one. They are also how tools like IDEs and documentation generators work.
 
 ---
 
-## [11:00 – 12:30] Type Hints (Optional but Professional)
+## Type Hints (Optional but Professional)
 
-**[SHOW SLIDE: "Type Hints — Document Expected Types"]**
-
-"Python 3 supports **type hints** — annotations that tell developers what types a function expects and returns. They are not enforced at runtime but improve readability and enable IDE tooling.
+Python 3 supports **type hints** — annotations that tell developers what types a function expects and returns. They are not enforced at runtime but improve readability and enable IDE tooling.
 
 ```python
 def add(a: int, b: int) -> int:
@@ -364,8 +332,6 @@ def min_max(numbers: list) -> tuple:
 
 The `->` before the colon indicates the return type. Type hints do not change how the function works — they are documentation for humans and static analysis tools.
 
-**[DEMO]**
-
 ```python
 >>> add(3, 4)
 7
@@ -373,15 +339,13 @@ The `->` before the colon indicates the return type. Type hints do not change ho
 'hello world'
 ```
 
-Use type hints in any code that others will read. They make function signatures self-documenting."
+Use type hints in any code that others will read. They make function signatures self-documenting.
 
 ---
 
-## [12:30 – 13:45] Putting It Together — Calculator Module
+## Putting It Together — Calculator Module
 
-**[DEMO — live code]**
-
-"Let me build a calculator using well-structured functions:
+Let me build a calculator using well-structured functions:
 
 ```python
 # calculator.py
@@ -427,15 +391,13 @@ while True:
         print(f'  Error: {e}')
 ```
 
-This uses docstrings, type hints, a dispatch dictionary, exception handling (preview of Module 12), and clean function design."
+This uses docstrings, type hints, a dispatch dictionary, exception handling (preview of Module 12), and clean function design.
 
 ---
 
-## [13:45 – 15:00] PCAP Exam Tips and Wrap-Up
+## PCAP Exam Tips and Wrap-Up
 
-**[SHOW SLIDE: "Module 08 — PCAP Alignment"]**
-
-"Key exam take-aways:
+Key exam take-aways:
 
 **1.** `def` defines a function. A function is not executed until it is called.
 
@@ -451,7 +413,7 @@ This uses docstrings, type hints, a dispatch dictionary, exception handling (pre
 
 **7.** `global x` inside a function allows modification of the global `x` — use sparingly.
 
-Module 09 covers scopes and namespaces in depth, and introduces recursion — functions that call themselves. See you there."
+Module 09 covers scopes and namespaces in depth, and introduces recursion — functions that call themselves. See you there.
 
 ---
 

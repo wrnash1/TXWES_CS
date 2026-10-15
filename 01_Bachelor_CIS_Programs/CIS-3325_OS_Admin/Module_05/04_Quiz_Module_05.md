@@ -124,7 +124,7 @@ Correct Answer: C) rpm -qR curl
 
 Distractor Analysis:
 
-- Why A is incorrect: rpm -ql lists the files installed by a package, not its dependencies. This works only after the package is installed and answers "what files did it install," not "what does it need."
+- Why A is incorrect: rpm -ql lists the files installed by a package, not its dependencies. This works only after the package is installed and answers "what files did it install," not "what does it need.
 - Why B is incorrect: dnf deplist is a valid dnf command for listing dependencies, but rpm -qR is the standard RPM-level query. The question specifically mentions RHEL and the rpm tool is the most direct answer for this query type.
 - Why D is incorrect: dnf info shows general package information including description, version, and summary. While it includes some dependency information in its output, rpm -qR specifically lists dependencies in a clean format.
 
@@ -135,12 +135,12 @@ Distractor Analysis:
 An Ubuntu administrator wants to search for any package that provides a terminal-based
 file manager. Which command searches the repository metadata for matching packages?
 
-- A) dpkg -l "file manager"
-- B) apt search "file manager"
+- A) dpkg -l "file manager
+- B) apt search "file manager
 - C) dpkg -S file-manager
 - D) apt list file-manager
 
-Correct Answer: B) apt search "file manager"
+Correct Answer: B) apt search "file manager
 
 Distractor Analysis:
 
@@ -243,7 +243,7 @@ Distractor Analysis:
 **Question 12**
 
 An administrator on Ubuntu 22.04 adds a new third-party repository by placing a .list file
-in /etc/apt/sources.list.d/. After running apt update, the command fails with a "NO_PUBKEY"
+in /etc/apt/sources.list.d/. After running apt update, the command fails with a "NO_PUBKEY
 error. What must the administrator do to resolve this?
 
 - A) Run apt install --fix-missing to download missing package signatures.

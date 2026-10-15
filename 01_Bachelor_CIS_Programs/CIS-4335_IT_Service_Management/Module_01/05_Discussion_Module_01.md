@@ -16,7 +16,7 @@ Use correct ITIL 4 terminology throughout. Vague responses that restate the prom
 
 ## Scenario A: The University Email Outage
 
-The campus email system goes down on a Sunday night during finals week. Students cannot submit papers, faculty cannot send grade updates, and the IT help desk phone line is flooded with calls. The IT director says, "The servers are technically fine — it's a configuration issue we can fix in two hours." A frustrated faculty member responds, "I don't care about the servers. My students are failing because of this."
+The campus email system goes down on a Sunday night during finals week. Students cannot submit papers, faculty cannot send grade updates, and the IT help desk phone line is flooded with calls. The IT director says, "The servers are technically fine — it's a configuration issue we can fix in two hours." A frustrated faculty member responds, "I don't care about the servers. My students are failing because of this.
 
 Respond to all three of the following prompts:
 

@@ -313,17 +313,17 @@ GraphQL APIs present a distinct testing surface from REST:
 
 Exam patterns for cloud testing:
 
-"A tester discovers an SSRF vulnerability in a web application hosted on an EC2 instance. What additional attack is directly enabled by this vulnerability?" — Reaching the IMDS at 169.254.169.254 to retrieve IAM role credentials.
+A tester discovers an SSRF vulnerability in a web application hosted on an EC2 instance. What additional attack is directly enabled by this vulnerability?" — Reaching the IMDS at 169.254.169.254 to retrieve IAM role credentials.
 
-"Which tool is specifically designed for AWS exploitation framework functionality?" — Pacu.
+Which tool is specifically designed for AWS exploitation framework functionality?" — Pacu.
 
 ### 6.2 OT/ICS Safety Approach
 
-"During an ICS assessment, the tester wants to identify all devices on the manufacturing floor network. Which approach is MOST appropriate?" — Passive traffic capture (NOT active scanning).
+During an ICS assessment, the tester wants to identify all devices on the manufacturing floor network. Which approach is MOST appropriate?" — Passive traffic capture (NOT active scanning).
 
 ### 6.3 API Security
 
-"Which OWASP API vulnerability category describes accessing another user's order by changing the order ID in the API request?" — API1:2023 — Broken Object Level Authorization (BOLA).
+Which OWASP API vulnerability category describes accessing another user's order by changing the order ID in the API request?" — API1:2023 — Broken Object Level Authorization (BOLA).
 
 ---
 
@@ -377,8 +377,6 @@ Exam patterns for cloud testing:
 - CISA ICS Security Advisories: https://www.cisa.gov/ics-advisories
 - Pacu Framework: https://github.com/RhinoSecurityLabs/pacu
 - ScoutSuite: https://github.com/nccgroup/ScoutSuite
-
-
 
 ---
 

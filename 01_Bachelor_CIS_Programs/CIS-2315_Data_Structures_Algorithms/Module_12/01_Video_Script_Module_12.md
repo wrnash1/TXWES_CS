@@ -26,21 +26,17 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 12 | Divide & Conquer | CIS-2315"]**
-
-"Divide and conquer is an algorithmic strategy: split the problem into smaller subproblems, solve each subproblem recursively, and combine the results. It powers merge sort, quicksort, binary search, and the fast Fourier transform. The key difference from plain recursion is that the subproblems are independent — they do not share state, so results can be combined cleanly. This module covers merge sort, binary search, and the Master Theorem for analyzing divide-and-conquer recurrences."
+Divide and conquer is an algorithmic strategy: split the problem into smaller subproblems, solve each subproblem recursively, and combine the results. It powers merge sort, quicksort, binary search, and the fast Fourier transform. The key difference from plain recursion is that the subproblems are independent — they do not share state, so results can be combined cleanly. This module covers merge sort, binary search, and the Master Theorem for analyzing divide-and-conquer recurrences.
 
 ---
 
-## [01:30 – 09:00] Part 1 — Merge Sort
+## Part 1 — Merge Sort
 
-**[SHOW SLIDE: "Merge Sort — Split, Recurse, Merge"]**
+Merge sort is the canonical divide-and-conquer sorting algorithm. It splits the array in half, recursively sorts each half, and merges the two sorted halves into one sorted array.
 
-"Merge sort is the canonical divide-and-conquer sorting algorithm. It splits the array in half, recursively sorts each half, and merges the two sorted halves into one sorted array.
-
-**[SHOW DIAGRAM: recursion tree for `[5, 3, 8, 1, 9, 2, 7, 4]`]**
+**`]**
 
 ```text
 Split phase:
@@ -54,8 +50,6 @@ Merge phase:
   [1,3,5,8]   [2,4,7,9]
   [1,2,3,4,5,7,8,9]
 ```
-
-[PAUSE]
 
 ```python
 def merge_sort(arr):
@@ -90,9 +84,7 @@ def merge(left, right):
     return result
 ```
 
-**[DEMO: `merge_sort([5,3,8,1,9,2,7,4])` — show output `[1,2,3,4,5,7,8,9]`]**
-
-[PAUSE]
+**)` — show output `[1,2,3,4,5,7,8,9]`]**
 
 **Why O(n log n)?**
 
@@ -100,15 +92,13 @@ The recursion tree has `log n` levels (each level halves the problem). At each l
 
 **Why merge sort over quicksort?**
 
-Merge sort is stable (equal elements maintain relative order) and guarantees O(n log n) worst case. Quicksort averages O(n log n) but degrades to O(n²) on sorted input with a naive pivot. When stability or worst-case guarantees matter, use merge sort."
+Merge sort is stable (equal elements maintain relative order) and guarantees O(n log n) worst case. Quicksort averages O(n log n) but degrades to O(n²) on sorted input with a naive pivot. When stability or worst-case guarantees matter, use merge sort.
 
 ---
 
-## [09:00 – 16:00] Part 2 — Binary Search
+## Part 2 — Binary Search
 
-**[SHOW SLIDE: "Binary Search — Halving the Search Space"]**
-
-"Binary search finds a target in a sorted array in O(log n) time by repeatedly halving the search space.
+Binary search finds a target in a sorted array in O(log n) time by repeatedly halving the search space.
 
 ```python
 def binary_search(arr, target):
@@ -131,9 +121,7 @@ def binary_search(arr, target):
     return -1
 ```
 
-**[DEMO: `binary_search([1,3,5,7,9,11,13,15], 7)` — trace: left=0,right=7,mid=3,arr[3]=7 → return 3]**
-
-[PAUSE]
+**, 7)` — trace: left=0,right=7,mid=3,arr[3]=7 → return 3]**
 
 **Three binary search variants:**
 
@@ -177,15 +165,13 @@ def ship_within_days(weights, days):
     return left
 ```
 
-**[DEMO: `ship_within_days([1,2,3,4,5,6,7,8,9,10], 5)` — expected 15]**"
+**, 5)` — expected 15]**
 
 ---
 
-## [16:00 – 20:00] Part 3 — Master Theorem
+## Part 3 — Master Theorem
 
-**[SHOW SLIDE: "Master Theorem — Analyzing Divide and Conquer"]**
-
-"The **Master Theorem** gives the asymptotic complexity of recurrences of the form:
+The **Master Theorem** gives the asymptotic complexity of recurrences of the form:
 
 ```text
 T(n) = a · T(n/b) + f(n)
@@ -203,8 +189,6 @@ Three cases:
 **Case 2:** `f(n) = Θ(n^log_b(a))` → T(n) = Θ(n^log_b(a) · log n)
 **Case 3:** `f(n) = Ω(n^(log_b(a) + ε))` → T(n) = Θ(f(n))
 
-[PAUSE]
-
 **Examples:**
 
 Merge sort: T(n) = 2T(n/2) + O(n)
@@ -213,15 +197,13 @@ a=2, b=2, log_b(a) = log_2(2) = 1. f(n) = O(n) = O(n^1). Case 2: T(n) = Θ(n log
 Binary search: T(n) = T(n/2) + O(1)
 a=1, b=2, log_b(a) = log_2(1) = 0. f(n) = O(1) = O(n^0). Case 2: T(n) = Θ(log n). ✓
 
-The Master Theorem tells you complexity without needing to draw the full recursion tree. Memorize the three cases and the two canonical examples (merge sort and binary search) — interviewers ask about both."
+The Master Theorem tells you complexity without needing to draw the full recursion tree. Memorize the three cases and the two canonical examples (merge sort and binary search) — interviewers ask about both.
 
 ---
 
-## [20:00 – 24:00] Part 4 — Count Inversions
+## Part 4 — Count Inversions
 
-**[SHOW SLIDE: "Merge Sort Application: Counting Inversions"]**
-
-"An **inversion** is a pair (i, j) where i < j but arr[i] > arr[j] — an out-of-order pair. Counting inversions with a nested loop is O(n²). Modified merge sort counts them in O(n log n).
+An **inversion** is a pair (i, j) where i < j but arr[i] > arr[j] — an out-of-order pair. Counting inversions with a nested loop is O(n²). Modified merge sort counts them in O(n log n).
 
 The insight: when merging two sorted halves, whenever we take an element from the right half before exhausting the left half, the number of remaining elements in the left half equals the number of inversions contributed by that right-half element.
 
@@ -253,9 +235,9 @@ def count_inversions(arr):
     return merged, inversions
 ```
 
-**[DEMO: `count_inversions([3,1,2])` — inversions are (3,1) and (3,2) → should return 2]**
+**)` — inversions are (3,1) and (3,2) → should return 2]**
 
-The Module 12 lab covers merge sort implementation and inversion counting, binary search and its variants, and the binary search on answer pattern with ship_within_days. Good luck."
+The Module 12 lab covers merge sort implementation and inversion counting, binary search and its variants, and the binary search on answer pattern with ship_within_days. Good luck.
 
 ---
 

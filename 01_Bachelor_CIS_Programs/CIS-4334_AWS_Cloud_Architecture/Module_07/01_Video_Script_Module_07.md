@@ -42,8 +42,6 @@ Let's get into it.
 
 ### SEGMENT 2 — Instance Types and Families (1:30–5:30)
 
-[SHOW DIAGRAM: Grid of EC2 instance family icons organized by workload category — General Purpose, Compute Optimized, Memory Optimized, Storage Optimized, Accelerated Computing — each with representative instance names and icons]
-
 AWS organizes EC2 instances into families based on the type of workload they target. Understanding these families is not optional for the SAA-C03 — scenario questions will ask you to identify the right family. Let me walk through each one.
 
 **General Purpose** — the default starting point for most workloads. The T-family — T3, T3a, T4g — uses a burstable CPU model. Instances accumulate CPU credits during idle periods and spend them during bursts. This is ideal for web servers, development environments, and low-traffic applications that have occasional spikes. The M-family — M5, M6i, M7g — provides a balanced ratio of CPU, memory, and network without burstable behavior. Use M-family for steady production workloads where consistent performance matters.
@@ -56,15 +54,11 @@ AWS organizes EC2 instances into families based on the type of workload they tar
 
 **Accelerated Computing** — P-family and G-family instances provide GPU-backed compute for machine learning training, deep learning, and graphics rendering. The Inf family uses AWS-designed Inferentia chips optimized for ML inference at lower cost per inference than GPU instances.
 
-[SHOW DIAGRAM: EC2 instance name breakdown — "m6g.2xlarge" labeled with arrows: m=family, 6=generation, g=processor variant (Graviton), .=separator, 2xlarge=size]
-
 The naming convention encodes important information. "m6g.2xlarge" means M-family, sixth generation, Graviton ARM processor, double-extra-large size. Processor suffixes matter: no suffix means Intel Xeon, "a" means AMD EPYC, "g" means AWS Graviton (ARM). Graviton instances typically provide 20–40% better price-performance than equivalent x86 instances for compatible workloads.
 
 ---
 
 ### SEGMENT 3 — Amazon Machine Images (5:30–7:30)
-
-[SHOW DIAGRAM: AMI creation and launch flow — Running EC2 instance with software installed → Create Image action → AMI artifact (consisting of EBS snapshot + metadata + permissions) → Launch new instances in multiple AZs from the AMI]
 
 An AMI — Amazon Machine Image — is a template containing the complete configuration needed to launch an EC2 instance: the operating system, pre-installed software, application configuration, and storage volume mappings. AMIs are the cornerstone of repeatable, consistent EC2 deployments.
 
@@ -80,8 +74,6 @@ For dynamic deployments, use AWS Systems Manager Parameter Store to store the la
 
 ### SEGMENT 4 — Placement Groups (7:30–9:30)
 
-[SHOW DIAGRAM: Three side-by-side diagrams — Left: Cluster group showing instances packed together on a single rack in one AZ. Center: Spread group showing individual instances each on separate hardware across AZs. Right: Partition group showing a set of partitions, each partition containing multiple instances on dedicated racks]
-
 Placement groups control the physical placement of EC2 instances within AWS infrastructure. The three types serve fundamentally different goals.
 
 **Cluster placement groups** pack instances together on the same underlying hardware within a single Availability Zone. This delivers the lowest possible network latency and highest throughput — up to 10 Gbps of bandwidth between instances in a cluster group. The trade-off is reduced fault tolerance: if the underlying hardware experiences an issue, all instances in the group are affected. Use cluster groups for HPC workloads, tightly-coupled parallel computing, and applications where node-to-node latency directly impacts performance.
@@ -96,8 +88,6 @@ The exam decision is direct: low latency for HPC equals Cluster. Small number of
 
 ### SEGMENT 5 — EC2 Pricing Models (9:30–13:00)
 
-[SHOW DIAGRAM: Bar chart comparing pricing of On-Demand at 100%, Compute Savings Plan at approximately 66%, Standard Reserved 1-year All Upfront at approximately 40%, and Spot at approximately 10–30% of On-Demand baseline, with workload characteristics noted under each bar]
-
 AWS provides four main pricing models for EC2. Selecting the right model is one of the highest-ROI architectural decisions you can make, and it is tested heavily on the SAA-C03.
 
 **On-Demand** pricing means you pay for compute by the hour or second with no commitments or upfront costs. This is the highest per-unit cost but gives you maximum flexibility. On-Demand is the right choice for workloads with unpredictable or short-duration compute needs, for new applications being evaluated before committing, and for development and test environments that run intermittently. Think of On-Demand as the baseline from which all other models provide discounts.
@@ -108,23 +98,17 @@ AWS provides four main pricing models for EC2. Selecting the right model is one 
 
 **Spot Instances** let you use spare AWS EC2 capacity at up to 90% discount compared to On-Demand. The critical caveat: AWS can reclaim Spot instances with only a 2-minute warning when the underlying capacity is needed elsewhere. This means Spot is exclusively appropriate for fault-tolerant, stateless, and interruptible workloads: nightly batch data processing, CI/CD pipeline build agents, image rendering farms, and stateless application tier instances running behind a load balancer where any individual instance can be replaced without data loss.
 
-[SHOW DIAGRAM: Pricing decision tree — "Is the workload steady-state and running continuously?" → Yes → Savings Plans or Reserved. "Can the workload be interrupted and restarted?" → Yes → Spot. "Is duration short or unpredictable?" → Yes → On-Demand.]
-
 Classic exam scenario: a company runs a 4-hour data transformation job every night that can be restarted from a checkpoint if interrupted. The answer is Spot Instances. Another scenario: a company runs a production e-commerce website 24/7 with predictable traffic. The answer is Compute Savings Plans or Standard Reserved Instances.
 
 ---
 
 ### SEGMENT 6 — Auto Scaling Groups (13:00–17:00)
 
-[SHOW DIAGRAM: Auto Scaling group visual spanning 3 AZs. CloudWatch alarm at top. Arrows show instances being added when CPU alarm fires and removed when CPU drops. Min/Desired/Max labels on the side with example values 2/4/10.]
-
 Auto Scaling allows your EC2 fleet to grow and shrink automatically in response to real demand. An Auto Scaling group — ASG — is the core resource. It maintains a desired number of instances, automatically replaces unhealthy instances by checking health checks, and adjusts capacity based on scaling policies you define.
 
 Every ASG has three capacity settings. **Minimum** is the floor — the ASG will never have fewer instances than this value. **Maximum** is the ceiling — the ASG will never exceed this. **Desired** is the target count the ASG actively tries to maintain. When a scaling policy fires, it adjusts the desired count, and the ASG either launches new instances or terminates existing ones to reach the new target.
 
 Auto Scaling uses a **launch template** to define what to launch. A launch template specifies the AMI ID, instance type, key pair, security groups, IAM instance profile, user data bootstrap script, and optional Spot configuration. Launch templates support versioning — you can create new versions and roll back if needed. Always use launch templates over the older launch configurations, which are deprecated and do not support all modern EC2 features including T-instance CPU credit options, Spot instance diversification, and dedicated hosts.
-
-[SHOW DIAGRAM: Scaling policy comparison — four rows: Target Tracking with a thermostat icon, Step Scaling with tiered alarm levels, Scheduled Scaling with a calendar icon, Predictive Scaling with an ML forecast curve]
 
 AWS provides four scaling policy types. **Target Tracking Scaling** is the recommended default. You specify a target value for a metric — "keep average CPU utilization at 50%" — and Auto Scaling adds or removes instances to maintain that target value. The ASG calculates the required capacity change automatically. This is analogous to a thermostat — set the target temperature and let the system manage it.
 
@@ -139,8 +123,6 @@ Auto Scaling groups distribute instances across the Availability Zones you speci
 ---
 
 ### SEGMENT 7 — Lifecycle Hooks (17:00–19:30)
-
-[SHOW DIAGRAM: EC2 instance lifecycle state machine — boxes for: Pending → Pending:Wait (hook fires here, Lambda runs) → Pending:Proceed → InService → Terminating → Terminating:Wait (hook fires here, Lambda runs) → Terminating:Proceed → Terminated. Arrows show CompleteLifecycleAction signals returning to the ASG.]
 
 Lifecycle hooks are one of those features that separate intermediate AWS users from architects. They pause EC2 instances at specific transition points in the Auto Scaling lifecycle so you can run custom actions before the instance enters or leaves the InService state.
 

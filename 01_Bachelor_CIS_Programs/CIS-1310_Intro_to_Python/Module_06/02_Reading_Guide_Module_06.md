@@ -206,7 +206,7 @@ curved = [score + 5 for score in grades]
 passing = [score for score in grades if score >= 60]
 ```
 
-Reading a comprehension: "Build a list of `[expression]` for each `[variable]` in `[iterable]` where `[condition]`."
+Reading a comprehension: "Build a list of `[expression]` for each `[variable]` in `[iterable]` where `[condition]`.
 
 ### Reference vs. Copy
 
@@ -574,8 +574,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

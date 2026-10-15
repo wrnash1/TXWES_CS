@@ -28,21 +28,21 @@
 
 ---
 
-### [00:00 - 01:30] Introduction
+### Introduction
 
 Professor Nash on camera. Title card: Module 07 — Malware Analysis Fundamentals.
 
-"Welcome to Module 07. So far in this course we have built skills in log analysis, network traffic analysis, and endpoint detection. All of those disciplines assume you are looking at behavior — what a system is doing. This module adds a different lens: examining the malware itself.
+Welcome to Module 07. So far in this course we have built skills in log analysis, network traffic analysis, and endpoint detection. All of those disciplines assume you are looking at behavior — what a system is doing. This module adds a different lens: examining the malware itself.
 
 Malware analysis is the practice of dissecting malicious software to understand what it does, how it does it, and what traces it leaves behind. As a SOC analyst you will not always perform deep reverse engineering — that is typically a Tier 3 or malware research function. But you absolutely need to understand the outputs of malware analysis: the IOCs it produces, the techniques it maps to, and how to use those findings to hunt across your environment.
 
-This module covers malware categories, the difference between static and dynamic analysis, sandbox analysis, key behavioral indicators, and how everything maps to ATT&CK. Let's get into it."
+This module covers malware categories, the difference between static and dynamic analysis, sandbox analysis, key behavioral indicators, and how everything maps to ATT&CK. Let's get into it.
 
 ---
 
-### [01:30 - 05:00] Malware Categories
+### Malware Categories
 
-"Before we analyze malware we need a shared vocabulary for what we are analyzing. Malware is not one thing — it is a category of many types of malicious software, each with distinct behavior and objective.
+Before we analyze malware we need a shared vocabulary for what we are analyzing. Malware is not one thing — it is a category of many types of malicious software, each with distinct behavior and objective.
 
 Virus — a program that replicates by attaching itself to legitimate files. Requires user interaction to spread. Becoming less common but still appears on certification exams.
 
@@ -64,15 +64,13 @@ Botnet agent (bot) — a compromised endpoint enrolled in a botnet. The attacker
 
 Fileless malware — executes entirely in memory using legitimate system tools. Leaves no persistent file on disk. Traditional AV cannot detect it. We covered this in Module 06 in the context of EDR detection.
 
-On the CySA+ exam, questions about malware categories test behavioral recognition: given a described behavior, identify the malware type. The exam will not ask you to write malware — it will ask you to classify what you are seeing in an EDR alert or sandbox report."
-
-[SHOW DIAGRAM: Malware category table with columns: Malware Type, Primary Behavior, Key Characteristic, ATT&CK Technique Reference. Rows for all ten types listed above.]
+On the CySA+ exam, questions about malware categories test behavioral recognition: given a described behavior, identify the malware type. The exam will not ask you to write malware — it will ask you to classify what you are seeing in an EDR alert or sandbox report.
 
 ---
 
-### [05:00 - 10:00] Static vs. Dynamic Analysis
+### Static vs. Dynamic Analysis
 
-"Malware analysis has two fundamental methodologies: static analysis and dynamic analysis. Understanding when to use each — and what each can and cannot reveal — is a core CySA+ exam topic.
+Malware analysis has two fundamental methodologies: static analysis and dynamic analysis. Understanding when to use each — and what each can and cannot reveal — is a core CySA+ exam topic.
 
 Static analysis examines a malware sample without executing it. You are inspecting the artifact itself.
 
@@ -108,15 +106,13 @@ Mutex creation — malware often creates named mutexes to prevent multiple insta
 
 The limitation of dynamic analysis is evasion. Sophisticated malware detects sandbox environments and either does nothing or executes benign behavior. Sandbox detection techniques include checking for: low uptime, too little memory, missing user activity, known sandbox process names, registry artifacts specific to virtual machines.
 
-For the CySA+ exam: When asked how to safely analyze a suspicious file to determine if it is malicious, the answer is dynamic analysis in a sandbox — not executing it on a production workstation. When asked what static analysis reveals, the answer includes file hashes, embedded strings, and import tables."
-
-[SHOW DIAGRAM: Two-column comparison. Left column: Static Analysis — tools, outputs, limitations. Right column: Dynamic Analysis — tools, outputs, limitations. Center: when to use each.]
+For the CySA+ exam: When asked how to safely analyze a suspicious file to determine if it is malicious, the answer is dynamic analysis in a sandbox — not executing it on a production workstation. When asked what static analysis reveals, the answer includes file hashes, embedded strings, and import tables.
 
 ---
 
-### [10:00 - 14:30] Sandbox Analysis and IOC Extraction
+### Sandbox Analysis and IOC Extraction
 
-"Let me walk through what a sandbox report looks like and how an analyst uses it.
+Let me walk through what a sandbox report looks like and how an analyst uses it.
 
 When you submit a sample to a sandbox — commercial tools like Any.run, Joe Sandbox, or Hybrid Analysis, or an on-premises open-source tool like Cuckoo Sandbox — the platform detonates the sample in an instrumented VM and generates a report.
 
@@ -152,13 +148,13 @@ It creates a mutex with a unique GUID-style name.
 
 From this report, an analyst extracts: three persistence IOCs (file path, Run key, scheduled task name), one C2 IP, one C2 domain, one port number, and one mutex name. Each becomes a detection rule, a threat hunting query, and a threat intelligence record.
 
-The analyst then uses the EDR to run a cross-endpoint query to determine if any other endpoints in the environment are running a process with the same hash, connecting to this IP, or containing this scheduled task name."
+The analyst then uses the EDR to run a cross-endpoint query to determine if any other endpoints in the environment are running a process with the same hash, connecting to this IP, or containing this scheduled task name.
 
 ---
 
-### [14:30 - 18:00] Malware Behaviors and ATT&CK Mapping
+### Malware Behaviors and ATT&CK Mapping
 
-"Understanding malware behavior means being able to look at what a piece of malware does and immediately map it to ATT&CK tactics and techniques. This is a core analyst skill.
+Understanding malware behavior means being able to look at what a piece of malware does and immediately map it to ATT&CK tactics and techniques. This is a core analyst skill.
 
 Let me walk through the most commonly tested malware behaviors and their ATT&CK mappings.
 
@@ -174,13 +170,13 @@ Exfiltration: Moving data out of the environment. Exfiltration over C2 channel (
 
 Impact: The end-stage destructive or disruptive action. Data encryption for ransomware (T1486), service stop (T1489), disk wipe (T1561).
 
-For the exam, the most frequently tested mapping is: malware behavior described in a scenario — you identify the ATT&CK tactic and technique. Know the technique IDs for the behaviors listed above."
+For the exam, the most frequently tested mapping is: malware behavior described in a scenario — you identify the ATT&CK tactic and technique. Know the technique IDs for the behaviors listed above.
 
 ---
 
-### [18:00 - 21:00] Malware Analysis in SOC Operations
+### Malware Analysis in SOC Operations
 
-"How does malware analysis fit into the SOC workflow you are building throughout this course?
+How does malware analysis fit into the SOC workflow you are building throughout this course?
 
 When a malware sample is identified — through EDR alert, email gateway detection, or incident response — the SOC analyst follows this workflow:
 
@@ -194,13 +190,13 @@ Step 4: Hunt with IOCs. Using the EDR cross-endpoint query, hunt for the file ha
 
 Step 5: Feed IOCs into SIEM. Create detection rules from the extracted IOCs. Future activity matching these indicators fires alerts immediately.
 
-Step 6: Document and share. Add the IOCs and ATT&CK mapping to your threat intelligence platform. If your organization participates in an ISAC, share the intelligence under TLP:AMBER or TLP:WHITE as appropriate."
+Step 6: Document and share. Add the IOCs and ATT&CK mapping to your threat intelligence platform. If your organization participates in an ISAC, share the intelligence under TLP:AMBER or TLP:WHITE as appropriate.
 
 ---
 
-### [21:00 - 24:00] Module Summary and Lab Preview
+### Module Summary and Lab Preview
 
-"Let's bring together what we covered.
+Let's bring together what we covered.
 
 Malware categories: virus, worm, Trojan, RAT, ransomware, rootkit, keylogger, spyware, botnet agent, fileless malware. Know the behavioral characteristics of each.
 
@@ -216,7 +212,7 @@ SOC malware analysis workflow: hash and query, static scan, sandbox, hunt with I
 
 In the Module 07 lab you will analyze a provided simulated sandbox report, extract all IOCs, map behaviors to ATT&CK techniques, and write a threat intelligence summary. Read the Reading Guide first for the full malware category reference and the IOC extraction table.
 
-Study resources: professormesser.com and comptia.org. See you in Module 08."
+Study resources: professormesser.com and comptia.org. See you in Module 08.
 
 ---
 

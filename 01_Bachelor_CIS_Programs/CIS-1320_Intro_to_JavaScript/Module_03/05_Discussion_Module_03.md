@@ -40,13 +40,13 @@ In 175–225 words, respond to the following:
 
 - From the Module 03 lab, identify **one coercion behavior** that you think is genuinely useful — where coercion reduces code and does what a developer would actually want. Describe the specific case and explain why it is useful.
 - Identify **one coercion behavior** that is a clear source of bugs — where the coercion produces a result that no reasonable developer would expect without having studied the rules. Describe the specific case and explain what the bug would look like in a real program.
-- Based on these two cases, where do you stand: is coercion a feature that should be embraced and understood, or a flaw that should be avoided by always using explicit conversions like `Number()`, `String()`, and `Boolean()`? Make a concrete argument — not just "it depends."
+- Based on these two cases, where do you stand: is coercion a feature that should be embraced and understood, or a flaw that should be avoided by always using explicit conversions like `Number()`, `String()`, and `Boolean()`? Make a concrete argument — not just "it depends.
 
 ---
 
 ### Scenario C — The `null` vs `undefined` Distinction
 
-JavaScript has two different "nothing" values: `null` and `undefined`. Most languages have one. JavaScript deliberately has two. The reading guide explains the difference: `null` is an intentional "no value," while `undefined` is an unintentional "not yet assigned."
+JavaScript has two different "nothing" values: `null` and `undefined`. Most languages have one. JavaScript deliberately has two. The reading guide explains the difference: `null` is an intentional "no value," while `undefined` is an unintentional "not yet assigned.
 
 In 175–225 words, respond to the following:
 

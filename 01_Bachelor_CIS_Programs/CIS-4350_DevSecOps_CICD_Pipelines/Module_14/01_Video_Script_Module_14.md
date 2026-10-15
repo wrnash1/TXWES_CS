@@ -173,7 +173,7 @@ The threat model is not a compliance artifact that gets filed and forgotten. Its
 
 **Elevation of Privilege threats** drive: PodSecurity admission controller (restricted profile), Security Contexts (no root, no privilege escalation, drop ALL capabilities), Network Policies (default-deny-all), Falco runtime rules for privilege escalation detection.
 
-When a security engineer can trace a CI/CD gate requirement back to a specific STRIDE threat in the threat model, the gate has a defensible justification. When an engineer asks "why do we have this OPA policy blocking privileged containers?", the answer is "it mitigates STRIDE Elevation of Privilege threat TM-047 in our API service threat model, documented in threat-model.json in the repo."
+When a security engineer can trace a CI/CD gate requirement back to a specific STRIDE threat in the threat model, the gate has a defensible justification. When an engineer asks "why do we have this OPA policy blocking privileged containers?", the answer is "it mitigates STRIDE Elevation of Privilege threat TM-047 in our API service threat model, documented in threat-model.json in the repo.
 
 ---
 

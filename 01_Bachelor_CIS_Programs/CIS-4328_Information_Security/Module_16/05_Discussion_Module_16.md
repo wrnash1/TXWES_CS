@@ -64,7 +64,7 @@ Write substantive replies of at least 80 words each to at least two classmates. 
 
 Strong initial posts will demonstrate the following:
 
-**Domain 1**: The BEC email attack exploits missing DMARC/DKIM email authentication and the lack of MFA on the CFO's account (or email impersonation bypassing MFA entirely). The bulk API download exploits inadequate session token controls or missing MFA on API access. Full credit requires naming a specific control, not just "add MFA."
+**Domain 1**: The BEC email attack exploits missing DMARC/DKIM email authentication and the lack of MFA on the CFO's account (or email impersonation bypassing MFA entirely). The bulk API download exploits inadequate session token controls or missing MFA on API access. Full credit requires naming a specific control, not just "add MFA.
 
 **Domain 2**: All three vectors are consistent with a coordinated APT or organized crime campaign. The ransomware maps to MITRE ATT&CK Tactic: Impact (T1486 — Data Encrypted for Impact). The BEC maps to Tactic: Initial Access or Collection via social engineering. The bulk download maps to Tactic: Exfiltration. Full credit requires at least one tactic named correctly.
 

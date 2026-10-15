@@ -1,5 +1,23 @@
 # Video Script: Module 13 - Laptop Components and Disassembly
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course &bull; Module 13</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLG49S3nxzAnlGHY8ObL8DiyP3AIu9vdnH" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLG49S3nxzAnlGHY8ObL8DiyP3AIu9vdnH" title="Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-2320 Hardware Fundamentals
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — Domain 1.3: Given a scenario, install or replace laptop components
 **Estimated Duration:** 20-24 minutes
@@ -7,7 +25,7 @@
 
 ---
 
-## [00:00 - 02:30] Section 1 — Introduction and Safety Foundation
+## Section 1 — Introduction and Safety Foundation
 
 <div style="text-align: center; margin: 24px 0;">
 <svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
@@ -108,7 +126,7 @@ The CompTIA A+ exam tests this rule directly. If a scenario question asks what t
 
 ---
 
-## [02:30 - 07:30] Section 2 — Laptop Battery Types and Removal Procedures
+## Section 2 — Laptop Battery Types and Removal Procedures
 
 **[SHOW COMPONENT: Laptop underside — removable battery with sliding latch visible]**
 
@@ -126,7 +144,7 @@ After disconnecting the battery, confirm the system is fully de-energized: press
 
 ---
 
-## [07:30 - 12:30] Section 3 — Wi-Fi Card, RAM, and M.2 Storage
+## Section 3 — Wi-Fi Card, RAM, and M.2 Storage
 
 **[SHOW COMPONENT: Interior of laptop — Wi-Fi card visible with two antenna cables]**
 
@@ -154,7 +172,7 @@ M.2 storage in a laptop uses the same removal procedure as a Wi-Fi card: one ret
 
 ---
 
-## [12:30 - 17:30] Section 4 — LCD Display Replacement and DC Power Jack
+## Section 4 — LCD Display Replacement and DC Power Jack
 
 **[SHOW COMPONENT: Laptop lid — bezel visible with rubber plug covering a screw hole]**
 
@@ -184,7 +202,7 @@ DC power jack replacement requires either soldering (if the jack is directly mou
 
 ---
 
-## [17:30 - 21:30] Section 5 — ZIF Connectors, Keyboard Replacement, and Lab Preparation
+## Section 5 — ZIF Connectors, Keyboard Replacement, and Lab Preparation
 
 **[SHOW COMPONENT: ZIF connector on motherboard — locking tab visible in closed and open position]**
 

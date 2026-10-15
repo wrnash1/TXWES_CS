@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Learning Objectives
+## Opening and Learning Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -27,8 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-**[INSTRUCTOR ON CAMERA — title card: "Module 05: Azure Virtual Networking"]**
-
 Welcome to Module 05. I'm Professor Nash. Today we cover Azure Virtual Networking — the connective tissue that links every Azure service together and connects your cloud resources to your on-premises environment and the internet.
 
 Networking is one of the largest topic areas in the AZ-900 "Describe Azure Architecture and Services" domain. Understanding virtual networks, subnets, Network Security Groups, DNS, and connectivity options is essential for passing the exam and for any real cloud infrastructure work.
@@ -44,7 +42,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 06:00] Azure Virtual Networks and Subnets
+## Azure Virtual Networks and Subnets
 
 **[SLIDE: "Azure Virtual Network (VNet)"]**
 
@@ -108,7 +106,7 @@ Public IP address types:
 
 ---
 
-## [06:00 - 11:00] Network Security Groups
+## Network Security Groups
 
 **[SLIDE: "Network Security Groups (NSGs)"]**
 
@@ -203,7 +201,7 @@ For AZ-900: NSGs are free, basic, subnet/NIC level. Azure Firewall is paid, adva
 
 ---
 
-## [11:00 - 15:00] Azure DNS and Name Resolution
+## Azure DNS and Name Resolution
 
 **[SLIDE: "Azure DNS"]**
 
@@ -227,7 +225,7 @@ Private DNS zones can be linked to multiple VNets, enabling name resolution acro
 
 ---
 
-## [15:00 - 19:00] Hybrid Connectivity: VPN Gateway and ExpressRoute
+## Hybrid Connectivity: VPN Gateway and ExpressRoute
 
 **[SLIDE: "Connecting On-Premises to Azure"]**
 
@@ -277,7 +275,7 @@ Key characteristics:
 
 ---
 
-## [19:00 - 21:30] VNet Peering and Service Endpoints
+## VNet Peering and Service Endpoints
 
 **[SLIDE: "VNet Peering"]**
 
@@ -298,7 +296,7 @@ Key characteristics:
 
 ---
 
-## [21:30 - 23:30] Lab Preview
+## Lab Preview
 
 **[SLIDE: "Module 05 Lab"]**
 
@@ -315,9 +313,7 @@ This is a foundational lab — every real Azure deployment involves VNet and NSG
 
 ---
 
-## [23:30 - 24:00] Closing
-
-**[INSTRUCTOR ON CAMERA]**
+## Closing
 
 You now understand Azure Virtual Networking — VNets, subnets, NSGs, DNS, VPN Gateway, ExpressRoute, and VNet peering. These concepts appear throughout AZ-900 and are fundamental to any cloud infrastructure role.
 

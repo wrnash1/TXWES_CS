@@ -457,7 +457,7 @@ Implement a full multi-head attention module and visualize how different heads a
 
 2. Instantiate `ManualMultiHeadAttention(d_model=32, num_heads=4)`. Pass a random input tensor of shape `(1, 8, 32)` (batch=1, seq_len=8, d_model=32) as q, k, and v. Retrieve the attention weights tensor of shape `(1, num_heads, 8, 8)`.
 3. Plot a 2×2 grid of heatmaps — one per attention head — showing the 8×8 weight matrix for each head. Label axes with token indices 0–7. Observe whether different heads attend to different patterns even with random weights.
-4. In a Markdown cell, explain why multiple heads attending to different subspaces provides more expressive power than a single attention head with the full `d_model` dimension. Reference the concept of "representation subspaces."
+4. In a Markdown cell, explain why multiple heads attending to different subspaces provides more expressive power than a single attention head with the full `d_model` dimension. Reference the concept of "representation subspaces.
 
 ### Reflection Questions
 

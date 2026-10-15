@@ -1,5 +1,23 @@
 # Video Script: Module 05 – Cost Management: Budgeting and EVM
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Google Career Certificates &bull; IT Project Management &bull; Module 05</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" title="Google Career Certificates &bull; IT Project Management" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Google Career Certificates &bull; IT Project Management</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3310 IT Project Management
 **Estimated Duration:** 23 minutes
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
@@ -7,20 +25,18 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 – 03:30]
-
+## Section 1: Welcome and Module Overview
 Welcome back to CIS-3310. I am Professor Nash, and this is Module 05: Cost Management. We have defined scope and built the schedule — now we need to determine how much all of that work will cost and how we will monitor our spending throughout the project.
 
 This module has two major components: budgeting (how we estimate and establish the cost baseline) and Earned Value Management, which is the most calculation-intensive topic on the Project+ exam.
 
-[SHOW SLIDE] Module 05 title: "Cost Management — Budgeting and EVM"
+ Module 05 title: "Cost Management — Budgeting and EVM
 
 Today we cover four topics: the cost management process flow; cost estimating techniques; the Cost Baseline and reserves; and Earned Value Management formulas and interpretation.
 
 ---
 
-## Section 2: Cost Management Process Flow [03:30 – 07:00]
-
+## Section 2: Cost Management Process Flow
 PMI defines four processes in Cost Management.
 
 Plan Cost Management develops the cost management plan — the rules for how costs will be estimated, budgeted, and controlled.
@@ -31,12 +47,11 @@ Determine Budget aggregates the activity cost estimates and adds contingency res
 
 Control Costs monitors actual spending against the Cost Baseline, calculates Earned Value metrics, and manages changes to the budget.
 
-[SHOW SLIDE] Cost management process chain
+ Cost management process chain
 
 ---
 
-## Section 3: Cost Estimating Techniques [07:00 – 11:00]
-
+## Section 3: Cost Estimating Techniques
 There are four primary estimating techniques, and the exam tests your ability to choose the right one for a given situation.
 
 Analogous estimating uses data from similar past projects as the basis for the current estimate. It is fast but less accurate. Best used early in the project when scope detail is limited. Accuracy range: roughly -25% to +75% (a ROM estimate).
@@ -51,9 +66,8 @@ Three-point estimating (PERT) applies the formula (O + 4M + P) / 6 to generate a
 
 ---
 
-## Section 4: Cost Baseline and Reserves [11:00 – 15:00]
-
-[SHOW SLIDE] Cost Baseline vs. Project Budget diagram
+## Section 4: Cost Baseline and Reserves
+ Cost Baseline vs. Project Budget diagram
 
 The Cost Baseline is the approved, time-phased budget used as the reference for measuring cost performance. It includes contingency reserves but does NOT include management reserves.
 
@@ -71,9 +85,8 @@ Management reserves are funds held by senior management for completely unforesee
 
 ---
 
-## Section 5: Earned Value Management [15:00 – 21:30]
-
-[SHOW SLIDE] EVM formula reference card
+## Section 5: Earned Value Management
+ EVM formula reference card
 
 Earned Value Management (EVM) is a performance measurement technique that integrates scope, schedule, and cost into a single quantitative framework. It is the most heavily tested topic in Cost Management.
 
@@ -83,9 +96,9 @@ Planned Value (PV) is the authorized budget assigned to the work that was schedu
 
 Actual Cost (AC) is the total cost actually incurred to accomplish the work performed during a given time period. AC is what you actually spent.
 
-Earned Value (EV) is the budgeted value of work actually completed. EV = Percent Complete × BAC (Budget at Completion). EV answers the question: "How much value have we actually produced?"
+Earned Value (EV) is the budgeted value of work actually completed. EV = Percent Complete × BAC (Budget at Completion). EV answers the question: "How much value have we actually produced?
 
-[SHOW SLIDE] S-curve with PV, EV, and AC plotted
+ S-curve with PV, EV, and AC plotted
 
 From these three values, we calculate variances and indices:
 
@@ -107,8 +120,7 @@ Variance at Completion (VAC) = BAC - EAC. Positive VAC means under budget at com
 
 ---
 
-## End Card [21:30 – 23:00]
-
+## End Card
 Module 05 is complete. Your assignments: complete the Reading Guide which has a full EVM formula reference; complete the Lab with hands-on EVM calculation exercises; take the Quiz; post your Discussion by Wednesday.
 
 Study resources for EVM formulas: professormesser.com and comptia.org.

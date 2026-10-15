@@ -28,17 +28,17 @@
 
 ---
 
-### [00:00 – 02:30] Introduction
+### Introduction
 
 **Visual:** Instructor on camera with title card: **Data+ DA0-001 Exam Preparation and Capstone**.
 
-**Audio:** "Welcome to Module 16 — the final module of CIS-4336. This module has two purposes. First, we do a comprehensive review of all five Data+ exam domains so you leave this course with a clear picture of what the exam tests and how to prepare. Second, you complete a capstone project that integrates the technical and communication skills from the entire course. If you have been working through this course systematically, you are already well-prepared. This module is about consolidating that preparation, filling gaps, and building confidence. Let's start with the exam itself."
+**Audio:** "Welcome to Module 16 — the final module of CIS-4336. This module has two purposes. First, we do a comprehensive review of all five Data+ exam domains so you leave this course with a clear picture of what the exam tests and how to prepare. Second, you complete a capstone project that integrates the technical and communication skills from the entire course. If you have been working through this course systematically, you are already well-prepared. This module is about consolidating that preparation, filling gaps, and building confidence. Let's start with the exam itself.
 
 **Study Link:** [CompTIA Data+ Exam Objectives DA0-001 — free PDF](https://www.comptia.org/certifications/data)
 
 ---
 
-### [02:30 – 06:00] Data+ Exam Structure
+### Data+ Exam Structure
 
 **Visual:** Exam overview slide with domain weights, question count, passing score, and format.
 
@@ -54,11 +54,11 @@ Domain 3 — Data Analysis and Statistics: 23%.
 Domain 4 — Data Visualization and Reporting: 22%.
 Domain 5 — Data Governance: 15%.
 
-Domain 2, Data Mining, has the highest weight at 25%. Domain 4, Visualization, is the second highest at 22%. Together they account for nearly half the exam. If you are short on preparation time, prioritize those two domains."
+Domain 2, Data Mining, has the highest weight at 25%. Domain 4, Visualization, is the second highest at 22%. Together they account for nearly half the exam. If you are short on preparation time, prioritize those two domains.
 
 ---
 
-### [06:00 – 10:00] Domain 1 Review — Data Concepts and Environments
+### Domain 1 Review — Data Concepts and Environments
 
 **Visual:** Mind map of Domain 1 topics.
 
@@ -76,11 +76,11 @@ Domain 2, Data Mining, has the highest weight at 25%. Domain 4, Visualization, i
 
 **Cloud concepts** — IaaS, PaaS, SaaS; shared responsibility model; benefits of cloud analytics: scalability, cost flexibility, managed infrastructure.
 
-Common exam traps: confusing OLTP with OLAP, confusing the star schema with the snowflake schema, and misidentifying data source types. First-party means you collected it directly from your customers. Third-party means a vendor collected it and sold it to you."
+Common exam traps: confusing OLTP with OLAP, confusing the star schema with the snowflake schema, and misidentifying data source types. First-party means you collected it directly from your customers. Third-party means a vendor collected it and sold it to you.
 
 ---
 
-### [10:00 – 13:30] Domain 2 Review — Data Mining
+### Domain 2 Review — Data Mining
 
 **Visual:** Flowchart of the data mining process: collect → clean → transform → load.
 
@@ -98,11 +98,11 @@ Common exam traps: confusing OLTP with OLAP, confusing the star schema with the 
 
 **Data quality dimensions** — completeness, consistency, accuracy, validity, uniqueness, and timeliness. These six dimensions appear on the exam frequently.
 
-Exam tip: be able to match a described data problem to its quality dimension. Missing values are a completeness issue. Duplicate records are a uniqueness issue. A value of 200% in a percentage column is a validity issue."
+Exam tip: be able to match a described data problem to its quality dimension. Missing values are a completeness issue. Duplicate records are a uniqueness issue. A value of 200% in a percentage column is a validity issue.
 
 ---
 
-### [13:30 – 17:00] Domain 3 Review — Data Analysis and Statistics
+### Domain 3 Review — Data Analysis and Statistics
 
 **Visual:** Summary table of statistical measures and when to use each.
 
@@ -120,11 +120,11 @@ Exam tip: be able to match a described data problem to its quality dimension. Mi
 
 **Machine learning concepts** — supervised vs. unsupervised, classification vs. regression, overfitting vs. underfitting, train-test split purpose.
 
-**Analysis types** — trend analysis, cohort analysis, root cause analysis, gap analysis, and what-if analysis. Know the purpose of each."
+**Analysis types** — trend analysis, cohort analysis, root cause analysis, gap analysis, and what-if analysis. Know the purpose of each.
 
 ---
 
-### [17:00 – 20:30] Domain 4 and Domain 5 Review
+### Domain 4 and Domain 5 Review
 
 **Visual:** Side-by-side summary cards for Domain 4 and Domain 5.
 
@@ -148,11 +148,11 @@ HIPAA: Protected Health Information, Privacy Rule and Security Rule.
 PII and quasi-identifiers.
 Data anonymization techniques: masking, pseudonymization, aggregation, generalization, k-anonymity.
 Algorithmic bias types: historical, measurement, sampling, proxy discrimination.
-Data governance principles: minimization, purpose limitation, transparency, consent, accountability."
+Data governance principles: minimization, purpose limitation, transparency, consent, accountability.
 
 ---
 
-### [20:30 – 24:00] Exam Strategy and Capstone Overview
+### Exam Strategy and Capstone Overview
 
 **Visual:** A prioritized study checklist and capstone project overview slide.
 
@@ -166,7 +166,7 @@ Three — flag and move on. If a question is taking more than 90 seconds, mark i
 
 For the capstone project, you will select a real or synthetic dataset, define a business question, clean the data, analyze it, visualize the findings, and present a one-page executive summary. The capstone combines every skill from this course: Python analysis, dashboard design thinking, statistical interpretation, and stakeholder communication.
 
-This is the finish line. You have covered all five domains across 16 modules. The tools and the concepts are in your toolkit. Now execute. Good luck on the exam and on the capstone."
+This is the finish line. You have covered all five domains across 16 modules. The tools and the concepts are in your toolkit. Now execute. Good luck on the exam and on the capstone.
 
 ---
 

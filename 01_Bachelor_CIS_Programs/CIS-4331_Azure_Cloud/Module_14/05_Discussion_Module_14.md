@@ -88,10 +88,10 @@ Responses that only say "great post" or restate the classmate's points without a
 
 To help you open your initial post with substance rather than filler:
 
-- "In Scenario [X], the core issue is not just overspending — it is a governance gap in..."
-- "The most important first action in this scenario is [specific tool/feature] because..."
-- "Before presenting to the [CFO/CTO/VP], I would quantify the impact by..."
-- "Azure Advisor flagging those VMs as underutilized is a useful starting point, but before acting I would want to know..."
+- "In Scenario [X], the core issue is not just overspending — it is a governance gap in...
+- "The most important first action in this scenario is [specific tool/feature] because...
+- "Before presenting to the [CFO/CTO/VP], I would quantify the impact by...
+- "Azure Advisor flagging those VMs as underutilized is a useful starting point, but before acting I would want to know...
 
 ---
 

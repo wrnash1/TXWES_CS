@@ -81,7 +81,7 @@ The document control section establishes the report's chain of custody. Each ver
 
 The distribution list documents who received the report and when. This matters if the report is later involved in a legal proceeding — demonstrating that only appropriate personnel received the document.
 
-Classification markings should appear in the header or footer of every page: "CONFIDENTIAL — [Client Name] — Not for Public Distribution."
+Classification markings should appear in the header or footer of every page: "CONFIDENTIAL — [Client Name] — Not for Public Distribution.
 
 ### 1.3 Report Classification and Handling
 
@@ -114,11 +114,11 @@ They do not need: Technical vulnerability mechanics, CVE numbers (without explan
 
 The overall security posture assessment is a qualitative summary statement supported by the finding distribution. Options:
 
-**Qualitative descriptions:** "The organization's security posture is assessed as High Risk, with multiple critical and high-severity vulnerabilities presenting immediate exploitation risk."
+**Qualitative descriptions:** "The organization's security posture is assessed as High Risk, with multiple critical and high-severity vulnerabilities presenting immediate exploitation risk.
 
-**Risk matrix summary:** "The assessment identified 2 Critical, 5 High, 8 Medium, and 4 Low findings across web applications, internal infrastructure, and network configuration."
+**Risk matrix summary:** "The assessment identified 2 Critical, 5 High, 8 Medium, and 4 Low findings across web applications, internal infrastructure, and network configuration.
 
-**Comparison to maturity model:** "The organization's current security controls represent an early-stage security program (NIST CSF Tier 1 — Partial). Core capabilities in Detection and Response require significant investment."
+**Comparison to maturity model:** "The organization's current security controls represent an early-stage security program (NIST CSF Tier 1 — Partial). Core capabilities in Detection and Response require significant investment.
 
 ### 2.3 Key Findings in Executive Language
 
@@ -131,17 +131,17 @@ Translate each top finding using this framework:
 
 Example transformation:
 
-**Technical:** "Unauthenticated SSRF in the internal request proxy at port 8080 enables reading of AWS EC2 instance metadata including IAM role credentials."
+**Technical:** "Unauthenticated SSRF in the internal request proxy at port 8080 enables reading of AWS EC2 instance metadata including IAM role credentials.
 
-**Executive:** "An attacker can access the company's cloud infrastructure management system without a password by exploiting a flaw in the internal server. This could allow them to access or delete data stored in the company's cloud environment, including customer records."
+**Executive:** "An attacker can access the company's cloud infrastructure management system without a password by exploiting a flaw in the internal server. This could allow them to access or delete data stored in the company's cloud environment, including customer records.
 
 ### 2.4 Priority Action Items
 
 The executive summary should conclude with 3–5 prioritized actions:
 
-- Use active verbs: "Apply the available patch to the web application server."
-- Specify timeline: "Immediately (within 48 hours)"
-- Reference business impact: "to prevent unauthorized access to the customer database"
+- Use active verbs: "Apply the available patch to the web application server.
+- Specify timeline: "Immediately (within 48 hours)
+- Reference business impact: "to prevent unauthorized access to the customer database
 
 ---
 
@@ -282,9 +282,9 @@ The PT0-002 exam tests whether students know the components and purpose of each 
 
 The exam presents scenarios and asks students to identify the correct CVSS metric values. Practice scenarios:
 
-"A vulnerability requires no authentication, can be exploited remotely, and gives the attacker full control of the server." — AV:N, AC:L, PR:N, UI:N, S:C, C:H, I:H, A:H
+A vulnerability requires no authentication, can be exploited remotely, and gives the attacker full control of the server." — AV:N, AC:L, PR:N, UI:N, S:C, C:H, I:H, A:H
 
-"A bug in the company's internal HR application requires an authenticated low-privilege user and only affects the HR system." — AV:N, AC:L, PR:L, UI:N, S:U, with impacts dependent on data sensitivity.
+A bug in the company's internal HR application requires an authenticated low-privilege user and only affects the HR system." — AV:N, AC:L, PR:L, UI:N, S:U, with impacts dependent on data sensitivity.
 
 ---
 
@@ -312,7 +312,7 @@ The exam presents scenarios and asks students to identify the correct CVSS metri
 
 1. What is the difference between the CVSS Base Score and the Environmental Score? When should a penetration tester apply environmental adjustments?
 
-2. Write an executive-level description (3 sentences maximum) of the following finding: "The SMTP server at mail.corp.internal allows NTLM authentication in cleartext over port 587, enabling passive capture of domain credentials."
+2. Write an executive-level description (3 sentences maximum) of the following finding: "The SMTP server at mail.corp.internal allows NTLM authentication in cleartext over port 587, enabling passive capture of domain credentials.
 
 3. A client argues that a Critical-rated finding should be downgraded to High because they have a WAF deployed that blocks the attack vector. How should the tester respond, and where in the report is this disagreement documented?
 
@@ -329,8 +329,6 @@ The exam presents scenarios and asks students to identify the correct CVSS metri
 - NIST NVD CVSS Calculator: https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator
 - PTES (Penetration Testing Execution Standard): http://www.pentest-standard.org/index.php/Reporting
 - Weidman, G. (2014). *Penetration Testing.* No Starch Press. Chapter 16: Working with the Report.
-
-
 
 ---
 

@@ -30,7 +30,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Module Overview
+## Opening and Module Overview
 
 **[VISUAL: Title card — "Module 02: Python for ML | CIS-4345 | Professor Nash"]**
 
@@ -46,7 +46,7 @@ Let's get started.
 
 ---
 
-## [01:30 - 05:30] NumPy: The Engine Under the Hood
+## NumPy: The Engine Under the Hood
 
 **[VISUAL: Slide — "NumPy: N-Dimensional Array Operations"]**
 
@@ -112,7 +112,7 @@ print((a + b).shape)           # (2, 3) — broadcasting expands both
 
 ---
 
-## [05:30 - 10:00] Pandas: Loading and Preparing Tabular Data
+## Pandas: Loading and Preparing Tabular Data
 
 **[VISUAL: Slide — "Pandas: DataFrame Operations for ML"]**
 
@@ -172,7 +172,7 @@ One pattern to memorize: always call `.values` after selecting DataFrame columns
 
 ---
 
-## [10:00 - 14:30] Matplotlib and Seaborn: Visualizing Data Before Modeling
+## Matplotlib and Seaborn: Visualizing Data Before Modeling
 
 **[VISUAL: Slide — "Exploratory Data Analysis: Why Visualization Comes Before Modeling"]**
 
@@ -241,7 +241,7 @@ Get comfortable with the training curve plot now. You will generate it after eve
 
 ---
 
-## [14:30 - 18:30] scikit-learn Preprocessing: Scalers and Pipelines
+## scikit-learn Preprocessing: Scalers and Pipelines
 
 **[VISUAL: Slide — "scikit-learn Preprocessing: The Tools You Will Use Before TF"]**
 
@@ -293,7 +293,7 @@ Pipelines prevent data leakage automatically. When you call `pipeline.fit(X_trai
 
 ---
 
-## [18:30 - 21:30] Connecting Python Fundamentals to TensorFlow
+## Connecting Python Fundamentals to TensorFlow
 
 **[VISUAL: Slide — "From NumPy to TensorFlow: The Bridge"]**
 
@@ -327,7 +327,7 @@ The `tf.data.Dataset` pipeline is how TensorFlow efficiently feeds data to model
 
 ---
 
-## [21:30 - 23:30] Module Summary and Lab Preview
+## Module Summary and Lab Preview
 
 **[VISUAL: Slide — "Module 02 Key Takeaways"]**
 

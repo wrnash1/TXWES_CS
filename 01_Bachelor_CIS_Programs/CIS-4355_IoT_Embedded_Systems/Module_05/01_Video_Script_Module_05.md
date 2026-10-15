@@ -7,8 +7,7 @@
 
 ---
 
-## Segment 1: Introduction and Learning Objectives [00:00 – 02:00]
-
+## Segment 1: Introduction and Learning Objectives
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -44,9 +43,7 @@ Let us start at the technology most of you already use every day: Wi-Fi.
 
 ---
 
-## Segment 2: Wi-Fi in IoT [02:00 – 06:30]
-
-[SHOW DIAGRAM]
+## Segment 2: Wi-Fi in IoT
 
 Wi-Fi is the IEEE 802.11 family of wireless LAN standards. Every home router, campus network, and corporate office runs Wi-Fi. The latest generation is Wi-Fi 6 (802.11ax), operating at up to 9.6 Gbps on 2.4, 5, and 6 GHz bands.
 
@@ -77,9 +74,7 @@ The Wi-Fi SSID and password configuration is one of the most commonly hardcoded 
 
 ---
 
-## Segment 3: Bluetooth Low Energy [06:30 – 10:30]
-
-[SHOW DIAGRAM]
+## Segment 3: Bluetooth Low Energy
 
 Bluetooth Low Energy (BLE) is defined in the Bluetooth Core Specification. It operates at 2.4 GHz in the same ISM band as Wi-Fi and Zigbee, using 40 channels of 2 MHz each with adaptive frequency hopping to avoid interference.
 
@@ -119,9 +114,7 @@ For IoT access control and medical applications, Numeric Comparison or OOB pairi
 
 ---
 
-## Segment 4: LoRaWAN [10:30 – 15:00]
-
-[SHOW DIAGRAM]
+## Segment 4: LoRaWAN
 
 LoRaWAN is the defining LPWAN (Low Power Wide Area Network) technology for outdoor IoT. It enables sensors to transmit over 2–15 kilometers on a single battery charge that lasts years. This is the radio technology that makes practical IoT deployments over large areas economically viable.
 
@@ -152,9 +145,7 @@ LoRaWAN operates on unlicensed spectrum (915 MHz in the US, 868 MHz in Europe). 
 
 ---
 
-## Segment 5: NB-IoT [15:00 – 18:30]
-
-[SHOW DIAGRAM]
+## Segment 5: NB-IoT
 
 NB-IoT (Narrowband IoT) is a cellular IoT technology standardized by 3GPP as part of LTE Release 13. Where LoRaWAN operates on unlicensed ISM spectrum, NB-IoT uses licensed cellular spectrum — the same frequencies as 4G LTE networks.
 
@@ -184,9 +175,7 @@ The SIM card containing the NB-IoT credentials becomes a physical security asset
 
 ---
 
-## Segment 6: Network Segmentation and IoT Wi-Fi Security [18:30 – 20:30]
-
-[SHOW DIAGRAM]
+## Segment 6: Network Segmentation and IoT Wi-Fi Security
 
 Before we close, I want to reinforce the most critical networking security concept for IoT: network segmentation.
 
@@ -202,8 +191,7 @@ This is a testable concept on CompTIA IoT+ and an expected control in any profes
 
 ---
 
-## Segment 7: Summary and Lab Preview [20:30 – 22:30]
-
+## Segment 7: Summary and Lab Preview
 Wi-Fi: high bandwidth, high power, 30–100 m, requires network segmentation. Use for gateways, cameras, and edge nodes with power supply.
 
 BLE: very low power, 10–100 m, 1–2 Mbps, coin-cell battery life. Use for wearables, beacons, and short-range sensors. Require authenticated pairing modes for sensitive applications.

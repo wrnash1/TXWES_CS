@@ -74,10 +74,10 @@ their five actions, explain your reasoning using a specific project constraint o
 
 Priya is studying for the Project+ exam and encounters the following practice question:
 
-"A project manager identifies that a key vendor is consistently delivering work two
+A project manager identifies that a key vendor is consistently delivering work two
 days late. The project has ten weeks remaining. The PM has attempted to discuss the
 issue with the vendor's project coordinator, but nothing has changed. What should the
-PM do next?"
+PM do next?
 
 A. Issue a stop-work order immediately
 B. Escalate to the vendor's executive sponsor and document the conversation in writing

@@ -159,7 +159,7 @@ Archive tier behavior: Blobs in Archive tier are stored offline. To read an arch
 
 Azure Blob Storage supports lifecycle management policies — rules that automatically transition blobs between tiers or delete them based on age:
 
-Example policy rule: "Move blobs that have not been modified for 30 days from Hot to Cool. Move blobs that have not been modified for 90 days from Cool to Archive. Delete blobs that have not been modified for 365 days."
+Example policy rule: "Move blobs that have not been modified for 30 days from Hot to Cool. Move blobs that have not been modified for 90 days from Cool to Archive. Delete blobs that have not been modified for 365 days.
 
 This automates cost optimization without requiring manual blob management.
 
@@ -603,8 +603,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

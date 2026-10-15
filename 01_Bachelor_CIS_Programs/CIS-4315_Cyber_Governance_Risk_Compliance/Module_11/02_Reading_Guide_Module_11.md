@@ -638,8 +638,6 @@ The Center for Internet Security Controls v8 provides prioritized security actio
 https://www.cisa.gov/known-exploited-vulnerabilities-catalog
 CISA's continuously updated catalog of vulnerabilities confirmed to be actively exploited in the wild. Critical resource for eradication planning — when identifying the attack vector used for initial access, this catalog helps confirm whether the vulnerability has been weaponized and prioritizes remediation urgency.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

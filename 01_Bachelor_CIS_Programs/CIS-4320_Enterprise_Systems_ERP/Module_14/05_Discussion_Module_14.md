@@ -18,7 +18,7 @@ Posts are due by Thursday 11:59 PM. Replies are due by Sunday 11:59 PM.
 
 ## Scenario A — The Dashboard Nobody Trusts
 
-A regional operations director at a logistics company receives a weekly email with a PDF of KPI metrics exported from the company's SAP system. She has stopped reading it. When asked why, she says: "The numbers are always three days old, I have no idea what half the metrics mean, and the last time I acted on something it showed in the report, the underlying data turned out to be wrong. I trust my spreadsheet more than that dashboard."
+A regional operations director at a logistics company receives a weekly email with a PDF of KPI metrics exported from the company's SAP system. She has stopped reading it. When asked why, she says: "The numbers are always three days old, I have no idea what half the metrics mean, and the last time I acted on something it showed in the report, the underlying data turned out to be wrong. I trust my spreadsheet more than that dashboard.
 
 Respond to this scenario. What are the root causes of the director's distrust? Address at least two distinct problems visible in her description. What specific changes — to the reporting process, the data quality controls, or the dashboard design — would you recommend to rebuild her confidence? Reference at least one concept from the Module 14 reading or lecture in your response.
 
@@ -34,7 +34,7 @@ Respond to this scenario. What factors should drive the tool selection decision?
 
 ## Scenario C — KPI Design Gone Wrong
 
-A call center manager is proud of his team's performance dashboard. It shows 14 metrics, updated daily, including: total calls received, total calls answered, average handle time, after-call work time, hold time, transfer rate, escalation rate, first-call resolution rate, customer satisfaction score, agent utilization, schedule adherence, calls per agent, average speed to answer, and service level percentage. He says, "I track everything — nothing can go wrong without me knowing."
+A call center manager is proud of his team's performance dashboard. It shows 14 metrics, updated daily, including: total calls received, total calls answered, average handle time, after-call work time, hold time, transfer rate, escalation rate, first-call resolution rate, customer satisfaction score, agent utilization, schedule adherence, calls per agent, average speed to answer, and service level percentage. He says, "I track everything — nothing can go wrong without me knowing.
 
 Respond to this scenario. Evaluate whether this manager's approach reflects good KPI design practice. What is the problem with tracking 14 metrics simultaneously? If you had to reduce this to a balanced scorecard of five KPIs for a call center, which five would you keep and why? Reference at least one concept from the Module 14 reading or lecture.
 

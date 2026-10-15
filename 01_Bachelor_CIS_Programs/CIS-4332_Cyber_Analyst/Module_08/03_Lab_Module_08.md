@@ -159,7 +159,7 @@ In 6–8 sentences, answer the following:
 
 1. Compare the prioritization of Finding 7 (Cisco IOS XE, CVSS 10.0, KEV, critical asset) versus Finding 2 (Zerologon, CVSS 10.0, KEV, domain controller, internal only). Both have identical CVSS scores and KEV status. What factors differentiate their priority ranking, and which do you prioritize first?
 
-2. Finding 9 (CVE-2015-10049) has a CVSS 7.2 High score but you likely ranked it near the bottom. Explain how you justified this placement to a manager who argues that "High severity vulnerabilities must be patched within 30 days per policy."
+2. Finding 9 (CVE-2015-10049) has a CVSS 7.2 High score but you likely ranked it near the bottom. Explain how you justified this placement to a manager who argues that "High severity vulnerabilities must be patched within 30 days per policy.
 
 3. What risk does the low-CVSS-but-high-EPSS pattern (Finding 6 — CVSS 7.5, EPSS 0.73) illustrate about relying solely on CVSS for prioritization?
 

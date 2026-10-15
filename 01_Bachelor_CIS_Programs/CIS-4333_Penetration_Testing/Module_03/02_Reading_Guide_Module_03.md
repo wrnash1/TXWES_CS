@@ -459,8 +459,6 @@ Shodan indexes banners, service information, and metadata from internet-connecte
 [https://www.exploit-db.com/google-hacking-database](https://www.exploit-db.com/google-hacking-database)
 The Exploit-DB Google Hacking Database (GHDB) catalogs hundreds of Google dork queries organized by category (sensitive files, login portals, exposed configuration files, and more). Reviewing the GHDB alongside Module 03 content reinforces practical Google dorking skills tested on PT0-002.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

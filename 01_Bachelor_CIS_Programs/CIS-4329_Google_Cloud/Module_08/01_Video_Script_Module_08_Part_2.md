@@ -34,8 +34,6 @@ Welcome back to Module 08. In Part 1 we covered Cloud Run and App Engine Standar
 
 ## Section 1: Cloud Functions
 
-**[SHOW SLIDE: Event sources pointing to Cloud Function which executes code and returns result]**
-
 Cloud Functions is GCP's function-as-a-service platform. You deploy a single function and it executes in response to an event.
 
 ### Cloud Functions Generations
@@ -111,8 +109,6 @@ Cloud Run is better when:
 ---
 
 ## Section 2: Serverless Platform Selection Decision Matrix
-
-**[SHOW SLIDE: Decision table with checkmarks for each platform]**
 
 The ACE exam tests platform selection across these four services. Use this matrix:
 
@@ -228,8 +224,6 @@ gcloud app browse
 ---
 
 ## Module 08 Summary
-
-**[SHOW SLIDE: Summary bullet list]**
 
 Let's wrap up Module 08. GCP serverless compute spans Cloud Functions, Cloud Run, and App Engine. Cloud Functions is event-driven — it executes in response to Pub/Sub messages, Cloud Storage events, or HTTP triggers. Cloud Run runs containers with scale-to-zero and request-driven billing, supporting any language and runtime. App Engine Standard provides the simplest deployment for supported language frameworks with scale-to-zero. App Engine Flexible runs Docker containers on VMs without scale-to-zero.
 

@@ -30,7 +30,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Module Overview
+## Opening and Module Overview
 
 **[VISUAL: Title card — "Module 03: Linear and Logistic Regression | CIS-4345 | Professor Nash"]**
 
@@ -44,7 +44,7 @@ By the end of this module you will understand not just how to run these models b
 
 ---
 
-## [01:30 - 06:00] Linear Regression: The Math
+## Linear Regression: The Math
 
 **[VISUAL: Slide — "Linear Regression: Fitting a Weighted Sum to Continuous Targets"]**
 
@@ -86,7 +86,7 @@ Squaring makes all residuals positive so negative and positive errors do not can
 
 ---
 
-## [06:00 - 10:30] Gradient Descent and the Training Loop
+## Gradient Descent and the Training Loop
 
 **[VISUAL: Slide — "Gradient Descent: Walking Down the Loss Surface"]**
 
@@ -126,7 +126,7 @@ The learning rate controls the step size. Too large and the weights overshoot th
 
 ---
 
-## [10:30 - 14:30] Logistic Regression: Classification with Sigmoid
+## Logistic Regression: Classification with Sigmoid
 
 **[VISUAL: Slide — "Logistic Regression: Linear Model Plus Sigmoid Activation"]**
 
@@ -163,7 +163,7 @@ This function heavily penalizes confident wrong predictions. Predicting 0.01 whe
 
 ---
 
-## [14:30 - 18:00] Regularization: L1 and L2 Penalties
+## Regularization: L1 and L2 Penalties
 
 **[VISUAL: Slide — "Regularization: Penalizing Large Weights"]**
 
@@ -203,7 +203,7 @@ In scikit-learn `LogisticRegression`, the parameter `C` is the inverse of regula
 
 ---
 
-## [18:00 - 21:30] Both Models in TensorFlow/Keras
+## Both Models in TensorFlow/Keras
 
 **[VISUAL: Slide — "Single-Neuron Networks = Classical Models"]**
 
@@ -254,7 +254,7 @@ These are complete Keras models. You compile them, fit them, evaluate them, and 
 
 ---
 
-## [21:30 - 23:30] Module Summary and Lab Preview
+## Module Summary and Lab Preview
 
 **[VISUAL: Slide — "Module 03 Key Takeaways"]**
 

@@ -32,8 +32,6 @@
 
 Welcome back to CIS-3322 Advanced Networking. I'm Professor Nash. Module 10 covers Network Address Translation and Port Address Translation — two mechanisms that have fundamentally shaped how the internet works with private IPv4 addressing.
 
-[SHOW SLIDE: "Module 10 — NAT and PAT"]
-
 Without NAT, every device on a corporate network would need a globally routable public IP address. IPv4 address exhaustion made that impossible long ago. NAT allows thousands of internal hosts to share one or a small pool of public IP addresses when accessing the internet.
 
 By the end of this module you will be able to:
@@ -56,8 +54,6 @@ Let's start with the address translation concepts.
 
 ## Section 1: NAT Address Terminology (1:30–4:00)
 
-[SHOW SLIDE: "NAT Address Types — Four Terms"]
-
 Before configuring NAT you must understand four address terms. These appear on the CCNA exam in output interpretation questions.
 
 **Inside local**: the private IP address assigned to an internal host as seen from inside the network. Example: 192.168.1.10.
@@ -79,8 +75,6 @@ Understanding these four terms is essential for reading `show ip nat translation
 ---
 
 ## Section 2: Static NAT (4:00–7:00)
-
-[SHOW SLIDE: "Static NAT — One-to-One Permanent Mapping"]
 
 Static NAT creates a permanent one-to-one mapping between one inside local address and one inside global address. It is used when an internal server must always be reachable from the internet at a specific public IP address — for example, a web server or mail server.
 
@@ -108,15 +102,11 @@ Router(config)# interface GigabitEthernet0/1
 Router(config-if)# ip nat outside
 ```
 
-[SHOW SLIDE: "Static NAT — Use Cases"]
-
 Static NAT is bidirectional by design. Internet users can initiate connections to the inside global address and the router forwards them to the internal server. This makes static NAT appropriate for hosting public-facing services on internal infrastructure.
 
 ---
 
 ## Section 3: Dynamic NAT (7:00–10:00)
-
-[SHOW SLIDE: "Dynamic NAT — Pool of Public Addresses"]
 
 Dynamic NAT translates internal addresses to a pool of public addresses on a first-come, first-served basis. When an internal host initiates a connection, the router picks an available address from the pool and creates a temporary translation. When the connection ends, the address returns to the pool for reuse.
 
@@ -143,15 +133,11 @@ Router(config)# ip nat inside source list 1 pool PUBLIC_POOL
 
 **Step 4: Mark inside and outside interfaces** (same as static NAT).
 
-[SHOW SLIDE: "Dynamic NAT Limitation"]
-
 Dynamic NAT has a critical limitation: if all addresses in the pool are in use, additional inside hosts cannot get translated and their connections are dropped. Dynamic NAT is rarely used in enterprise environments today because PAT achieves much better address utilization.
 
 ---
 
 ## Section 4: PAT — Port Address Translation (10:00–14:00)
-
-[SHOW SLIDE: "PAT — Many-to-One Translation Using Port Numbers"]
 
 PAT, also called NAT overload, translates multiple inside addresses to a single outside IP address by using unique source port numbers to distinguish connections. This is how virtually every home router and most enterprise routers work today.
 
@@ -173,8 +159,6 @@ Router(config)# ip nat pool PAT_POOL 203.0.113.1 203.0.113.1 netmask 255.255.255
 Router(config)# ip nat inside source list 1 pool PAT_POOL overload
 ```
 
-[SHOW SLIDE: "PAT Port Tracking Table"]
-
 The PAT translation table entry looks like this:
 
 ```text
@@ -192,8 +176,6 @@ PAT supports approximately 65,000 simultaneous connections per public IP address
 ---
 
 ## Section 5: NAT64 (14:00–16:00)
-
-[SHOW SLIDE: "NAT64 — IPv6 to IPv4 Translation"]
 
 NAT64 allows IPv6-only hosts to communicate with IPv4 destinations. As organizations migrate to IPv6, they need a mechanism to reach IPv4-only internet services. NAT64 provides that bridge.
 
@@ -218,8 +200,6 @@ However, full NAT64 configuration syntax is beyond CCNA scope. Know the concept 
 ---
 
 ## Section 6: NAT Verification Commands (16:00–18:30)
-
-[SHOW SLIDE: "NAT Verification — Key Commands"]
 
 The primary NAT verification commands are:
 
@@ -249,8 +229,6 @@ Hits: 12345  Misses: 0
 
 ## Section 7: NAT Troubleshooting (18:30–21:30)
 
-[SHOW SLIDE: "NAT Troubleshooting — Common Failures"]
-
 The most common NAT configuration mistakes are:
 
 **Missing inside or outside interface designation.** If you configure the translation rule but forget to apply `ip nat inside` and `ip nat outside` to interfaces, NAT never triggers. Check with `show ip nat statistics` — it shows which interfaces are marked.
@@ -260,8 +238,6 @@ The most common NAT configuration mistakes are:
 **Routing after NAT.** After translation, the packet with the public source address must be routable to the internet. If there is no default route pointing toward the internet, translated packets are dropped.
 
 **Pool exhaustion with dynamic NAT.** If all pool addresses are in use, new translations fail silently. Monitor with `show ip nat statistics` and look for translation failure counters.
-
-[SHOW SLIDE: "NAT Troubleshooting Commands Summary"]
 
 ```text
 Router# show ip nat translations
@@ -279,8 +255,6 @@ Router# clear ip nat translation *
 
 ## Conclusion (21:30–23:00)
 
-[SHOW SLIDE: "Module 10 Summary"]
-
 Let's wrap up Module 10. Today you learned:
 
 - Static NAT creates permanent one-to-one mappings for hosting internal servers
@@ -294,8 +268,6 @@ Let's wrap up Module 10. Today you learned:
 - NAT64 bridges IPv6 hosts to IPv4 destinations during transition
 
 - Verify NAT with `show ip nat translations` and `show ip nat statistics`
-
-[SHOW SLIDE: "CCNA Exam Focus Areas"]
 
 For the CCNA exam: know how to read `show ip nat translations` output, identify PAT configuration by the `overload` keyword, and distinguish the four address types. These appear frequently in scenario and output interpretation questions.
 

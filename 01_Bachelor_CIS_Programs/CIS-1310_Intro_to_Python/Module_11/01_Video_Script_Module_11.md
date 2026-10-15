@@ -26,25 +26,19 @@
 
 ---
 
-## [00:00 – 00:45] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 11 | String Methods and Operations | CIS-1310"]**
-
-"Welcome back. We have used strings since Module 01 — printing them, concatenating them, using f-strings. This module goes deeper: the full library of string methods that Python gives you for searching, cleaning, splitting, joining, and transforming text.
+Welcome back. We have used strings since Module 01 — printing them, concatenating them, using f-strings. This module goes deeper: the full library of string methods that Python gives you for searching, cleaning, splitting, joining, and transforming text.
 
 String processing is everywhere. Every time you read a CSV file, parse a log line, validate user input, or clean data pulled from a web API, you are applying string methods. The PCAP exam tests these heavily — especially immutability, `.find()` versus `.index()`, `.split()` edge cases, and `.join()` syntax.
 
-Let's cover all of it."
+Let's cover all of it.
 
 ---
 
-## [00:45 – 02:30] String Immutability — The Foundation
+## String Immutability — The Foundation
 
-**[SHOW SLIDE: "Strings Are Immutable — Methods Return New Strings"]**
-
-"Before we touch a single method, we need to lock in one rule that governs everything else: **strings in Python are immutable**. No string method modifies the original string. Every method returns a **new string** and leaves the original unchanged.
-
-**[DEMO]**
+Before we touch a single method, we need to lock in one rule that governs everything else: **strings in Python are immutable**. No string method modifies the original string. Every method returns a **new string** and leaves the original unchanged.
 
 ```python
 s = 'hello'
@@ -65,8 +59,6 @@ s = s.upper()
 print(s)        # HELLO
 ```
 
-**[PAUSE]**
-
 This is a classic PCAP trap. The exam will show code that calls a string method and then asks the value of the original variable. The answer is always the original, unchanged string — unless the result was explicitly reassigned.
 
 You cannot change a character in a string by indexing:
@@ -76,15 +68,13 @@ word = 'cat'
 word[0] = 'b'    # TypeError: 'str' object does not support item assignment
 ```
 
-If you need to change one character, build a new string: `'b' + word[1:]`."
+If you need to change one character, build a new string: `'b' + word[1:]`.
 
 ---
 
-## [02:30 – 04:30] Case Methods and String Testing
+## Case Methods and String Testing
 
-**[SHOW SLIDE: "Case Conversion and Testing Methods"]**
-
-"**[DEMO — case conversion]**
+"
 
 ```python
 text = 'Hello, World!'
@@ -95,8 +85,6 @@ print(text.capitalize())  # Hello, world! — only first char upper
 print(text.title())       # Hello, World! — first char of each word upper
 print(text.swapcase())    # hELLO, wORLD!
 ```
-
-**[DEMO — boolean testing methods]**
 
 These return `True` or `False`. Extremely useful for input validation.
 
@@ -114,8 +102,6 @@ print('Hello'.endswith('lo'))     # True
 print('Hello'.endswith('LO'))     # False — case-sensitive
 ```
 
-[PAUSE]
-
 `.startswith()` and `.endswith()` accept tuples to test multiple options at once:
 
 ```python
@@ -125,11 +111,9 @@ print(filename.endswith(('.pdf', '.docx', '.txt')))    # True
 
 ---
 
-## [04:30 – 06:30] Searching — find(), index(), count()
+## Searching — find(), index(), count()
 
-**[SHOW SLIDE: "Searching in Strings"]**
-
-"**[DEMO — find() and index()]**
+"
 
 ```python
 s = 'Python programming'
@@ -139,8 +123,6 @@ print(s.find('java'))      # -1 — not found, NO exception
 print(s.index('gram'))     # 10 — same result when found
 print(s.index('java'))     # ValueError: substring not found
 ```
-
-[PAUSE]
 
 This is one of the most tested distinctions on the PCAP exam. Both methods search for a substring. The difference: `.find()` returns `-1` if the substring is not found. `.index()` raises `ValueError`. Use `.find()` when the substring might be absent and you want to handle it gracefully. Use `.index()` when you want an error if it is missing.
 
@@ -152,15 +134,11 @@ else:
     print('Not found')
 ```
 
-**[DEMO — rfind() searches from the right]**
-
 ```python
 s = 'banana'
 print(s.find('a'))     # 1 — first occurrence
 print(s.rfind('a'))    # 5 — last occurrence
 ```
-
-**[DEMO — count()]**
 
 ```python
 print(s.count('a'))    # 3 — non-overlapping occurrences
@@ -169,13 +147,9 @@ print('aaa'.count('aa'))    # 1 — non-overlapping
 
 ---
 
-## [06:30 – 08:00] strip(), replace(), and Cleaning Text
+## strip(), replace(), and Cleaning Text
 
-**[SHOW SLIDE: "Cleaning Strings — strip() and replace()"]**
-
-"Real-world data is messy. User input has extra spaces. File lines have trailing newlines. CSV values have quotes you need to remove. These methods clean it up.
-
-**[DEMO — strip()]**
+Real-world data is messy. User input has extra spaces. File lines have trailing newlines. CSV values have quotes you need to remove. These methods clean it up.
 
 ```python
 messy = '   hello world   '
@@ -192,8 +166,6 @@ line = '---important---'
 print(line.strip('-'))    # important
 ```
 
-**[DEMO — replace()]**
-
 ```python
 s = 'I like cats. Cats are great.'
 print(s.replace('cats', 'dogs'))      # replaces all occurrences
@@ -209,17 +181,13 @@ I like cats. dogs are great.
 I like cXts. CXts are great.
 ```
 
-[PAUSE]
-
-Remember — `s.replace()` returns a new string. The original `s` is not changed unless you reassign."
+Remember — `s.replace()` returns a new string. The original `s` is not changed unless you reassign.
 
 ---
 
-## [08:00 – 10:00] split() and join()
+## split() and join()
 
-**[SHOW SLIDE: "split() and join() — Text Parsing and Assembly"]**
-
-"**[DEMO — split()]**
+"
 
 ```python
 sentence = 'the quick brown fox'
@@ -237,19 +205,13 @@ parts = csv_line.split(',')
 print(parts)    # ['Alice', '92', 'Dallas']
 ```
 
-**[DEMO — split() with whitespace edge case — PCAP trap]**
-
 ```python
 double_space = 'a  b'
 print(double_space.split())      # ['a', 'b'] — no empty string
 print(double_space.split(' '))   # ['a', '', 'b'] — empty string appears
 ```
 
-[PAUSE]
-
 This is a tested PCAP distinction. `.split()` with no argument collapses multiple spaces and trims leading/trailing whitespace. `.split(' ')` treats every space as a delimiter — two spaces in a row produce an empty string.
-
-**[DEMO — join()]**
 
 ```python
 words = ['the', 'quick', 'brown', 'fox']
@@ -261,19 +223,13 @@ print(', '.join(words))     # the, quick, brown, fox
 print(''.join(words))       # thequickbrownfox
 ```
 
-[PAUSE]
-
-The syntax is `separator.join(list)`. This surprises students who expect `list.join(separator)`. The method belongs to the string (the separator), not the list. All elements in the list must be strings, or `TypeError` is raised."
+The syntax is `separator.join(list)`. This surprises students who expect `list.join(separator)`. The method belongs to the string (the separator), not the list. All elements in the list must be strings, or `TypeError` is raised.
 
 ---
 
-## [10:00 – 11:30] Slicing Review and String Operators
+## Slicing Review and String Operators
 
-**[SHOW SLIDE: "Slicing and String Operators"]**
-
-"You saw slicing in Module 06 for lists. The syntax is identical for strings.
-
-**[DEMO]**
+You saw slicing in Module 06 for lists. The syntax is identical for strings.
 
 ```python
 s = 'Python'
@@ -286,11 +242,7 @@ print(s[::2])     # Pto — every other character
 print(s[::-1])    # nohtyP — reversed string
 ```
 
-[PAUSE]
-
 `s[::-1]` is the standard Python idiom for reversing a string. It appears on the PCAP exam.
-
-**[DEMO — string operators]**
 
 ```python
 a = 'hello'
@@ -302,8 +254,6 @@ print('xyz' not in a) # True
 print(len(a))        # 5
 ```
 
-**[DEMO — ord() and chr()]**
-
 ```python
 print(ord('A'))     # 65 — Unicode code point
 print(ord('a'))     # 97
@@ -311,13 +261,11 @@ print(chr(65))      # A
 print(chr(97))      # a
 ```
 
-`ord()` converts a character to its integer code point. `chr()` goes the other direction. These appear on the PCAP exam in character-comparison and sorting questions."
+`ord()` converts a character to its integer code point. `chr()` goes the other direction. These appear on the PCAP exam in character-comparison and sorting questions.
 
 ---
 
-## [11:30 – 13:30] text_cleaner.py — Realistic String Pipeline
-
-**[DEMO — live code]**
+## text_cleaner.py — Realistic String Pipeline
 
 ```python
 # text_cleaner.py
@@ -373,11 +321,9 @@ Round trip: python is great python is powerful
 
 ---
 
-## [13:30 – 15:00] PCAP Exam Tips and Wrap-Up
+## PCAP Exam Tips and Wrap-Up
 
-**[SHOW SLIDE: "Module 11 — PCAP Alignment"]**
-
-"Key exam take-aways:
+Key exam take-aways:
 
 **1.** String methods return new strings — they never modify the original. Calling `s.upper()` without capturing the return value has no lasting effect.
 
@@ -393,7 +339,7 @@ Round trip: python is great python is powerful
 
 **7.** `.startswith()` and `.endswith()` are case-sensitive and accept tuples for multiple options.
 
-Module 12 covers exception handling — `try`, `except`, `else`, `finally`, and how to raise your own exceptions. See you there."
+Module 12 covers exception handling — `try`, `except`, `else`, `finally`, and how to raise your own exceptions. See you there.
 
 ---
 

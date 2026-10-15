@@ -231,7 +231,7 @@ D. DC1 forwards the query to the standard forwarder (8.8.8.8) before trying
 
 After promoting DC1 as the first domain controller for `txwes.edu`, a
 technician reports that client computers can resolve hostnames but cannot log
-on to the domain. You run `Resolve-DnsName -Name "_ldap._tcp.dc._msdcs.txwes.edu"
+on to the domain. You run `Resolve-DnsName -Name "_ldap._tcp.dc._msdcs.txwes.edu
 -Type SRV` and receive no results. What is the most likely cause?
 
 A. The DHCP server has not been authorized in Active Directory

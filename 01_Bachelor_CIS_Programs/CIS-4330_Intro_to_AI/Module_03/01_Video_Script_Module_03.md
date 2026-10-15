@@ -26,7 +26,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening
+## Opening
 
 Welcome back. Professor Nash here, and this is Module 03 of CIS-4330. In the last two modules we covered the full landscape of AI and machine learning and went deep on supervised learning — regression, classification, and key algorithms. Today we focus exclusively on unsupervised learning, with a detailed look at clustering and dimensionality reduction.
 
@@ -34,7 +34,7 @@ These topics appear on the AI-900 exam in the context of Azure ML clustering exp
 
 ---
 
-## [01:30 - 05:00] Why Unsupervised Learning Matters
+## Why Unsupervised Learning Matters
 
 Let me start with an honest question: why would you ever want to train a model without labels? Labels are the answer key. They tell the algorithm what is correct. Why would you intentionally remove that guidance?
 
@@ -50,9 +50,7 @@ The AI-900 exam tests unsupervised learning primarily in two contexts: clusterin
 
 ---
 
-## [05:00 - 10:00] Clustering — K-means in Depth
-
-[SHOW DIAGRAM: Four-panel sequence. Panel 1: scattered unlabeled points. Panel 2: same points with 3 random centroids marked. Panel 3: points colored by nearest centroid, centroids moved to cluster means. Panel 4: final stable clusters with clean color boundaries.]
+## Clustering — K-means in Depth
 
 Clustering is the most important unsupervised task for AI-900. The goal is to partition data points into groups — called clusters — such that points within a cluster are more similar to each other than to points in other clusters.
 
@@ -62,15 +60,13 @@ Imagine you are a marketing analyst at a subscription software company. You have
 
 Step one: choose K. You decide to try K = 3 clusters first and will refine later. Step two: the algorithm randomly places 3 centroids in the four-dimensional feature space. Step three: every customer is assigned to the nearest centroid based on Euclidean distance — the straight-line distance between the customer's feature vector and each centroid. Step four: each centroid is moved to the arithmetic mean of all customer points assigned to it. Step five: steps three and four repeat until the centroid positions change by less than a small threshold.
 
-When the algorithm converges, you examine each cluster. Cluster one might contain customers with high logins, many features used, high contract value, and few support tickets — you name this cluster "Power Users." Cluster two has low logins, few features, low contract value, and many support tickets — "At-Risk Churners." Cluster three has moderate logins and features, medium contract value, few tickets — "Healthy Mid-Market."
+When the algorithm converges, you examine each cluster. Cluster one might contain customers with high logins, many features used, high contract value, and few support tickets — you name this cluster "Power Users." Cluster two has low logins, few features, low contract value, and many support tickets — "At-Risk Churners." Cluster three has moderate logins and features, medium contract value, few tickets — "Healthy Mid-Market.
 
 Notice that the algorithm did not create these names. You did. Unsupervised learning reveals structure; humans provide interpretation.
 
 ---
 
-## [10:00 - 13:00] Choosing K and Evaluating Clustering Quality
-
-[SHOW DIAGRAM: Line graph with K on the x-axis from 1 to 10 and "Within-Cluster Sum of Squares (WCSS)" on the y-axis. The curve drops sharply from K=1 to K=3, then levels off. An arrow points to K=3 labeled "The Elbow."]
+## Choosing K and Evaluating Clustering Quality
 
 The weakness of K-means is that you must specify K before running the algorithm. Choosing K too small merges distinct groups. Choosing K too large splits natural groups into artificial fragments.
 
@@ -86,9 +82,7 @@ Second, K-means assumes clusters are approximately spherical and equally sized. 
 
 ---
 
-## [13:00 - 16:00] Dimensionality Reduction with PCA
-
-[SHOW DIAGRAM: Left side shows a cloud of points in 3D space with three labeled axes: Feature 1, Feature 2, Feature 3. An arrow points right. Right side shows the same cloud projected onto a 2D plane with two axes labeled PC1 and PC2. Label: "PCA reduces 3 features to 2 principal components."]
+## Dimensionality Reduction with PCA
 
 Real datasets often have dozens, hundreds, or even thousands of features. High dimensionality creates several problems.
 
@@ -104,11 +98,11 @@ Here is the key insight: the first principal component points in the direction o
 
 For example, if you have 100 features in a customer dataset, PCA might reveal that the first 5 principal components explain 85% of the variance. You can replace 100 features with 5 principal components and retain the vast majority of the information for downstream analysis.
 
-The trade-off: principal components are linear combinations of the original features and are less interpretable than the original features. You sacrifice the ability to say "this axis represents age" for the ability to say "this axis captures the most variance in the data."
+The trade-off: principal components are linear combinations of the original features and are less interpretable than the original features. You sacrifice the ability to say "this axis represents age" for the ability to say "this axis captures the most variance in the data.
 
 ---
 
-## [16:00 - 18:30] Other Dimensionality Reduction and Anomaly Detection
+## Other Dimensionality Reduction and Anomaly Detection
 
 Beyond PCA, two other techniques are worth knowing for this course.
 
@@ -120,7 +114,7 @@ Azure Machine Learning includes an anomaly detection capability that uses statis
 
 ---
 
-## [18:30 - 21:00] Azure ML Clustering Experiment Walkthrough
+## Azure ML Clustering Experiment Walkthrough
 
 In Azure Machine Learning, you can run a clustering experiment using the Designer visual interface or via code. The workflow is:
 
@@ -132,7 +126,7 @@ For AI-900, remember that Azure ML supports clustering as a task type, and that 
 
 ---
 
-## [21:00 - 22:30] Module Summary and Lab Preview
+## Module Summary and Lab Preview
 
 Let us summarize Module 03.
 

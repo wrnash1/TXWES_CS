@@ -134,7 +134,7 @@ Write your answers here with specific references to the artifact list above.
 
 Navigate to the MITRE ATT&CK Navigator at [https://mitre-attack.github.io/attack-navigator/](https://mitre-attack.github.io/attack-navigator/).
 
-Select "Create New Layer" and choose "Enterprise."
+Select "Create New Layer" and choose "Enterprise.
 
 You will search for and highlight the following techniques. For each one, record the Tactic name, Technique ID, and Technique name.
 

@@ -450,8 +450,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
    URL: [https://www.amd.com/en/products/specifications](https://www.amd.com/en/products/specifications)
    Relevance: AMD's official specification lookup for CPUs and APUs. Use alongside the Intel ARK to practice verifying socket compatibility (AM4 vs. AM5) and chipset support — a skill tested in A+ scenario questions.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

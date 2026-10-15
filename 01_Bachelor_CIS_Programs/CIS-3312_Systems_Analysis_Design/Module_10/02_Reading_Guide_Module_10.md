@@ -312,8 +312,8 @@ unreadable and unusable as a requirements document.
 
 #### Labeling Rules
 
-- Use noun phrases, not verbs: "Member Record" not "Retrieve Member"
-- Be specific: "Book Availability Status" not "Book Data"
+- Use noun phrases, not verbs: "Member Record" not "Retrieve Member
+- Be specific: "Book Availability Status" not "Book Data
 - Reflect actual data content, not system actions
 - Use consistent naming across all DFD levels — a flow named "Loan Record" at Level 1
   should not become "Borrowing Data" at Level 2
@@ -348,7 +348,7 @@ answer depends on what you need to communicate.
 
 Use both when you need a complete requirements picture. DFDs answer "what data does the
 system need and how does it transform it." BPMN answers "how does work flow through the
-organization and what are the decision rules."
+organization and what are the decision rules.
 
 ---
 
@@ -543,8 +543,6 @@ The following open educational resources extend module content on data flow diag
    Focus: The primary ZTC textbook chapters on data flow diagrams, data modeling, and leveling. Read the DFD chapters alongside this reading guide for worked examples and exercises.
 
 *Reading Guide — Module 10 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*
-
-
 
 ---
 

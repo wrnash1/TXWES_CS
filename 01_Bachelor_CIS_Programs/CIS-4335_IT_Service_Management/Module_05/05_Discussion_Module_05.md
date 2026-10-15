@@ -32,7 +32,7 @@ Respond to all three of the following prompts:
 
 A national retail chain with 240 locations is modernizing its IT infrastructure. The project involves replacing the point-of-sale systems at all locations, upgrading the network equipment, migrating from on-premise servers to a cloud infrastructure, and implementing a new IT service management platform.
 
-The CIO describes the situation: "We are rebuilding while the plane is flying. Every day those 240 stores are open, they need their systems to work. We cannot take anything down during store hours. But we also cannot wait — our current systems are five years past their refresh cycle."
+The CIO describes the situation: "We are rebuilding while the plane is flying. Every day those 240 stores are open, they need their systems to work. We cannot take anything down during store hours. But we also cannot wait — our current systems are five years past their refresh cycle.
 
 Respond to all three of the following prompts:
 
@@ -46,7 +46,7 @@ Respond to all three of the following prompts:
 
 A university IT department has a documented backlog of 340 unresolved items: 112 open incidents more than 30 days old, 89 service requests that have not been fulfilled in more than two weeks, 67 known problems with no assigned owner, and 72 improvement ideas submitted through the staff suggestion system that have never been reviewed.
 
-The new IT director says: "We have a lot of data here. The challenge is that we are so busy delivering services day-to-day that we never have time to step back and work on improvement. The urgent always beats the important."
+The new IT director says: "We have a lot of data here. The challenge is that we are so busy delivering services day-to-day that we never have time to step back and work on improvement. The urgent always beats the important.
 
 Respond to all three of the following prompts:
 

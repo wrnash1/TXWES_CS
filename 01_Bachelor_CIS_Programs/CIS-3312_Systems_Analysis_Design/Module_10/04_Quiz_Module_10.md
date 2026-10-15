@@ -169,7 +169,7 @@ A. The label is too short; it should include the actor name and the action perfo
 
 B. The label uses a verb phrase describing an action rather than a noun phrase describing
    the data being transferred; a correct label would be "Authentication Request" or
-   "Authentication Credentials."
+Authentication Credentials.
 
 C. The label should be in passive voice to conform to structured analysis naming standards.
 

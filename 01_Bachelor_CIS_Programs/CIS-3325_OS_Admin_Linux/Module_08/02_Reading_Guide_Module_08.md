@@ -686,8 +686,6 @@ The definitive community reference for POSIX ACLs on Linux. Covers `setfacl` and
 **3. [Understanding Linux File Permissions — TLDP](https://tldp.org/HOWTO/Security-HOWTO/file-security.html)**
 The Linux Documentation Project's security HOWTO chapter on file security. Provides accessible coverage of umask calculation, the implications of world-writable directories, SUID/SGID security risks, and the principle of least privilege applied to file ownership. A useful complement to the lab's security audit challenges and the exam's Domain 2 security objectives.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

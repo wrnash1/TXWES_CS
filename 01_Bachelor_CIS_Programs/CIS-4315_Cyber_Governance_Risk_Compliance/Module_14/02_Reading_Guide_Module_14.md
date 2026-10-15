@@ -554,8 +554,6 @@ Covers the full spectrum of IT contingency planning including alternate site sel
 <https://www.sans.org/reading-room/whitepapers/recovery/disaster-recovery-plan-strategies-processes-564>
 A practitioner-focused SANS whitepaper covering DR plan components, activation criteria, failover and failback sequencing, and lessons learned integration. Useful for understanding how DR governance principles translate to operational plan design.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

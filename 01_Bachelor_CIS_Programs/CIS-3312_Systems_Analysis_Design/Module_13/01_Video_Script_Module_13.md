@@ -154,7 +154,7 @@ Here are the core principles every BA must know.
 Users should always know what the system is doing. A page that goes blank after a button click with no feedback is a violation of this principle. The fix: loading indicators, confirmation messages, progress bars.
 
 **Principle 2 — Match between system and the real world.**
-Use language and concepts that match how users think, not how the database is organized. Users say "invoice," not "AR_TRANSACTION_RECORD."
+Use language and concepts that match how users think, not how the database is organized. Users say "invoice," not "AR_TRANSACTION_RECORD.
 
 **Principle 3 — User control and freedom.**
 Users make mistakes. The system should support easy undo, back navigation, and confirmation dialogs before irreversible actions.
@@ -163,7 +163,7 @@ Users make mistakes. The system should support easy undo, back navigation, and c
 Use the same terminology, layout patterns, and interaction behaviors throughout. If "Save" means one thing on screen A, it should mean the same thing on screen B.
 
 **Principle 5 — Error prevention and recovery.**
-Design to prevent errors before they happen. When errors do occur, provide clear, actionable error messages — not "Error 404" or "Something went wrong."
+Design to prevent errors before they happen. When errors do occur, provide clear, actionable error messages — not "Error 404" or "Something went wrong.
 
 **Principle 6 — Recognition over recall.**
 Minimize what users must remember. Options should be visible or easily discoverable rather than requiring users to memorize commands or paths.

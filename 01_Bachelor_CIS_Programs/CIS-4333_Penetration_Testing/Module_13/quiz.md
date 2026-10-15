@@ -102,7 +102,7 @@ D. It does not include a CVSS score to support the claim.
 **Distractor Analysis:**
 
 - A is incorrect. Length is not the primary issue with this statement. The problem is the content and tone.
-- B is correct. "Will inevitably be exploited" and "within weeks" are speculative claims not supported by evidence. "Nation-state actors" requires threat intelligence context. "Potentially destroying the company" is alarmist. Professional reports state risk based on evidence: "These vulnerabilities are easily exploitable using publicly available tools and create significant risk of unauthorized access to customer data."
+- B is correct. "Will inevitably be exploited" and "within weeks" are speculative claims not supported by evidence. "Nation-state actors" requires threat intelligence context. "Potentially destroying the company" is alarmist. Professional reports state risk based on evidence: "These vulnerabilities are easily exploitable using publicly available tools and create significant risk of unauthorized access to customer data.
 - C is incorrect. Threat actor references can appear in executive summaries to provide context. The problem here is not the reference to threat actors but the unsupported specificity ("nation-state," "within weeks").
 - D is incorrect. Executive summaries do not include CVSS scores — those are in the technical findings section. The problem is language quality, not missing metrics.
 
@@ -135,13 +135,13 @@ D. Include the finding but categorize it as "Informational" to reduce its promin
 
 Which of the following best demonstrates the correct executive-level translation of: "The IIS 7.5 server at 10.10.2.45 is vulnerable to CVE-2015-1635 (MS15-034), enabling remote kernel-level code execution via HTTP Range header overflow."?
 
-A. "CVE-2015-1635 represents a kernel-level RCE vulnerability in Microsoft IIS 7.5 with a CVSS score of 10.0."
+A. "CVE-2015-1635 represents a kernel-level RCE vulnerability in Microsoft IIS 7.5 with a CVSS score of 10.0.
 
-B. "The company's internal web server has an unpatched flaw that allows an attacker to take complete control of the server without a password. This server should be patched immediately."
+B. "The company's internal web server has an unpatched flaw that allows an attacker to take complete control of the server without a password. This server should be patched immediately.
 
-C. "HTTP Range header processing in IIS 7.5 is subject to heap buffer overflow conditions in the kernelmode HTTP.sys driver."
+C. "HTTP Range header processing in IIS 7.5 is subject to heap buffer overflow conditions in the kernelmode HTTP.sys driver.
 
-D. "A web server vulnerability was identified. Please contact IT for remediation details."
+D. "A web server vulnerability was identified. Please contact IT for remediation details.
 
 **Correct Answer:** B
 
@@ -227,13 +227,13 @@ D. Printed physical copies only, hand-delivered to the client's CISO.
 
 A tester documents a finding with the following remediation recommendation: "Fix the SQL injection vulnerability." This remediation recommendation is inadequate. Which revised version meets professional standards?
 
-A. "SQL injection is a well-known vulnerability class. The development team should research OWASP guidance."
+A. "SQL injection is a well-known vulnerability class. The development team should research OWASP guidance.
 
-B. "Apply parameterized queries or prepared statements to all database interactions in the application. Specifically, remediate the `username` parameter in the `/login.php` endpoint. Deploy input validation as a defense-in-depth measure. Consider deploying a WAF as an interim compensating control."
+B. "Apply parameterized queries or prepared statements to all database interactions in the application. Specifically, remediate the `username` parameter in the `/login.php` endpoint. Deploy input validation as a defense-in-depth measure. Consider deploying a WAF as an interim compensating control.
 
-C. "The development team must immediately patch all SQL injection vulnerabilities within 24 hours or risk regulatory penalties."
+C. "The development team must immediately patch all SQL injection vulnerabilities within 24 hours or risk regulatory penalties.
 
-D. "Update the application framework to the latest version, which may include SQL injection protections."
+D. "Update the application framework to the latest version, which may include SQL injection protections.
 
 **Correct Answer:** B
 

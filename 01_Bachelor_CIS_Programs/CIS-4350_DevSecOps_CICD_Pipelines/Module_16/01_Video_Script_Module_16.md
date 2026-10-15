@@ -123,8 +123,8 @@ The DSOE exam consists of scenario-based multiple choice questions. Understandin
 **The four distractor patterns.** Learn to recognize them:
 
 - **Right tool, wrong stage.** DAST placed at commit time instead of staging; Falco described as preventing container creation instead of detecting runtime behavior. Know precisely which stage each tool operates at.
-- **Symptom vs. root cause.** The scenario describes a finding escaping to production — the distractor says "fix the finding faster"; the correct answer says "enforce the gate that should have caught it."
-- **Administrative vs. technical control.** A scenario asks for a technical control that prevents hardcoded secrets in code. The distractor offers "security policy requiring no hardcoded secrets"; the correct answer is "pre-commit secrets scanning gate with git-secrets."
+- **Symptom vs. root cause.** The scenario describes a finding escaping to production — the distractor says "fix the finding faster"; the correct answer says "enforce the gate that should have caught it.
+- **Administrative vs. technical control.** A scenario asks for a technical control that prevents hardcoded secrets in code. The distractor offers "security policy requiring no hardcoded secrets"; the correct answer is "pre-commit secrets scanning gate with git-secrets.
 - **Correct in isolation, wrong in context.** `imagePullPolicy: IfNotPresent` is operationally valid for performance but does not pull updated signed images; `imagePullPolicy: Always` is required for image signing verification.
 
 **The two-step elimination method:**

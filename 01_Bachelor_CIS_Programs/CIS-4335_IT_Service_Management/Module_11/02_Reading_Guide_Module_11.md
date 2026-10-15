@@ -405,8 +405,6 @@ Practitioner-focused guide that explains the watermelon SLA failure mode — gre
 <https://xla-manifesto.com>
 The industry reference document on Experience Level Agreements, authored by leading ITSM practitioners. Explains why XLAs complement rather than replace SLAs, how to design measurable experience targets, and how to use NPS, CES, and outcome-based measurement alongside traditional service level metrics.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

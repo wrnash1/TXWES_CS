@@ -94,7 +94,7 @@ This reading guide covers the theory and implementation of Recurrent Neural Netw
 
 ## Section 1 — Why Sequences Require a Different Architecture
 
-Standard feedforward and convolutional networks process each input independently. This works for images but fails for data where context accumulates across time. Consider predicting the word that comes after "The cat sat on the ___." A model that ignores the prior words has no hope of predicting "mat."
+Standard feedforward and convolutional networks process each input independently. This works for images but fails for data where context accumulates across time. Consider predicting the word that comes after "The cat sat on the ___." A model that ignores the prior words has no hope of predicting "mat.
 
 ### The i.i.d. Assumption Violation
 
@@ -186,7 +186,7 @@ Exploding gradients are detectable (NaN loss, wildly oscillating training curves
 
 An LSTM cell maintains two state vectors:
 
-- **Cell state** `C_t`: long-term memory, the "conveyor belt"
+- **Cell state** `C_t`: long-term memory, the "conveyor belt
 - **Hidden state** `h_t`: short-term working memory, also the output
 
 The cell state pathway allows gradients to flow backward across many time steps with minimal decay, directly addressing the vanishing gradient problem.
@@ -610,8 +610,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

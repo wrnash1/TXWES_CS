@@ -348,11 +348,11 @@ ERP automation typically reduces close time from 10+ days to 3-5 days by automat
 Complete before attempting the quiz:
 
 - **Salesforce Trailhead — Revenue Cloud Basics**
-  URL: trailhead.salesforce.com — search "Revenue Cloud Basics"
+  URL: trailhead.salesforce.com — search "Revenue Cloud Basics
   Covers how Salesforce handles billing and revenue management — provides context for how CRM connects to financial processes.
 
 - **Salesforce Trailhead — Financial Services Cloud Basics**
-  URL: trailhead.salesforce.com — search "Financial Services Cloud Basics"
+  URL: trailhead.salesforce.com — search "Financial Services Cloud Basics
   Relevant for understanding Salesforce's financial services industry positioning.
 
 ---
@@ -497,8 +497,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

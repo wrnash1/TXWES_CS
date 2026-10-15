@@ -44,7 +44,7 @@ Your classmate described an incident response process. What step did they miss o
 
 You are a DevSecOps consultant advising a healthcare company that must comply with HIPAA. They are currently using Jenkins (self-hosted) and considering a migration to either GitHub Actions (cloud-hosted) or GitLab CI (self-hosted GitLab). Their CISO has three requirements: (1) all CI/CD execution must occur in their own data center or a FedRAMP-authorized environment, (2) scan results must never leave their infrastructure, and (3) the solution must support the full security scan suite — SAST, dependency scanning, DAST, and container scanning — out of the box or with minimal custom configuration.
 
-Evaluate GitHub Actions, GitLab CI (self-hosted), and Jenkins for this client against all three requirements. Which do you recommend and why? What are the trade-offs? If you recommend GitLab self-hosted, what specific security templates would you use and what do they provide out of the box? If you recommend GitHub Actions, how would you address the data residency concern? Be specific — do not simply say one is "better."
+Evaluate GitHub Actions, GitLab CI (self-hosted), and Jenkins for this client against all three requirements. Which do you recommend and why? What are the trade-offs? If you recommend GitLab self-hosted, what specific security templates would you use and what do they provide out of the box? If you recommend GitHub Actions, how would you address the data residency concern? Be specific — do not simply say one is "better.
 
 ### Scenario 3 — Peer Response Prompt
 

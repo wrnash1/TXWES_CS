@@ -163,7 +163,7 @@ You need to detect whether a directed graph has a cycle. Which algorithm and app
 
 - *Why A is incorrect:* BFS does not detect cycles in directed graphs by revisiting nodes. A node can be reachable from multiple sources without forming a cycle. Cycle detection in directed graphs requires tracking the current path — which BFS does not maintain.
 - *Why B is correct:* The three-color DFS maintains which nodes are on the current recursion path (color 1). A back edge — reaching a node that is still on the active path — indicates a cycle. This is the standard algorithm for directed cycle detection (used in LeetCode #207 Course Schedule). Color 2 marks fully processed nodes — revisiting them is safe.
-- *Why C is incorrect:* This is backwards. Topological sort (via Kahn's) is valid only for DAGs. If the sort produces fewer than V nodes, it means some nodes have unresolvable in-degrees — indicating a cycle exists. The sort cannot complete if a cycle is present, not "includes all V nodes."
+- *Why C is incorrect:* This is backwards. Topological sort (via Kahn's) is valid only for DAGs. If the sort produces fewer than V nodes, it means some nodes have unresolvable in-degrees — indicating a cycle exists. The sort cannot complete if a cycle is present, not "includes all V nodes.
 - *Why D is incorrect:* Dijkstra finds shortest paths in weighted graphs. Distances of infinity mean nodes are unreachable, not that cycles exist. Cycles can exist even when all nodes are reachable.
 
 ---
@@ -224,7 +224,7 @@ A graph has 5 nodes and 4 undirected edges. The graph is connected. What type of
 - *Why A is incorrect:* A connected graph with n nodes and n−1 edges cannot have a cycle. Adding any edge to a tree creates exactly one cycle — so a tree has no cycles. The structure described is a tree.
 - *Why B is correct:* A tree is defined as a connected acyclic graph. It has exactly n−1 edges for n nodes. This is a fundamental theorem: a connected graph with n nodes and n−1 edges is always a tree (and vice versa). With 5 nodes and 4 edges, connectivity confirms it is a tree.
 - *Why C is incorrect:* A complete graph K₅ has 5×4/2 = 10 edges, not 4. The graph described has far fewer edges than a complete graph.
-- *Why D is incorrect:* Bipartiteness is about graph colorability (two-colorable = no odd cycles), not about edge count. A graph with n nodes and n−1 edges can be bipartite or not — for a tree (which is always acyclic), it is always bipartite. But the primary classification is "tree," not "bipartite graph."
+- *Why D is incorrect:* Bipartiteness is about graph colorability (two-colorable = no odd cycles), not about edge count. A graph with n nodes and n−1 edges can be bipartite or not — for a tree (which is always acyclic), it is always bipartite. But the primary classification is "tree," not "bipartite graph.
 
 ---
 

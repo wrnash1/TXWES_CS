@@ -25,14 +25,10 @@
 ---
 
 ### Pre-Roll Slide
-[SHOW SLIDE: "CSC-6361 — Module 04 Part 1: Enterprise Security — AAA, ACLs & Control Plane Protection | Texas Wesleyan University | Graduate Level"]
 
 ---
 
 ### Section 1: The Security Mindset at CCNP Level
-
-[00:00 – 02:00]
-[SHOW SLIDE: Professor Nash on camera, security framework diagram visible]
 
 Welcome to Module 04. This module shifts focus from network *design* to network *hardening*. Every device we have configured so far — routers, switches, VPN gateways — has a default configuration that is not secure. CCNP-level network engineers understand that configuring protocols correctly is only half the job. Securing the infrastructure against attack is the other half.
 
@@ -41,9 +37,6 @@ This module covers four critical security domains: **AAA (Authentication, Author
 ---
 
 ### Section 2: AAA — Authentication, Authorization, Accounting
-
-[02:00 – 06:30]
-[SHOW DIAGRAM: AAA architecture — network device → TACACS+/RADIUS server → Active Directory]
 
 [Alt-text: A diagram showing a network administrator's laptop attempting to SSH into a router. An arrow goes from the router to a box labeled "TACACS+ Server (Cisco ISE)" with text "Authentication Request." Another arrow returns labeled "Access Permitted." The TACACS+ server connects to a box labeled "Active Directory — Corp LDAP" showing backend identity source.]
 
@@ -95,9 +88,6 @@ aaa accounting commands 15 default start-stop group NETWORK-ADMIN
 
 ### Section 3: Access Control Lists at CCNP Depth
 
-[06:30 – 11:00]
-[SHOW DIAGRAM: ACL packet flow — router with inbound ACL on Gi0/0, outbound ACL on Gi0/1]
-
 ACLs are a fundamental security tool, but CCNP-level knowledge requires understanding beyond just permit/deny:
 
 **Standard vs. Extended ACLs:**
@@ -132,9 +122,6 @@ For true stateful traffic filtering on a router (without a firewall), **Reflexiv
 ---
 
 ### Section 4: Control Plane and Management Plane Protection
-
-[11:00 – 14:30]
-[SHOW DIAGRAM: Router planes — Data Plane, Control Plane, Management Plane — with traffic types]
 
 A network device operates at three planes:
 - **Data Plane:** Forwarding user traffic — fast-path, hardware-accelerated (ASICs).
@@ -193,9 +180,6 @@ line vty 0 15
 ---
 
 ### Section 5: Part 1 Summary
-
-[14:30 – 16:00]
-[SHOW SLIDE: Security hardening checklist]
 
 In Part 1 you learned:
 - **AAA** with TACACS+/RADIUS — authentication, authorization, accounting and fallback design.

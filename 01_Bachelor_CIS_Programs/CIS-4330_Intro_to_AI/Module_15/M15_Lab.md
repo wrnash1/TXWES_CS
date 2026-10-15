@@ -39,7 +39,7 @@
 **Option A — Azure OpenAI Playground (Preferred):**
 
 1. Navigate to `https://oai.azure.com/` and sign in.
-2. If you have a deployment, select it. If not, use the demo at `https://azure.microsoft.com/en-us/products/ai-services/openai-service` and click "Try Azure OpenAI Service."
+2. If you have a deployment, select it. If not, use the demo at `https://azure.microsoft.com/en-us/products/ai-services/openai-service` and click "Try Azure OpenAI Service.
 3. In the Chat Playground, select a GPT-4V or GPT-4o deployment.
 
 **Option B — Azure AI Foundry Demo:**
@@ -58,25 +58,25 @@ Complete the following five tasks with the multimodal model. For each task, reco
 
 Upload a photograph from your phone or computer (any photograph without personal identifying information). Ask the model:
 
-"Describe this image in detail. What is the main subject? What details are in the background? What is the overall mood or tone?"
+Describe this image in detail. What is the main subject? What details are in the background? What is the overall mood or tone?
 
 **Task B — Text Extraction from Image**
 
 Find or create a simple image containing text (a screenshot of a menu, a sign, a handwritten note). Ask the model:
 
-"Extract all visible text from this image. Then tell me if there are any spelling errors or formatting inconsistencies."
+Extract all visible text from this image. Then tell me if there are any spelling errors or formatting inconsistencies.
 
 **Task C — Visual Reasoning**
 
 Upload a chart or graph (a bar chart, line graph, or pie chart — from a news article, textbook, or website). Ask the model:
 
-"Analyze this chart. What does it show? What is the most significant trend or data point? What conclusion would a business analyst draw from this data?"
+Analyze this chart. What does it show? What is the most significant trend or data point? What conclusion would a business analyst draw from this data?
 
 **Task D — Comparative Analysis**
 
 Upload two photographs of the same type of object (two cars, two buildings, two food dishes — from the web is fine). Ask:
 
-"Compare and contrast these two images. Identify three similarities and three differences. Which would you recommend and why?"
+Compare and contrast these two images. Identify three similarities and three differences. Which would you recommend and why?
 
 **Task E — Limitation Probing**
 
@@ -106,7 +106,7 @@ Identify and describe THREE tools that Azure AI Agent Service supports natively.
 
 You are designing an AI agent for a small business owner. The business owner wants an agent that can:
 
-1. Monitor their email inbox for any messages from customers containing the word "refund"
+1. Monitor their email inbox for any messages from customers containing the word "refund
 2. For each refund request, look up the customer's order in a database
 3. If the order is within 30 days, automatically approve the refund and send a confirmation email
 4. If the order is older than 30 days, flag for human review and send an acknowledgment email

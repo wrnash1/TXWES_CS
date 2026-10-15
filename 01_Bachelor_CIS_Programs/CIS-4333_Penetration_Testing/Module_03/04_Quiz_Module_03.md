@@ -52,7 +52,7 @@ A penetration tester queries a target domain's name server with the command `dig
 A penetration tester uses the Google search operator `site:example.com filetype:pdf "confidential"` during passive reconnaissance. Which of the following best describes what this technique is and what it targets?
 
 - A) Active reconnaissance — the query contacts the example.com web server directly to retrieve PDF files
-- B) Passive reconnaissance — the query searches Google's existing index for PDF files on the target domain containing the word "confidential"
+- B) Passive reconnaissance — the query searches Google's existing index for PDF files on the target domain containing the word "confidential
 - C) Vulnerability scanning — the query identifies whether example.com's web server has directory listing enabled
 - D) Social engineering — the query gathers employee names from PDF documents to use in phishing campaigns
 

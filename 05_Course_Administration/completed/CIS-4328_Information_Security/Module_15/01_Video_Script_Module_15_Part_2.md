@@ -180,7 +180,7 @@ Without metrics, you cannot demonstrate that security investments are working, p
 
 **Reporting metrics to leadership:**
 
-Security metrics for executive audiences should be translated from technical measures to business impact language. Instead of "we have 47 critical CVEs open," say "47 critical vulnerabilities affecting 12 revenue-generating systems are awaiting patches — they represent a potential breach risk estimated at $2.3M based on our risk model."
+Security metrics for executive audiences should be translated from technical measures to business impact language. Instead of "we have 47 critical CVEs open," say "47 critical vulnerabilities affecting 12 revenue-generating systems are awaiting patches — they represent a potential breach risk estimated at $2.3M based on our risk model.
 
 **Key Performance Indicators (KPIs) vs. Key Risk Indicators (KRIs):**
 

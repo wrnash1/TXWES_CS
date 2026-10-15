@@ -452,7 +452,7 @@ az cosmosdb sql container create \
 
 ## Section 9: AZ-900 Exam Tips
 
-1. **PaaS vs. IaaS for SQL:** Azure SQL Database and Azure Database for PostgreSQL/MySQL are PaaS — Microsoft manages the OS and engine. SQL Server on Azure VM is IaaS — you manage the OS. Exam signals for IaaS: "OS access needed," "SQL Server Agent required," "linked servers," "specific SQL Server version."
+1. **PaaS vs. IaaS for SQL:** Azure SQL Database and Azure Database for PostgreSQL/MySQL are PaaS — Microsoft manages the OS and engine. SQL Server on Azure VM is IaaS — you manage the OS. Exam signals for IaaS: "OS access needed," "SQL Server Agent required," "linked servers," "specific SQL Server version.
 
 2. **Cosmos DB global distribution signal:** If the exam scenario uses the words "global," "low latency for users worldwide," "multiple regions," or "millisecond response from any region," Azure Cosmos DB is the answer. No other Azure database service provides native global distribution.
 
@@ -460,13 +460,13 @@ az cosmosdb sql container create \
 
 4. **Cosmos DB SLA = 99.999%:** The five-nines SLA for multi-region Cosmos DB is the highest of any Azure database service. If a scenario requires "maximum database availability" or "five-nines SLA," Cosmos DB is the answer.
 
-5. **Elastic Pools for SaaS:** Multiple databases with variable, unpredictable utilization benefit from Elastic Pools — idle database compute is shared with active ones. Signal: "SaaS application with many customers, each with their own database."
+5. **Elastic Pools for SaaS:** Multiple databases with variable, unpredictable utilization benefit from Elastic Pools — idle database compute is shared with active ones. Signal: "SaaS application with many customers, each with their own database.
 
 6. **SQL Managed Instance for migration:** If the scenario mentions migrating an on-premises SQL Server application that uses SQL Agent, linked servers, CLR, or Service Broker, and the team wants PaaS, the answer is Azure SQL Managed Instance — not Azure SQL Database.
 
-7. **Cosmos DB MongoDB API:** An existing MongoDB application can migrate to Cosmos DB using the MongoDB API with minimal code changes. Signal: "existing MongoDB application," "need managed NoSQL," "migrate from MongoDB."
+7. **Cosmos DB MongoDB API:** An existing MongoDB application can migrate to Cosmos DB using the MongoDB API with minimal code changes. Signal: "existing MongoDB application," "need managed NoSQL," "migrate from MongoDB.
 
-8. **Synapse for analytics:** Azure Synapse Analytics is the answer for data warehousing, large-scale analytics, and business intelligence. Signal: "petabytes of data," "analytical queries," "data warehouse," "BI reporting."
+8. **Synapse for analytics:** Azure Synapse Analytics is the answer for data warehousing, large-scale analytics, and business intelligence. Signal: "petabytes of data," "analytical queries," "data warehouse," "BI reporting.
 
 ---
 
@@ -622,8 +622,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

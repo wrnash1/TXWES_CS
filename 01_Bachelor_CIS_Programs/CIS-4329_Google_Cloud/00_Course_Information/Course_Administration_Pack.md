@@ -15,7 +15,7 @@ We will be using live Google Cloud environments to deploy virtual machines, conf
 **Estimated Duration:** 3 minutes
 **Visual:** Instructor on camera.
 **Audio:** "Welcome to Google Cloud Administration. I'm Professor Nash. The days of buying physical servers, waiting weeks for delivery, and racking them in a cold data center are over. Today, we write code to instantly summon massive computing power from Google's global network.
-In this course, we are preparing for the Associate Cloud Engineer certification. You will learn the difference between Compute Engine, App Engine, and Kubernetes. You will learn how to automate deployments using the `gcloud` command line, and how to use Managed Instance Groups to ensure your website never goes down, even during a traffic spike. It's a challenging, fast-paced course, but it will fundamentally change how you view IT infrastructure. Let's get started."
+In this course, we are preparing for the Associate Cloud Engineer certification. You will learn the difference between Compute Engine, App Engine, and Kubernetes. You will learn how to automate deployments using the `gcloud` command line, and how to use Managed Instance Groups to ensure your website never goes down, even during a traffic spike. It's a challenging, fast-paced course, but it will fundamentally change how you view IT infrastructure. Let's get started.
 
 ---
 

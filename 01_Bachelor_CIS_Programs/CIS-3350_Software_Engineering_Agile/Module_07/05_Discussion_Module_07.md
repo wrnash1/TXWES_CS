@@ -41,7 +41,7 @@ Sub-questions:
 
 ## Scenario C — Acceptance Criteria Ambiguity
 
-A checkout story has been in the Sprint for four days: "As a customer, I can complete a purchase so that I can receive the product I want." At the Sprint Review, the Product Owner says the story is not Done because "the confirmation email should show the order total with tax broken out separately." The Developer says: "We sent a confirmation email — the story is Done." The Scrum Master says: "The acceptance criteria just say 'customer receives a confirmation email.'"
+A checkout story has been in the Sprint for four days: "As a customer, I can complete a purchase so that I can receive the product I want." At the Sprint Review, the Product Owner says the story is not Done because "the confirmation email should show the order total with tax broken out separately." The Developer says: "We sent a confirmation email — the story is Done." The Scrum Master says: "The acceptance criteria just say 'customer receives a confirmation email.'
 
 Sub-questions:
 

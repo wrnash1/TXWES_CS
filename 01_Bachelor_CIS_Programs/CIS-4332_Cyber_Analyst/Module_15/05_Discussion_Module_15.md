@@ -32,7 +32,7 @@ In 175–225 words, address the following: How do you assess the risk level of t
 
 ## Scenario C — Hunting Program Metrics and Executive Justification
 
-Your threat hunting program has been running for six months. You have completed 23 documented hunts. Three hunts led to confirmed incident escalations. Seven hunts resulted in new detection rules being added to the SIEM. Thirteen hunts were negative (no findings). Your annual budget review is next month and your manager is presenting to the executive team. A CFO asks: "How do I know if threat hunting is worth the investment? We could just rely on our automated detection."
+Your threat hunting program has been running for six months. You have completed 23 documented hunts. Three hunts led to confirmed incident escalations. Seven hunts resulted in new detection rules being added to the SIEM. Thirteen hunts were negative (no findings). Your annual budget review is next month and your manager is presenting to the executive team. A CFO asks: "How do I know if threat hunting is worth the investment? We could just rely on our automated detection.
 
 In 175–225 words, address the following: What metrics from your six-month program most directly demonstrate value to a non-technical executive? How do you explain the business value of the 13 negative hunts — why is "we found nothing" a meaningful positive outcome? How would you calculate a return-on-investment estimate for the three confirmed incident escalations? What argument would you make for why automated detection alone is insufficient, without disparaging the automated systems that the executive team has already approved and funded?
 

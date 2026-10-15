@@ -217,7 +217,7 @@ spreadsheet alone?
 ### Challenge Step 3: Normalization Impact Assessment
 
 The hospital project sponsor reviews your normalized schema and expresses concern: "We
-went from one table to seven tables. How does this help us? Aren't joins expensive?"
+went from one table to seven tables. How does this help us? Aren't joins expensive?
 Write a one-page business-facing impact assessment that addresses the sponsor's concern.
 Your assessment must include: a table comparing the unnormalized structure against the
 normalized structure on four dimensions (anomaly risk, query complexity, storage

@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -41,9 +41,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 05:30] IAM Core Identity Types
-
-[SHOW DIAGRAM]
+## IAM Core Identity Types
 
 IAM has four core identity types. Understanding each one and when to use it is fundamental to both the exam and real-world AWS security.
 
@@ -53,17 +51,13 @@ IAM has four core identity types. Understanding each one and when to use it is f
 
 **IAM Roles** are the most important IAM identity type for the SAA-C03 exam. A role is an IAM identity that can be assumed by a trusted entity — an EC2 instance, a Lambda function, another AWS account, a federated identity provider, or a specific IAM user. Roles have no long-term credentials. When an entity assumes a role, it receives temporary security credentials — an access key, a secret key, and a session token — that expire after a configurable period from 15 minutes to 12 hours.
 
-[SHOW DIAGRAM]
-
 Why does this matter? Because roles solve the credential management problem. If you hardcode an IAM user's access keys in your EC2 application code, those keys can be extracted from the instance, committed to source control by mistake, or exposed in a breach. With an instance role, the EC2 instance assumes the role and gets temporary credentials automatically rotated by the AWS SDK. There are no static keys to manage or expose.
 
 **Identity Providers** allow federation — the ability to use an external identity system to authenticate to AWS. AWS supports SAML 2.0 for enterprise federation (think Active Directory via ADFS) and OpenID Connect for web identity federation (think a Cognito user pool). With federation, users authenticate to their existing identity provider and receive temporary AWS credentials through the Security Token Service. This eliminates the need to create IAM users for every employee in a large organization.
 
 ---
 
-## [05:30 - 10:30] IAM Policies and Evaluation Logic
-
-[SHOW DIAGRAM]
+## IAM Policies and Evaluation Logic
 
 IAM policies are JSON documents that define what actions are allowed or denied on which resources under what conditions. There are several types of policies you must understand for the exam.
 
@@ -107,15 +101,13 @@ Notice the two Resource ARNs. The first is the bucket itself — needed for s3:L
 
 Now let me explain IAM evaluation logic.
 
-[SHOW DIAGRAM]
-
 The evaluation logic follows these steps in order. First, start with an implicit deny — by default everything is denied. Second, check for an explicit Deny anywhere in all applicable policies. An explicit Deny always wins and cannot be overridden by any Allow. Third, check for an explicit Allow. If an Allow exists and no Deny overrides it, the request is permitted.
 
 The critical rule: an explicit Deny always overrides any Allow. If a Service Control Policy denies an action and an identity-based policy allows that same action, the Deny wins. This is the most tested IAM evaluation concept on SAA-C03.
 
 ---
 
-## [10:30 - 15:30] IAM Best Practices
+## IAM Best Practices
 
 The SAA-C03 exam tests IAM best practices extensively.
 
@@ -155,13 +147,11 @@ This policy denies all actions if MFA is not present. Attach it to users who mus
 
 ---
 
-## [15:30 - 19:30] IAM Roles in Practice
+## IAM Roles in Practice
 
 Let me walk through the two most common role patterns you will see on the exam.
 
 **EC2 Instance Profile.** When you launch an EC2 instance, you attach an IAM role via an instance profile. The AWS SDK running on the instance retrieves temporary credentials from the EC2 Instance Metadata Service. The credentials are rotated automatically. The application code never handles static credentials.
-
-[SHOW DIAGRAM]
 
 ```text
 EC2 Instance
@@ -176,9 +166,7 @@ This pattern is essential for multi-account Organizations architectures — a ce
 
 ---
 
-## [19:30 - 22:00] Service Control Policies
-
-[SHOW DIAGRAM]
+## Service Control Policies
 
 Service Control Policies are IAM policies attached at the AWS Organizations level — to the root, an organizational unit, or an individual member account. SCPs set the maximum permissions for all identities in the accounts they apply to. Even if an IAM policy in a member account grants s3:DeleteBucket, if the SCP at the OU level denies s3:DeleteBucket, the delete will be denied for all identities in that OU — including the account root user.
 
@@ -188,7 +176,7 @@ For the SAA-C03 exam: if a scenario involves preventing all accounts in an organ
 
 ---
 
-## [22:00 - 24:00] Module Summary and Exam Preview
+## Module Summary and Exam Preview
 
 Here are the key patterns the SAA-C03 exam tests from this module.
 

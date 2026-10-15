@@ -26,23 +26,19 @@
 
 ---
 
-## [00:00 – 00:45] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 06 | Lists: The Workhorse Data Structure | CIS-1310"]**
-
-"Welcome back. In every module so far, our programs have worked with one value at a time — one score, one name, one number. But real programs work with collections of data: a class roster, a list of prices, a set of sensor readings.
+Welcome back. In every module so far, our programs have worked with one value at a time — one score, one name, one number. But real programs work with collections of data: a class roster, a list of prices, a set of sensor readings.
 
 Python's primary tool for ordered collections is the **list**. Lists are arguably the most-used data structure in Python — you will use them in virtually every program you write from this point forward. They are flexible, powerful, and have a rich set of built-in operations that the PCAP exam tests extensively.
 
-This module also introduces **list comprehensions** — a compact, Pythonic way to build lists in a single expression — and covers the core list methods you need to know. Let's go."
+This module also introduces **list comprehensions** — a compact, Pythonic way to build lists in a single expression — and covers the core list methods you need to know. Let's go.
 
 ---
 
-## [00:45 – 02:30] Creating and Accessing Lists
+## Creating and Accessing Lists
 
-**[SHOW SLIDE: "Lists — Ordered, Mutable Sequences"]**
-
-"A **list** is an ordered, mutable sequence of items. 'Ordered' means the items have a defined position. 'Mutable' means you can change the contents after creating the list.
+A **list** is an ordered, mutable sequence of items. 'Ordered' means the items have a defined position. 'Mutable' means you can change the contents after creating the list.
 
 You create a list with square brackets:
 
@@ -58,8 +54,6 @@ Lists can hold any Python value — and they can mix types (though it is usually
 ### Indexing — Accessing Individual Items
 
 Access items by their **index** — their position in the list, starting at 0.
-
-**[DEMO]**
 
 ```python
 >>> grades = [88, 72, 95, 61, 83]
@@ -91,17 +85,13 @@ Access items by their **index** — their position in the list, starting at 0.
 IndexError: list index out of range
 ```
 
-Know your list's length. `len(grades)` tells you — valid indices run from `0` to `len(grades) - 1`."
+Know your list's length. `len(grades)` tells you — valid indices run from `0` to `len(grades) - 1`.
 
 ---
 
-## [02:30 – 04:30] Slicing
+## Slicing
 
-**[SHOW SLIDE: "Slicing — Extracting Sublists"]**
-
-"Slicing extracts a portion of a list and returns a new list. The syntax mirrors `range()`: `start:stop:step` — and `stop` is always excluded.
-
-**[DEMO]**
+Slicing extracts a portion of a list and returns a new list. The syntax mirrors `range()`: `start:stop:step` — and `stop` is always excluded.
 
 ```python
 >>> grades = [88, 72, 95, 61, 83]
@@ -128,17 +118,13 @@ Know your list's length. `len(grades)` tells you — valid indices run from `0` 
 [83, 61, 95, 72, 88]
 ```
 
-`grades[::-1]` reverses the list — a common Python idiom. Step -1 walks the list from the end to the beginning."
+`grades[::-1]` reverses the list — a common Python idiom. Step -1 walks the list from the end to the beginning.
 
 ---
 
-## [04:30 – 06:15] Mutability — Modifying Lists
+## Mutability — Modifying Lists
 
-**[SHOW SLIDE: "Mutability — Lists Can Be Changed in Place"]**
-
-"Unlike strings — which are immutable — lists can be modified after creation. You can change an item, add items, or remove items from an existing list object.
-
-**[DEMO — item assignment]**
+Unlike strings — which are immutable — lists can be modified after creation. You can change an item, add items, or remove items from an existing list object.
 
 ```python
 >>> grades = [88, 72, 95, 61, 83]
@@ -190,15 +176,13 @@ Know your list's length. `len(grades)` tells you — valid indices run from `0` 
 [95, 88, 83, 79]
 ```
 
-The distinction between `list.sort()` (modifies the original) and `sorted(list)` (returns a new list) is tested on the PCAP exam."
+The distinction between `list.sort()` (modifies the original) and `sorted(list)` (returns a new list) is tested on the PCAP exam.
 
 ---
 
-## [06:15 – 07:30] List Methods — Full Reference
+## List Methods — Full Reference
 
-**[SHOW SLIDE: "Core List Methods"]**
-
-"Here are the methods you must know for the PCAP exam:
+Here are the methods you must know for the PCAP exam:
 
 | Method | What it does | Returns |
 |---|---|---|
@@ -214,15 +198,11 @@ The distinction between `list.sort()` (modifies the original) and `sorted(list)`
 | `clear()` | Remove all items | `None` |
 | `copy()` | Return a shallow copy | new list |
 
-A critical PCAP trap: methods like `append()`, `sort()`, and `reverse()` return `None`. Assigning them: `new_list = my_list.sort()` gives you `None`, not the sorted list."
+A critical PCAP trap: methods like `append()`, `sort()`, and `reverse()` return `None`. Assigning them: `new_list = my_list.sort()` gives you `None`, not the sorted list.
 
 ---
 
-## [07:30 – 09:00] List Operations — in, len, +, *
-
-**[SHOW SLIDE: "List Operators"]**
-
-**[DEMO]**
+## List Operations — in, len, +, *
 
 ```python
 >>> grades = [88, 72, 95, 61, 83]
@@ -244,15 +224,13 @@ True
 [0, 0, 0, 0, 0]
 ```
 
-`in` tests membership — it works on lists, strings, and other sequences. `+` concatenates two lists into a new one. `*` repeats a list — `[0] * 5` is a quick way to create a fixed-size list initialized to zero."
+`in` tests membership — it works on lists, strings, and other sequences. `+` concatenates two lists into a new one. `*` repeats a list — `[0] * 5` is a quick way to create a fixed-size list initialized to zero.
 
 ---
 
-## [09:00 – 11:00] List Comprehensions
+## List Comprehensions
 
-**[SHOW SLIDE: "List Comprehensions — Build Lists in One Expression"]**
-
-"A **list comprehension** creates a new list by applying an expression to each item in an iterable. It is the most Pythonic way to transform or filter a list.
+A **list comprehension** creates a new list by applying an expression to each item in an iterable. It is the most Pythonic way to transform or filter a list.
 
 **Syntax:**
 
@@ -260,8 +238,6 @@ True
 [expression for variable in iterable]
 [expression for variable in iterable if condition]
 ```
-
-**[DEMO — basic comprehension]**
 
 ```python
 >>> squares = [x**2 for x in range(1, 6)]
@@ -279,15 +255,11 @@ for x in range(1, 6):
 
 Same result, more readable.
 
-**[DEMO — comprehension with filter]**
-
 ```python
 >>> evens = [x for x in range(10) if x % 2 == 0]
 >>> evens
 [0, 2, 4, 6, 8]
 ```
-
-**[DEMO — transform a list]**
 
 ```python
 >>> grades = [88, 72, 95, 61, 83]
@@ -296,25 +268,19 @@ Same result, more readable.
 [93, 77, 100, 66, 88]
 ```
 
-**[DEMO — filter and transform]**
-
 ```python
 >>> passing = [g for g in grades if g >= 60]
 >>> passing
 [88, 72, 95, 61, 83]
 ```
 
-List comprehensions are concise, readable, and faster than equivalent `for` loops in many cases. They are tested on the PCAP exam — know how to read and trace them."
+List comprehensions are concise, readable, and faster than equivalent `for` loops in many cases. They are tested on the PCAP exam — know how to read and trace them.
 
 ---
 
-## [11:00 – 12:15] Copying Lists — Shallow vs. Deep
+## Copying Lists — Shallow vs. Deep
 
-**[SHOW SLIDE: "Copying Lists — The Assignment Trap"]**
-
-"This is one of the most common list bugs, and it appears on the PCAP exam.
-
-**[DEMO]**
+This is one of the most common list bugs, and it appears on the PCAP exam.
 
 ```python
 >>> original = [1, 2, 3]
@@ -348,17 +314,13 @@ Any of these three methods creates a new independent list. The `id()` function c
 140234567912
 ```
 
-Different memory addresses — different objects."
+Different memory addresses — different objects.
 
 ---
 
-## [12:15 – 13:30] Nested Lists
+## Nested Lists
 
-**[SHOW SLIDE: "Nested Lists — Lists Inside Lists"]**
-
-"Lists can contain other lists. A nested list is commonly used to represent a table or grid.
-
-**[DEMO]**
+Lists can contain other lists. A nested list is commonly used to represent a table or grid.
 
 ```python
 >>> matrix = [
@@ -389,15 +351,13 @@ Nested lists are iterable:
 7 8 9
 ```
 
-This nested loop pattern is the foundation of 2D data processing — grids, game boards, pixel arrays."
+This nested loop pattern is the foundation of 2D data processing — grids, game boards, pixel arrays.
 
 ---
 
-## [13:30 – 14:30] Putting It Together — Student Grade Tracker
+## Putting It Together — Student Grade Tracker
 
-**[DEMO — live code]**
-
-"Let me build a grade tracker using everything from this module:
+Let me build a grade tracker using everything from this module:
 
 ```python
 # grade_tracker.py
@@ -430,15 +390,13 @@ else:
     print('No valid scores entered.')
 ```
 
-This program dynamically builds a list with `append()`, sorts it in place, uses negative indexing to get min/max after sorting, and uses `sum()` — a built-in that works on any numeric list."
+This program dynamically builds a list with `append()`, sorts it in place, uses negative indexing to get min/max after sorting, and uses `sum()` — a built-in that works on any numeric list.
 
 ---
 
-## [14:30 – 15:15] PCAP Exam Tips and Wrap-Up
+## PCAP Exam Tips and Wrap-Up
 
-**[SHOW SLIDE: "Module 06 — PCAP Alignment"]**
-
-"Key exam take-aways:
+Key exam take-aways:
 
 **1.** List indices start at 0. Valid range: 0 to `len(list) - 1`. Negative indices count from the end — `-1` is the last item.
 
@@ -454,7 +412,7 @@ This program dynamically builds a list with `append()`, sorts it in place, uses 
 
 **7.** `in` tests membership. `len()` returns element count. `+` concatenates. `*` repeats.
 
-Module 07 covers advanced list operations — sorting with key functions, list comprehensions in depth, and introduces tuples and sets. See you there."
+Module 07 covers advanced list operations — sorting with key functions, list comprehensions in depth, and introduces tuples and sets. See you there.
 
 ---
 

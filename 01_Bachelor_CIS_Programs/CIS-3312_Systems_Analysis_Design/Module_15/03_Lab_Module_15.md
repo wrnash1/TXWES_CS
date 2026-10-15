@@ -62,13 +62,13 @@ For your recommended strategy, outline the key events and milestones in the cuto
 
 For each of the four staff groups below, identify which ADKAR stage is most likely to be the primary adoption barrier and explain your reasoning in two to three sentences.
 
-Group 1: Medical Records staff — experienced with paper processes, skeptical of the new system, have said publicly "the paper system never crashes."
+Group 1: Medical Records staff — experienced with paper processes, skeptical of the new system, have said publicly "the paper system never crashes.
 
 Group 2: Emergency Department nurses — concerned that any system slowdown during a critical patient event could be dangerous. Have asked whether there is a downtime procedure.
 
-Group 3: Admissions staff — enthusiastic about the new system but have never used an EHR before. Their supervisor says they are "excited but undertrained."
+Group 3: Admissions staff — enthusiastic about the new system but have never used an EHR before. Their supervisor says they are "excited but undertrained.
 
-Group 4: Outpatient Clinics physicians — have not attended any of the informational sessions held over the past two months. Their assistants report that the physicians "don't know the go-live date."
+Group 4: Outpatient Clinics physicians — have not attended any of the informational sessions held over the past two months. Their assistants report that the physicians "don't know the go-live date.
 
 ### Part 2B — Intervention Design
 

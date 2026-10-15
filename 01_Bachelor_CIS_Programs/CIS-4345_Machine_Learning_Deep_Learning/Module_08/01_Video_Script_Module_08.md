@@ -28,9 +28,9 @@
 
 ---
 
-### [00:00 – 01:30] Opening and Module Overview
+### Opening and Module Overview
 
-**Visual:** Title card — "Module 08: Data Augmentation and Image Preprocessing"
+**Visual:** Title card — "Module 08: Data Augmentation and Image Preprocessing
 
 **Audio:**
 Welcome back, everyone. I'm Professor Nash, and in Module 08 we tackle one of the most practical skills you will use on every real-world computer-vision project: data augmentation and image preprocessing.
@@ -49,7 +49,7 @@ All of these topics appear directly on the TensorFlow Developer Certificate exam
 
 ---
 
-### [01:30 – 04:00] Why Augmentation Matters
+### Why Augmentation Matters
 
 **Visual:** Side-by-side: a training set of 1,000 cat photos vs. a training set of 1,000 cats with augmented variants.
 
@@ -68,7 +68,7 @@ A key rule: augmentation is applied **only during training**. Validation and tes
 
 ---
 
-### [04:00 – 07:30] ImageDataGenerator — The Legacy API
+### ImageDataGenerator — The Legacy API
 
 **Visual:** Code editor showing `ImageDataGenerator` configuration.
 
@@ -111,7 +111,7 @@ The `flow_from_directory` method reads images directly from a folder hierarchy w
 
 ---
 
-### [07:30 – 11:00] tf.data Pipelines — The Modern Approach
+### tf.data Pipelines — The Modern Approach
 
 **Visual:** Diagram showing dataset pipeline stages: load → map → cache → shuffle → batch → prefetch.
 
@@ -172,7 +172,7 @@ Let me walk through each stage:
 
 ---
 
-### [11:00 – 13:30] Normalization Techniques
+### Normalization Techniques
 
 **Visual:** Table comparing pixel value ranges before and after each technique.
 
@@ -210,7 +210,7 @@ image = preprocess_input(image)  # scales to [-1, 1] for MobileNetV2
 
 ---
 
-### [13:30 – 16:30] Augmentation Operations in Detail
+### Augmentation Operations in Detail
 
 **Visual:** Grid of the same image with different augmentations applied.
 
@@ -263,7 +263,7 @@ When these layers are placed at the top of your model, they are automatically di
 
 ---
 
-### [16:30 – 18:30] Handling Class Imbalance
+### Handling Class Imbalance
 
 **Visual:** Bar chart showing imbalanced class distribution (e.g., 900 cats vs. 100 dogs).
 
@@ -304,7 +304,7 @@ balanced_ds = tf.data.Dataset.sample_from_datasets(
 
 ---
 
-### [18:30 – 20:30] Preprocessing Layers Inside the Model
+### Preprocessing Layers Inside the Model
 
 **Visual:** Model summary showing augmentation layers at the top.
 
@@ -348,7 +348,7 @@ When you call `model.predict()` or deploy this model, the `RandomFlip`, `RandomR
 
 ---
 
-### [20:30 – 22:00] Certification Exam Tips
+### Certification Exam Tips
 
 **Visual:** Bullet list of common exam pitfalls.
 
@@ -364,7 +364,7 @@ Before we wrap up, let me give you the key exam tips for this module:
 
 ---
 
-### [22:00 – 24:00] Module Summary and Lab Preview
+### Module Summary and Lab Preview
 
 **Visual:** Summary slide with key API checklist.
 

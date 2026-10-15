@@ -109,7 +109,7 @@ SIP is the dominant VoIP signaling protocol. The Network+ exam tests SIP heavily
 SIP is an application-layer signaling protocol defined in RFC 3261. It handles the establishment, modification, and termination of communication sessions. SIP is responsible for:
 
 - Locating users (address resolution)
-- Signaling call setup — "ring the phone"
+- Signaling call setup — "ring the phone
 - Negotiating call parameters — what codec to use, which port for media
 - Tearing down calls — hanging up
 
@@ -130,7 +130,7 @@ SIP uses a client-server model with several key components:
 SIP messages use request methods similar to HTTP:
 
 - **REGISTER**: UA registers its current address with the registrar.
-- **INVITE**: Initiate a call — "I want to establish a session with you."
+- **INVITE**: Initiate a call — "I want to establish a session with you.
 - **ACK**: Acknowledges the final response to INVITE — completes the three-way handshake.
 - **BYE**: Terminates an established session.
 - **CANCEL**: Cancels a pending INVITE before it is answered.

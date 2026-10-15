@@ -46,7 +46,7 @@ Let's get started.
 
 [SLIDE: Traditional Waterfall vs. Agile vs. DevOps timeline]
 
-To understand DevSecOps we first need to understand DevOps. In the traditional software development world — sometimes called the waterfall model — development teams and operations teams were completely separate. Developers wrote code, threw it "over the wall" to operations, and operations tried to deploy it. Security was an afterthought, a gate at the very end, often called a "penetration test before release."
+To understand DevSecOps we first need to understand DevOps. In the traditional software development world — sometimes called the waterfall model — development teams and operations teams were completely separate. Developers wrote code, threw it "over the wall" to operations, and operations tried to deploy it. Security was an afterthought, a gate at the very end, often called a "penetration test before release.
 
 This created three fundamental problems.
 

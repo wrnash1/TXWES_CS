@@ -98,7 +98,7 @@ Read the following team scenario and complete the three tasks below.
 FastPath is a Scrum team that has been operating for twelve Sprints. Their velocity has been declining for the last four Sprints. In the Sprint Retrospective, the team identified the following:
 
 - Two developers spent an average of 8 hours each in the last Sprint debugging merge conflicts because everyone pushed to main on the last day of the Sprint
-- The team has a CI pipeline, but the integration test stage is bypassed every Sprint because "it always fails and we know the code is fine"
+- The team has a CI pipeline, but the integration test stage is bypassed every Sprint because "it always fails and we know the code is fine
 - The Definition of Done says "CI pipeline green" but this is effectively ignored
 - Two defects introduced in Sprint 10 were not discovered until Sprint 13 because there was no automated integration testing catching regressions
 - The team estimates they spend 30 percent of each Sprint on activities that would be eliminated by functional CI: manual testing, merge conflict resolution, and regression investigation

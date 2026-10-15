@@ -416,8 +416,6 @@ The following free resources supplement Module 14 content on mobile device conne
    URL: [https://www.rfc-editor.org/rfc/rfc3501](https://www.rfc-editor.org/rfc/rfc3501)
    Relevance: The free, official IETF specification for IMAP4, which defines how email clients communicate with mail servers to retrieve, manage, and synchronize messages across multiple devices. Reading the protocol summary section clarifies the fundamental difference between IMAP server-side storage and POP3 download-and-delete behavior — a distinction that appears on nearly every A+ exam in the mobile connectivity and email configuration domains.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

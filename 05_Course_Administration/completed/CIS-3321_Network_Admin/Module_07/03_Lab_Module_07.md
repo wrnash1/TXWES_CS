@@ -356,7 +356,7 @@ Without running a live capture, write the correct Wireshark display filter synta
 2. Show all TCP resets (RST flag set).
 3. Show all packets larger than 1400 bytes.
 4. Show all ARP requests (not replies).
-5. Show all packets where the HTTP host header contains "google."
+5. Show all packets where the HTTP host header contains "google.
 
 **Challenge Question 2:** For each filter above, write the filter string. Then select any two of the five filters and explain what network troubleshooting scenario would lead an administrator to use each filter — what problem would you be investigating, and what would you expect to find in the results?
 

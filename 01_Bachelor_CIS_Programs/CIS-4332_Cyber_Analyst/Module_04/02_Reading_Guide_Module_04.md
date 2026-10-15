@@ -328,7 +328,7 @@ A correlation rule consists of:
 - Grouping: which field ties events together (same source IP, same username)
 - Alert severity: how the resulting alert is classified
 
-Example rule logic in plain language: "If more than 10 Event ID 4625 events occur for the same TargetUserName from the same source IP within 5 minutes, generate a HIGH severity alert titled 'Brute Force Attempt.'"
+Example rule logic in plain language: "If more than 10 Event ID 4625 events occur for the same TargetUserName from the same source IP within 5 minutes, generate a HIGH severity alert titled 'Brute Force Attempt.'
 
 ---
 
@@ -554,8 +554,6 @@ Sigma is the open-source standard for writing SIEM-agnostic detection rules. The
 **3. Splunk — Search Tutorial and SPL Quick Reference**
 <https://docs.splunk.com/Documentation/Splunk/latest/SearchTutorial/WelcometotheSearchTutorial>
 Splunk's free interactive search tutorial walks through SPL query construction from basic keyword searches to stats, eval, and transaction commands. Even without a Splunk license, working through the tutorial exercises reinforces the query patterns covered in Section 5 of this guide.
-
-
 
 ---
 

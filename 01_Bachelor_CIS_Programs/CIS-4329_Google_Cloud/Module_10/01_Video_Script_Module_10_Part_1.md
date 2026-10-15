@@ -129,7 +129,7 @@ gcloud monitoring uptime-checks list
 ```
 
 Uptime checks report from multiple regions simultaneously. GCP considers an endpoint
-"down" when a majority of check locations fail.
+down" when a majority of check locations fail.
 
 ---
 

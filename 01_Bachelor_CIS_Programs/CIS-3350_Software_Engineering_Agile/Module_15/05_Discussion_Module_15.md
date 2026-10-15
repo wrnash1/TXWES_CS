@@ -26,7 +26,7 @@ A software company's leadership team has started publishing a weekly dashboard s
 
 In the three Sprints since the dashboard went live, the product team's Scrum Master has noticed: two teams have inflated their estimates (stories that were previously estimated at 5 points are now consistently estimated at 8); one team reports stories as done before the Definition of Done is fully met; and all teams are reluctant to take on stories that are ambiguous or risky because those stories are harder to complete by Sprint end.
 
-The Scrum Master raises the concern with the VP of Engineering: "This dashboard is measuring the wrong thing and changing the wrong behavior." The VP responds: "We need visibility into team performance. What's the alternative?"
+The Scrum Master raises the concern with the VP of Engineering: "This dashboard is measuring the wrong thing and changing the wrong behavior." The VP responds: "We need visibility into team performance. What's the alternative?
 
 How would you advise the Scrum Master to respond to the VP? What specific behaviors does the dashboard create, and why are they harmful? What alternative approach to organizational transparency would you recommend? Your post should be 175–225 words.
 
@@ -42,7 +42,7 @@ The alternative I would recommend to the VP: measure outcomes, not activity. Bus
 
 ## Scenario B: The Burndown That Won't Budge
 
-The EdgeSync team is in Sprint 5. On Day 7 of their 10-day Sprint, the burndown shows 26 remaining story points out of an original 40. The ideal line at Day 7 would be 12 points. The Scrum Master asks the developers what is happening. The responses are: "I finished my story but it's not tested yet." "My story is done technically but it needs a design review." "I have two stories in code review but they haven't been merged yet." "My story is 85 percent done but the API integration is blocked."
+The EdgeSync team is in Sprint 5. On Day 7 of their 10-day Sprint, the burndown shows 26 remaining story points out of an original 40. The ideal line at Day 7 would be 12 points. The Scrum Master asks the developers what is happening. The responses are: "I finished my story but it's not tested yet." "My story is done technically but it needs a design review." "I have two stories in code review but they haven't been merged yet." "My story is 85 percent done but the API integration is blocked.
 
 The Daily Scrum has been running efficiently — 15 minutes, everyone shares updates, impediments are raised. But the burndown is not changing.
 
@@ -54,7 +54,7 @@ The root cause is that the team is confusing individual task completion with sto
 
 The Daily Scrum is technically running efficiently but is not effective. Fifteen minutes, everyone talks — but the team is not surfacing and acting on the right information. The Daily Scrum's purpose is to inspect progress toward the Sprint Goal and adapt. Four developers with stories stuck in handoffs is a pattern that should have triggered a swarm response several days earlier. An effective Daily Scrum would have prompted someone to ask "what can I do to unblock your code review?" on Day 3, not Day 7.
 
-The recommended change is about how the team works, not how they report: define explicit WIP limits on the number of stories in code review and testing simultaneously, and adopt a swarm model where team members prioritize completing in-progress stories over starting new ones. The Daily Scrum question should shift from "what did I work on yesterday?" to "what is blocking stories from reaching Done, and how do we remove that blocker today?"
+The recommended change is about how the team works, not how they report: define explicit WIP limits on the number of stories in code review and testing simultaneously, and adopt a swarm model where team members prioritize completing in-progress stories over starting new ones. The Daily Scrum question should shift from "what did I work on yesterday?" to "what is blocking stories from reaching Done, and how do we remove that blocker today?
 
 ---
 

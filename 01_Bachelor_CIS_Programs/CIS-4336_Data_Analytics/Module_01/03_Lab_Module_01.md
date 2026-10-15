@@ -126,7 +126,7 @@ Lifecycle stages: Define the Question, Collect Data, Clean and Transform, Analyz
 
 ### Activities
 
-1. The VP of Operations asks: "Why did patient readmission rates increase 12 percent in Q2?"
+1. The VP of Operations asks: "Why did patient readmission rates increase 12 percent in Q2?
 2. A data engineer writes a Python script to pull records from the hospital EHR system via API.
 3. An analyst discovers 340 records with null values in the DISCHARGE_DATE column and fills them using median imputation.
 4. An analyst runs a logistic regression to identify which patient attributes predict 30-day readmission.

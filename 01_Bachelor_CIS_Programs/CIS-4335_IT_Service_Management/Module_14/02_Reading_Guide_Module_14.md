@@ -205,7 +205,7 @@ A gap analysis compares the organization's current control state against the req
 1. Define the target standard (ISO 27001, SOC 2, PCI-DSS, HIPAA, or internal policy)
 2. Document the organization's current controls for each requirement
 3. For each requirement, assess: Is the required control present? Is it adequately designed? Is there evidence it is operating?
-4. Record gaps — requirements where the answer to any assessment question is "no"
+4. Record gaps — requirements where the answer to any assessment question is "no
 5. Prioritize gaps by risk — high-impact gaps with no compensating control are the highest priority
 6. Build a remediation roadmap — assigning owners, timelines, and success criteria to each gap
 
@@ -389,8 +389,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

@@ -34,7 +34,7 @@ D. Think and Work Holistically
 
 - **A (Focus on Value)** aligns more with the Agile principle of delivering valuable software — about what is delivered, not the delivery cadence or adaptability.
 - **B (Start Where You Are)** aligns with understanding the current state before changing — relevant to planning, not adaptability.
-- **C (Progress Iteratively with Feedback)** is correct. This principle directly describes the Agile and DevOps approach of making incremental changes and using feedback to guide the next iteration — the operational expression of "responding to change."
+- **C (Progress Iteratively with Feedback)** is correct. This principle directly describes the Agile and DevOps approach of making incremental changes and using feedback to guide the next iteration — the operational expression of "responding to change.
 - **D (Think and Work Holistically)** aligns with DevOps systems thinking — but does not specifically correspond to the adaptability value.
 
 ---
@@ -55,7 +55,7 @@ D. None of the Three Ways aligns with ITIL 4
 
 **Distractor Analysis:**
 
-- **A (First Way — Flow)** focuses on optimizing the speed of work through the value stream — more aligned with Lean and the ITIL principle of "Optimize and Automate."
+- **A (First Way — Flow)** focuses on optimizing the speed of work through the value stream — more aligned with Lean and the ITIL principle of "Optimize and Automate.
 - **B (Second Way — Feedback)** focuses on rapid feedback loops from right (operations) to left (development) — aligns with monitoring, incident management, and service measurement in ITIL.
 - **C (Third Way)** is correct. The Third Way is explicitly about creating a culture of continual learning, experimentation, and improvement — the direct philosophical equivalent of ITIL 4's Continual Improvement practice.
 - **D** is wrong. ITIL 4 was explicitly designed to align with the Three Ways and DevOps principles.

@@ -176,10 +176,10 @@ Example: Member — places — Loan
 
 - Reading from Member to Loan: look at the symbols at the Loan end.
   If Loan end shows crow's foot (outer) and circle (inner) → "Each Member places
-  zero-or-more Loans."
+  zero-or-more Loans.
 - Reading from Loan to Member: look at the symbols at the Member end.
   If Member end shows line (outer) and line (inner) → "Each Loan is placed by exactly
-  one Member."
+  one Member.
 
 > ECBA Exam Tip: The direction you read matters. Always start at one entity and read
 > toward the other, using the symbols at the destination end. Never read both ends from
@@ -613,8 +613,6 @@ modeling and data modeling. All are freely accessible without login or purchase.
 ---
 
 *Reading Guide — Module 11 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*
-
-
 
 ---
 

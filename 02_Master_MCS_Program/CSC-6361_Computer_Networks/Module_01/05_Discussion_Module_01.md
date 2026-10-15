@@ -37,8 +37,8 @@ Write a substantive initial post (400+ words) that addresses ALL of the followin
 
 ## Peer Response Guidance
 When responding to classmates, choose posts that made a design recommendation **different from yours** and engage with the difference. Consider:
-- "You recommended Totally Stubby areas for all branches. What about a branch that has a local internet breakout — would you still use Totally Stubby, and if so, how would you handle the local default route?"
-- "You proposed keeping EIGRP and OSPF permanently separate. What would change if the company planned to migrate to SD-WAN within 3 years?"
+- "You recommended Totally Stubby areas for all branches. What about a branch that has a local internet breakout — would you still use Totally Stubby, and if so, how would you handle the local default route?
+- "You proposed keeping EIGRP and OSPF permanently separate. What would change if the company planned to migrate to SD-WAN within 3 years?
 
 ---
 

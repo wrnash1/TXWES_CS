@@ -377,10 +377,10 @@ Distractor Analysis:
 
 A developer asks a Security Champion: "Why should I care about DevSecOps? Security is the security team's job." Which response best represents the core DevSecOps culture argument?
 
-- A) "Because the company policy requires it and you could be fired for security violations."
-- B) "Because fixing a vulnerability after production deployment costs 30 times more than fixing it during development, and when you find and fix issues earlier in your own code, you protect your users and reduce the incident workload that would otherwise fall back to your sprint."
-- C) "Because security tools run automatically in CI now — you don't actually need to do anything differently."
-- D) "Because security is a compliance requirement and we need to pass our next audit."
+- A) "Because the company policy requires it and you could be fired for security violations.
+- B) "Because fixing a vulnerability after production deployment costs 30 times more than fixing it during development, and when you find and fix issues earlier in your own code, you protect your users and reduce the incident workload that would otherwise fall back to your sprint.
+- C) "Because security tools run automatically in CI now — you don't actually need to do anything differently.
+- D) "Because security is a compliance requirement and we need to pass our next audit.
 
 Correct Answer: B — The DevSecOps culture argument is grounded in practical developer self-interest and user protection, not compliance obligation or threat. The cost-of-defect curve (vulnerabilities cost exponentially more to fix later) is a concrete, credible argument. Connecting security to protecting users makes it a values-based argument. Connecting it to reduced sprint disruption (fewer incident-driven interruptions) makes it personally relevant. This is the Security Champion's value proposition to skeptical developers.
 

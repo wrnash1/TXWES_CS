@@ -28,17 +28,17 @@
 
 ---
 
-### [00:00 – 02:00] Introduction
+### Introduction
 
 **Visual:** Instructor on camera with title card: **Data Ethics, Privacy, and Regulatory Compliance**.
 
-**Audio:** "Welcome to Module 15. This is one of the most important modules in this course — not because it has the most technical content, but because the decisions we cover here have real consequences for real people. Data analysts work with personal, financial, and health information every day. How you handle that data, what protections you apply, and how you ensure that analytical outputs do not harm the people whose data produced them — these are professional and legal obligations. The CompTIA Data+ exam tests these topics in Domain 5, Data Governance. Let's get into it."
+**Audio:** "Welcome to Module 15. This is one of the most important modules in this course — not because it has the most technical content, but because the decisions we cover here have real consequences for real people. Data analysts work with personal, financial, and health information every day. How you handle that data, what protections you apply, and how you ensure that analytical outputs do not harm the people whose data produced them — these are professional and legal obligations. The CompTIA Data+ exam tests these topics in Domain 5, Data Governance. Let's get into it.
 
 **Study Link:** [IAPP Privacy Fundamentals — free resources](https://iapp.org/resources/article/privacy-fundamentals/)
 
 ---
 
-### [02:00 – 06:30] Data Privacy Regulations
+### Data Privacy Regulations
 
 **Visual:** Map of the United States and Europe with regulation names placed by geography, then a timeline showing enactment dates.
 
@@ -52,11 +52,11 @@
 
 **HIPAA — Health Insurance Portability and Accountability Act** was enacted in 1996 and governs protected health information, called PHI. It applies to covered entities — healthcare providers, health plans, healthcare clearinghouses — and their business associates. HIPAA mandates the Privacy Rule (controls use and disclosure of PHI) and the Security Rule (technical and physical safeguards for electronic PHI).
 
-For the Data+ exam, know what each regulation covers, who it applies to, and what individual rights it grants."
+For the Data+ exam, know what each regulation covers, who it applies to, and what individual rights it grants.
 
 ---
 
-### [06:30 – 10:00] PII — Personally Identifiable Information
+### PII — Personally Identifiable Information
 
 **Visual:** Two-column table: left column shows direct identifiers; right column shows indirect identifiers (quasi-identifiers).
 
@@ -75,11 +75,11 @@ As an analyst, you must:
 * Not store PII beyond the period required for its stated purpose
 * Report breaches according to your organization's incident response policy
 
-Under GDPR, unauthorized disclosure of personal data can result in fines up to 4% of annual global revenue or €20 million, whichever is greater."
+Under GDPR, unauthorized disclosure of personal data can result in fines up to 4% of annual global revenue or €20 million, whichever is greater.
 
 ---
 
-### [10:00 – 14:00] Data Anonymization Techniques
+### Data Anonymization Techniques
 
 **Visual:** A table showing a raw patient records dataset transforming through three anonymization stages.
 
@@ -97,11 +97,11 @@ Under GDPR, unauthorized disclosure of personal data can result in fines up to 4
 
 **k-anonymity** ensures that each record is indistinguishable from at least k-1 other records on quasi-identifier combinations. If k=5, every combination of zip code, age range, and gender appears at least 5 times in the dataset.
 
-**Data suppression** removes rows or columns that cannot be sufficiently protected. If a disease occurs in only two people in a dataset, those rows should be suppressed entirely."
+**Data suppression** removes rows or columns that cannot be sufficiently protected. If a disease occurs in only two people in a dataset, those rows should be suppressed entirely.
 
 ---
 
-### [14:00 – 17:30] Algorithmic Bias
+### Algorithmic Bias
 
 **Visual:** A diagram showing how biased training data produces biased model outputs, which then feed into biased decisions.
 
@@ -117,11 +117,11 @@ Bias enters machine learning through three main paths:
 
 **Proxy discrimination** — a model does not directly use a protected attribute like race, but uses a correlated proxy such as zip code or school attended. The discriminatory effect is identical even though the protected attribute was not in the training data.
 
-Your responsibility as an analyst includes asking: Who does this model affect? Are error rates consistent across demographic groups? Was the training data representative of the population the model will be applied to? These are not just ethical questions — in regulated industries, they are legal requirements."
+Your responsibility as an analyst includes asking: Who does this model affect? Are error rates consistent across demographic groups? Was the training data representative of the population the model will be applied to? These are not just ethical questions — in regulated industries, they are legal requirements.
 
 ---
 
-### [17:30 – 20:30] Responsible Data Use
+### Responsible Data Use
 
 **Visual:** A checklist slide with seven responsible data use principles.
 
@@ -141,15 +141,15 @@ Sixth — **accountability**: someone in the organization must own data governan
 
 Seventh — **security**: personal data must be protected with appropriate technical controls — encryption, access controls, audit logs.
 
-On the Data+ exam, Domain 5 — Data Governance — includes all of these principles. You will see scenario questions where you must identify which principle is being violated or which regulation applies."
+On the Data+ exam, Domain 5 — Data Governance — includes all of these principles. You will see scenario questions where you must identify which principle is being violated or which regulation applies.
 
 ---
 
-### [20:30 – 22:00] Exam Connection and Wrap-Up
+### Exam Connection and Wrap-Up
 
 **Visual:** Data+ domain map with Domain 5 — Data Governance — highlighted.
 
-**Audio:** "Domain 5 of the Data+ exam covers data governance, data quality, and privacy regulations. You need to know GDPR, CCPA, and HIPAA — who they apply to, what rights they grant, and what the analyst's obligations are. You also need to understand PII, anonymization techniques, and algorithmic bias. This week's lab walks you through a data audit exercise where you identify PII, apply anonymization decisions, and flag a dataset for regulatory compliance. See you there."
+**Audio:** "Domain 5 of the Data+ exam covers data governance, data quality, and privacy regulations. You need to know GDPR, CCPA, and HIPAA — who they apply to, what rights they grant, and what the analyst's obligations are. You also need to understand PII, anonymization techniques, and algorithmic bias. This week's lab walks you through a data audit exercise where you identify PII, apply anonymization decisions, and flag a dataset for regulatory compliance. See you there.
 
 ---
 

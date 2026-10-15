@@ -101,8 +101,8 @@ It has been a privilege to work through this material with you. I am proud of wh
 When responding to classmates in this final discussion, go beyond affirmation. The most valuable peer responses in a capstone discussion:
 
 - Identify a technical detail your classmate's post implies but does not state explicitly. State it explicitly and explain why it matters.
-- Challenge a confidence rating your classmate gave themselves. "You rated BGP as a 4/5 but your description of next-hop-self suggests you may not have internalized the iBGP route advertisement rule — let me ask you this..."
-- Extend a career connection to a scenario the classmate did not consider. "You described SD-WAN as directly applicable to your enterprise campus role. What happens when your SD-WAN controller (vManage) is unreachable — does your vEdge continue to forward traffic, and how does that affect your availability argument to management?"
+- Challenge a confidence rating your classmate gave themselves. "You rated BGP as a 4/5 but your description of next-hop-self suggests you may not have internalized the iBGP route advertisement rule — let me ask you this...
+- Extend a career connection to a scenario the classmate did not consider. "You described SD-WAN as directly applicable to your enterprise campus role. What happens when your SD-WAN controller (vManage) is unreachable — does your vEdge continue to forward traffic, and how does that affect your availability argument to management?
 
 ---
 

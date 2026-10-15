@@ -25,25 +25,15 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: "Module 04 Part 2 — SLAAC, EUI-64, DHCPv6, and IPv4/IPv6 Transition Technologies"]
-
 ---
 
 ### Section 1: Part 2 Introduction
-
-[00:00 – 00:45]
-
-[SHOW SLIDE: Professor Nash on camera]
 
 Welcome back to Module 04. In Part 1 we covered IPv6 address structure, abbreviation rules, address types, and NDP. Now in Part 2 we cover how IPv6 addresses are automatically configured — SLAAC and DHCPv6 — the EUI-64 process, and the three primary transition technologies. These are heavily tested on the Network+ exam.
 
 ---
 
 ### Section 2: SLAAC — Stateless Address Autoconfiguration
-
-[00:45 – 04:00]
-
-[SHOW DIAGRAM: SLAAC process sequence. Step 1: Router sends a Router Advertisement (RA) containing the network prefix (e.g., 2001:db8::/64). Step 2: Host combines the 64-bit prefix from the RA with its own 64-bit EUI-64 interface identifier derived from its MAC address. Step 3: Host performs Duplicate Address Detection (DAD). Step 4: Host uses the assembled address.]
 
 [Alt-text: A four-step diagram showing the SLAAC process. Step 1 shows a Router icon sending a Router Advertisement arrow to a Host icon, with the label "RA contains prefix 2001:db8::/64." Step 2 shows the Host combining the 64-bit prefix with a 64-bit EUI-64 interface ID generated from its MAC address. Step 3 shows the Host performing Duplicate Address Detection by sending a Neighbor Solicitation to verify the address is not already in use. Step 4 shows the Host configured with the assembled global unicast address.]
 
@@ -67,10 +57,6 @@ One limitation: SLAAC does not provide DNS server configuration by default. To p
 
 ### Section 3: EUI-64 Interface Identifier
 
-[04:00 – 06:00]
-
-[SHOW DIAGRAM: EUI-64 calculation steps. Start with MAC address 00:1A:2B:3C:4D:5E. Split into two halves: 00:1A:2B and 3C:4D:5E. Insert FF:FE in the middle: 00:1A:2B:FF:FE:3C:4D:5E. Flip the seventh bit of the first byte: 00 = 00000000, flip bit 7 (Universal/Local), becomes 00000010 = 02. Result: 02:1A:2B:FF:FE:3C:4D:5E. Written as IPv6 interface ID: 021a:2bff:fe3c:4d5e.]
-
 [Alt-text: A step-by-step EUI-64 calculation diagram. Starting MAC address is 00:1A:2B:3C:4D:5E. Step 1 splits the MAC into two three-byte halves: 00:1A:2B and 3C:4D:5E. Step 2 inserts the bytes FF:FE in the middle, producing 00:1A:2B:FF:FE:3C:4D:5E. Step 3 flips the seventh bit (Universal/Local bit) of the first byte from 00000000 to 00000010, changing 00 to 02. The final EUI-64 interface identifier is 021a:2bff:fe3c:4d5e.]
 
 EUI-64 is the process used by SLAAC to derive the 64-bit interface identifier portion of an IPv6 address from a device's 48-bit MAC address.
@@ -91,10 +77,6 @@ The resulting 64 bits form the interface identifier, which is appended to the 64
 
 ### Section 4: DHCPv6
 
-[06:00 – 07:30]
-
-[SHOW SLIDE: Two-column comparison: Stateful DHCPv6 versus Stateless DHCPv6]
-
 IPv6 supports two forms of DHCPv6.
 
 Stateful DHCPv6 works similarly to IPv4 DHCP. The DHCPv6 server assigns specific IPv6 addresses to clients and keeps a record of which client holds which address. The router's RA sets the "M flag" (Managed) to tell clients to use stateful DHCPv6 for addressing.
@@ -106,10 +88,6 @@ The combination of SLAAC for addressing plus stateless DHCPv6 for DNS is the mos
 ---
 
 ### Section 5: IPv4 to IPv6 Transition Technologies
-
-[07:30 – 10:30]
-
-[SHOW DIAGRAM: Three transition technology diagrams. Left: Dual Stack — one device with both IPv4 and IPv6 addresses simultaneously. Center: Tunneling — IPv6 packet encapsulated inside IPv4 header to cross IPv4-only infrastructure. Right: NAT64 — IPv6-only client communicating with IPv4-only server through a translation border device.]
 
 [Alt-text: Three diagrams illustrating IPv6 transition technologies. The left diagram shows a single network device with two stacked address bars, one labeled IPv4 and one labeled IPv6, with the caption "Dual Stack — both protocols active simultaneously." The center diagram shows an IPv6 packet with an IPv4 outer header wrapped around it, crossing a gray IPv4-only cloud network, with the caption "Tunneling — IPv6 wrapped inside IPv4." The right diagram shows an IPv6-only client on the left communicating through a NAT64 border device to an IPv4-only server on the right, with the caption "NAT64 — protocol translation at the border."]
 
@@ -124,8 +102,6 @@ The transition from IPv4 to IPv6 is a multi-decade process. Three primary techno
 ---
 
 ### Section 6: Lab Preview and Module Closing
-
-[SHOW SLIDE: Lab preview — ipconfig /all output showing link-local address]
 
 In this week's lab, you will use ipconfig /all on Windows or ip addr on Linux to observe the automatically generated link-local IPv6 address on your machine. You will identify the address type from its prefix, ping the loopback address (::1), and investigate the EUI-64 derivation from your NIC's MAC address.
 

@@ -53,7 +53,7 @@ In your initial post (175-225 words), address all of the following:
 
 A large law firm wants to use NLP to analyze thousands of historical contract documents to extract key parties, financial obligations, important dates, and penalty clauses. The goal is to reduce the time paralegals spend manually reviewing contracts before flagging them for attorney review.
 
-The firm's senior partner is cautious. "Legal documents are highly precise," she notes. "A missed entity or a misread clause could expose our clients to serious risk. How confident are we that the NLP system will not miss critical information?"
+The firm's senior partner is cautious. "Legal documents are highly precise," she notes. "A missed entity or a misread clause could expose our clients to serious risk. How confident are we that the NLP system will not miss critical information?
 
 In your initial post (175-225 words), address all of the following:
 

@@ -30,7 +30,7 @@ Your classmate proposed a prioritization framework for the 47 findings. Is "fix 
 
 ## Scenario 2 — The Sentinel Hard Mandatory Debate
 
-Your organization uses Terraform Enterprise. The security team wants to enforce the following as a Hard Mandatory Sentinel policy: all AWS RDS instances must have `deletion_protection = true`. The database team pushes back: "We have dozens of ephemeral testing databases that are intentionally short-lived. If we can't delete them, our testing workflows break." The security team's response: "If it's in Terraform, it's subject to the policy."
+Your organization uses Terraform Enterprise. The security team wants to enforce the following as a Hard Mandatory Sentinel policy: all AWS RDS instances must have `deletion_protection = true`. The database team pushes back: "We have dozens of ephemeral testing databases that are intentionally short-lived. If we can't delete them, our testing workflows break." The security team's response: "If it's in Terraform, it's subject to the policy.
 
 Evaluate both positions. Is a blanket Hard Mandatory policy the right tool for this requirement, or should it be Soft Mandatory with an exception workflow? How would you write a Sentinel policy that differentiates between production and non-production RDS instances — for example, using resource tags or workspace names? What is the broader principle about how enforcement level should be calibrated to the risk of the controlled configuration? Reference the three Sentinel enforcement levels from the reading guide and propose a specific policy design that satisfies both teams.
 

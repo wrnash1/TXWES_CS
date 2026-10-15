@@ -463,8 +463,6 @@ The official CompTIA objective document for PT0-002 maps every exam domain and s
 [https://academy.tcm-sec.com/p/practical-ethical-hacking-the-complete-course](https://academy.tcm-sec.com/p/practical-ethical-hacking-the-complete-course)
 TCM Security's free and paid course content includes practical walkthroughs of pre-engagement documentation, scoping decisions, and authorization frameworks aligned to real-world consulting practice and eJPT/OSCP preparation.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

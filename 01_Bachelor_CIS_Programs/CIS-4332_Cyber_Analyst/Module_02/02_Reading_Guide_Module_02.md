@@ -513,8 +513,6 @@ CISA's guidance on threat intelligence sharing programs, including the Automated
 <https://www.first.org/tlp/>
 The authoritative TLP specification maintained by the Forum of Incident Response and Security Teams (FIRST). The page defines all five TLP markings with usage guidance. This is the primary reference for TLP questions on the CySA+ exam and for professional CTI sharing decisions.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

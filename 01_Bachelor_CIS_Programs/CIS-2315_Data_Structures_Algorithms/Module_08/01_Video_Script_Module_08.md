@@ -26,19 +26,15 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 08 | Hash Tables & Hash Collisions | CIS-2315"]**
-
-"This module covers hash tables — the most important data structure for interview problems. A hash table maps keys to values in O(1) average time for insert, lookup, and delete. Python's built-in `dict` and `set` are both hash tables. Understanding how they work under the hood — the hash function, collision resolution, and load factor — separates you from candidates who can use a dict but cannot explain it. This module also covers the top interview patterns that use hash tables: Two Sum, anagram grouping, and frequency counting."
+This module covers hash tables — the most important data structure for interview problems. A hash table maps keys to values in O(1) average time for insert, lookup, and delete. Python's built-in `dict` and `set` are both hash tables. Understanding how they work under the hood — the hash function, collision resolution, and load factor — separates you from candidates who can use a dict but cannot explain it. This module also covers the top interview patterns that use hash tables: Two Sum, anagram grouping, and frequency counting.
 
 ---
 
-## [01:30 – 07:00] Part 1 — Hash Table Structure and Hash Functions
+## Part 1 — Hash Table Structure and Hash Functions
 
-**[SHOW SLIDE: "Hash Table — Array + Hash Function"]**
-
-"A hash table is an array of fixed size. To store a key-value pair, we apply a **hash function** to the key, which produces an integer index. We store the value at that index in the array.
+A hash table is an array of fixed size. To store a key-value pair, we apply a **hash function** to the key, which produces an integer index. We store the value at that index in the array.
 
 For a table of size 8 and a key `'apple'`:
 
@@ -47,10 +43,6 @@ index = hash('apple') % 8
 ```
 
 The `hash()` built-in returns a large integer; the modulo operation maps it to a valid array index.
-
-**[SHOW DIAGRAM: array of 8 buckets, 'apple' → index 3]**
-
-[PAUSE]
 
 A good hash function has two properties:
 
@@ -72,8 +64,6 @@ def simple_hash(s, size):
 
 The constant 31 is a small prime chosen to spread character values across the output range.
 
-[PAUSE]
-
 **Why does the table need to be resized?**
 
 If we insert too many keys into a fixed-size table, many buckets will have multiple entries — **collisions**. The ratio of stored keys to table size is the **load factor**:
@@ -82,15 +72,13 @@ If we insert too many keys into a fixed-size table, many buckets will have multi
 load_factor = n / table_size
 ```
 
-When load factor exceeds a threshold (typically 0.7 for Python dicts), the table is resized — usually doubled — and all keys are **rehashed** into the new table. This resize is O(n), but it happens rarely enough that the amortized cost of n inserts remains O(n) total — O(1) per insert."
+When load factor exceeds a threshold (typically 0.7 for Python dicts), the table is resized — usually doubled — and all keys are **rehashed** into the new table. This resize is O(n), but it happens rarely enough that the amortized cost of n inserts remains O(n) total — O(1) per insert.
 
 ---
 
-## [07:00 – 13:00] Part 2 — Collision Resolution
+## Part 2 — Collision Resolution
 
-**[SHOW SLIDE: "Collision Resolution: Chaining and Open Addressing"]**
-
-"**What is a collision?**
+**What is a collision?**
 
 A collision occurs when two different keys hash to the same index. For example:
 
@@ -100,8 +88,6 @@ hash('grape') % 8 == 3   # same bucket!
 ```
 
 There are two main strategies to handle collisions.
-
-[PAUSE]
 
 ### Strategy 1: Chaining
 
@@ -132,11 +118,9 @@ class HashTableChaining:
         return None
 ```
 
-**[DEMO: `put('apple', 1)`, `put('grape', 2)` — both land in bucket 3, show list `[['apple',1],['grape',2]]`]**
+**,['grape',2]]`]**
 
 With chaining, the worst case is O(n) — if all n keys hash to the same bucket. But with a good hash function and load factor ≤ 0.7, the average chain length is a small constant, giving O(1) average.
-
-[PAUSE]
 
 ### Strategy 2: Open Addressing (Linear Probing)
 
@@ -171,19 +155,15 @@ class HashTableLinearProbe:
 
 **Clustering problem:** consecutive occupied slots form clusters, making probes longer. Quadratic probing `(h + i²) % size` reduces clustering. Python's dict uses a more sophisticated pseudorandom probing scheme.
 
-[PAUSE]
-
 **Which does Python use?**
 
-CPython's `dict` uses open addressing with a perturbation-based probing sequence (not simple linear probing). The load factor threshold is 2/3. When it exceeds this, the table is doubled and all keys are rehashed."
+CPython's `dict` uses open addressing with a perturbation-based probing sequence (not simple linear probing). The load factor threshold is 2/3. When it exceeds this, the table is doubled and all keys are rehashed.
 
 ---
 
-## [13:00 – 18:00] Part 3 — Key Interview Patterns
+## Part 3 — Key Interview Patterns
 
-**[SHOW SLIDE: "Hash Map Interview Patterns"]**
-
-"**Pattern 1: Two Sum (LeetCode #1)**
+**Pattern 1: Two Sum (LeetCode #1)**
 
 Given a list of integers and a target, return the indices of two numbers that add to the target.
 
@@ -202,11 +182,9 @@ def two_sum(nums, target):
     return []
 ```
 
-**[DEMO: `two_sum([2, 7, 11, 15], 9)` — trace: seen={}, num=2, comp=7 not seen → seen={2:0}; num=7, comp=2 in seen → return [0,1]]**
+**, 9)` — trace: seen={}, num=2, comp=7 not seen → seen={2:0}; num=7, comp=2 in seen → return [0,1]]**
 
 The key insight: `complement in seen` is O(1) for a dict. This reduces the problem from O(n²) to O(n).
-
-[PAUSE]
 
 ### Pattern 2: Contains Duplicate (LeetCode #217)
 
@@ -231,8 +209,6 @@ def contains_duplicate(nums):
 
 The set membership test `num in seen` is O(1) average.
 
-[PAUSE]
-
 ### Pattern 3: Group Anagrams (LeetCode #49)
 
 Given a list of strings, group all anagrams together. Two words are anagrams if they contain the same characters with the same frequencies.
@@ -250,11 +226,9 @@ def group_anagrams(strs):
     return list(groups.values())
 ```
 
-**[DEMO: `['eat','tea','tan','ate','nat','bat']` → `{('a','e','t'): ['eat','tea','ate'], ('a','n','t'): ['tan','nat'], ('a','b','t'): ['bat']}`]**
+**` → `{('a','e','t'): ['eat','tea','ate'], ('a','n','t'): ['tan','nat'], ('a','b','t'): ['bat']}`]**
 
 Time: O(n · k log k) where n is the number of strings and k is the maximum string length. The sort dominates.
-
-[PAUSE]
 
 ### Pattern 4: Frequency Counting with `Counter`
 
@@ -282,11 +256,9 @@ def is_anagram(s, t):
 
 ---
 
-## [18:00 – 22:00] Part 4 — `defaultdict`, `set`, and Complexity
+## Part 4 — `defaultdict`, `set`, and Complexity
 
-**[SHOW SLIDE: "Python Hash Tools and Complexity"]**
-
-"`collections.defaultdict` avoids KeyError by providing a default factory for missing keys:
+`collections.defaultdict` avoids KeyError by providing a default factory for missing keys:
 
 ```python
 from collections import defaultdict
@@ -307,8 +279,6 @@ for ch in 'aabbccc':
 print(freq)   # defaultdict(<class 'int'>, {'a': 2, 'b': 2, 'c': 3})
 ```
 
-[PAUSE]
-
 **`set` operations — all O(1) average:**
 
 ```python
@@ -320,8 +290,6 @@ s.discard(99)        # O(1) — no error if absent
 ```
 
 Set intersection, union, difference: O(min(len(s1), len(s2))), O(len(s1) + len(s2)), O(len(s1)).
-
-[PAUSE]
 
 **Complexity Summary:**
 
@@ -337,7 +305,7 @@ sorted key hash    O(k log k) —
 
 The worst case O(n) occurs with a pathological hash function that puts all keys in one bucket. With Python's built-in hash, this is rare enough to ignore for interviews. When someone asks for average complexity, say O(1) for individual hash map operations.
 
-The Module 08 lab has you implement chaining and linear probing from scratch, practice Two Sum, Group Anagrams, and frequency counting with Counter and defaultdict. Good luck."
+The Module 08 lab has you implement chaining and linear probing from scratch, practice Two Sum, Group Anagrams, and frequency counting with Counter and defaultdict. Good luck.
 
 ---
 

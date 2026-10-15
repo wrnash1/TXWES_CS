@@ -175,7 +175,7 @@ For each stakeholder group, assess:
 
 ### Task 3.2: Apply the ADKAR Model
 
-The Crestwood IT Administrator recently overheard a group of front desk staff saying: "We went to the training. The new system looks really different, and honestly we're not sure we can use it during a busy check-in rush."
+The Crestwood IT Administrator recently overheard a group of front desk staff saying: "We went to the training. The new system looks really different, and honestly we're not sure we can use it during a busy check-in rush.
 
 Using the ADKAR model, diagnose this situation:
 

@@ -96,7 +96,7 @@ D. Azure App Service application settings
 **Distractor Analysis:**
 
 - **A (Azure Storage):** Azure Storage can store files securely but does not provide a managed secrets API with fine-grained access control, audit logging, HSM key support, or managed identity authentication for secret retrieval. Incorrect.
-- **B (Azure Key Vault) — CORRECT:** Azure Key Vault stores secrets, keys, and certificates. It provides fine-grained RBAC access control, complete audit logging, managed identity integration (applications authenticate with no stored password), and HSM-backed key storage. This is the correct answer for "store credentials securely, no hardcoded secrets."
+- **B (Azure Key Vault) — CORRECT:** Azure Key Vault stores secrets, keys, and certificates. It provides fine-grained RBAC access control, complete audit logging, managed identity integration (applications authenticate with no stored password), and HSM-backed key storage. This is the correct answer for "store credentials securely, no hardcoded secrets.
 - **C (Entra ID application registration secrets):** Application registration client secrets are used for app-to-app authentication (OAuth 2.0 flows). They do not serve as a general-purpose secret store for database connection strings or TLS certificates. Incorrect.
 - **D (App Service application settings):** App Service application settings store configuration values but are not encrypted at the Key Vault level, do not support certificate storage, provide less audit logging, and expose secrets to anyone with App Service management access. Incorrect.
 
@@ -141,7 +141,7 @@ D. Use Azure Blueprints to deploy the policy across all subscriptions simultaneo
 
 **Distractor Analysis:**
 
-- **A (Assign to each subscription individually):** This works but requires three separate assignments. If a fourth subscription is added, the team must assign the policy again manually. This does not scale and is error-prone. Not the best answer for "apply once."
+- **A (Assign to each subscription individually):** This works but requires three separate assignments. If a fourth subscription is added, the team must assign the policy again manually. This does not scale and is error-prone. Not the best answer for "apply once.
 - **B (Management Groups) — CORRECT:** Management Groups allow organizing subscriptions into a hierarchy. Assigning a policy at the Management Group level automatically applies it to all subscriptions within that group — current and future. This is the correct, scalable governance pattern.
 - **C (Entra ID group):** Azure Policy is assigned to scopes (management groups, subscriptions, resource groups) — not to Entra ID groups or users. Policy assignment is a governance action, not an identity action. Incorrect.
 - **D (Azure Blueprints):** Blueprints can deploy policies across subscriptions but are typically used for initial environment setup. Management Groups with Policy assignment is the standard ongoing compliance pattern. Also, Blueprints is being deprecated. Incorrect.
@@ -366,7 +366,7 @@ A company has a Management Group hierarchy: Root Management Group → "CORP" Man
   - *Why B is correct:* Azure Policy assignments at a Management Group scope are inherited by all child management groups, subscriptions, resource groups, and resources within the hierarchy. A Deny effect policy assigned at the CORP Management Group applies to the Production subscription (which is a child of CORP), and the resource creation attempt will be blocked with an error.
   - *Why A is incorrect:* This is factually incorrect — Management Group policy assignments do cascade down to child subscriptions. That is one of the primary reasons for using Management Groups.
   - *Why C is incorrect:* Deny effect blocks the operation entirely. It does not issue a warning and proceed. Warning behavior is characteristic of Audit effect, not Deny.
-  - *Why D is incorrect:* Management Groups do not have their own resource groups. They are organizational containers for subscriptions. Policy assigned at a Management Group level applies to all resources within all subscriptions in that group, not to a special "Management Group resource group."
+  - *Why D is incorrect:* Management Groups do not have their own resource groups. They are organizational containers for subscriptions. Policy assigned at a Management Group level applies to all resources within all subscriptions in that group, not to a special "Management Group resource group.
 
 ---
 

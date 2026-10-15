@@ -70,7 +70,7 @@ console.log('C');
 
 **Distractor Analysis:**
 
-- Why A is incorrect: A 0ms delay does not mean synchronous execution — it means "run as soon as the call stack is empty."
+- Why A is incorrect: A 0ms delay does not mean synchronous execution — it means "run as soon as the call stack is empty.
 - Why B is correct: The event loop moves callbacks only after the call stack is empty — synchronous code always runs first.
 - Why C is incorrect: `console.log` is a synchronous call that executes immediately in order.
 - Why D is incorrect: Sequential statements execute top-to-bottom, not in reverse.

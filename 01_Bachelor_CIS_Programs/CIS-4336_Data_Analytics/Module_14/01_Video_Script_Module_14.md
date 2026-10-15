@@ -28,17 +28,17 @@
 
 ---
 
-### [00:00 – 02:00] Introduction
+### Introduction
 
 **Visual:** Instructor on camera with title card: **Machine Learning for Data Analysts**.
 
-**Audio:** "Welcome to Module 14. Machine learning is one of the most discussed topics in data, and it is also one of the most misunderstood. This module is not about becoming a machine learning engineer. It is about understanding enough ML to be a better data analyst — to know what questions ML can and cannot answer, how to prepare data for a model, and how to evaluate whether a model is working. The CompTIA Data+ exam tests these conceptual foundations, and they are what employers expect analysts to know. Let's start from the top."
+**Audio:** "Welcome to Module 14. Machine learning is one of the most discussed topics in data, and it is also one of the most misunderstood. This module is not about becoming a machine learning engineer. It is about understanding enough ML to be a better data analyst — to know what questions ML can and cannot answer, how to prepare data for a model, and how to evaluate whether a model is working. The CompTIA Data+ exam tests these conceptual foundations, and they are what employers expect analysts to know. Let's start from the top.
 
 **Study Link:** [Google Machine Learning Crash Course — free](https://developers.google.com/machine-learning/crash-course)
 
 ---
 
-### [02:00 – 06:00] Supervised vs. Unsupervised Learning
+### Supervised vs. Unsupervised Learning
 
 **Visual:** Two-column diagram: left column shows supervised learning with labeled examples flowing into a model; right column shows unsupervised learning with unlabeled data flowing into a clustering algorithm.
 
@@ -50,11 +50,11 @@
 
 **Unsupervised learning** means the data has no labels. The algorithm finds structure in the data on its own. The most common form is **clustering** — grouping similar records together without being told what the groups are. Customer segmentation is a classic example: you give the algorithm purchase history, and it discovers that customers naturally group into budget shoppers, premium buyers, and seasonal purchasers. You did not define those groups. The algorithm found them.
 
-A third category is **semi-supervised learning**, which uses a small amount of labeled data and a large amount of unlabeled data. For the Data+ exam, focus on supervised and unsupervised — these are the two categories tested."
+A third category is **semi-supervised learning**, which uses a small amount of labeled data and a large amount of unlabeled data. For the Data+ exam, focus on supervised and unsupervised — these are the two categories tested.
 
 ---
 
-### [06:00 – 09:30] scikit-learn Basics
+### scikit-learn Basics
 
 **Visual:** Jupyter notebook showing a five-step machine learning workflow: import → load data → split → train → evaluate.
 
@@ -69,11 +69,11 @@ Two — `predict(X_test)` — generates predictions for new data.
 Three — `score(X_test, y_test)` — returns the default evaluation metric (accuracy for classifiers, R² for regressors).
 Four — `predict_proba(X_test)` — for classifiers, returns the probability of each class rather than just the class label.
 
-This uniform API means switching from a decision tree to a random forest to logistic regression changes only one line of code — the class you instantiate. Everything else stays the same. That is by design."
+This uniform API means switching from a decision tree to a random forest to logistic regression changes only one line of code — the class you instantiate. Everything else stays the same. That is by design.
 
 ---
 
-### [09:30 – 13:00] Feature Engineering
+### Feature Engineering
 
 **Visual:** A before-and-after table: raw data on the left, engineered feature set on the right.
 
@@ -93,15 +93,15 @@ Common feature engineering techniques:
 
 **Scaling** — StandardScaler subtracts the mean and divides by standard deviation; MinMaxScaler rescales to a 0–1 range. Many algorithms — logistic regression, SVM, KNN — require scaled features.
 
-A common mistake: applying scaling to the entire dataset before splitting into train and test sets. This causes **data leakage** — the test set statistics contaminate the training fit. Always split first, then fit the scaler on training data only."
+A common mistake: applying scaling to the entire dataset before splitting into train and test sets. This causes **data leakage** — the test set statistics contaminate the training fit. Always split first, then fit the scaler on training data only.
 
 ---
 
-### [13:00 – 16:30] Train/Test Split and Model Selection
+### Train/Test Split and Model Selection
 
 **Visual:** Diagram showing a dataset being split: 80% training set, 20% test set, with an arrow from training set to model and from test set to evaluation.
 
-**Alt-text:** A horizontal bar representing the full dataset divided by a vertical line at the 80% mark. Left segment labeled "Training set — model learns here." Right segment labeled "Test set — model never sees this during training."
+**Alt-text:** A horizontal bar representing the full dataset divided by a vertical line at the 80% mark. Left segment labeled "Training set — model learns here." Right segment labeled "Test set — model never sees this during training.
 
 **Audio:** "The train/test split is the foundation of honest model evaluation. If you train a model on all your data and evaluate it on the same data, you are measuring memorization, not generalization. The model will appear to perform extremely well but will fail on new data.
 
@@ -125,11 +125,11 @@ For small datasets or when you want a more reliable estimate, use **cross-valida
 * How interpretable does the model need to be?
 * How long can training take?
 
-For the Data+ exam, know that logistic regression is for binary classification, linear regression is for numeric prediction, decision trees are interpretable but prone to overfitting, and random forests reduce overfitting by averaging many trees."
+For the Data+ exam, know that logistic regression is for binary classification, linear regression is for numeric prediction, decision trees are interpretable but prone to overfitting, and random forests reduce overfitting by averaging many trees.
 
 ---
 
-### [16:30 – 20:00] Overfitting vs. Underfitting
+### Overfitting vs. Underfitting
 
 **Visual:** Three curves on one chart: perfect fit, overfit, and underfit, showing training error and test error for each.
 
@@ -143,17 +143,17 @@ For the Data+ exam, know that logistic regression is for binary classification, 
 
 The diagnostic tool is comparing training accuracy to test accuracy. If training accuracy is 98% and test accuracy is 61%, the model is overfit. If both are 64%, the model is underfit.
 
-For the Data+ exam, be able to define overfitting and underfitting, identify which failure mode a described scenario represents, and name at least two solutions for each."
+For the Data+ exam, be able to define overfitting and underfitting, identify which failure mode a described scenario represents, and name at least two solutions for each.
 
 ---
 
-### [20:00 – 24:00] Exam Connection and Wrap-Up
+### Exam Connection and Wrap-Up
 
 **Visual:** Data+ domain map with Domain 3 — Data Analysis — highlighted, with ML concepts listed.
 
 **Audio:** "Machine learning concepts appear in Domain 3 of the Data+ exam — Data Analysis and Statistics. The exam does not ask you to write or debug ML code. It asks conceptual questions: What is the difference between supervised and unsupervised learning? What does overfitting look like in a training-versus-test-accuracy comparison? What is the purpose of a train-test split? What is feature engineering?
 
-This week's lab has you walking through a complete scikit-learn classification pipeline in a Jupyter notebook. Even if you have never written ML code before, the lab is structured step by step and the dataset is intentionally clean. Focus on understanding each step rather than memorizing syntax. I'll see you there."
+This week's lab has you walking through a complete scikit-learn classification pipeline in a Jupyter notebook. Even if you have never written ML code before, the lab is structured step by step and the dataset is intentionally clean. Focus on understanding each step rather than memorizing syntax. I'll see you there.
 
 ---
 

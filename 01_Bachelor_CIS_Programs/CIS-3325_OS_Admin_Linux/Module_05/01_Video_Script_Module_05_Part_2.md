@@ -290,7 +290,7 @@ MIN  HOUR  DAY  MONTH  DOW  COMMAND
 - DAY: 1–31
 - MONTH: 1–12
 - DOW: 0–6 (Sunday=0)
-- `*` means "every value"
+- `*` means "every value
 
 ### On-Screen Demo
 

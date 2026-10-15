@@ -19,7 +19,7 @@ Correct Answer: B) Finish-to-Start is the most common scheduling linkage; the pr
 
 Distractor Analysis:
 
-- *Why B is correct:* FS is the default dependency type in most project schedules. Example: "Testing cannot start until Development finishes."
+- *Why B is correct:* FS is the default dependency type in most project schedules. Example: "Testing cannot start until Development finishes.
 - *Why A is incorrect:* Start-to-Start means B cannot start until A starts — both begin around the same time, but B cannot initiate before A does.
 - *Why C is incorrect:* Finish-to-Finish means B cannot finish until A finishes — both may run concurrently but B must wait for A to complete before B can complete.
 - *Why D is incorrect:* Start-to-Finish (the rarest type) means B cannot finish until A starts — almost never used in practice.

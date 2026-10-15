@@ -58,7 +58,7 @@ Many-to-Many: implemented using a junction object with two master-detail relatio
 
 **Custom vs. Standard Fields:** custom fields have the `__c` suffix in their API name. Standard fields are provided by Salesforce and cannot be deleted (though they can often be hidden from page layouts).
 
-**Record Types:** allow different page layouts and picklist values for different categories of records within the same object. For example, an Opportunity with record type "Enterprise" might have different required fields and a different page layout than one with record type "SMB."
+**Record Types:** allow different page layouts and picklist values for different categories of records within the same object. For example, an Opportunity with record type "Enterprise" might have different required fields and a different page layout than one with record type "SMB.
 
 **Page Layouts vs. FLS:** page layouts control which fields appear on the record page and their order. Field-Level Security controls whether a user can see a field at all. FLS supersedes the page layout — a field on the layout that is hidden by FLS will not appear.
 
@@ -291,7 +291,7 @@ Strong capstone submissions demonstrate: correct application of technical concep
 
 **Show trade-off awareness.** Every recommendation has a downside. Acknowledging it — "This approach provides the fastest time-to-value but creates technical debt that will need to be addressed in Phase 2" — demonstrates professional judgment.
 
-**Use the terminology.** If the question is about SAP security, use "authorization object," "PFCG," and "composite role" — not generic terms like "user settings."
+**Use the terminology.** If the question is about SAP security, use "authorization object," "PFCG," and "composite role" — not generic terms like "user settings.
 
 **Structure your response.** Use headings for each topic area. Graders reviewing long submissions appreciate clear organization.
 
@@ -392,8 +392,6 @@ This glossary consolidates the most exam-critical terms from all modules.
 ---
 
 *Document prepared for CIS-4320 instructional use. Texas Wesleyan University. Proprietary and Confidential.*
-
-
 
 ---
 

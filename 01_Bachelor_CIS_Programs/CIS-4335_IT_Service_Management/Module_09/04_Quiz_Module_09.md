@@ -105,7 +105,7 @@ problem management?
 
 ### Question 4
 
-During a 5 Whys analysis, an IT team asks: "Why did the server run out of disk space?"
+During a 5 Whys analysis, an IT team asks: "Why did the server run out of disk space?
 and answers "Because log files were never purged." They then ask why log files were never
 purged and discover the automated cleanup job was disabled during a maintenance window
 six months ago and was never re-enabled.

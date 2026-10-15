@@ -113,4 +113,4 @@ Your hybrid approach is exactly right. I would add that the catalog's filtered r
 
 ## Professor Nash Note
 
-Strong responses go beyond restating the problem. They explain the underlying mechanism — why React behaves the way it does — and generalize to similar situations. For Scenario A, the strongest posts will mention the functional updater form and at least one array pattern beyond `push`. For Scenario B, the strongest posts will handle both the missing dependency and the unmount cleanup. For Scenario C, the best posts will give a concrete architectural recommendation with clear reasoning rather than saying "it depends."
+Strong responses go beyond restating the problem. They explain the underlying mechanism — why React behaves the way it does — and generalize to similar situations. For Scenario A, the strongest posts will mention the functional updater form and at least one array pattern beyond `push`. For Scenario B, the strongest posts will handle both the missing dependency and the unmount cleanup. For Scenario C, the best posts will give a concrete architectural recommendation with clear reasoning rather than saying "it depends.

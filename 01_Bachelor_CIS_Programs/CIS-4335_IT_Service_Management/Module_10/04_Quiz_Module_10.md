@@ -151,7 +151,7 @@ According to ITIL 4 best practice, what should the team do?
   undermines the purpose of service level reporting.
 - D is incorrect. Customers have the right to know when service commitments are not met.
   Concealing breach information from customers is contrary to every ITIL 4 guiding
-  principle, especially "Be transparent."
+  principle, especially "Be transparent.
 
 ---
 

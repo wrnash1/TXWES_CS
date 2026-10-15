@@ -224,7 +224,7 @@ Most organizations measure at Levels 1 and 2 only. A mature program measures at 
 
 ### 4.3 Reporting to Leadership
 
-Security awareness metrics should be presented to leadership in business terms, not technical statistics. Instead of "our phishing click rate decreased from 18% to 9%," present it as "we cut the number of employees vulnerable to phishing attacks in half over 12 months, reducing the likelihood of a credential-based breach by an estimated 50%."
+Security awareness metrics should be presented to leadership in business terms, not technical statistics. Instead of "our phishing click rate decreased from 18% to 9%," present it as "we cut the number of employees vulnerable to phishing attacks in half over 12 months, reducing the likelihood of a credential-based breach by an estimated 50%.
 
 ---
 
@@ -472,8 +472,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

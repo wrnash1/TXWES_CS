@@ -89,7 +89,7 @@ Using the information above, create a system boundary diagram for the Sparrow Ri
 
 Your diagram must include:
 
-- One central process bubble labeled "Course Registration System"
+- One central process bubble labeled "Course Registration System
 - A dashed or solid boundary rectangle enclosing the process bubble
 - All external entities as labeled rectangles outside the boundary
 - All data flows as labeled arrows showing direction (into or out of the system)

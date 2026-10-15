@@ -336,7 +336,7 @@ Savings Plans are more flexible than Reserved Instances. If the scenario involve
 Any question that asks about Auto Scaling configuration should reference launch templates. If a distractor answer offers "launch configuration," it is likely wrong for any scenario involving modern EC2 features.
 
 **Exam Tip 5 — Lifecycle hooks for pre-launch and pre-termination automation:**
-If a scenario describes running a script before an instance accepts traffic or before an instance is destroyed, the answer involves lifecycle hooks. Keywords: "before termination," "before InService," "drain connections," "upload logs before shutdown."
+If a scenario describes running a script before an instance accepts traffic or before an instance is destroyed, the answer involves lifecycle hooks. Keywords: "before termination," "before InService," "drain connections," "upload logs before shutdown.
 
 **Exam Tip 6 — ELB health checks for web tiers:**
 For ASGs behind a load balancer, always enable ELB health checks in addition to EC2 health checks. EC2 health checks alone cannot detect application-level failures.
@@ -567,8 +567,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

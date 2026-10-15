@@ -8,7 +8,7 @@
 
 ## Background
 
-Dynamic programming is where algorithm design gets interesting. The technique is not about memorizing a formula — it is about recognizing that a problem has overlapping subproblems and optimal substructure, then defining a clean subproblem, writing the recurrence, establishing base cases, and filling the table. The hard part is always the recurrence: what does `dp[i]` mean, and how does `dp[i]` depend on smaller subproblems? Getting that definition right is 90% of the work. Students who can articulate the subproblem definition before touching code are ready for DP interview questions. Students who start coding immediately — copying a formula they half-remember — will get stuck when the interviewer asks "why does that recurrence work?"
+Dynamic programming is where algorithm design gets interesting. The technique is not about memorizing a formula — it is about recognizing that a problem has overlapping subproblems and optimal substructure, then defining a clean subproblem, writing the recurrence, establishing base cases, and filling the table. The hard part is always the recurrence: what does `dp[i]` mean, and how does `dp[i]` depend on smaller subproblems? Getting that definition right is 90% of the work. Students who can articulate the subproblem definition before touching code are ready for DP interview questions. Students who start coding immediately — copying a formula they half-remember — will get stuck when the interviewer asks "why does that recurrence work?
 
 ---
 

@@ -391,11 +391,11 @@ All Data Box devices use AES-256-bit encryption. The device is wiped after Micro
 
 Scenario keywords that indicate Data Box:
 
-- "Terabytes or petabytes of data to migrate"
-- "Limited bandwidth"
-- "Too slow to upload over the internet"
-- "Offline data transfer"
-- "Physical device"
+- "Terabytes or petabytes of data to migrate
+- "Limited bandwidth
+- "Too slow to upload over the internet
+- "Offline data transfer
+- "Physical device
 
 ---
 
@@ -622,8 +622,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

@@ -28,24 +28,15 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: "Module 09 Part 2 — NTP, NAT, and Network Services Wrap-Up"]
-
 ---
 
 ### Section 1: Part 2 Introduction
-
-[00:00 – 00:45]
-
-[SHOW SLIDE: Professor Nash on camera]
 
 Welcome back to Module 09. In Part 1 we covered DNS record types, the resolution hierarchy, and the DHCP DORA process. Now in Part 2 we add NTP for time synchronization and NAT for address translation. NTP and NAT both appear frequently on the Network+ exam, and NAT in particular has three subtypes you need to distinguish.
 
 ---
 
 ### Section 2: NTP — Network Time Protocol
-
-[00:45 – 04:00]
-
 <div style="text-align: center; margin: 24px 0;">
 <svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
   <rect width="100%" height="45" fill="#1b365d"/>
@@ -137,8 +128,6 @@ Welcome back to Module 09. In Part 1 we covered DNS record types, the resolution
 </svg>
 </div>
 
-[SHOW DIAGRAM: An NTP hierarchy showing three levels. Level 0 (Stratum 0) shows a GPS satellite and atomic clock labeled "Reference Clock — not on the network." Level 1 (Stratum 1) shows two NTP servers labeled "Primary NTP Servers — synchronized directly to Stratum 0." Level 2 (Stratum 2) shows four NTP servers. Level 3 (Stratum 3) shows eight client devices labeled "End devices and infrastructure."]
-
 [Alt-text: A four-level NTP stratum diagram. Stratum 0 shows a GPS satellite and atomic clock icon labeled Reference Clock. Stratum 1 shows two server icons labeled Primary NTP Servers synchronized directly to Stratum 0. Stratum 2 shows four server icons labeled Secondary NTP Servers synchronized to Stratum 1. Stratum 3 shows eight device icons including workstations and network switches. Downward arrows between each stratum represent time synchronization flowing down the hierarchy.]
 
 NTP — Network Time Protocol — synchronizes clocks across all devices in a network. Accurate time is not just a convenience — it is a security requirement.
@@ -161,10 +150,6 @@ NTP uses UDP port 123. Stratum 16 indicates unsynchronized.
 
 ### Section 3: NAT — Network Address Translation
 
-[04:00 – 09:00]
-
-[SHOW DIAGRAM: Two side-by-side diagrams. Left: Static NAT — one private IP maps permanently to one public IP. Right: PAT (NAT Overload) — multiple private IPs share a single public IP, differentiated by unique source port numbers.]
-
 [Alt-text: Two NAT diagrams. Left diagram labeled Static NAT shows one private IP 192.168.1.10 mapping through a NAT router to one public IP 203.0.113.10, labeled One-to-one permanent mapping. Right diagram labeled PAT / NAT Overload shows three private IP addresses (192.168.1.10, 192.168.1.11, 192.168.1.12) all translating through a NAT router to the single public IP 203.0.113.1 with unique translated source port numbers. Labeled Many-to-one mapping using unique port numbers.]
 
 NAT — Network Address Translation — modifies IP address information in packet headers as traffic passes through a router, allowing private-addressed devices to use public IP addresses for internet access.
@@ -186,10 +171,6 @@ Inside global — The public IP of an internal host as seen from outside after t
 ---
 
 ### Section 4: IPAM and DNS/DHCP Integration
-
-[09:00 – 11:30]
-
-[SHOW DIAGRAM: A three-box flow diagram showing DHCP Server, IPAM (IP Address Management), and DNS Server with bidirectional arrows labeled Dynamic DNS Updates.]
 
 [Alt-text: A three-box horizontal flow diagram. Left box labeled DHCP Server. Center box labeled IPAM with text: Centralized tracking of IP assignments and scope utilization. Right box labeled DNS Server. Bidirectional arrows between DHCP and IPAM and between IPAM and DNS are labeled Dynamic DNS Updates.]
 

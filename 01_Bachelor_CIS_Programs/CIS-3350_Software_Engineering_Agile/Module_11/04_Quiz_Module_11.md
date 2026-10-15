@@ -166,10 +166,10 @@ Distractor Analysis:
 
 A Scrum team wants to refactor a God Object class. The Product Owner asks: "Why should we spend Sprint capacity on code cleanup instead of new features?" What is the most effective Scrum Master response?
 
-- A) "The Scrum Guide requires a Definition of Done that prohibits God Objects, so we must fix it."
-- B) "Refactoring this class will reduce the coupling and risk that currently causes every new feature to break existing functionality — directly increasing our Sprint velocity and ability to deliver features faster."
-- C) "Technical debt is the developer's responsibility to fix in their own time outside of Sprints."
-- D) "We should not include refactoring in Sprints — it should be done during Sprint 0."
+- A) "The Scrum Guide requires a Definition of Done that prohibits God Objects, so we must fix it.
+- B) "Refactoring this class will reduce the coupling and risk that currently causes every new feature to break existing functionality — directly increasing our Sprint velocity and ability to deliver features faster.
+- C) "Technical debt is the developer's responsibility to fix in their own time outside of Sprints.
+- D) "We should not include refactoring in Sprints — it should be done during Sprint 0.
 
 Correct Answer: B — The Scrum Master's role includes helping the Product Owner understand the value of technical work. Connecting the refactoring to business outcomes — faster velocity, fewer bugs, reduced risk per feature — frames it in terms the Product Owner cares about.
 

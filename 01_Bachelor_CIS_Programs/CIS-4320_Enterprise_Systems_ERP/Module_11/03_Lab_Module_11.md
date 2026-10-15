@@ -14,7 +14,7 @@ This lab develops your ability to analyze Bill of Materials structures, trace MR
 
 **Estimated Time:** 90 minutes
 
-**Submission:** Upload to Canvas under "Lab 11 -- SAP Production Planning."
+**Submission:** Upload to Canvas under "Lab 11 -- SAP Production Planning.
 
 ---
 
@@ -272,7 +272,7 @@ Trace the PP-to-MM-to-FI integration for the PAC FG-AILERON-200 production run. 
 
 1. Compile all responses into a single document.
 2. Name your file: `Lab11_LastName_FirstName.pdf`
-3. Upload to Canvas under "Lab 11 -- SAP Production Planning."
+3. Upload to Canvas under "Lab 11 -- SAP Production Planning.
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
 
 ---

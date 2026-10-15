@@ -26,30 +26,22 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 04 | Recursion & Backtracking | CIS-2315"]**
+Modules 01 through 03 gave you the foundational data structures. This module introduces recursion — the technique that powers most tree traversal, divide-and-conquer, and backtracking algorithms you will encounter in interviews. Recursion is hard at first because it requires trusting a function you are still writing. Once that trust clicks, it becomes one of the most powerful tools in your kit.
 
-"Modules 01 through 03 gave you the foundational data structures. This module introduces recursion — the technique that powers most tree traversal, divide-and-conquer, and backtracking algorithms you will encounter in interviews. Recursion is hard at first because it requires trusting a function you are still writing. Once that trust clicks, it becomes one of the most powerful tools in your kit.
-
-By the end of this module, you will be able to write recursive functions correctly, analyze their complexity, apply memoization to remove redundant work, and implement the backtracking template to solve combinatorial problems like Subsets, Permutations, and Generate Parentheses."
+By the end of this module, you will be able to write recursive functions correctly, analyze their complexity, apply memoization to remove redundant work, and implement the backtracking template to solve combinatorial problems like Subsets, Permutations, and Generate Parentheses.
 
 ---
 
-## [01:30 – 06:30] Part 1 — Recursion Fundamentals
+## Part 1 — Recursion Fundamentals
 
-**[SHOW SLIDE: "What Is Recursion?"]**
-
-"A recursive function is a function that calls itself. That sounds circular — and it is — unless two conditions hold:
+A recursive function is a function that calls itself. That sounds circular — and it is — unless two conditions hold:
 
 1. There is a **base case** that terminates the recursion.
 2. Every recursive call makes progress toward the base case.
 
 Without a base case, the function calls itself forever until Python raises `RecursionError: maximum recursion depth exceeded`. Without progress, you hit the same condition forever.
-
-[PAUSE]
-
-**[DEMO — Factorial]**
 
 ```python
 def factorial(n):
@@ -75,11 +67,7 @@ factorial(4)
   → return 4 * 6 = 24
 ```
 
-**[SHOW DIAGRAM: call stack growing down, then unwinding]**
-
 Each function call creates a new stack frame containing the local variable `n`. Python pushes a new frame when `factorial` calls itself, and pops the frame when the call returns. The stack grows 5 frames deep for `factorial(4)`.
-
-[PAUSE]
 
 **The three questions to ask when writing any recursive function:**
 
@@ -87,15 +75,13 @@ Each function call creates a new stack frame containing the local variable `n`. 
 2. Does each recursive call move closer to the base case?
 3. Assuming the recursive call returns the correct answer for the smaller input, does my expression assemble the correct answer for the current input?
 
-If you can answer all three, the recursion is correct."
+If you can answer all three, the recursion is correct.
 
 ---
 
-## [06:30 – 10:30] Part 2 — Memoization
+## Part 2 — Memoization
 
-**[SHOW SLIDE: "Naive Fibonacci and Exponential Blowup"]**
-
-"Fibonacci is the classic example of why naive recursion is sometimes disastrously slow.
+Fibonacci is the classic example of why naive recursion is sometimes disastrously slow.
 
 ```python
 def fib(n):
@@ -103,8 +89,6 @@ def fib(n):
         return n
     return fib(n - 1) + fib(n - 2)
 ```
-
-**[SHOW DIAGRAM: call tree for fib(5)]**
 
 ```text
 fib(5)
@@ -122,8 +106,6 @@ fib(5)
 
 `fib(3)` is called twice. `fib(2)` is called three times. For `fib(50)`, the call tree has over a trillion nodes. Time complexity: O(2ⁿ).
 
-[PAUSE]
-
 **Memoization** stores previously computed results in a dictionary so each subproblem is solved only once.
 
 ```python
@@ -138,8 +120,6 @@ def fib(n, memo={}):
 
 With memoization, the call tree becomes a straight chain — each value from 0 to n is computed exactly once. Time: O(n). Space: O(n) for the memo dictionary.
 
-[PAUSE]
-
 Python also provides `functools.lru_cache` as a decorator that handles memoization automatically:
 
 ```python
@@ -152,15 +132,13 @@ def fib(n):
     return fib(n - 1) + fib(n - 2)
 ```
 
-`@lru_cache` caches by input argument. It is O(n) time and O(n) space — identical to the manual memo approach."
+`@lru_cache` caches by input argument. It is O(n) time and O(n) space — identical to the manual memo approach.
 
 ---
 
-## [10:30 – 16:00] Part 3 — Backtracking Template
+## Part 3 — Backtracking Template
 
-**[SHOW SLIDE: "Backtracking — Explore, Then Undo"]**
-
-"Backtracking is recursion applied to decision-making. At each step, you make a choice, recurse to explore all consequences of that choice, then undo the choice (backtrack) and try the next option. The goal is to enumerate all valid combinations, permutations, or paths in a problem.
+Backtracking is recursion applied to decision-making. At each step, you make a choice, recurse to explore all consequences of that choice, then undo the choice (backtrack) and try the next option. The goal is to enumerate all valid combinations, permutations, or paths in a problem.
 
 The template is always the same three lines:
 
@@ -169,10 +147,6 @@ choose   # add something to the current state
 recurse  # explore all consequences
 unchoose # undo the choice, restore previous state
 ```
-
-[PAUSE]
-
-**[DEMO — Subsets (LeetCode #78)]**
 
 Given a list of integers with no duplicates, return all possible subsets.
 
@@ -204,17 +178,13 @@ For `nums = [1, 2, 3]`:
 
 Final result: `[[], [1], [1,2], [1,2,3], [1,3], [2], [2,3], [3]]` — all 2³ = 8 subsets.
 
-[PAUSE]
-
-Notice the `current.pop()` after the recursive call. This is the 'unchoose' step — it restores `current` to the state it was in before this iteration, so the next loop iteration starts from the same clean state. Forgetting `pop()` is the most common backtracking bug."
+Notice the `current.pop()` after the recursive call. This is the 'unchoose' step — it restores `current` to the state it was in before this iteration, so the next loop iteration starts from the same clean state. Forgetting `pop()` is the most common backtracking bug.
 
 ---
 
-## [16:00 – 20:30] Part 4 — Permutations and Generate Parentheses
+## Part 4 — Permutations and Generate Parentheses
 
-**[SHOW SLIDE: "LeetCode #46 — Permutations"]**
-
-"Permutations require choosing every element for every position, without reuse. The approach: track which elements have been used with a `used` set or by swapping.
+Permutations require choosing every element for every position, without reuse. The approach: track which elements have been used with a `used` set or by swapping.
 
 ```python
 def permute(nums):
@@ -239,10 +209,6 @@ def permute(nums):
 
 For `[1, 2, 3]`, this generates all 3! = 6 permutations.
 
-[PAUSE]
-
-**[DEMO — Generate Parentheses (LeetCode #22)]**
-
 Given `n` pairs of parentheses, generate all valid combinations.
 
 ```python
@@ -264,15 +230,13 @@ def generate_parentheses(n):
 
 The two constraints — `open_count < n` and `close_count < open_count` — enforce validity without needing to check the result. For `n=3`: `['((()))', '(()())', '(())()', '()(())', '()()()']`.
 
-Note: this version builds a new string at each step (strings are immutable in Python), so there is no explicit `unchoose` step. The parent function's string `s` is unchanged on return."
+Note: this version builds a new string at each step (strings are immutable in Python), so there is no explicit `unchoose` step. The parent function's string `s` is unchanged on return.
 
 ---
 
-## [20:30 – 24:00] Part 5 — Complexity and Closing
+## Part 5 — Complexity and Closing
 
-**[SHOW SLIDE: "Recursion and Backtracking Complexity"]**
-
-"Analyzing the complexity of recursive and backtracking algorithms uses the tools from Module 01.
+Analyzing the complexity of recursive and backtracking algorithms uses the tools from Module 01.
 
 For simple recursion:
 
@@ -288,9 +252,7 @@ For backtracking:
 
 These exponential complexities are unavoidable when the problem requires enumerating all solutions. Backtracking is correct for these problems — pruning invalid paths (like the constraints in Generate Parentheses) reduces the constant factor but not the asymptotic class.
 
-[PAUSE]
-
-The Module 04 lab has you implement factorial, memoized Fibonacci, and the three backtracking problems: Subsets, Permutations, and Generate Parentheses. The quiz covers base cases, memoization, the backtracking template, and complexity analysis of recursive algorithms. Draw the call stack. Draw the decision tree. Good luck."
+The Module 04 lab has you implement factorial, memoized Fibonacci, and the three backtracking problems: Subsets, Permutations, and Generate Parentheses. The quiz covers base cases, memoization, the backtracking template, and complexity analysis of recursive algorithms. Draw the call stack. Draw the decision tree. Good luck.
 
 ---
 

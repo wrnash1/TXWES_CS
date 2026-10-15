@@ -63,7 +63,7 @@ Complete this table in your lab document:
 | HR | | | |
 | Purchasing | | | |
 
-**Guidance:** For the "Specific Problem" column, describe a realistic scenario — for example, "A customer calls to check if an order has shipped; the sales rep cannot see warehouse inventory and must call the warehouse manually, causing a 2-hour delay."
+**Guidance:** For the "Specific Problem" column, describe a realistic scenario — for example, "A customer calls to check if an order has shipped; the sales rep cannot see warehouse inventory and must call the warehouse manually, causing a 2-hour delay.
 
 ### A-2: Silo Diagram
 
@@ -135,7 +135,7 @@ For each numbered step below, identify the SAP module involved and the SAP docum
 
 ### C-2: Integration Justification
 
-RidgeLine's CFO is skeptical of the SAP investment, asking: "We've managed fine with spreadsheets for 15 years. Why do we need to spend $2 million on a new system?"
+RidgeLine's CFO is skeptical of the SAP investment, asking: "We've managed fine with spreadsheets for 15 years. Why do we need to spend $2 million on a new system?
 
 Write a 200-250 word response from the perspective of a consultant making the business case. Your response must address:
 
@@ -178,7 +178,7 @@ In 100-150 words, describe a real or hypothetical scenario from an industry you 
 
 1. Compile your responses into a single document (Word, PDF, or Google Doc).
 2. Name your file: `Lab01_LastName_FirstName.pdf`
-3. Upload to the Canvas assignment portal under "Lab 01 — Enterprise Systems Concepts."
+3. Upload to the Canvas assignment portal under "Lab 01 — Enterprise Systems Concepts.
 4. Deadline: See the course schedule in Canvas.
 
 Late submissions lose 10 points per day unless an extension is approved in advance by Professor Nash.

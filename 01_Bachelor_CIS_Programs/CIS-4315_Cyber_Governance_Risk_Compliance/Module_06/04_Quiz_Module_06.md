@@ -376,10 +376,10 @@ An organization uses the Capability Maturity Model Integration (CMMI) to assess 
 
 A CISO is proposing a new threat intelligence program to the CFO. The CFO asks: "What is the business justification for this investment?" Which of the following responses most effectively makes the business case?
 
-- A) "Threat intelligence is an industry best practice recommended by NIST and ISO 27001, and peer organizations have implemented similar programs."
-- B) "This program will reduce the mean time to detect relevant threats targeting our sector from an estimated 17 days to under 72 hours, protecting $4.2M in assets currently exposed to those threats."
-- C) "Our security team needs better information to do their jobs effectively, and threat intelligence provides that information."
-- D) "Without threat intelligence, we cannot achieve Level 4 maturity on our security capability assessment."
+- A) "Threat intelligence is an industry best practice recommended by NIST and ISO 27001, and peer organizations have implemented similar programs.
+- B) "This program will reduce the mean time to detect relevant threats targeting our sector from an estimated 17 days to under 72 hours, protecting $4.2M in assets currently exposed to those threats.
+- C) "Our security team needs better information to do their jobs effectively, and threat intelligence provides that information.
+- D) "Without threat intelligence, we cannot achieve Level 4 maturity on our security capability assessment.
 
 **Correct Answer:** B
 

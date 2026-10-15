@@ -28,14 +28,14 @@ Sub-questions:
 
 ---
 
-## Scenario B: User Stories Without a "Why"
+## Scenario B: User Stories Without a "Why
 
 A product owner hands the BA a backlog of 12 user stories for a new expense reporting system. The BA reviews them and notices that 7 of the 12 stories follow the format "As a finance employee, I want [feature]" — they are missing the "so that [value]" component. The product owner says: "The 'so that' part is obvious — we all know why we need expense reporting. Do we really need to write it down?" The BA also flags three stories as epics that need to be broken down before sprint planning.
 
 Sub-questions:
 
 1. Explain why the "so that [value]" component of a user story is not just a formatting requirement but a functional necessity for the development team. Give a specific example of how omitting the value statement could lead to building the wrong feature.
-2. Choose one of the two epic scenarios below and demonstrate how you would split it into at least two sprint-sized stories. Explain why each resulting story satisfies the Small and Independent INVEST criteria. Epic options: (a) "As a manager, I want to approve, reject, and audit all expense reports for my team so that I can control costs and ensure policy compliance." (b) "As an employee, I want to submit, track, and receive reimbursement for my business expenses so that I am paid back promptly."
+2. Choose one of the two epic scenarios below and demonstrate how you would split it into at least two sprint-sized stories. Explain why each resulting story satisfies the Small and Independent INVEST criteria. Epic options: (a) "As a manager, I want to approve, reject, and audit all expense reports for my team so that I can control costs and ensure policy compliance." (b) "As an employee, I want to submit, track, and receive reimbursement for my business expenses so that I am paid back promptly.
 3. The product owner has stated that the "so that" documentation is unnecessary overhead. Describe how you would respond to this professionally, referencing the BA's responsibility to ensure requirements quality.
 
 ---

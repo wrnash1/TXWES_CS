@@ -34,7 +34,7 @@ All 47 fleet vehicles use a third-party GPS tracking system. An audit reveals th
 
 All operations depend on a single ISP. An extended outage would halt customer portal access, GPS tracking, and ERP access for remote workers. ALE calculated at $215,000. Proposed mitigation: secondary ISP failover at $14,400/year. This would reduce ALE to $32,000.
 
-The CEO reviews the risk register and says: "We're a logistics company, not a bank. I think we can accept Risk A and Risk B for now and maybe look at Risk C next year when budget frees up."
+The CEO reviews the risk register and says: "We're a logistics company, not a bank. I think we can accept Risk A and Risk B for now and maybe look at Risk C next year when budget frees up.
 
 ---
 

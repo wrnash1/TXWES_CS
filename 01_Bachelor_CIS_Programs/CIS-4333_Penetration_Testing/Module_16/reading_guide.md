@@ -357,8 +357,6 @@ Review all key terms from Modules 1–15. The following are highest-frequency on
 - NIST SP 800-115 Technical Guide to Information Security Testing: https://csrc.nist.gov/publications/detail/sp/800-115/final
 - CVSS Calculator: https://www.first.org/cvss/calculator/3.1
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

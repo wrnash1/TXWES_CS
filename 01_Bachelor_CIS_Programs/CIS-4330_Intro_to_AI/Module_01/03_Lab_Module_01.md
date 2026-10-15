@@ -269,7 +269,7 @@ Upload to the Module 01 Lab Assignment in Canvas by the posted due date.
 
 ### Challenge 1: Build Your Own AI vs. ML vs. DL Taxonomy
 
-1. Find three real news headlines or product announcements from technology companies that mention "AI," "machine learning," or "deep learning."
+1. Find three real news headlines or product announcements from technology companies that mention "AI," "machine learning," or "deep learning.
 2. For each headline, classify the system described as Traditional AI, Machine Learning, or Deep Learning. Write a two-sentence justification citing specific clues in the headline text.
 3. Identify at least one headline where the term used in the headline does not match your classification (e.g., a headline says "AI" but describes a rule-based system). Explain the mismatch.
 4. Reflect: Why do you think technology companies often use "AI" as a blanket marketing term regardless of the underlying technique?

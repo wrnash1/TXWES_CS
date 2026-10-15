@@ -93,7 +93,7 @@ A BA is using a requirements workshop to elicit requirements for a new student e
 A BA is reviewing a requirement that reads: "The system should be fast and easy to use." Which quality characteristic of requirements does this statement fail, and how should it be rewritten?
 
 - A) Completeness — the requirement is missing context about which system features must be fast.
-- B) Verifiability and clarity — "fast" and "easy to use" are subjective and cannot be tested; the requirement should specify measurable criteria such as "the system shall load the patron search results page within 2 seconds for queries returning up to 500 results."
+- B) Verifiability and clarity — "fast" and "easy to use" are subjective and cannot be tested; the requirement should specify measurable criteria such as "the system shall load the patron search results page within 2 seconds for queries returning up to 500 results.
 - C) Traceability — the requirement does not reference the business goal it supports.
 - D) Feasibility — the requirement cannot be achieved within typical project budgets.
 

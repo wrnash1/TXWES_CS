@@ -1,4 +1,3 @@
-
 # Reading Guide — Module 03: Application Attacks and Software Vulnerabilities
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->

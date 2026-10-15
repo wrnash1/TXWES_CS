@@ -26,21 +26,17 @@
 
 ---
 
-## [00:00 – 01:00] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 16 | Final Exam Prep | CIS-1310"]**
+Welcome to Module 16 — the final module of CIS-1310. You have covered the full core Python language. Today we do not introduce new material. Instead, we consolidate everything you have learned across fifteen modules into a systematic review, with focused attention on the exam traps that the PCAP tests most heavily.
 
-"Welcome to Module 16 — the final module of CIS-1310. You have covered the full core Python language. Today we do not introduce new material. Instead, we consolidate everything you have learned across fifteen modules into a systematic review, with focused attention on the exam traps that the PCAP tests most heavily.
-
-By the end of this module you will have a clear map of every major topic, a list of the patterns that trick students, and a strategy for approaching the exam itself. Let us make sure every one of you walks in prepared."
+By the end of this module you will have a clear map of every major topic, a list of the patterns that trick students, and a strategy for approaching the exam itself. Let us make sure every one of you walks in prepared.
 
 ---
 
-## [01:00 – 04:00] Part 1 — Language Foundations (Modules 1–5)
+## Part 1 — Language Foundations (Modules 1–5)
 
-**[SHOW SLIDE: "Modules 1–5: Foundations"]**
-
-"**Variables, Types, and Operators (Modules 1–3)**
+**Variables, Types, and Operators (Modules 1–3)**
 
 Python is dynamically typed — variables have no declared type. The type belongs to the value. `type(x)` returns the actual type at runtime.
 
@@ -52,8 +48,6 @@ Modulo: `7 % 3` is `1`. The sign of the result matches the divisor in Python.
 
 String multiplication: `'ab' * 3` is `'ababab'`. String concatenation with `+` requires both sides to be strings — mixing with int raises `TypeError`.
 
-**[DEMO — type conversion traps]**
-
 ```python
 int('3.5')       # ValueError — int() cannot parse a decimal string
 int(float('3.5'))  # 3 — convert to float first, then int
@@ -64,8 +58,6 @@ bool(0.0)        # False
 bool('0')        # True — non-empty string is truthy
 ```
 
-[PAUSE]
-
 **Input and Comparison (Modules 3–4)**
 
 `input()` always returns a string. `int(input())` is required to get a number.
@@ -74,23 +66,19 @@ bool('0')        # True — non-empty string is truthy
 
 `and`, `or`, `not` — short-circuit evaluation. `False and anything` is `False` without evaluating `anything`. `True or anything` is `True` without evaluating `anything`.
 
-**Strings are immutable.** Every string method returns a new string — it does not modify the original. `s.strip()` on a line by itself discards the result."
+**Strings are immutable.** Every string method returns a new string — it does not modify the original. `s.strip()` on a line by itself discards the result.
 
 ---
 
-## [04:00 – 07:00] Part 2 — Control Flow and Collections (Modules 4–8)
+## Part 2 — Control Flow and Collections (Modules 4–8)
 
-**[SHOW SLIDE: "Modules 4–8: Control Flow and Data Structures"]**
-
-"**Loops (Module 5)**
+**Loops (Module 5)**
 
 `for item in sequence` — iterates items. `for i in range(n)` — produces integers 0 through n-1.
 
 `range(start, stop, step)` — stop is exclusive. `range(1, 10, 2)` produces `1, 3, 5, 7, 9` — not `10`.
 
 `break` exits the loop entirely. `continue` skips to the next iteration. `else` on a loop runs only if the loop completed without a `break`.
-
-**[DEMO — loop/else trap]**
 
 ```python
 for n in [2, 4, 6]:
@@ -116,19 +104,15 @@ Negative indexing: `lst[-1]` is the last element. Slicing: `lst[1:4]` — indexe
 
 `for item in d` iterates keys only. Use `.values()`, `.items()` for values and key-value pairs.
 
-`in` tests keys, not values: `'key' in d` checks keys."
+`in` tests keys, not values: `'key' in d` checks keys.
 
 ---
 
-## [07:00 – 10:00] Part 3 — Functions and Scope (Modules 8–9)
+## Part 3 — Functions and Scope (Modules 8–9)
 
-**[SHOW SLIDE: "Modules 8–9: Functions and Scope"]**
-
-"**Functions (Module 8)**
+**Functions (Module 8)**
 
 Default parameter values are evaluated once at definition time — not each call. Mutable defaults (like lists) are shared across all calls:
-
-**[DEMO — mutable default trap]**
 
 ```python
 def append_to(item, lst=[]):    # lst shared across all calls
@@ -153,15 +137,13 @@ Assigning to a name anywhere in a function makes it local throughout the whole f
 
 `global x` — declares `x` refers to the module-level variable. `nonlocal x` — declares `x` refers to the nearest enclosing function's variable (not global).
 
-**Recursion (Module 9)** — a function that calls itself. Always needs a base case. Default recursion limit is 1000 — exceeded raises `RecursionError`."
+**Recursion (Module 9)** — a function that calls itself. Always needs a base case. Default recursion limit is 1000 — exceeded raises `RecursionError`.
 
 ---
 
-## [10:00 – 12:00] Part 4 — Strings and Exception Handling (Modules 11–12)
+## Part 4 — Strings and Exception Handling (Modules 11–12)
 
-**[SHOW SLIDE: "Modules 11–12: Strings and Exceptions"]**
-
-"**String Methods (Module 11) — PCAP traps:**
+**String Methods (Module 11) — PCAP traps:**
 
 `.split()` with no argument splits on any whitespace and discards empty strings. `.split(' ')` splits on exactly one space — produces empty strings for runs of spaces.
 
@@ -183,15 +165,13 @@ Execution order: `try` runs → exception? `except` runs → no exception? `else
 
 Bare `raise` inside `except` re-raises the current exception with its original traceback.
 
-`except BaseException:` and bare `except:` catch `SystemExit` and `KeyboardInterrupt` — almost always wrong."
+`except BaseException:` and bare `except:` catch `SystemExit` and `KeyboardInterrupt` — almost always wrong.
 
 ---
 
-## [12:00 – 14:00] Part 5 — Modules and OOP (Modules 13–15)
+## Part 5 — Modules and OOP (Modules 13–15)
 
-**[SHOW SLIDE: "Modules 13–15: Modules and OOP"]**
-
-"**Modules (Module 13)**
+**Modules (Module 13)**
 
 Three import forms: `import math` → use `math.sqrt`. `from math import sqrt` → use `sqrt`. `import math as m` → use `m.sqrt`.
 
@@ -217,15 +197,13 @@ Method overriding: child's version is found first in the MRO. `super().method()`
 
 `isinstance(child_obj, Parent)` returns `True`. Use `isinstance()` not `type() ==` when inheritance is involved.
 
-Polymorphism: different objects respond to the same method call with their own behavior. The loop just calls the method — Python routes it to the right class."
+Polymorphism: different objects respond to the same method call with their own behavior. The loop just calls the method — Python routes it to the right class.
 
 ---
 
-## [14:00 – 17:00] Part 6 — Top Exam Traps
+## Part 6 — Top Exam Traps
 
-**[SHOW SLIDE: "The 15 Traps That Appear Most on PCAP"]**
-
-"These are the patterns that students most commonly miss. Go through each one.
+These are the patterns that students most commonly miss. Go through each one.
 
 **1. Integer division direction.** `−7 // 2` is `−4`, not `−3`. Floor toward negative infinity.
 
@@ -255,15 +233,13 @@ Polymorphism: different objects respond to the same method call with their own b
 
 **14. Forgetting `super().__init__()` causes `AttributeError` for parent attributes.**
 
-**15. `isinstance(child, Parent)` is `True`. `type(child) == Parent` is `False`.**"
+**15. `isinstance(child, Parent)` is `True`. `type(child) == Parent` is `False`.**
 
 ---
 
-## [17:00 – 18:30] Part 7 — Exam Strategy
+## Part 7 — Exam Strategy
 
-**[SHOW SLIDE: "PCAP Exam Day Strategy"]**
-
-"Final advice for exam day.
+Final advice for exam day.
 
 **Read every question twice before answering.** PCAP questions often have two plausible-looking options that differ by a single character or one line of code. Slow down.
 
@@ -277,7 +253,7 @@ Polymorphism: different objects respond to the same method call with their own b
 
 **Time management.** PCAP gives you 65 minutes for 40 questions — about 97 seconds per question. Do not spend five minutes on one question. Mark it, move on, return at the end.
 
-You have covered every topic that will appear on this exam. Trust your preparation, trace the code carefully, and you will be ready. Good luck — I will see you at certification."
+You have covered every topic that will appear on this exam. Trust your preparation, trace the code carefully, and you will be ready. Good luck — I will see you at certification.
 
 ---
 

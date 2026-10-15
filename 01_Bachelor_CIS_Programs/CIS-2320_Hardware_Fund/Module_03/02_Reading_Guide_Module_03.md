@@ -202,7 +202,7 @@ Key technician fact: if a PGA CPU is dropped or mishandled, the pins on the CPU 
 
 BGA is a packaging method in which the CPU is permanently soldered to the motherboard via tiny solder balls. There is no socket; no field replacement is possible. BGA is standard in laptops, tablets, smartphones, and embedded systems. If a BGA processor fails, the entire system board must be replaced. Reflow soldering equipment is required to rework a BGA component — this is not a technician-level repair.
 
-For the A+ exam: if a scenario describes a laptop or mobile device CPU failing, the answer is almost always "replace the motherboard/system board," not "replace the CPU."
+For the A+ exam: if a scenario describes a laptop or mobile device CPU failing, the answer is almost always "replace the motherboard/system board," not "replace the CPU.
 
 #### CPU Core
 
@@ -297,7 +297,7 @@ Common thermal failure symptoms:
 
 **Tip 2 — BGA means no field repair:** Any scenario involving a laptop CPU failure almost always resolves to motherboard replacement, not CPU replacement, because laptop CPUs are typically BGA-soldered. Never select "replace the CPU" for a laptop CPU failure scenario unless the question specifies a socketed mobile processor.
 
-**Tip 3 — Thermal paste quantity:** The correct answer is always a pea-sized dot in the center. If a question describes a technician spreading a thin layer across the entire IHS surface manually, that is also an acceptable real-world method, but "pea-sized dot in the center" is the standard A+ exam answer. Never choose "apply as much paste as possible."
+**Tip 3 — Thermal paste quantity:** The correct answer is always a pea-sized dot in the center. If a question describes a technician spreading a thin layer across the entire IHS surface manually, that is also an acceptable real-world method, but "pea-sized dot in the center" is the standard A+ exam answer. Never choose "apply as much paste as possible.
 
 **Tip 4 — CPU fan header monitoring:** The BIOS monitors the CPU_FAN header for a tachometer signal. A disconnected or failed CPU fan triggers a thermal shutdown or "CPU Fan Error" at POST — it does not just reduce cooling silently. Expect scenario questions about this behavior.
 
@@ -467,8 +467,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 5. **HWiNFO64 — Free Hardware Monitoring Tool**
    URL: [https://www.hwinfo.com/download/](https://www.hwinfo.com/download/)
    Relevance: Free real-time hardware monitoring tool that shows CPU temperature per core, fan RPM, and thermal throttling events. Essential for the challenge step where students observe thermal behavior and document throttling under load.
-
-
 
 ---
 

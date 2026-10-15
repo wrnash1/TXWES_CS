@@ -90,7 +90,7 @@ Required use cases (at minimum):
 
 Draw the use case diagram following UML notation:
 
-- System boundary rectangle labeled "Library Management System"
+- System boundary rectangle labeled "Library Management System
 - Actors as stick figures outside the boundary
 - Use cases as ellipses inside the boundary
 - Association lines between actors and the use cases they participate in

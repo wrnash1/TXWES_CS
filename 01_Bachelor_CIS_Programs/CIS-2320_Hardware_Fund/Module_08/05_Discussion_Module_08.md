@@ -32,7 +32,7 @@ Address all three of the following:
 
 ## Scenario B — The Virtualization Host Upgrade
 
-A small university IT department runs a virtualization host that currently has 16 cores and 64 GB of RAM running VMware ESXi. The host supports 12 virtual machines for student development environments, but students are reporting that VMs are extremely slow during midterms when all 12 are active simultaneously. The department chair suggests upgrading the GPU to a high-end gaming card to improve performance, having read that "gaming GPUs accelerate compute workloads."
+A small university IT department runs a virtualization host that currently has 16 cores and 64 GB of RAM running VMware ESXi. The host supports 12 virtual machines for student development environments, but students are reporting that VMs are extremely slow during midterms when all 12 are active simultaneously. The department chair suggests upgrading the GPU to a high-end gaming card to improve performance, having read that "gaming GPUs accelerate compute workloads.
 
 Address all three of the following:
 

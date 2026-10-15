@@ -24,7 +24,7 @@ Design patterns become real when you encounter the problems they solve. The best
 
 The CampusConnect development team has been building their application for eighteen months. In the first six months, they shipped features quickly. In the last twelve months, their Sprint velocity has dropped from 38 story points to 14. When a new developer joins and tries to add a feature that sends email notifications when a project status changes to "At Risk," she discovers that email logic, status update logic, database writes, user authentication checks, and audit logging are all tangled together in a single class called ApplicationCore.java — 6,000 lines long. Her change to the email logic accidentally breaks the audit logging because they share a private helper method. The fix for the audit log breaks a database write. The Sprint ends with the feature incomplete and three regressions introduced.
 
-The team's Scrum Master asks: "Why does every feature take longer than it should?" The senior developer answers: "Because everything touches ApplicationCore."
+The team's Scrum Master asks: "Why does every feature take longer than it should?" The senior developer answers: "Because everything touches ApplicationCore.
 
 What anti-pattern does ApplicationCore represent? Explain in specific terms how this anti-pattern is causing the velocity decline — name at least two technical mechanisms (not just "it is too long"). Then propose which design patterns the team should apply to begin decomposing ApplicationCore, and explain how the decomposition would affect future Sprint velocity. Your post should be 175–225 words.
 
@@ -62,7 +62,7 @@ A junior developer on the DataSync team read about the Singleton pattern and app
 
 Over the next eight Sprints, the team kept adding to DataManager because it was globally accessible and easy to reach from anywhere in the codebase. DataManager now handles database connections, caching, API response transformation, report generation, email templating, and user session state. It is a Singleton with 4,200 lines of code.
 
-A new developer on the team notes: "We started with a correct pattern and ended up with the God Object anti-pattern." The Scrum Master asks: "How did a correct design choice lead to an anti-pattern?"
+A new developer on the team notes: "We started with a correct pattern and ended up with the God Object anti-pattern." The Scrum Master asks: "How did a correct design choice lead to an anti-pattern?
 
 Explain the mechanism by which the correct Singleton pattern evolved into a God Object. Then explain what design principle the team should have applied at each Sprint to prevent this drift. Finally, identify which two patterns from this module could help decompose the current DataManager — explain what each pattern would extract and why. Your post should be 175–225 words.
 

@@ -26,7 +26,7 @@ In 175-225 words, diagnose the root cause of the performance gap using the conce
 
 ## Scenario B: Choosing the Right Visualization
 
-A student has just loaded a medical dataset with 12 numeric features and a binary target (disease present or absent). She wants to understand the data before training but is unsure which visualizations to run first. A classmate suggests she skip visualization and just train a model to "see what happens."
+A student has just loaded a medical dataset with 12 numeric features and a binary target (disease present or absent). She wants to understand the data before training but is unsure which visualizations to run first. A classmate suggests she skip visualization and just train a model to "see what happens.
 
 In 175-225 words, argue why exploratory visualization must precede model training. Identify three specific visualizations from the Module 02 reading guide that are most valuable for this binary classification dataset and explain what diagnostic information each one provides. For at least one visualization, describe a specific data problem it might reveal — such as a highly skewed feature, extreme outlier, or multicollinear pair — and explain how that finding would change your preprocessing decisions. Close by describing how the training curve differs from the other four visualizations in terms of when it is generated.
 

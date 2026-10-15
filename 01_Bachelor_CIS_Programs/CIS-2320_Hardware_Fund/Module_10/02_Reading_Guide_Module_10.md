@@ -479,8 +479,6 @@ The following free resources supplement Module 10 content on boot troubleshootin
    URL: [https://www.memtest86.com/](https://www.memtest86.com/)
    Relevance: Free industry-standard bootable memory testing tool used to diagnose RAM hardware faults that cause MEMORY_MANAGEMENT and PAGE_FAULT_IN_NONPAGED_AREA BSODs. Running MemTest86 is the standard first step when the A+ exam presents a scenario with random system crashes or memory-related stop codes.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

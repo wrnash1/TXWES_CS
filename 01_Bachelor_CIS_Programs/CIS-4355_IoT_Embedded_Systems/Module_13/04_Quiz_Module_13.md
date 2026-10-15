@@ -293,7 +293,7 @@ A FreeRTOS application has a high-priority Task H (priority 5) and a low-priorit
   - *Why A is incorrect:* FreeRTOS does not automatically release mutexes when a task blocks. The mutex remains held by Task L throughout its `vTaskDelay()`. If FreeRTOS released mutexes automatically on blocking, it would violate the mutual exclusion guarantee — shared resources would be accessible before the holder had finished its critical section.
   - *Why B is correct:* Priority inheritance works by allowing the mutex holder to preempt lower-priority tasks. However, a task in the Blocked state (sleeping) cannot be preempted or run — it is not in the Ready state. Elevating Task L's priority to 5 has no effect while Task L is blocked for 10 seconds. The mutex will not be released until `vTaskDelay()` returns and Task L explicitly gives it. The rule violated is: never hold a mutex across a blocking call, I/O operation, or delay. Critical sections must be fast and non-blocking.
   - *Why C is incorrect:* The TWDT monitors tasks for liveness failures (not calling `esp_task_wdt_reset()`). It does not monitor or time out mutex wait operations. Task L is alive — it is simply sleeping — so the TWDT would not trigger on it.
-  - *Why D is incorrect:* Task H called `xSemaphoreTake(mutex, portMAX_DELAY)`, which means it will wait indefinitely. It will not time out unless the application uses a finite timeout value. `portMAX_DELAY` explicitly means "wait forever."
+  - *Why D is incorrect:* Task H called `xSemaphoreTake(mutex, portMAX_DELAY)`, which means it will wait indefinitely. It will not time out unless the application uses a finite timeout value. `portMAX_DELAY` explicitly means "wait forever.
 
 ---
 

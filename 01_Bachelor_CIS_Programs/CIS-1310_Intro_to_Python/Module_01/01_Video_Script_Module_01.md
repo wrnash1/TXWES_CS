@@ -25,25 +25,21 @@
 
 ---
 
-## [00:00 – 00:50] Opening — Welcome & Course Overview
+## Opening — Welcome & Course Overview
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 01 | Python Basics & Local Environment | CIS-1310"]**
-
-"Hey everyone — welcome to CIS-1310, Introduction to Python Programming. I'm Professor Nash, and I want to start by telling you something important up front: this is not just a class about writing Python scripts.
+Hey everyone — welcome to CIS-1310, Introduction to Python Programming. I'm Professor Nash, and I want to start by telling you something important up front: this is not just a class about writing Python scripts.
 
 This course is built around getting you to a real, industry-recognized certification — the PCAP, which stands for Certified Associate in Python Programming, issued by the Python Institute. That certification exam is your final in Module 16. So everything we do — every module, every lab, every quiz — is building toward that goal.
 
 In this first module, we're going to cover what Python actually is, how it works under the hood, how to set up your development environment using VirtualBox and Ubuntu Linux, and how to write and run your first Python programs.
 
-This is your launchpad. Let's get into it."
+This is your launchpad. Let's get into it.
 
 ---
 
-## [00:50 – 02:30] What Is Python?
+## What Is Python?
 
-**[SHOW SLIDE: "What Is Python? — History & Why It Matters"]**
-
-"Python is a high-level, general-purpose programming language created by a Dutch programmer named Guido van Rossum. He started working on it in the late 1980s, and Python 1.0 was officially released in 1991. And yes — the name comes from Monty Python's Flying Circus. Guido is a fan. The language has absolutely nothing to do with snakes.
+Python is a high-level, general-purpose programming language created by a Dutch programmer named Guido van Rossum. He started working on it in the late 1980s, and Python 1.0 was officially released in 1991. And yes — the name comes from Monty Python's Flying Circus. Guido is a fan. The language has absolutely nothing to do with snakes.
 
 What made Python different from day one was its core design philosophy. The guiding principle, written in a document called PEP 20 — also known as 'The Zen of Python' — is this: **readability counts**. Guido believed that code is read far more often than it is written, so Python was designed to look almost like plain English. Fewer symbols. Consistent structure. Clean formatting.
 
@@ -51,15 +47,13 @@ Fast forward to today — Python is consistently ranked as the **number one most
 
 It powers Netflix's recommendation engine, NASA's spacecraft data processing pipelines, Instagram's backend servers, and nearly every AI and machine learning project you'll hear about. When you learn Python, you're learning the language of the modern tech industry.
 
-Now — before you write a single line of code, you need to understand **how Python actually runs**. This is directly tested on the PCAP exam."
+Now — before you write a single line of code, you need to understand **how Python actually runs**. This is directly tested on the PCAP exam.
 
 ---
 
-## [02:30 – 05:30] Interpreted vs. Compiled Languages — The Full Picture
+## Interpreted vs. Compiled Languages — The Full Picture
 
-**[SHOW SLIDE: "Interpreted vs. Compiled Languages"]**
-
-"Every programming language has to solve one fundamental problem: your computer doesn't understand Python. Your processor only understands machine code — binary instructions. So how do we get from a readable Python file to a running program? There are two main approaches: **compiled** and **interpreted**.
+Every programming language has to solve one fundamental problem: your computer doesn't understand Python. Your processor only understands machine code — binary instructions. So how do we get from a readable Python file to a running program? There are two main approaches: **compiled** and **interpreted**.
 
 Let me give you an analogy that actually sticks.
 
@@ -68,8 +62,6 @@ Imagine you have a recipe written entirely in French, and you don't speak French
 A **compiled language** is like hiring a professional translator *before* you ever walk into the kitchen. You hand them the entire French recipe. They read the whole thing, translate it completely into English, print it out, and hand it back to you. That translation is done once — ahead of time. You can now cook from that English document anytime, anywhere, without the translator present. This is how languages like C, C++, and Go work. You run a **compiler** — a separate tool — that reads your entire source code and produces a machine-code executable. That executable runs directly on your hardware. Fast. Self-contained.
 
 An **interpreted language** is like having a French-speaking chef standing next to you *in the kitchen*, translating in real time. You point to the first instruction — they read it — you execute that step — you point to the next line. It happens **line by line, as the program runs**. That is Python.
-
-**[PAUSE]**
 
 The Python **interpreter** reads your `.py` source file line by line and executes each statement immediately — no separate compile step from your perspective.
 
@@ -81,29 +73,24 @@ Python doesn't *only* interpret. When you run a Python script, a two-step proces
 
 **Step 2 — Interpretation by the PVM:** The **Python Virtual Machine** — the PVM — then reads that bytecode and executes it instruction by instruction.
 
-**[SHOW DIAGRAM on screen]**
 ```
 Source Code (.py)  →  Python Compiler  →  Bytecode (.pyc)  →  PVM  →  Running Program
 ```
 
 You never manually run the compiler. You never manage `.pyc` files. Python handles all of this transparently the moment you type `python3 yourfile.py`. But understanding this pipeline is a core PCAP exam topic.
 
-**[PAUSE]**
-
 Practical takeaways:
 - Python code is **portable** — the same `.py` file runs on Windows, Mac, and Linux.
 - Python is **flexible** — test one line at a time in the REPL without a build step.
 - Python is **somewhat slower** than fully compiled languages for raw math — but libraries like NumPy use compiled C code under the hood, making numerical work fast.
 
-Lock in the execution model: Source → Bytecode → PVM → Output."
+Lock in the execution model: Source → Bytecode → PVM → Output.
 
 ---
 
-## [05:30 – 07:00] Python Versions — Python 2 vs. Python 3
+## Python Versions — Python 2 vs. Python 3
 
-**[SHOW SLIDE: "Python 2 vs. Python 3 — Use Python 3. Always."]**
-
-"Let's handle versions quickly because this trips people up.
+Let's handle versions quickly because this trips people up.
 
 Python 2 was released in 2000. Python 3 came in 2008. They are **not** backward compatible — some syntax is different between them.
 
@@ -119,17 +106,13 @@ python3 --version
 
 Ubuntu 22.04 LTS — which we're using in all our labs — ships with Python 3.10 or higher pre-installed.
 
-One more thing: the standard Python implementation is called **CPython**. It's the official interpreter, written in C, downloaded from python.org. There are other implementations — PyPy for speed, Jython for Java environments, MicroPython for tiny microcontrollers — but when anyone says 'Python,' they mean CPython. That's what the PCAP targets."
+One more thing: the standard Python implementation is called **CPython**. It's the official interpreter, written in C, downloaded from python.org. There are other implementations — PyPy for speed, Jython for Java environments, MicroPython for tiny microcontrollers — but when anyone says 'Python,' they mean CPython. That's what the PCAP targets.
 
 ---
 
-## [07:00 – 09:00] The Python REPL — Your Interactive Sandbox
+## The Python REPL — Your Interactive Sandbox
 
-**[SHOW SLIDE: "The Python REPL — Read, Eval, Print, Loop"]**
-
-**[TRANSITION TO SCREEN SHARE — Terminal window, Ubuntu or macOS]**
-
-"One of the best features Python gives you right out of the box is the **REPL**.
+One of the best features Python gives you right out of the box is the **REPL**.
 
 REPL stands for **Read-Eval-Print Loop**:
 - **Read** — Python reads a statement you type
@@ -144,8 +127,6 @@ python3
 ```
 
 You'll see a version banner and then three angle brackets: `>>>` — that's your prompt.
-
-**[DEMO — type the following in the terminal]**
 
 ```python
 >>> 2 + 2
@@ -185,17 +166,15 @@ This REPL vs. script mode distinction is a high-frequency PCAP exam question.
 To exit the REPL:
 - Type `exit()` and press Enter
 - Or press **Ctrl+D** on Mac/Linux
-- Or press **Ctrl+Z** then Enter on Windows"
+- Or press **Ctrl+Z** then Enter on Windows
 
 ---
 
-## [09:00 – 10:30] Script Mode — Writing Real Programs
-
-**[SHOW SLIDE: "Script Mode — Writing .py Files"]**
+## Script Mode — Writing Real Programs
 
 **[CONTINUE SCREEN SHARE — VS Code or nano + terminal]**
 
-"The REPL is your sandbox. Real programs live in **script files** — plain text files saved with a `.py` extension.
+The REPL is your sandbox. Real programs live in **script files** — plain text files saved with a `.py` extension.
 
 Workflow:
 
@@ -209,8 +188,6 @@ Workflow:
 ```
 python3 hello.py
 ```
-
-**[DEMO — create hello.py and run it]**
 
 ```python
 # hello.py
@@ -240,15 +217,13 @@ Two things to notice:
 
 First — the `#` symbol starts a **comment**. Python ignores everything on a line after `#`. Comments are for human readers. Use them generously.
 
-Second — `print()` is required in script mode. The REPL automatically shows expression results. Scripts do not. Always use `print()` when you need to display something."
+Second — `print()` is required in script mode. The REPL automatically shows expression results. Scripts do not. Always use `print()` when you need to display something.
 
 ---
 
-## [10:30 – 12:30] Python's Indentation Rules — This Is Syntax, Not Style
+## Python's Indentation Rules — This Is Syntax, Not Style
 
-**[SHOW SLIDE: "Indentation — Python's Block Structure"]**
-
-"Now here's something that confuses almost every programmer coming from another language: Python uses **indentation** to define code blocks. This is **not** a style preference. It is literal syntax.
+Now here's something that confuses almost every programmer coming from another language: Python uses **indentation** to define code blocks. This is **not** a style preference. It is literal syntax.
 
 In JavaScript, C, or Java, code blocks are surrounded by curly braces:
 
@@ -269,11 +244,7 @@ if 5 > 3:
 print('This always runs')        # 0 spaces — OUTSIDE the if block
 ```
 
-**[PAUSE]**
-
 The standard Python convention — defined in PEP 8, the official Python style guide — is **4 spaces per indentation level**. You can technically use 2 spaces, but 4 is universal in professional Python code. Do **NOT** mix tabs and spaces. Python 3 will raise an error if you do.
-
-**[DEMO — show IndentationError]**
 
 ```python
 # This is broken code — DO NOT do this
@@ -304,15 +275,13 @@ for i in range(3):              # level 0 — no indent
 - Standard is 4 spaces per level (PEP 8)
 - Mixing tabs and spaces causes `IndentationError`
 - `IndentationError` is raised at parse time — before the program executes
-- Nested blocks add 4 more spaces per nesting level"
+- Nested blocks add 4 more spaces per nesting level
 
 ---
 
-## [12:30 – 14:30] VirtualBox Setup Overview & Lab Prep
+## VirtualBox Setup Overview & Lab Prep
 
-**[SHOW SLIDE: "Your Lab Environment — VirtualBox + Ubuntu 22.04"]**
-
-"For every hands-on lab in this course, you'll work inside a **virtual machine** running Ubuntu Linux inside VirtualBox. Let me explain the setup.
+For every hands-on lab in this course, you'll work inside a **virtual machine** running Ubuntu Linux inside VirtualBox. Let me explain the setup.
 
 **VirtualBox** is free, open-source virtualization software from Oracle. It creates a completely isolated 'guest' computer running inside a window on your real 'host' computer. Anything you do inside the VM — install packages, break things, experiment — doesn't affect your real machine.
 
@@ -352,15 +321,13 @@ cd ~/cis1310
 
 Every lab this semester lives in that folder.
 
-The full step-by-step with expected output, screenshots, and troubleshooting is in your **Lab document**. Follow it exactly."
+The full step-by-step with expected output, screenshots, and troubleshooting is in your **Lab document**. Follow it exactly.
 
 ---
 
-## [14:30 – 15:30] PCAP Exam Alignment & Closing
+## PCAP Exam Alignment & Closing
 
-**[SHOW SLIDE: "Module 01 — PCAP Exam Alignment"]**
-
-"Let me close by tying everything back to the PCAP.
+Let me close by tying everything back to the PCAP.
 
 The PCAP exam from the Python Institute tests Python 3 across five sections. Module 01 aligns with **Section 1: Computer Programming and Python Fundamentals** — specifically, understanding Python's execution model, the interpreter, the REPL vs. script mode, and basic syntax including indentation.
 
@@ -383,7 +350,7 @@ Complete your Module 01 lab, post to the discussion board by Wednesday, and resp
 
 In **Module 02**, we're diving into actual Python code — literals, data types, operators, and expressions. That's where programming really begins.
 
-See you there."
+See you there.
 
 ---
 

@@ -297,7 +297,7 @@ Disparate impact analysis compares the rate of a favorable outcome for a protect
 
 The following principles synthesize requirements from GDPR, professional ethics frameworks, and industry best practices:
 
-* **Data minimization** — collect and retain only the data needed for the stated purpose. Do not collect "just in case."
+* **Data minimization** — collect and retain only the data needed for the stated purpose. Do not collect "just in case.
 * **Purpose limitation** — do not repurpose data for uses beyond what data subjects consented to.
 * **Transparency** — be honest with data subjects, stakeholders, and the public about what data is collected and how it is used.
 * **Consent** — obtain informed consent before collecting personal data where required by applicable law.
@@ -477,8 +477,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

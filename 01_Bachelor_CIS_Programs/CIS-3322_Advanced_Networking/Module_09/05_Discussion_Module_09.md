@@ -86,7 +86,7 @@ Write an initial post of 175–225 words addressing all three sub-questions.
 
 The following is an example of a substantive peer response that meets the minimum standard. Use it as a quality benchmark, not as a template to copy.
 
-"You made a great point about the implicit deny in your Scenario B answer. I would add that the 47-match count on the deny line actually helps the troubleshooting process — it confirms the ACL is active and processing real traffic. If the count were zero, that would suggest the ACL might not be applied to the right interface or direction. One thing I would add to your corrected ACL: consider using a named extended ACL instead of a numbered one so the team can insert additional entries later without recreating the entire list. In a growing branch environment that flexibility matters."
+You made a great point about the implicit deny in your Scenario B answer. I would add that the 47-match count on the deny line actually helps the troubleshooting process — it confirms the ACL is active and processing real traffic. If the count were zero, that would suggest the ACL might not be applied to the right interface or direction. One thing I would add to your corrected ACL: consider using a named extended ACL instead of a numbered one so the team can insert additional entries later without recreating the entire list. In a growing branch environment that flexibility matters.
 
 ---
 

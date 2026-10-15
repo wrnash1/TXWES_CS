@@ -102,5 +102,5 @@ under normal conditions is easy to write. A script that logs what it did, stops 
 something goes wrong, cleans up after itself, and gives you enough information to diagnose
 failures — that takes deliberate design. set -euo pipefail and trap are not optional extras
 for production scripts. They are the minimum standard. When a cron job runs at 3 AM and fails
-silently, the question is never "did the script work?" but always "how will we know it failed?"
+silently, the question is never "did the script work?" but always "how will we know it failed?
 Build that answer into every script before you schedule it.

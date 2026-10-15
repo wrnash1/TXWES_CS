@@ -122,7 +122,7 @@ Distractor Analysis:
 
 - Why A is incorrect: Automatic storage increase provisions additional storage capacity to prevent the disk from filling up — it does not increase IOPS per se. Storage tier determines IOPS in Cloud SQL, and automatically expanded storage does not change the storage type. More storage can increase IOPS on SSD storage, but this is not the straightforward solution to read latency from analytical queries.
 - Why C is incorrect: Cloud CDN caches HTTP responses at Google edge locations. It is not applicable to database connections — Cloud SQL does not serve HTTP responses. CDN cannot cache SQL query results.
-- Why D is incorrect: Migrating to Cloud Spanner is a significant, disruptive change that would require application refactoring. It is not proportionate to a read latency problem that can be solved with a read replica. Spanner also has a substantially different cost profile. The question asks how to reduce latency "without changing the primary instance configuration."
+- Why D is incorrect: Migrating to Cloud Spanner is a significant, disruptive change that would require application refactoring. It is not proportionate to a read latency problem that can be solved with a read replica. Spanner also has a substantially different cost profile. The question asks how to reduce latency "without changing the primary instance configuration.
 
 ---
 

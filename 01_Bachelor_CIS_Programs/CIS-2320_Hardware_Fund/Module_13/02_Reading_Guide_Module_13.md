@@ -365,7 +365,7 @@ The following are the eight most commonly tested traps on the CompTIA A+ Core 1 
 Every A+ laptop service scenario starts with removing or disconnecting the battery. This is the single most frequently tested fact in Domain 1.3. The correct first step before replacing keyboard, RAM, Wi-Fi card, or any other internal component is: disconnect the battery.
 
 **Exam Trap 2 — Antenna connectors are pried, not pulled:**
-MHF4 antenna connectors must be pried off with a spudger. Pulling the cable breaks the connector or separates the cable from its connector body. Any question describing the correct technique for removing antenna cables from a Wi-Fi card should point to spudger/pry — not "grip and pull."
+MHF4 antenna connectors must be pried off with a spudger. Pulling the cable breaks the connector or separates the cable from its connector body. Any question describing the correct technique for removing antenna cables from a Wi-Fi card should point to spudger/pry — not "grip and pull.
 
 **Exam Trap 3 — ZIF lock must be open before removing cable:**
 A flex cable cannot be removed from a ZIF connector while the lock bar is closed. The lock bar must be flipped to the open position first. Forcing the cable while locked breaks the lock bar. The A+ exam may describe a technician unable to remove a keyboard cable and ask what step was missed.
@@ -563,8 +563,6 @@ The following free resources supplement Module 13 content on laptop component id
 1. **Panasonic Toughbook Service Manuals (Example of Free OEM Documentation)**
    URL: [https://pc-ap.panasonic.com/pages/support/servicesupport.html](https://pc-ap.panasonic.com/pages/support/servicesupport.html)
    Relevance: Many laptop manufacturers publish free service manuals and field service guides that document disassembly sequences, torque specifications, and component location diagrams. Reviewing an OEM service manual for any available laptop model demonstrates the professional documentation that technicians use in the field and reinforces the systematic disassembly approach emphasized in this module.
-
-
 
 ---
 

@@ -206,11 +206,11 @@ duration.
 
 The DHCP conversation uses four messages, remembered with the acronym **DORA**:
 
-1. **Discover** — client broadcasts: "Is there a DHCP server?"
+1. **Discover** — client broadcasts: "Is there a DHCP server?
 
 2. **Offer** — DHCP server responds with an available IP address and lease terms.
 
-3. **Request** — client broadcasts: "I want the IP that server offered."
+3. **Request** — client broadcasts: "I want the IP that server offered.
 
 4. **Acknowledge** — server confirms the assignment and the client configures
    its adapter.

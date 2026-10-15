@@ -10,8 +10,6 @@
 
 ## SEGMENT 1 — Hook and Module Overview (Slides 1–3) [3 min]
 
-[ON CAMERA]
-
 When I was teaching the first version of this course in 2019, there was a clear boundary between what AI could do and what it could not. It could classify images, translate text, and recommend products — but only one thing at a time, with separate specialized models. Today, GPT-4 can look at a photograph of a math problem handwritten on a napkin and solve it. An AI agent can plan a trip, book flights, send confirmation emails, and add events to your calendar — all from a single natural language instruction.
 
 We are living through the most rapid expansion in AI capability in history. Module 15 is your map of what is happening on the frontier — not the hype, but the real technological advances and what they mean for practitioners.
@@ -120,13 +118,13 @@ The key distinction from a standard AI model is **autonomy and tool use**. A reg
 
 The dominant agent reasoning pattern is called **ReAct** (Reasoning + Acting). In a ReAct loop, the agent alternates between:
 
-**Thought:** "I need to find the current weather in Dallas to answer this question."
+**Thought:** "I need to find the current weather in Dallas to answer this question.
 
 **Action:** Call the weather API tool.
 
-**Observation:** "The weather API returned: Dallas, TX, 78°F, partly cloudy."
+**Observation:** "The weather API returned: Dallas, TX, 78°F, partly cloudy.
 
-**Thought:** "Now I have the data. I can compose my answer."
+**Thought:** "Now I have the data. I can compose my answer.
 
 **Action:** Return response to user.
 

@@ -24,14 +24,10 @@
 ---
 
 ### Pre-Roll Slide
-[SHOW SLIDE: Course banner — "CSC-6361 Advanced Computer Networks | Module 01: Advanced IP Routing — Multi-Area OSPF & EIGRP | Texas Wesleyan University | Graduate Level"]
 
 ---
 
 ### Section 1: Welcome and Graduate-Level Expectations
-
-[00:00 – 02:00]
-[SHOW SLIDE: Professor Nash on camera, enterprise network topology diagram visible behind.]
 
 Welcome to Module 01 of CSC-6361, Advanced Computer Networks. I'm Professor Nash. If you are in this graduate course, you have already been exposed to networking fundamentals — the OSI model, basic OSPF, classful addressing. This week, we begin where the CCNP Enterprise track begins: advanced routing at enterprise scale.
 
@@ -44,9 +40,6 @@ Let's begin.
 ---
 
 ### Section 2: OSPF Fundamentals Review — What You Already Know
-
-[02:00 – 04:00]
-[SHOW SLIDE: OSPF basic concepts — single area, DR/BDR election, LSA types 1 and 2]
 
 Before we scale OSPF, let's confirm the foundation. In a single-area OSPF network:
 - All routers participate in the same **area** — typically Area 0, the backbone.
@@ -61,9 +54,6 @@ The solution: **Multi-Area OSPF**.
 ---
 
 ### Section 3: Multi-Area OSPF Architecture
-
-[04:00 – 08:30]
-[SHOW DIAGRAM: Multi-area OSPF topology — Area 0 (backbone) with Area 1, Area 2 connected via ABRs. ABR routers highlighted. ASBR shown connecting to external routing domain.]
 
 [Alt-text: A network diagram showing three OSPF areas. Area 0 (backbone) is in the center with three routers. Area 1 connects to the left via a router labeled ABR-1. Area 2 connects to the right via a router labeled ABR-2. An ASBR router in Area 2 connects to an external cloud labeled "External AS (BGP or EIGRP domain)."]
 
@@ -94,8 +84,6 @@ An ASBR redistributes external routes (from BGP, EIGRP, or static routes) into O
 ---
 
 ### Section 4: OSPF Stub Area Types
-
-[08:30 – 11:00]
 [SHOW TABLE: Stub area comparison — Stub, Totally Stubby, NSSA, Totally NSSA]
 
 Multi-area OSPF gives us the ability to further reduce LSA overhead by defining **stub areas**. The concept: if a remote area has only one exit point (an ABR), why does it need to know about every external route in the OSPF domain? It does not. A stub area replaces Type 5 External LSAs with a single default route injected by the ABR.
@@ -112,9 +100,6 @@ The practical impact: a Totally Stubby area router may have a routing table with
 ---
 
 ### Section 5: Inter-Area Route Summarization
-
-[11:00 – 14:00]
-[SHOW DIAGRAM: ABR summarizing multiple Area 1 subnets into one summary route advertised to Area 0]
 
 One of the most powerful tools an ABR has is **route summarization**. Without summarization, every specific subnet in Area 1 is advertised individually to Area 0 and Area 2 via Type 3 LSAs. With summarization, the ABR aggregates contiguous subnets into a single summary advertisement.
 
@@ -135,9 +120,6 @@ The benefits compound as the network grows. In a large enterprise, proper summar
 ---
 
 ### Section 6: Part 1 Summary
-
-[14:00 – 15:30]
-[SHOW SLIDE: Key concepts recap diagram]
 
 In Part 1, you have learned:
 - **Why** multi-area OSPF exists: to control LSDB size and SPF recalculation overhead.

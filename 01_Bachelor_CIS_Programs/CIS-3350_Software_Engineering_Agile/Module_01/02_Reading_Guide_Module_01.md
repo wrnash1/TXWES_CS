@@ -101,7 +101,7 @@ The conference produced a key insight: building large software systems requires 
 Key figures in the early history:
 
 - **Winston Royce (1970):** Documented what became known as the Waterfall model in his paper "Managing the Development of Large Software Systems." Ironically, Royce himself warned that the model was risky without iterative prototyping — a warning that was largely ignored for decades.
-- **Barry Boehm (1986):** Introduced the Spiral model as a risk-driven alternative to Waterfall in "A Spiral Model of Software Development and Enhancement."
+- **Barry Boehm (1986):** Introduced the Spiral model as a risk-driven alternative to Waterfall in "A Spiral Model of Software Development and Enhancement.
 - **Kent Beck, Ward Cunningham, and others (1990s):** Pioneered Extreme Programming (XP) and other lightweight methods that prioritized working software and customer collaboration.
 - **Ken Schwaber and Jeff Sutherland (1995):** Presented Scrum at OOPSLA 1995 and later codified it in the Scrum Guide.
 - **Agile Manifesto authors (2001):** Seventeen practitioners gathered in Snowbird, Utah, and signed the Agile Manifesto, creating a unified philosophical statement for lightweight development methods.
@@ -381,8 +381,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

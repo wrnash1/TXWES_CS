@@ -109,7 +109,7 @@ Sprint 3 Goal:
 ### Step 1.4 — Write Acceptance Criteria
 
 Choose two of your selected user stories. For each, write at least three acceptance
-criteria. Use the format: "Given [context], when [action], then [expected result]"
+criteria. Use the format: "Given [context], when [action], then [expected result]
 (Given-When-Then / Gherkin format).
 
 ---
@@ -193,7 +193,7 @@ Does the team appear on track to meet the sprint goal? Explain your reasoning.
 
 Imagine you are a developer on this team on Day 6. Write your Daily Scrum update
 answering the three standard questions. Be specific — reference actual user stories
-and tasks, not vague statements like "working on stuff."
+and tasks, not vague statements like "working on stuff.
 
 ---
 

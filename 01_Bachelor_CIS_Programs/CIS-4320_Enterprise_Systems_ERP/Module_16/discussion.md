@@ -97,11 +97,11 @@ Good luck. I genuinely enjoyed teaching this course.
 
 ## Sample Strong Opening Lines (to inspire, not copy)
 
-For Scenario 1: "The honest answer is that the Salesforce Admin certification has a clearer, faster path to market value for someone in their first five years of their career — the job titles and salary bands are well-documented, and the ecosystem is larger — but for someone already embedded in an SAP finance environment, the SAP essentials cert signals domain depth to employers who already know the value of SAP expertise..."
+For Scenario 1: "The honest answer is that the Salesforce Admin certification has a clearer, faster path to market value for someone in their first five years of their career — the job titles and salary bands are well-documented, and the ecosystem is larger — but for someone already embedded in an SAP finance environment, the SAP essentials cert signals domain depth to employers who already know the value of SAP expertise...
 
-For Scenario 2: "Change management is the hardest risk to mitigate post-go-live because it is almost invisible until it has already caused irreversible damage — a security vulnerability can be patched, a data quality problem can be cleaned, but an organization where people actively distrust and work around the ERP system can take years to recover even if you fix every technical issue..."
+For Scenario 2: "Change management is the hardest risk to mitigate post-go-live because it is almost invisible until it has already caused irreversible damage — a security vulnerability can be patched, a data quality problem can be cleaned, but an organization where people actively distrust and work around the ERP system can take years to recover even if you fix every technical issue...
 
-For Scenario 3: "The skills least likely to be automated are the judgment-intensive ones — deciding which integration pattern to use given a specific company's risk tolerance, designing an SoD model that balances compliance with operational practicality, navigating a change management crisis when half the users are resisting the system on political rather than technical grounds. AI can generate a report format; it cannot yet negotiate with a VP who has decided the implementation is a threat to their department's autonomy..."
+For Scenario 3: "The skills least likely to be automated are the judgment-intensive ones — deciding which integration pattern to use given a specific company's risk tolerance, designing an SoD model that balances compliance with operational practicality, navigating a change management crisis when half the users are resisting the system on political rather than technical grounds. AI can generate a report format; it cannot yet negotiate with a VP who has decided the implementation is a threat to their department's autonomy...
 
 ---
 

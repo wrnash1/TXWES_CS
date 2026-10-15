@@ -272,7 +272,7 @@ A developer writes `element.style.display = ''` (empty string). What is the effe
 
 - **Correct Answer:** B
 - **Distractor Analysis:**
-  - Why A is incorrect: An empty string does not mean "none" — it means "remove the inline style entirely."
+  - Why A is incorrect: An empty string does not mean "none" — it means "remove the inline style entirely.
   - Why B is correct: Setting a style property to an empty string removes that inline style declaration, allowing the cascade to fall through to the stylesheet or browser default value.
   - Why C is incorrect: This is valid JavaScript that executes without error.
   - Why D is incorrect: An empty string does not impose any specific value — it defers the value to the CSS cascade.

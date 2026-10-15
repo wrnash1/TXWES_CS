@@ -20,7 +20,7 @@ Read all three scenarios below. Choose ONE scenario to respond to in your initia
 
 ## Scenario A — The Stakeholder Who Wants to Skip Wireframes
 
-A large municipal government is building a new citizen services portal that will allow residents to pay utility bills, apply for permits, and report service issues. The project has a fixed budget and a twelve-month timeline. The CIO tells the BA assigned to the project: "We don't have time for wireframes. Let's just start building and I'll give feedback when I see the real screens."
+A large municipal government is building a new citizen services portal that will allow residents to pay utility bills, apply for permits, and report service issues. The project has a fixed budget and a twelve-month timeline. The CIO tells the BA assigned to the project: "We don't have time for wireframes. Let's just start building and I'll give feedback when I see the real screens.
 
 The BA knows from experience that skipping wireframes typically leads to costly rework in later development stages. However, the CIO is a senior stakeholder with strong influence over the project.
 
@@ -44,7 +44,7 @@ A startup is building a mobile expense-tracking application for small businesses
 
 During the first stakeholder review session, a major investor spends the entire meeting commenting on the color choices and animation speed. Core workflow questions — whether the expense categorization model is correct, whether the approval routing logic makes sense, whether the mobile-first design serves field employees — are never discussed.
 
-When the BA tries to redirect the conversation to workflow questions, the investor says: "The design is basically done. Let's move to development."
+When the BA tries to redirect the conversation to workflow questions, the investor says: "The design is basically done. Let's move to development.
 
 For your initial post, address the following questions. What went wrong in the prototyping approach, and at what point could it have been corrected? How does prototype fidelity level influence the type of feedback stakeholders provide? What would you recommend as the correct sequencing of design artifacts for this project? How would you reset stakeholder expectations at this stage without damaging the relationship?
 

@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 – 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -35,7 +35,7 @@ The seven-step model is directly testable on the Foundation exam. You will need 
 
 ---
 
-## [01:30 – 04:00] Purpose and Scope of Continual Improvement
+## Purpose and Scope of Continual Improvement
 
 The purpose of the Continual Improvement practice is to align the organization's practices and services with changing business needs through the ongoing identification and improvement of services, service components, practices, or any element involved in the efficient and effective management of products and services.
 
@@ -45,9 +45,7 @@ The scope of continual improvement is also worth noting. It applies to services,
 
 ---
 
-## [04:00 – 10:00] The Seven-Step Continual Improvement Model
-
-[SHOW DIAGRAM]
+## The Seven-Step Continual Improvement Model
 
 The Continual Improvement Model provides a structured approach to implementing improvements. It has seven steps, and the sequence matters — each step depends on the outputs of the previous one.
 
@@ -69,7 +67,7 @@ The seven steps form a loop, not a line. When Step 7 completes, the organization
 
 ---
 
-## [10:00 – 13:00] The Continual Improvement Register (CIR)
+## The Continual Improvement Register (CIR)
 
 The Continual Improvement Register is a documented log used to record, prioritize, and track all improvement opportunities and initiatives.
 
@@ -90,7 +88,7 @@ One important point: the CIR is not owned by one team. Any team, at any level, c
 
 ---
 
-## [13:00 – 16:00] Continual Improvement vs. the Improve SVC Activity
+## Continual Improvement vs. the Improve SVC Activity
 
 Students sometimes confuse the Continual Improvement practice with the Improve SVC activity. Let me clarify this distinction carefully.
 
@@ -102,7 +100,7 @@ Think of it this way: the Improve SVC activity is the pipe; the Continual Improv
 
 ---
 
-## [16:00 – 19:00] Connecting Continual Improvement to Guiding Principles
+## Connecting Continual Improvement to Guiding Principles
 
 The Continual Improvement practice has natural connections to all seven Guiding Principles, but three are particularly strong.
 
@@ -114,13 +112,13 @@ Progress Iteratively with Feedback: Step 5 of the seven-step model — "Take act
 
 ---
 
-## [19:00 – 22:00] Applying Continual Improvement: A Worked Example
+## Applying Continual Improvement: A Worked Example
 
 Let us apply the seven-step model to a concrete scenario.
 
 An IT help desk has an average first-contact resolution rate of 32%. The target is 65%. Leadership has identified this as a priority improvement area.
 
-Step 1 — Vision: The vision is "a help desk that resolves most user problems on first contact, reducing both user frustration and escalation costs, in support of the company's commitment to employee productivity."
+Step 1 — Vision: The vision is "a help desk that resolves most user problems on first contact, reducing both user frustration and escalation costs, in support of the company's commitment to employee productivity.
 
 Step 2 — Where are we now? First-contact resolution is 32%. Analysis of tickets shows the top reasons for escalation are: agents cannot find the knowledge they need (40%), agents lack authorization to access the systems needed (35%), and users describe problems in ways that are hard to diagnose remotely (25%).
 
@@ -138,7 +136,7 @@ Then loop back to Step 2 for the next cycle.
 
 ---
 
-## [22:00 – 24:00] Module Summary and What Is Next
+## Module Summary and What Is Next
 
 The Continual Improvement practice provides the methodology for systematic, ongoing improvement of all services, practices, and capabilities.
 

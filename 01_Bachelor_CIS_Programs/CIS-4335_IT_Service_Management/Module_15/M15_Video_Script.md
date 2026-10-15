@@ -43,7 +43,7 @@ The seven ITIL 4 Guiding Principles map surprisingly well to Agile and DevOps va
 ### Principle 1: Focus on Value
 
 - **ITIL 4:** Every activity must contribute to value creation for stakeholders.
-- **Agile:** The Manifesto's first principle — "Our highest priority is to satisfy the customer through early and continuous delivery of valuable software."
+- **Agile:** The Manifesto's first principle — "Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.
 - **Alignment:** Perfect. Both frameworks reject work that does not directly serve the customer.
 
 ### Principle 2: Start Where You Are
@@ -93,7 +93,7 @@ The seven ITIL 4 Guiding Principles map surprisingly well to Agile and DevOps va
 A value stream is the sequence of steps that delivers value from initial demand to the customer. VSM visualizes this sequence to identify:
 
 - **Value-adding activities:** Steps that directly contribute to what the customer wants.
-- **Non-value-adding activities (waste):** Steps that consume time or resources without adding customer value. In Lean terminology, these are called "muda."
+- **Non-value-adding activities (waste):** Steps that consume time or resources without adding customer value. In Lean terminology, these are called "muda.
 
 ### VSM in ITIL 4
 

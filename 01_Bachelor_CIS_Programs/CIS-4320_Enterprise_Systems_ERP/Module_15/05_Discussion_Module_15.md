@@ -18,7 +18,7 @@ Posts are due by Thursday 11:59 PM. Replies are due by Sunday 11:59 PM.
 
 ## Scenario A — The Compressed Timeline
 
-A healthcare network with 3,200 employees is implementing Salesforce Health Cloud for patient relationship management. The project sponsor — a VP who just returned from a Salesforce conference — tells the implementation team: "I saw a demo of this at Dreamforce and it looked easy. I want us live in six weeks." The project manager knows that a proper implementation of this scope requires at least 16–18 weeks. The VP dismisses the concern, saying: "We'll figure out the details as we go."
+A healthcare network with 3,200 employees is implementing Salesforce Health Cloud for patient relationship management. The project sponsor — a VP who just returned from a Salesforce conference — tells the implementation team: "I saw a demo of this at Dreamforce and it looked easy. I want us live in six weeks." The project manager knows that a proper implementation of this scope requires at least 16–18 weeks. The VP dismisses the concern, saying: "We'll figure out the details as we go.
 
 Respond to this scenario. What implementation risks does a six-week timeline create for a 3,200-employee healthcare organization? Identify at least two specific ASAP or Salesforce lifecycle phases that would be dangerously compressed. What should the project manager do — comply with the VP's timeline, push back, or propose a middle-ground approach? What evidence or data would you bring to that conversation? Reference at least one concept from the Module 15 reading or lecture.
 

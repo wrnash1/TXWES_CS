@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Learning Objectives
+## Opening and Learning Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -27,8 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-**[INSTRUCTOR ON CAMERA — title card: "Module 02: Azure Physical Architecture"]**
-
 Welcome back. I'm Professor Nash, and this is Module 02. We are moving from the conceptual world of cloud computing into the physical world of Azure — the actual buildings, power systems, fiber networks, and geographic distribution that make Azure work at global scale.
 
 Understanding Azure's physical architecture is not just trivia. It directly determines how you design for high availability, disaster recovery, data residency compliance, and latency. AZ-900 tests this domain heavily — roughly 35 to 40 percent of exam questions come from Azure Architecture and Services content.
@@ -43,7 +41,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 05:00] Azure Datacenters and Regions
+## Azure Datacenters and Regions
 
 **[SLIDE: "Azure Global Infrastructure"]**
 
@@ -77,7 +75,7 @@ Fourth, **pricing** — Azure pricing varies by region. The same VM size can cos
 
 ---
 
-## [05:00 - 09:00] Availability Zones
+## Availability Zones
 
 **[SLIDE: "Availability Zones — Datacenter-Level Fault Isolation"]**
 
@@ -105,7 +103,7 @@ Not every Azure region has Availability Zones. Regions without zones are typical
 
 ---
 
-## [09:00 - 13:00] Region Pairs and Geographies
+## Region Pairs and Geographies
 
 **[SLIDE: "Region Pairs"]**
 
@@ -137,7 +135,7 @@ On AZ-900, you should be able to identify that sovereign regions exist and what 
 
 ---
 
-## [13:00 - 17:00] Azure Management Hierarchy
+## Azure Management Hierarchy
 
 **[SLIDE: "Azure Organizational Hierarchy"]**
 
@@ -169,7 +167,7 @@ Policies and access control applied at a higher level cascade down to all lower 
 
 ---
 
-## [17:00 - 20:30] Lab Preview and Exam Alignment
+## Lab Preview and Exam Alignment
 
 **[SLIDE: "Key AZ-900 Exam Points for Module 02"]**
 
@@ -195,9 +193,7 @@ This returns the full list of Azure regions with their display names. You will u
 
 ---
 
-## [20:30 - 22:00] Closing
-
-**[INSTRUCTOR ON CAMERA]**
+## Closing
 
 You now have a complete mental map of Azure's physical infrastructure — from individual datacenters up through regions, Availability Zones, region pairs, and the management hierarchy of resources, resource groups, subscriptions, and management groups.
 

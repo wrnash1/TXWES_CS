@@ -14,12 +14,12 @@ Choose one of the three scenarios below (A, B, or C). Write an initial post resp
 
 ## Scenario A: The Endless Help Desk
 
-A regional insurance company employs 12 IT staff members. Most of their time is spent responding to help desk tickets, applying patches, maintaining servers, and managing the company's network. The IT manager tells her director: "We've been running the same processes for years — there's never a finish line." The director, who just completed a project management course, replies: "Some of what you described is operational work. But I think we also have a few projects buried in there."
+A regional insurance company employs 12 IT staff members. Most of their time is spent responding to help desk tickets, applying patches, maintaining servers, and managing the company's network. The IT manager tells her director: "We've been running the same processes for years — there's never a finish line." The director, who just completed a project management course, replies: "Some of what you described is operational work. But I think we also have a few projects buried in there.
 
 Sub-questions for Scenario A:
 
 1. Using PMI's definition, identify at least two activities in the IT manager's description that are clearly operational, and explain the characteristic that makes each one operational.
-2. Propose one IT initiative the insurance company could launch that would qualify as a true project under PMI's definition. Justify your answer using the terms "temporary," "unique," and "defined end date."
+2. Propose one IT initiative the insurance company could launch that would qualify as a true project under PMI's definition. Justify your answer using the terms "temporary," "unique," and "defined end date.
 3. If the company decides to deploy a new cloud-based ticketing platform, how does the Triple Constraint apply from day one? Identify the most likely constraint to be fixed and explain why.
 
 Your initial post should be 175–225 words and address all three sub-questions.

@@ -1,5 +1,23 @@
 # Video Script: Module 02 - Modern CSS Layouts
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Full Stack Web Development for Beginners &bull; Module 02</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=nu_pCVPKzTk" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/nu_pCVPKzTk" title="freeCodeCamp &bull; Full Stack Web Development for Beginners" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Full Stack Web Development for Beginners</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3340 Full Stack Web Development
 **Estimated Duration:** 23 minutes
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
@@ -7,8 +25,7 @@
 
 ---
 
-## Section 1: Introduction - Why CSS Layout Matters [00:00 - 03:30]
-
+## Section 1: Introduction - Why CSS Layout Matters
 Welcome back. I am Professor Nash. In Module 01 we built a semantically correct HTML5 page — a clean, well-structured document that machines can read and understand. Today in Module 02 we make it look like a real application.
 
 CSS layout is one of the most tested practical skills in any web developer interview. Interviewers ask you to center a div. They ask you to build a sidebar layout. They give you a Figma mockup and ask how you would implement it. The two tools that handle all of these are Flexbox and CSS Grid, and by the end of this module you will know exactly when to reach for each one.
@@ -25,8 +42,7 @@ Let us open `styles.css` and start from scratch.
 
 ---
 
-## Section 2: The Box Model Foundation [03:30 - 08:30]
-
+## Section 2: The Box Model Foundation
 [SHOW CODE]
 
 Every CSS layout starts with the box model. Understanding the box model is the difference between layouts that just work and layouts where you constantly fight mysterious spacing.
@@ -69,8 +85,7 @@ The key insight: `display` affects how the element participates in its parent's 
 
 ---
 
-## Section 3: Flexbox — One-Dimensional Layout [08:30 - 14:00]
-
+## Section 3: Flexbox — One-Dimensional Layout
 [SHOW CODE]
 
 Flexbox is a one-dimensional layout model. It manages items in either a row or a column — but not both simultaneously. Use Flexbox when you are arranging items in a line.
@@ -155,8 +170,7 @@ Flex item properties control how individual items grow and shrink:
 
 ---
 
-## Section 4: CSS Grid — Two-Dimensional Layout [14:00 - 19:30]
-
+## Section 4: CSS Grid — Two-Dimensional Layout
 [SHOW CODE]
 
 CSS Grid is a two-dimensional layout model. It manages items in rows and columns simultaneously. Use Grid when you are building a page layout with both horizontal and vertical structure.
@@ -230,8 +244,7 @@ Watch me resize the browser window. The card grid reflows from four columns to t
 
 ---
 
-## Section 5: Flexbox vs. Grid and Lab Preview [19:30 - 23:00]
-
+## Section 5: Flexbox vs. Grid and Lab Preview
 [SHOW CODE]
 
 The practical decision rule:

@@ -27,14 +27,14 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-- [ ] Title slide loaded: "Module 04 - Active Reconnaissance - Nmap and Enumeration"
+- [ ] Title slide loaded: "Module 04 - Active Reconnaissance - Nmap and Enumeration
 - [ ] Kali Linux VM running with Nmap installed
 - [ ] Lab network isolated — Nmap demos run against authorized lab targets only
 - [ ] Sample Nmap output files ready for display
 
 ---
 
-## [00:00 - 01:30] Opening
+## Opening
 
 **[SLIDE: Module 04 — Active Reconnaissance - Nmap and Enumeration]**
 
@@ -55,7 +55,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 04:30] Active Reconnaissance Fundamentals
+## Active Reconnaissance Fundamentals
 
 **[SLIDE: Active vs. Passive Recap]**
 
@@ -78,7 +78,7 @@ Nmap is the foundation. In a professional penetration test, Nmap is typically ru
 
 ---
 
-## [04:30 - 10:00] Nmap — Core Scan Types
+## Nmap — Core Scan Types
 
 **[SLIDE: Nmap Scan Type Reference]**
 
@@ -148,7 +148,7 @@ nmap -A 192.168.1.10
 
 ---
 
-## [10:00 - 13:30] Nmap Output Formats and Port States
+## Nmap Output Formats and Port States
 
 **[SLIDE: Nmap Port States]**
 
@@ -178,7 +178,7 @@ Always save Nmap output. Reconstructing a scan from memory is not a substitute f
 
 ---
 
-## [13:30 - 17:00] Nmap NSE Scripts
+## Nmap NSE Scripts
 
 **[SLIDE: Nmap Scripting Engine (NSE)]**
 
@@ -227,7 +227,7 @@ PORT    STATE SERVICE
 
 ---
 
-## [17:00 - 19:30] Interpreting Nmap Output — A Complete Example
+## Interpreting Nmap Output — A Complete Example
 
 **[SLIDE: Reading Nmap Results Professionally]**
 
@@ -269,7 +269,7 @@ Port 8080 Tomcat — Apache Tomcat often runs with default credentials. Check fo
 
 ---
 
-## [19:30 - 22:00] Enumeration Beyond Nmap
+## Enumeration Beyond Nmap
 
 **[SLIDE: Service-Specific Enumeration]**
 
@@ -289,7 +289,7 @@ All of these enumeration activities must remain within the authorized scope defi
 
 ---
 
-## [22:00 - 23:30] Exam Tips and Summary
+## Exam Tips and Summary
 
 **[SLIDE: PT0-002 Exam Tips — Module 04]**
 
@@ -309,7 +309,7 @@ For additional study, visit **professormesser.com** and the official PT0-002 obj
 
 ---
 
-## [23:30 - 24:00] Closing
+## Closing
 
 Your lab for Module 04 provides sample Nmap output and asks you to interpret it — identifying open ports, services, OS guesses, and potential vulnerabilities based on version information. This mirrors exactly what you will do in a real engagement.
 

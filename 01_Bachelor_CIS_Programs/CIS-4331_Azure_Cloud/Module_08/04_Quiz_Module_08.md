@@ -73,7 +73,7 @@ D. Azure Application Gateway
 **Distractor Analysis:**
 
 - **A (VPN Gateway VpnGw5):** VpnGw5 supports up to 10 Gbps throughput, but VPN Gateway traffic travels over the public internet (encrypted via IPsec). The requirement explicitly states "no traffic exposure to the public internet." Incorrect.
-- **B (ExpressRoute) — CORRECT:** ExpressRoute provides a private, dedicated circuit between on-premises and Azure that bypasses the public internet entirely. It supports up to 100 Gbps and provides consistent, low latency. This is the correct answer for "private dedicated" and "no public internet."
+- **B (ExpressRoute) — CORRECT:** ExpressRoute provides a private, dedicated circuit between on-premises and Azure that bypasses the public internet entirely. It supports up to 100 Gbps and provides consistent, low latency. This is the correct answer for "private dedicated" and "no public internet.
 - **C (Azure Virtual WAN):** Virtual WAN is a networking service for connecting branches and VNets at scale. It does not itself provide a private dedicated circuit from on-premises to Azure. Incorrect.
 - **D (Application Gateway):** Application Gateway is a Layer 7 load balancer and WAF — it handles inbound HTTP/HTTPS traffic from the internet to backend resources, not on-premises to Azure connectivity. Incorrect.
 

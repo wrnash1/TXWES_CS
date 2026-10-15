@@ -1,5 +1,23 @@
 # Video Script: Module 02 – Agile Manifesto and the 12 Principles
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture &bull; Module 02</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=LzMnsfqjzkA" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/LzMnsfqjzkA" title="freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Estimated Duration:** 21 minutes
@@ -7,9 +25,8 @@
 
 ---
 
-## Section 1 — Welcome and Context [00:00–03:30]
-
-"Welcome to Module 2. Last week we surveyed the landscape of SDLC models and established why Waterfall fails for complex, uncertain projects. Today we go to the primary source — the document that changed the software industry in 2001: the Agile Manifesto.
+## Section 1 — Welcome and Context
+Welcome to Module 2. Last week we surveyed the landscape of SDLC models and established why Waterfall fails for complex, uncertain projects. Today we go to the primary source — the document that changed the software industry in 2001: the Agile Manifesto.
 
 The Manifesto is short. It is four values and twelve principles. You can read it in under five minutes. But its implications are deep enough that we spend entire courses unpacking it, and the PSM I certification exam tests your understanding of it directly.
 
@@ -21,17 +38,14 @@ By the end of this module you will be able to:
 - Map specific Scrum practices to the Manifesto principles that justify them
 - Answer PSM I scenario questions that test Manifesto alignment
 
-Let's start at Snowbird, Utah, in February of 2001."
+Let's start at Snowbird, Utah, in February of 2001.
 
 ---
 
-## Section 2 — The Snowbird Meeting and the Four Values [03:30–09:00]
-
-"In February 2001, seventeen software practitioners gathered at a ski resort in Snowbird, Utah. They represented diverse approaches — Extreme Programming, Scrum, DSDM, Adaptive Software Development, Crystal, Feature-Driven Development, and Pragmatic Programming. Despite their differences, they agreed on something important: the software industry needed a lighter, more humane alternative to the heavyweight, documentation-heavy processes that dominated at the time.
+## Section 2 — The Snowbird Meeting and the Four Values
+In February 2001, seventeen software practitioners gathered at a ski resort in Snowbird, Utah. They represented diverse approaches — Extreme Programming, Scrum, DSDM, Adaptive Software Development, Crystal, Feature-Driven Development, and Pragmatic Programming. Despite their differences, they agreed on something important: the software industry needed a lighter, more humane alternative to the heavyweight, documentation-heavy processes that dominated at the time.
 
 The result was a 68-word statement called the Manifesto for Agile Software Development. Let me read it to you now.
-
-[SHOW DIAGRAM: The Agile Manifesto values displayed as a two-column card — left values highlighted, right values in lower contrast]
 
 'We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:
 
@@ -52,15 +66,12 @@ Value 3: Customer collaboration over contract negotiation. Software development 
 
 Value 4: Responding to change over following a plan. Plans are valuable — they represent your best current thinking. But the world changes, and so does your understanding of the problem. When new information arrives, the plan updates.
 
-PSM I Exam Tip: A common question presents a scenario where a Scrum Master insists on following the original Sprint plan even after the team discovers new information. This violates the fourth value — responding to change. The Scrum Master should facilitate a conversation about what the team has learned and whether the Sprint Goal needs to adapt."
+PSM I Exam Tip: A common question presents a scenario where a Scrum Master insists on following the original Sprint plan even after the team discovers new information. This violates the fourth value — responding to change. The Scrum Master should facilitate a conversation about what the team has learned and whether the Sprint Goal needs to adapt.
 
 ---
 
-## Section 3 — The 12 Principles: Customer and Delivery [09:00–13:30]
-
-"Behind the four values are twelve principles that give the Manifesto operational meaning. The PSM I exam tests all twelve. I'll group them thematically.
-
-[SHOW DIAGRAM: The 12 Principles arranged in four color-coded groups — Customer and Delivery, Technical Excellence, People and Culture, Sustainability and Reflection]
+## Section 3 — The 12 Principles: Customer and Delivery
+Behind the four values are twelve principles that give the Manifesto operational meaning. The PSM I exam tests all twelve. I'll group them thematically.
 
 Principle 1: 'Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.' Notice three things: highest priority, early, and continuous. This principle is the engine that drives short Sprints in Scrum.
 
@@ -74,15 +85,12 @@ Principle 5: 'Build projects around motivated individuals. Give them the environ
 
 Principle 6: 'The most efficient and effective method of conveying information to and within a development team is face-to-face conversation.' Written specifications introduce ambiguity; direct conversation resolves it faster.
 
-PSM I Exam Tip: Exam questions sometimes describe a scenario where the team wants to refuse a late change request. The Agile answer is never to refuse a legitimate customer need. The Scrum answer is to add it to the Product Backlog and let the Product Owner prioritize it."
+PSM I Exam Tip: Exam questions sometimes describe a scenario where the team wants to refuse a late change request. The Agile answer is never to refuse a legitimate customer need. The Scrum answer is to add it to the Product Backlog and let the Product Owner prioritize it.
 
 ---
 
-## Section 4 — The 12 Principles: Technical, People, Sustainability [13:30–18:30]
-
-"Continuing with the remaining principles:
-
-[SHOW DIAGRAM: Principles 7–12 displayed as numbered cards with one-line summaries]
+## Section 4 — The 12 Principles: Technical, People, Sustainability
+Continuing with the remaining principles:
 
 Principle 7: 'Working software is the primary measure of progress.' Not tasks completed, not story points burned, not documents written. Working, tested software.
 
@@ -96,15 +104,12 @@ Principle 11: 'The best architectures, requirements, and designs emerge from sel
 
 Principle 12: 'At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly.' This principle directly justifies the Sprint Retrospective. Continuous improvement is a structural commitment, not an occasional activity.
 
-PSM I Exam Tip: The Sprint Retrospective is directly justified by Principle 12. If a PSM I question asks why Scrum includes Retrospectives, connect your answer to this principle and to the empirical pillar of Adaptation."
+PSM I Exam Tip: The Sprint Retrospective is directly justified by Principle 12. If a PSM I question asks why Scrum includes Retrospectives, connect your answer to this principle and to the empirical pillar of Adaptation.
 
 ---
 
-## Section 5 — Connecting Manifesto to Scrum Practice [18:30–21:00]
-
-"Let me close by drawing explicit connections between the Manifesto and Scrum's mechanics, because this mapping is exactly what the PSM I exam tests.
-
-[SHOW DIAGRAM: Two-column mapping table — Scrum Practice on the left, Manifesto Principle(s) on the right]
+## Section 5 — Connecting Manifesto to Scrum Practice
+Let me close by drawing explicit connections between the Manifesto and Scrum's mechanics, because this mapping is exactly what the PSM I exam tests.
 
 Every Scrum event exists because a Manifesto principle demands it. The Sprint exists because Principles 1 and 3 demand early and continuous delivery. The Sprint Review exists because Principle 7 says working software is the primary measure of progress. The Retrospective exists because Principle 12 says teams must reflect and improve regularly. The self-managing Scrum team exists because Principle 11 says the best solutions emerge from self-organized people.
 
@@ -112,7 +117,7 @@ When you understand this connection, the Scrum Guide stops being a list of rules
 
 PSM I Exam Tip: Manifesto values are tested by presenting a scenario and asking which response is most consistent with Agile values. Always look for the answer that prioritizes working software, customer collaboration, adaptability, and people over the answer that protects the plan, enforces process, or prioritizes documentation.
 
-Next module, we enter the Scrum framework itself — the three accountabilities, five events, and three artifacts that turn these principles into a working team process. See you there."
+Next module, we enter the Scrum framework itself — the three accountabilities, five events, and three artifacts that turn these principles into a working team process. See you there.
 
 ---
 

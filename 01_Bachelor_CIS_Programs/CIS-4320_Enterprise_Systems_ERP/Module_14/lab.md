@@ -74,19 +74,19 @@ Build a summary report with the following specifications:
 - **Group rows by:** Stage
 - **Columns:** Opportunity Name, Account Name, Amount, Close Date
 - **Summary fields:** Sum of Amount per Stage, Count of Opportunity Name per Stage
-- **Filter:** Stage not equal to "Closed Won" and Stage not equal to "Closed Lost"
+- **Filter:** Stage not equal to "Closed Won" and Stage not equal to "Closed Lost
 
 Add a **bucket field** on Amount:
 
-- Bucket name: "Deal Size"
+- Bucket name: "Deal Size
 - Bucket values:
-  - $0–$9,999 = "Small"
-  - $10,000–$99,999 = "Mid-Market"
-  - $100,000+ = "Enterprise"
+  - $0–$9,999 = "Small
+  - $10,000–$99,999 = "Mid-Market
+  - $100,000+ = "Enterprise
 
 Add the "Deal Size" bucket as a column in the report.
 
-Save the report as "Pipeline by Stage and Deal Size."
+Save the report as "Pipeline by Stage and Deal Size.
 
 **Document the following:**
 
@@ -107,10 +107,10 @@ Build a matrix report with the following specifications:
 - **Row grouping:** Owner Full Name
 - **Column grouping:** Close Date (grouped by Calendar Quarter)
 - **Summary field in cells:** Sum of Amount
-- **Filter:** Stage = "Closed Won"
+- **Filter:** Stage = "Closed Won
 - **Date range:** Last 4 Fiscal Quarters
 
-Save the report as "Closed Won Revenue by Rep and Quarter."
+Save the report as "Closed Won Revenue by Rep and Quarter.
 
 **Document the following:**
 
@@ -142,7 +142,7 @@ Create a new Joined Report. Add two report blocks:
 
 The two blocks are joined on Account Name.
 
-Save the report as "Accounts — Open Cases and Open Opportunities."
+Save the report as "Accounts — Open Cases and Open Opportunities.
 
 **Document the following:**
 
@@ -158,7 +158,7 @@ Save the report as "Accounts — Open Cases and Open Opportunities."
 
 ### Task 2.1: Create a Sales Performance Dashboard
 
-Navigate to the Dashboards tab. Click "New Dashboard." Name it "Q2 Sales Performance Dashboard."
+Navigate to the Dashboards tab. Click "New Dashboard." Name it "Q2 Sales Performance Dashboard.
 
 Add the following components. For each component, specify the source report and the component type:
 
@@ -168,35 +168,35 @@ Add the following components. For each component, specify the source report and 
 - Chart type: Horizontal Bar
 - Measure: Sum of Amount
 - Group by: Stage
-- Title: "Open Pipeline by Stage"
+- Title: "Open Pipeline by Stage
 
 **Component 2 — Closed Won Revenue by Rep (Bar Chart)**
 
 - Source: Closed Won Revenue by Rep and Quarter (from Task 1.3)
 - Chart type: Grouped Bar (reps on X-axis)
 - Measure: Sum of Amount (most recent full quarter)
-- Title: "Closed Won Revenue — Latest Quarter"
+- Title: "Closed Won Revenue — Latest Quarter
 
 **Component 3 — Total Open Pipeline (Metric)**
 
 - Source: Pipeline by Stage and Deal Size
 - Component type: Metric
 - Display: Sum of Amount (Grand Total)
-- Title: "Total Open Pipeline"
+- Title: "Total Open Pipeline
 
 **Component 4 — Open Opportunity Count (Metric)**
 
 - Source: Open Opportunities — Current and Next FQ
 - Component type: Metric
 - Display: Record Count
-- Title: "Open Opportunities This FQ"
+- Title: "Open Opportunities This FQ
 
 **Component 5 — Account Health (Table)**
 
 - Source: Accounts — Open Cases and Open Opportunities
 - Component type: Table (Block 1 — Cases)
 - Display: Account Name, Open Case Count
-- Title: "Accounts with Open Cases"
+- Title: "Accounts with Open Cases
 
 After adding all components, arrange them so that the two Metric components appear at the top, the bar charts below them, and the table at the bottom.
 
@@ -232,7 +232,7 @@ The Clearwater VP of Sales has proposed the following "KPIs" for the QBR dashboa
 
 For each proposed KPI, identify what components are missing and rewrite it as a properly defined KPI.
 
-**Proposed KPI 1:** "Track how many deals we close."
+**Proposed KPI 1:** "Track how many deals we close.
 
 Your evaluation:
 
@@ -240,7 +240,7 @@ Your evaluation:
 - What components are missing?
 - Rewritten KPI:
 
-**Proposed KPI 2:** "Customer satisfaction."
+**Proposed KPI 2:** "Customer satisfaction.
 
 Your evaluation:
 
@@ -248,7 +248,7 @@ Your evaluation:
 - What components are missing?
 - Rewritten KPI:
 
-**Proposed KPI 3:** "Quota attainment is 87%."
+**Proposed KPI 3:** "Quota attainment is 87%.
 
 Your evaluation:
 

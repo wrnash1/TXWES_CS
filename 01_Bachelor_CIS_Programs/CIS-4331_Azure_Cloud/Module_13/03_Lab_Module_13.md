@@ -85,7 +85,7 @@ Take a screenshot of the Metrics chart showing transaction data.
 
 Now add a second metric to the same chart:
 
-1. Click "Add metric"
+1. Click "Add metric
 2. Metric: Ingress
 3. Aggregation: Sum
 
@@ -103,10 +103,10 @@ Answer:
 
 On the Metrics chart showing both metrics:
 
-1. Click "Save to dashboard" or "Pin to dashboard"
+1. Click "Save to dashboard" or "Pin to dashboard
 2. Select "Create new" dashboard
-3. Name it "Lab13-Monitoring-Dashboard"
-4. Click "Pin"
+3. Name it "Lab13-Monitoring-Dashboard
+4. Click "Pin
 
 Navigate to the Dashboard to verify the chart was pinned.
 

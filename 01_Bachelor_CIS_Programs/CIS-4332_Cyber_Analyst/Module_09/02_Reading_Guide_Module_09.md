@@ -484,8 +484,6 @@ The definitive U.S. government guidance document on ransomware response, coverin
 <https://www.ic3.gov/>
 The FBI Internet Crime Complaint Center's reporting portal for cybercrime including ransomware. Reviewing the portal's reporting guidance and recent ransomware advisories illustrates the federal reporting obligations and investigation support processes described in Section 6 of this guide. Law enforcement reporting after ransomware incidents is strongly encouraged and may provide decryptor resources in some cases.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

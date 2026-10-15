@@ -481,7 +481,7 @@ history = model.fit(
 
 - `restore_best_weights=True` in EarlyStopping is critical. Without it, training stops but keeps the final (potentially worse) weights rather than the best ones.
 - `save_best_only=True` in ModelCheckpoint prevents disk from filling with every epoch's weights.
-- BatchNormalization adds non-trainable parameters (moving mean and variance). `model.summary()` shows these separately under "Non-trainable params."
+- BatchNormalization adds non-trainable parameters (moving mean and variance). `model.summary()` shows these separately under "Non-trainable params.
 - Dropout is automatically disabled during `model.predict()` and `model.evaluate()`. You never need to manually toggle it.
 - `model.evaluate()` returns values in the order they were specified in `metrics=[]` during compile, preceded by the loss value.
 - The `patience` parameter in both EarlyStopping and ReduceLROnPlateau is in units of epochs, not batches.
@@ -623,8 +623,6 @@ The Ioffe and Szegedy (2015) paper that introduced batch normalization. Section 
 **3. Dropout: A Simple Way to Prevent Neural Networks from Overfitting (original paper)**
 <https://jmlr.org/papers/v15/srivastava14a.html>
 The Srivastava et al. (2014) JMLR paper introducing dropout. Section 2 explains inverted dropout scaling (why `model.predict()` does not need to scale outputs) and Section 3 covers placement guidelines. The experiments in Section 5 provide concrete evidence for the dropout rates recommended in this module's placement guidelines table.
-
-
 
 ---
 

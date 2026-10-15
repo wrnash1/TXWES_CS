@@ -194,7 +194,7 @@ systemctl status sshd
 ssh root@localhost
 ```
 
-Expected result: "Permission denied, please try again" or "root@localhost: Permission denied."
+Expected result: "Permission denied, please try again" or "root@localhost: Permission denied.
 
 ---
 

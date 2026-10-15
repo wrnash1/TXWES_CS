@@ -26,21 +26,15 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 14 | Promises and Async/Await: Patterns in Practice | CIS-1320"]**
-
-"Module 13 gave you the foundation: the event loop, Promises, and `async/await`. Module 14 puts that foundation to work with real patterns you will use in every project: how to run async operations sequentially versus in parallel, how to handle errors at every level, how to cancel a fetch request in progress, and how to serialize and parse JSON data. By the end of this module, you will write async code that is not just functional but well-structured and production-ready."
+Module 13 gave you the foundation: the event loop, Promises, and `async/await`. Module 14 puts that foundation to work with real patterns you will use in every project: how to run async operations sequentially versus in parallel, how to handle errors at every level, how to cancel a fetch request in progress, and how to serialize and parse JSON data. By the end of this module, you will write async code that is not just functional but well-structured and production-ready.
 
 ---
 
-## [01:30 – 06:30] Part 1 — Sequential vs Parallel Async Operations
+## Part 1 — Sequential vs Parallel Async Operations
 
-**[SHOW SLIDE: "Sequential vs Parallel"]**
-
-"One of the most common performance mistakes in async JavaScript: using `await` in a loop when the operations are independent, forcing them to run one after another when they could run together.
-
-**[DEMO — Sequential (slow)]**
+One of the most common performance mistakes in async JavaScript: using `await` in a loop when the operations are independent, forcing them to run one after another when they could run together.
 
 ```javascript
 async function loadSequential() {
@@ -61,10 +55,6 @@ async function loadSequential() {
 ```
 
 Each `await` waits for the previous request to finish before starting the next. Total time ≈ sum of all three response times.
-
-[PAUSE]
-
-**[DEMO — Parallel (fast)]**
 
 ```javascript
 async function loadParallel() {
@@ -87,8 +77,6 @@ async function loadParallel() {
 
 All three requests fire simultaneously. Total time ≈ duration of the single slowest request.
 
-[PAUSE]
-
 **When sequential is the right choice:**
 
 Sequential `await` is correct when each step depends on the previous result:
@@ -104,17 +92,13 @@ async function authenticateAndLoad(credentials) {
 
 Here the order matters — you cannot load the profile before you have the token. Sequential is correct.
 
-**Rule: use `Promise.all` for independent operations; use sequential `await` for dependent operations.**"
+**Rule: use `Promise.all` for independent operations; use sequential `await` for dependent operations.**
 
 ---
 
-## [06:30 – 10:30] Part 2 — Promise Combinators
+## Part 2 — Promise Combinators
 
-**[SHOW SLIDE: "Promise Combinators"]**
-
-"Module 13 introduced `Promise.all`. There are three more combinators worth knowing.
-
-**[DEMO — `Promise.allSettled`]**
+Module 13 introduced `Promise.all`. There are three more combinators worth knowing.
 
 ```javascript
 const promises = [
@@ -136,10 +120,6 @@ Promise.allSettled(promises).then(results => {
 
 `allSettled` waits for every Promise to settle — it never rejects itself. Each result has a `status` (`'fulfilled'` or `'rejected'`) and either `value` or `reason`. Use this when you want all results regardless of which ones failed.
 
-[PAUSE]
-
-**[DEMO — `Promise.race`]**
-
 ```javascript
 function fetchWithTimeout(url, timeoutMs) {
   const fetchPromise = fetch(url);
@@ -158,10 +138,6 @@ fetchWithTimeout('https://jsonplaceholder.typicode.com/todos/1', 3000)
 
 `Promise.race` settles with the first Promise to settle — fulfilled or rejected. Here we race the fetch against a timeout. If the fetch takes longer than 3 seconds, the timeout wins and rejects the race.
 
-[PAUSE]
-
-**[DEMO — `Promise.any`]**
-
 ```javascript
 // Try multiple sources — use whichever responds first successfully
 Promise.any([
@@ -176,8 +152,6 @@ Promise.any([
 
 `Promise.any` fulfills with the first fulfilled Promise. It only rejects if all Promises reject (with an `AggregateError`). Useful for redundancy: try multiple sources, use whichever succeeds first.
 
-[PAUSE]
-
 **Combinator Summary:**
 
 | Method | Resolves when | Rejects when |
@@ -191,13 +165,9 @@ Promise.any([
 
 ---
 
-## [10:30 – 14:30] Part 3 — JSON: `stringify` and `parse`
+## Part 3 — JSON: `stringify` and `parse`
 
-**[SHOW SLIDE: "JSON.stringify and JSON.parse"]**
-
-"JSON — JavaScript Object Notation — is the standard data format for web APIs. Every `fetch` response you have worked with returns JSON. `JSON.stringify` converts a JavaScript value to a JSON string; `JSON.parse` converts a JSON string back to a JavaScript value.
-
-**[DEMO]**
+JSON — JavaScript Object Notation — is the standard data format for web APIs. Every `fetch` response you have worked with returns JSON. `JSON.stringify` converts a JavaScript value to a JSON string; `JSON.parse` converts a JSON string back to a JavaScript value.
 
 ```javascript
 const user = {
@@ -219,8 +189,6 @@ console.log(parsed.name);          // 'Alice'
 console.log(parsed.address.city);  // 'Dallas'
 ```
 
-[PAUSE]
-
 **What JSON can and cannot represent:**
 
 ```javascript
@@ -238,8 +206,6 @@ console.log(JSON.stringify(obj));
 ```
 
 Functions and `undefined` are silently dropped. Dates become ISO strings (not `Date` objects after parsing — just strings). Know these for the exam.
-
-[PAUSE]
 
 **Formatting with indent:**
 
@@ -259,17 +225,13 @@ const prefs = JSON.parse(localStorage.getItem('preferences'));
 console.log(prefs.theme);   // 'dark'
 ```
 
-`localStorage` only stores strings. `JSON.stringify`/`JSON.parse` is the standard pattern to store and retrieve objects."
+`localStorage` only stores strings. `JSON.stringify`/`JSON.parse` is the standard pattern to store and retrieve objects.
 
 ---
 
-## [14:30 – 18:00] Part 4 — `AbortController` and Fetch Cancellation
+## Part 4 — `AbortController` and Fetch Cancellation
 
-**[SHOW SLIDE: "AbortController"]**
-
-"Once you call `fetch`, the request is in flight. What if the user navigates away, or a newer request supersedes the old one? `AbortController` lets you cancel a fetch that is no longer needed.
-
-**[DEMO]**
+Once you call `fetch`, the request is in flight. What if the user navigates away, or a newer request supersedes the old one? `AbortController` lets you cancel a fetch that is no longer needed.
 
 ```javascript
 // Create a controller
@@ -293,8 +255,6 @@ controller.abort();
 ```
 
 When `abort()` is called, the fetch Promise rejects with an `AbortError`. Check `err.name === 'AbortError'` to distinguish an intentional cancellation from a real network error.
-
-[PAUSE]
 
 **Practical pattern — replace previous request on user input:**
 
@@ -326,17 +286,13 @@ async function searchUsers(query) {
 }
 ```
 
-Every new search aborts the previous one. Only the latest result renders."
+Every new search aborts the previous one. Only the latest result renders.
 
 ---
 
-## [18:00 – 21:00] Part 5 — Error Handling Strategies
+## Part 5 — Error Handling Strategies
 
-**[SHOW SLIDE: "Async Error Handling"]**
-
-"Unhandled Promise rejections cause silent failures. Every async operation needs an error path.
-
-**[DEMO — Levels of error handling]**
+Unhandled Promise rejections cause silent failures. Every async operation needs an error path.
 
 ```javascript
 // Level 1: per-operation try/catch
@@ -362,8 +318,6 @@ async function initPage() {
 }
 ```
 
-[PAUSE]
-
 **Centralized error handler:**
 
 ```javascript
@@ -387,15 +341,13 @@ async function loadPage() {
 }
 ```
 
-Centralizing the `response.ok` check in `apiFetch` means callers never forget it."
+Centralizing the `response.ok` check in `apiFetch` means callers never forget it.
 
 ---
 
-## [21:00 – 22:00] Closing — Lab Preview
+## Closing — Lab Preview
 
-**[SHOW SLIDE: "Module 14 Lab Preview"]**
-
-"The Module 14 lab has four parts.
+The Module 14 lab has four parts.
 
 Part 1 benchmarks sequential vs parallel fetches — you will time both approaches and observe the difference.
 
@@ -405,7 +357,7 @@ Part 3 covers JSON — you will practice `stringify` and `parse`, observe what g
 
 Part 4 is the integration — a search page with `AbortController` that cancels in-flight requests when a new search fires, with centralized error handling and a graceful loading state.
 
-The quiz tests sequential vs parallel performance, `allSettled` vs `all` behavior, JSON conversion rules, `AbortController` abort error detection, and structured error handling. Read the guide before the lab. Good luck."
+The quiz tests sequential vs parallel performance, `allSettled` vs `all` behavior, JSON conversion rules, `AbortController` abort error detection, and structured error handling. Read the guide before the lab. Good luck.
 
 ---
 

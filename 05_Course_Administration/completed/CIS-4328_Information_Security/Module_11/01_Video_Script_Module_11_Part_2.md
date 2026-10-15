@@ -30,21 +30,15 @@
 
 ## Pre-Roll Slate
 
-**[SHOW SLIDE: Course title card — "CIS-4328 Information Security | Module 11 | Texas Wesleyan University"]**
-
 ---
 
 ## Opening — Part 2
-
-**[INSTRUCTOR ON CAMERA]**
 
 Welcome back to Module 11. In Part 1 we covered the NIST SP 800-61 IR lifecycle, the four phases, and IR team roles. In Part 2 we tackle communication plans, evidence preservation, chain of custody, containment strategies in more depth, and the lessons learned process that closes the cycle.
 
 ---
 
 ## Section 1 — Communication Plans
-
-**[SHOW SLIDE: Communication flow chart — internal vs. external notifications]**
 
 Incident communication is one of the most underestimated parts of IR. How and when you communicate an incident has legal, regulatory, and reputational implications.
 
@@ -64,8 +58,6 @@ The IR plan must pre-designate who is authorized to communicate externally. Unau
 ---
 
 ## Section 2 — Evidence Preservation
-
-**[SHOW SLIDE: Evidence types diagram — volatile vs. non-volatile]**
 
 Evidence preservation is where IR meets forensics. The goal is to collect evidence in a way that maintains its integrity and admissibility if legal proceedings follow.
 
@@ -90,8 +82,6 @@ If a system must be shut down, volatile data is lost. This is why forensic best 
 
 ## Section 3 — Chain of Custody
 
-**[SHOW SLIDE: Chain of custody form example]**
-
 Chain of custody is the documented history of who handled evidence, when, and for what purpose. It is the legal mechanism that proves evidence was not tampered with between the time of collection and the time it is presented in court.
 
 A chain of custody log records:
@@ -112,8 +102,6 @@ Breaking chain of custody — even through negligence rather than malice — can
 
 ## Section 4 — Containment Strategies
 
-**[SHOW SLIDE: Containment options matrix]**
-
 Containment decisions involve trade-offs between business continuity and investigation thoroughness. The Security+ exam tests specific containment approaches and when to apply them.
 
 **Segmentation**: Isolating a compromised segment of the network from the rest. For example, moving a compromised workstation to a quarantine VLAN that has no access to internal resources. The system remains running, preserving volatile evidence, but cannot communicate with the rest of the network.
@@ -131,8 +119,6 @@ Containment decisions involve trade-offs between business continuity and investi
 ---
 
 ## Section 5 — The Lessons Learned Process
-
-**[SHOW SLIDE: Lessons learned meeting framework]**
 
 Phase 4 in the NIST model is Post-Incident Activity — what most practitioners call the "lessons learned" or "after-action review." This is the most frequently skipped phase and the most valuable for long-term improvement.
 
@@ -155,8 +141,6 @@ The output is a written post-incident report and an action item list with owners
 
 ## Section 6 — Incident Report Documentation
 
-**[SHOW SLIDE: Incident report template]**
-
 The incident report is the formal record of the incident and the response. Security+ tests understanding of what an incident report contains. A complete incident report includes:
 
 - Executive summary suitable for leadership review.
@@ -173,8 +157,6 @@ The incident report is the formal record of the incident and the response. Secur
 
 ## Section 7 — Tabletop Exercises
 
-**[SHOW SLIDE: Tabletop exercise facilitator notes]**
-
 Preparation is only as good as its testing. A tabletop exercise is a discussion-based simulation where the IR team walks through a realistic scenario without activating real response activities. The facilitator presents an evolving scenario and asks the team to describe what they would do at each decision point.
 
 Tabletop exercises reveal gaps in the IR plan, test decision-making under pressure, familiarize team members with their roles, and identify communication breakdowns before they happen in a real incident.
@@ -184,8 +166,6 @@ A full-scale exercise activates actual response procedures in a controlled simul
 ---
 
 ## Closing
-
-**[INSTRUCTOR ON CAMERA]**
 
 Incident response is the profession's answer to the certainty that perfect prevention is impossible. The NIST lifecycle gives us a structured framework. Chain of custody and evidence preservation connect IR to legal proceedings. Communication plans prevent organizational chaos. Lessons learned turn incidents into improvements.
 

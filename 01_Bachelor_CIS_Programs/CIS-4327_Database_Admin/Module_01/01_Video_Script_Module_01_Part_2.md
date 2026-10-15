@@ -28,8 +28,6 @@
 
 ### Opening — Part 2 Overview
 
-**[SHOW SLIDE: Module 01 Part 2 — DML, JOINs, GROUP BY, EXPLAIN ANALYZE]**
-
 Welcome back. I am Professor Nash, and this is Part 2 of Module 01.
 
 In Part 1 we covered the relational model, ACID properties, and DDL. Now we are going to work with data — SELECT queries, JOINs, aggregation with GROUP BY, and the EXPLAIN ANALYZE command that is critical for query performance analysis. All of these appear directly in the Google Cloud Professional Cloud Database Engineer exam.
@@ -37,8 +35,6 @@ In Part 1 we covered the relational model, ACID properties, and DDL. Now we are 
 ---
 
 ### Section 1 — SQL DML: INSERT, UPDATE, DELETE
-
-**[SHOW SLIDE: DML command categories]**
 
 The Data Manipulation Language, or DML, is the set of commands that read and modify data in tables. The four core DML statements are SELECT, INSERT, UPDATE, and DELETE.
 
@@ -105,8 +101,6 @@ Note the difference between WHERE and HAVING. WHERE filters rows before aggregat
 ---
 
 ### Section 3 — JOIN Types
-
-**[SHOW SLIDE: Venn diagram of INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN]**
 
 JOINs combine rows from two or more tables based on a related column. The exam tests each join type, so I am going to show you all of them with the same schema.
 
@@ -186,8 +180,6 @@ HAVING filters after grouping. In the second query, we only return customers who
 
 ### Section 5 — EXPLAIN ANALYZE for Query Performance
 
-**[SHOW SLIDE: Query execution plan output with cost estimates and actual timing]**
-
 EXPLAIN ANALYZE is the tool you use to understand why a query is slow. It shows the query execution plan — the steps the database engine takes to retrieve data — along with actual timing information. This command is tested in the GCP exam's performance tuning domain.
 
 **[SHOW CODE]**
@@ -209,8 +201,6 @@ WHERE  o.status = 'pending';
 ```
 
 **[END CODE]**
-
-**[SHOW SLIDE: Sample EXPLAIN ANALYZE output with annotations]**
 
 In the output, look for these key indicators.
 
@@ -275,8 +265,6 @@ In PostgreSQL, every statement outside an explicit BEGIN/COMMIT block is automat
 
 ### Section 7 — Exam Tips for Module 01
 
-**[SHOW SLIDE: Exam tip callouts]**
-
 Here are six exam tips specifically for the relational fundamentals domain.
 
 First: when a scenario describes a workload with ACID requirements in a single region, the answer is Cloud SQL. When it adds global distribution, the answer is Cloud Spanner.
@@ -294,8 +282,6 @@ Sixth: ON DELETE RESTRICT prevents deletion of a parent row when child rows exis
 ---
 
 ### Closing — Module 01 Wrap-Up
-
-**[SHOW SLIDE: Module 01 complete — next steps]**
 
 That completes Module 01. You now have the relational database and SQL foundation needed for every module that follows.
 

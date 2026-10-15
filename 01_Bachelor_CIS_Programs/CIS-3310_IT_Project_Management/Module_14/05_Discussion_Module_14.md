@@ -74,7 +74,7 @@ would change your recommendation?
 A project manager at a regional hospital network issued an RFP for a new patient portal
 implementation. The SOW in the RFP states: "The vendor shall implement a patient-facing
 web portal that allows patients to view records, schedule appointments, and communicate
-with providers. The portal shall be user-friendly and responsive."
+with providers. The portal shall be user-friendly and responsive.
 
 The contract was awarded and the vendor delivered a portal six months later. The hospital
 is dissatisfied. The portal has no mobile app, no integration with the existing EHR system,
@@ -99,19 +99,19 @@ product because the SOW created no enforceable standards.
 Three specific weaknesses and stronger rewrites:
 
 First, "user-friendly and responsive" is not measurable. A stronger criterion would be:
-"The portal shall render correctly on iOS Safari, Android Chrome, and desktop Chrome and
+The portal shall render correctly on iOS Safari, Android Chrome, and desktop Chrome and
 Firefox, with page load times not exceeding 3 seconds on a standard broadband connection,
-verified by automated testing."
+verified by automated testing.
 
 Second, EHR integration was not mentioned at all. A stronger deliverable would be:
-"The portal shall integrate bidirectionally with the hospital's Epic EHR system via
+The portal shall integrate bidirectionally with the hospital's Epic EHR system via
 the HL7 FHIR R4 API, displaying lab results, visit summaries, and medication lists in
-real time, with integration verified by a formal test plan."
+real time, with integration verified by a formal test plan.
 
 Third, "communicate with providers" is ambiguous. A stronger standard would be:
-"The secure messaging feature shall support real-time in-app messaging with a maximum
+The secure messaging feature shall support real-time in-app messaging with a maximum
 provider response time SLA of four business hours, with message delivery confirmed via
-read receipt."
+read receipt.
 
 The project manager should have convened a requirements workshop with clinical and IT
 stakeholders before drafting the SOW, and should have required vendor-proposed
@@ -136,10 +136,10 @@ to produce incorrect totals under a specific edge-case condition.
 The vendor's project manager calls Marcus and says, "Look, our team is already
 reassigned. We need you to sign off on acceptance today so we can issue our final
 invoice and close the books. The cosmetic stuff is a known issue — we'll patch it in
-the next version."
+the next version.
 
 Marcus's own project sponsor says, "Just sign off. We're out of contract period in
-eight days anyway. Legal says we'll lose any leverage we have after that."
+eight days anyway. Legal says we'll lose any leverage we have after that.
 
 ### Initial Post Prompt
 

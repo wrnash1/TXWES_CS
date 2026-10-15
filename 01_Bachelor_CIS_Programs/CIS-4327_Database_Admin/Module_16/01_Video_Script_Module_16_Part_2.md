@@ -247,14 +247,14 @@ Here is how all the modules connect for the exam:
 With the technical content reviewed, let's talk about how to approach the exam itself.
 
 **Read the full question**: Exam questions often have critical details near the end.
-"With minimal downtime" or "without changing the schema" or "using only managed
+With minimal downtime" or "without changing the schema" or "using only managed
 services" radically change the correct answer.
 
 **Eliminate clearly wrong answers first**: Most questions have one or two obviously
 incorrect options. Eliminating them narrows your choice and improves your odds
 on uncertain questions.
 
-**Watch for absolute language**: Answers containing "always," "never," or "all"
+**Watch for absolute language**: Answers containing "always," "never," or "all
 are often incorrect. GCP services have nuances and exceptions.
 
 **Identify the constraint**: Most questions have a stated constraint

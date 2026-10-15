@@ -316,7 +316,7 @@ An Escalation Rule is configured to fire after a Case has been open for 2 hours 
 
 - A) The Escalation Rule has not fired because Priority 2 Cases are exempt from time-based escalation
 - B) The Escalation Rule fired at 10:00 AM (2 hours after creation), changing the Priority to High and reassigning to Tier 2
-- C) The Escalation Rule fires only when an agent manually triggers it by clicking "Escalate"
+- C) The Escalation Rule fires only when an agent manually triggers it by clicking "Escalate
 - D) The Escalation Rule will not fire until a manager reviews and approves the escalation
 
 - **Correct Answer:** B
@@ -394,7 +394,7 @@ A company wants to measure its Service Cloud team's performance on first contact
 
 A company deploys Salesforce Service Cloud with Email-to-Case, Web-to-Case, Chat, and Phone (via CTI). An administrator wants to ensure that when an agent is on a phone call via CTI, they cannot simultaneously receive a new Chat session, but can still receive a new Case from the queue. Which Omni-Channel configuration controls this?
 
-- A) Presence Statuses with different channel availability settings for "On Call" versus "Available"
+- A) Presence Statuses with different channel availability settings for "On Call" versus "Available
 - B) Escalation Rules that pause Chat routing during active phone calls
 - C) Validation Rules on the Case that block creation during active CTI sessions
 - D) Case Assignment Rules that exclude agents with active phone sessions from Case routing

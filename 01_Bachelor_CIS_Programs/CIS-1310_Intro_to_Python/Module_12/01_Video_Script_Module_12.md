@@ -26,33 +26,25 @@
 
 ---
 
-## [00:00 – 00:45] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 12 | Exception Handling | CIS-1310"]**
-
-"Welcome back. Every program you write will eventually encounter unexpected input, missing files, or invalid operations. The question is not whether errors will happen — it is whether your program handles them gracefully or crashes with a traceback the user does not understand.
+Welcome back. Every program you write will eventually encounter unexpected input, missing files, or invalid operations. The question is not whether errors will happen — it is whether your program handles them gracefully or crashes with a traceback the user does not understand.
 
 Python's exception handling system — `try`, `except`, `else`, and `finally` — gives you complete control over what happens when things go wrong. The PCAP exam tests the exact execution order of these clauses, how to catch multiple exception types, and how to raise exceptions yourself.
 
-This module is the difference between code that works only in ideal conditions and code that works in the real world."
+This module is the difference between code that works only in ideal conditions and code that works in the real world.
 
 ---
 
-## [00:45 – 03:00] try and except — The Basic Pattern
+## try and except — The Basic Pattern
 
-**[SHOW SLIDE: "try / except — Catching Exceptions"]**
-
-"Without exception handling, a bad conversion crashes the program immediately:
-
-**[DEMO — unhandled exception]**
+Without exception handling, a bad conversion crashes the program immediately:
 
 ```python
 value = int('hello')    # ValueError: invalid literal for int() with base 10: 'hello'
 ```
 
 With exception handling:
-
-**[DEMO — basic try/except]**
 
 ```python
 try:
@@ -71,11 +63,7 @@ That is not a valid number.
 Program continues...
 ```
 
-[PAUSE]
-
 Here is exactly what Python does: it executes the `try` block line by line. When `int('hello')` raises `ValueError`, Python immediately stops executing the `try` block — the `print('Converted:', value)` line is **skipped** — and jumps to the matching `except ValueError:` clause. After the `except` block finishes, execution continues normally after the entire try-except structure.
-
-**[DEMO — accessing the exception message with `as`]**
 
 ```python
 try:
@@ -90,17 +78,13 @@ Output:
 Error caught: division by zero
 ```
 
-The `as e` syntax binds the exception object to the name `e`. `str(e)` gives you the message."
+The `as e` syntax binds the exception object to the name `e`. `str(e)` gives you the message.
 
 ---
 
-## [03:00 – 05:00] Multiple except Clauses — Order Matters
+## Multiple except Clauses — Order Matters
 
-**[SHOW SLIDE: "Multiple except Clauses — Specific Before General"]**
-
-"A single `try` block can have multiple `except` clauses, each catching a different exception type. Python checks them top to bottom and executes the **first** matching one.
-
-**[DEMO — multiple handlers]**
+A single `try` block can have multiple `except` clauses, each catching a different exception type. Python checks them top to bottom and executes the **first** matching one.
 
 ```python
 def safe_divide(a, b):
@@ -117,16 +101,12 @@ safe_divide(10, 0)            # Cannot divide by zero.
 safe_divide(10, 'x')          # Both arguments must be numbers.
 ```
 
-**[DEMO — catching multiple types in one clause]**
-
 ```python
 try:
     value = int(input('Enter a number: '))
 except (ValueError, TypeError) as e:
     print(f'Input error: {e}')
 ```
-
-**[DEMO — the ordering bug: broad before specific]**
 
 ```python
 try:
@@ -142,8 +122,6 @@ Output:
 ```text
 Generic error
 ```
-
-[PAUSE]
 
 `ValueError` is a subclass of `Exception`. When Python checks the `except Exception:` clause first, it matches — and the `except ValueError:` clause below it is never reached. Always put **specific** exceptions before **general** ones.
 
@@ -166,11 +144,9 @@ Value error
 
 ---
 
-## [05:00 – 07:30] else and finally — Execution Flow
+## else and finally — Execution Flow
 
-**[SHOW SLIDE: "else and finally — The Full try-except Structure"]**
-
-"The complete try-except structure has four clauses:
+The complete try-except structure has four clauses:
 
 ```python
 try:
@@ -182,8 +158,6 @@ else:
 finally:
     # ALWAYS runs — exception or not
 ```
-
-**[DEMO — all four clauses]**
 
 ```python
 def read_number(s):
@@ -218,11 +192,7 @@ finally: always runs
 after the block
 ```
 
-[PAUSE]
-
 Read this output carefully. For valid input: `try` succeeds, `except` is skipped, `else` runs, `finally` runs. For invalid input: `try` raises ValueError, `except` runs, `else` is **skipped**, `finally` runs. The `else` clause is the success-only path. `finally` is unconditional.
-
-**[DEMO — finally with return — the PCAP trap]**
 
 ```python
 def demo():
@@ -242,17 +212,13 @@ finally runs before the return!
 from try
 ```
 
-Even with a `return` statement inside `try`, `finally` executes first — before the return value is handed back to the caller. This is a classic PCAP exam question. `finally` **always** runs."
+Even with a `return` statement inside `try`, `finally` executes first — before the return value is handed back to the caller. This is a classic PCAP exam question. `finally` **always** runs.
 
 ---
 
-## [07:30 – 09:30] raise and Re-raise
+## raise and Re-raise
 
-**[SHOW SLIDE: "raise — Triggering Exceptions Intentionally"]**
-
-"Sometimes you need to signal that something is wrong yourself — user passed a negative age, a required field is empty, a value is out of range. The `raise` statement lets you create and throw any exception.
-
-**[DEMO — raise with a message]**
+Sometimes you need to signal that something is wrong yourself — user passed a negative age, a required field is empty, a value is out of range. The `raise` statement lets you create and throw any exception.
 
 ```python
 def set_age(age):
@@ -273,8 +239,6 @@ Output:
 ```text
 Invalid age: Age cannot be negative: -5
 ```
-
-**[DEMO — re-raise with bare raise]**
 
 ```python
 def process(data):
@@ -297,15 +261,13 @@ Logging: bad data received
 Outer handler: invalid literal for int() with base 10: 'bad'
 ```
 
-A bare `raise` with no argument re-raises the most recently caught exception, preserving its original type, message, and traceback. This is useful when you want to log or note an error but still propagate it up the call stack."
+A bare `raise` with no argument re-raises the most recently caught exception, preserving its original type, message, and traceback. This is useful when you want to log or note an error but still propagate it up the call stack.
 
 ---
 
-## [09:30 – 11:00] The Exception Hierarchy
+## The Exception Hierarchy
 
-**[SHOW SLIDE: "Python Exception Hierarchy"]**
-
-"Python exceptions form a class hierarchy. Here are the most important ones:
+Python exceptions form a class hierarchy. Here are the most important ones:
 
 ```text
 BaseException
@@ -329,8 +291,6 @@ BaseException
 
 The `except` clause matches the specified exception **or any of its subclasses**. `except Exception:` catches everything in the `Exception` branch — which includes nearly all runtime errors. `except BaseException:` would also catch `SystemExit` and `KeyboardInterrupt` — almost never what you want.
 
-**[DEMO — bare except vs except Exception]**
-
 ```python
 # bare except — catches EVERYTHING including Ctrl+C
 try:
@@ -345,13 +305,11 @@ except Exception:
     pass    # KeyboardInterrupt can still exit the program
 ```
 
-Always use `except SomeSpecificError:` in production code. Use `except Exception:` as a last-resort fallback only, and never use bare `except:` unless you have a very specific reason."
+Always use `except SomeSpecificError:` in production code. Use `except Exception:` as a last-resort fallback only, and never use bare `except:` unless you have a very specific reason.
 
 ---
 
-## [11:00 – 13:30] input_validator.py — Complete Exception Handling Program
-
-**[DEMO — live code]**
+## input_validator.py — Complete Exception Handling Program
 
 ```python
 # input_validator.py
@@ -415,11 +373,9 @@ Output (non-interactive portion):
 
 ---
 
-## [13:30 – 15:00] PCAP Exam Tips and Wrap-Up
+## PCAP Exam Tips and Wrap-Up
 
-**[SHOW SLIDE: "Module 12 — PCAP Alignment"]**
-
-"Key exam take-aways:
+Key exam take-aways:
 
 **1.** Execution order: `try` runs first. If exception → `except`. If no exception → `else`. `finally` always runs regardless.
 
@@ -435,7 +391,7 @@ Output (non-interactive portion):
 
 **7.** `except ValueError as e:` binds the exception object to `e`. `str(e)` gives the error message.
 
-Module 13 covers modules and packages — how to organize Python code across files, use the standard library, and install third-party packages with pip. See you there."
+Module 13 covers modules and packages — how to organize Python code across files, use the standard library, and install third-party packages with pip. See you there.
 
 ---
 

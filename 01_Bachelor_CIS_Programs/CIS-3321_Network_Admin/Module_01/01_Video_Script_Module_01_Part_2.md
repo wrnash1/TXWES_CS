@@ -25,24 +25,15 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: "Module 01 Part 2 — Network Topologies, TCP/IP Model Comparison, and Lab Preview"]
-
 ---
 
 ### Section 1: Part 2 Introduction
-
-[00:00 – 00:45]
-
-[SHOW SLIDE: Professor Nash on camera]
 
 Welcome back to Module 01. In Part 1, we broke down all seven OSI layers, learned the PDU names, and walked through the encapsulation process. Now in Part 2, we connect those concepts to real-world network design with topologies, compare the OSI model to the TCP/IP model you will encounter in practice, look at exam strategy, and preview your lab.
 
 ---
 
 ### Section 2: Physical Network Topologies
-
-[00:45 – 04:00]
-
 <div style="text-align: center; margin: 24px 0;">
 <svg viewBox="0 0 850 490" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
   <rect width="100%" height="45" fill="#1b365d"/>
@@ -135,8 +126,6 @@ Welcome back to Module 01. In Part 1, we broke down all seven OSI layers, learne
 </svg>
 </div>
 
-[SHOW DIAGRAM: Three labeled network diagrams side by side. Left: Bus topology — a single horizontal cable with five workstations tapping into it via T-connectors. Center: Ring topology — eight workstations arranged in a circle, each connected to the next. Right: Star topology — a central switch in the middle with six workstations connected by individual cables radiating outward.]
-
 [Alt-text: Three network topology diagrams. Left diagram shows a Bus topology: a horizontal line represents a coaxial cable, with five computers connected to it at intervals using T-connectors. A terminator is shown at each end. Center diagram shows a Ring topology: eight computers are arranged in a circle, with cables connecting each computer to its two neighbors. Right diagram shows a Star topology: a central switch is in the middle, and six computers connect to it with individual cables extending outward like spokes on a wheel.]
 
 A network topology describes how devices are arranged and connected. There are three classic physical topologies you must know for the Network+ exam.
@@ -153,10 +142,6 @@ The Star topology is the dominant topology in modern LANs. Every device connects
 
 ### Section 3: Logical Topologies vs. Physical Topologies
 
-[04:00 – 06:30]
-
-[SHOW DIAGRAM: A Star topology diagram (central switch with four workstations). A red dashed arrow traces a path: Workstation A sends to the Switch, Switch forwards to Workstation B, Workstation B responds back through the Switch to Workstation A. A label reads "Physical Topology: Star" and "Logical Topology: Depends on traffic flow."]
-
 [Alt-text: A Star topology diagram showing a central switch connected to four workstations labeled A, B, C, and D. A red dashed arrow shows data flowing from Workstation A to the central switch, then from the switch to Workstation B. A second arrow shows the response path from B back through the switch to A. Text labels indicate the physical layout is a Star, while the logical flow is point-to-point through the switch.]
 
 Here is a concept that trips up many students on the Network+ exam: physical topology is not the same as logical topology.
@@ -170,10 +155,6 @@ Today, most networks are physically a star and logically a bus — data broadcas
 ---
 
 ### Section 4: The TCP/IP Model vs. the OSI Model
-
-[06:30 – 09:00]
-
-[SHOW DIAGRAM: Two side-by-side models. Left: OSI Model (7 layers, labeled 1–7 bottom to top). Right: TCP/IP Model (4 layers). Lines connect the OSI layers to their corresponding TCP/IP layers: OSI Layers 5, 6, 7 map to TCP/IP Application layer. OSI Layer 4 maps to TCP/IP Transport layer. OSI Layer 3 maps to TCP/IP Internet layer. OSI Layers 1, 2 map to TCP/IP Network Access layer.]
 
 [Alt-text: Two vertical diagrams shown side by side. On the left is the OSI model with seven layers numbered bottom to top from Physical to Application. On the right is the TCP/IP model with four layers bottom to top: Network Access, Internet, Transport, and Application. Horizontal lines connect the two models, showing that OSI Layers 1 and 2 map to TCP/IP Network Access, OSI Layer 3 maps to TCP/IP Internet, OSI Layer 4 maps to TCP/IP Transport, and OSI Layers 5 through 7 collectively map to TCP/IP Application.]
 
@@ -191,10 +172,6 @@ When you are troubleshooting in the real world, you typically think in TCP/IP te
 
 ### Section 5: Applying the OSI Model to Troubleshooting
 
-[09:00 – 10:30]
-
-[SHOW SLIDE: A seven-step troubleshooting flowchart labeled "OSI Troubleshooting — Bottom Up". Each step corresponds to an OSI layer question: Layer 1: Is the cable connected? Layer 2: Is the switch port active and showing a MAC address? Layer 3: Is there a valid IP address and can we reach the gateway? Layer 4: Is the TCP connection completing the three-way handshake? Layers 5–7: Is the application responding correctly?]
-
 One of the most valuable uses of the OSI model is systematic troubleshooting. Network engineers commonly troubleshoot "bottom-up" — they start at Layer 1 and work their way up until they find the problem.
 
 If a user says "I can't reach the internet," the bottom-up approach goes like this. Layer 1 — is the network cable plugged in? Is the link light on? Layer 2 — does the NIC have a valid MAC address? Is the switch port up? Layer 3 — does the host have a valid IP address and default gateway? Can we ping the gateway? Layer 4 — is the TCP handshake completing? Are ports being blocked? Layer 7 — is the web server responding to HTTP requests? Is DNS resolving the hostname?
@@ -204,10 +181,6 @@ This systematic approach prevents technicians from jumping straight to advanced 
 ---
 
 ### Section 6: Lab Preview and Exam Tips
-
-[10:30 – 12:00]
-
-[SHOW SLIDE: Lab preview screenshot showing Cisco Packet Tracer with two PCs connected to a switch]
 
 In this week's lab, you will use Cisco Packet Tracer to build a simple star topology, assign IP addresses, and test connectivity using the ping command. You will also use Packet Tracer's simulation mode to watch frames move through the network layer by layer — you can literally watch the encapsulation and decapsulation process happen in real time.
 
@@ -230,8 +203,6 @@ The TCP/IP model has four layers. Know how they map to the OSI model.
 ---
 
 ### Section 7: Module 01 Closing
-
-[SHOW SLIDE: Module 01 key takeaways bullet list]
 
 That wraps up Module 01. Here are your key takeaways:
 

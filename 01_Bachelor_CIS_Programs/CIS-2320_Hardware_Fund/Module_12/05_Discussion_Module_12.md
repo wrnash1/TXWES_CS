@@ -26,10 +26,10 @@ A 30-person accounting firm has outgrown its original network. The current setup
 
 ## Scenario B — The Wiring Closet Problem
 
-A university IT department receives a help desk ticket: "Twelve students in Lab 204 have no network connectivity. The computers were working yesterday." A technician goes to the wiring closet and finds that someone reorganized the rack and moved several patch cables. The managed switch shows all 24 ports as active with green LEDs. The students' computers show "Network cable unplugged."
+A university IT department receives a help desk ticket: "Twelve students in Lab 204 have no network connectivity. The computers were working yesterday." A technician goes to the wiring closet and finds that someone reorganized the rack and moved several patch cables. The managed switch shows all 24 ports as active with green LEDs. The students' computers show "Network cable unplugged.
 
 1. Explain how a patch panel and a managed switch work together in a structured cabling installation. Why would moving patch cables in the wiring closet cause workstations in a classroom to lose connectivity even though the switch shows active ports?
-2. The technician suspects the patch cables from the Lab 204 wall jack ports are now plugged into the wrong switch ports — ports assigned to a different VLAN. Explain what a VLAN is, which device enforces VLAN segmentation, and why a workstation on the wrong VLAN would show "Network cable unplugged" rather than just "No internet access."
+2. The technician suspects the patch cables from the Lab 204 wall jack ports are now plugged into the wrong switch ports — ports assigned to a different VLAN. Explain what a VLAN is, which device enforces VLAN segmentation, and why a workstation on the wrong VLAN would show "Network cable unplugged" rather than just "No internet access.
 3. What documentation should the IT department maintain to prevent this type of problem from recurring, and what labeling practice should be applied to patch panel ports?
 
 ---

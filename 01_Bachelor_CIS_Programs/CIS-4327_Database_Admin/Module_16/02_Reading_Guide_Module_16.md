@@ -148,9 +148,9 @@ Key design decisions tested:
 
 Common design question patterns:
 
-- "A startup needs a relational database that scales globally with zero downtime. Which service?"
-- "A table receives millions of timestamp-keyed writes per second. What Spanner key design prevents hotspots?"
-- "Which Cloud SQL availability type provides automatic failover within a region?"
+- "A startup needs a relational database that scales globally with zero downtime. Which service?
+- "A table receives millions of timestamp-keyed writes per second. What Spanner key design prevents hotspots?
+- "Which Cloud SQL availability type provides automatic failover within a region?
 
 ### 2.2 Section 2: Manage (20%)
 
@@ -480,8 +480,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

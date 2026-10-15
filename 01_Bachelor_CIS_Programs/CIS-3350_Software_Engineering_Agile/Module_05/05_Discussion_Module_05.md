@@ -29,7 +29,7 @@ Sub-questions:
 
 ## Scenario B — Groundhog Day Retrospectives
 
-The Horizon Team has been running Sprint Retrospectives faithfully every Sprint for eight months. In every Retrospective, the same three issues come up: unclear requirements at Sprint Planning, unplanned work injected mid-Sprint by the VP of Engineering, and insufficient time for code review. The team writes the issues on sticky notes, the Scrum Master photographs them, and the meeting ends. In Sprint 9, the same three issues appear again. A Developer says: "What's the point of these Retrospectives? Nothing ever changes."
+The Horizon Team has been running Sprint Retrospectives faithfully every Sprint for eight months. In every Retrospective, the same three issues come up: unclear requirements at Sprint Planning, unplanned work injected mid-Sprint by the VP of Engineering, and insufficient time for code review. The team writes the issues on sticky notes, the Scrum Master photographs them, and the meeting ends. In Sprint 9, the same three issues appear again. A Developer says: "What's the point of these Retrospectives? Nothing ever changes.
 
 Sub-questions:
 
@@ -41,7 +41,7 @@ Sub-questions:
 
 ## Scenario C — The Vulnerable Retrospective
 
-You are a new Scrum Master at a company where the engineering culture is highly competitive. Developers rarely admit when they are stuck because being stuck is seen as weakness. The existing Retrospective format asks team members to share what "didn't go well" — but no one ever says anything negative. The Scrum Master before you noted in their handoff document: "Retrospectives are pointless here — developers won't be honest."
+You are a new Scrum Master at a company where the engineering culture is highly competitive. Developers rarely admit when they are stuck because being stuck is seen as weakness. The existing Retrospective format asks team members to share what "didn't go well" — but no one ever says anything negative. The Scrum Master before you noted in their handoff document: "Retrospectives are pointless here — developers won't be honest.
 
 Sub-questions:
 

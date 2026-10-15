@@ -15,7 +15,7 @@ We will cover everything from social engineering and malware analysis to cryptog
 **Estimated Duration:** 3 minutes
 **Visual:** Instructor on camera.
 **Audio:** "Welcome to Information Systems Security. I'm Professor Nash. Security is not just about installing a firewall or running antivirus software. It is a mindset. It is about understanding the CIA triad: Confidentiality, Integrity, and Availability.
-In this course, we will look at security from both the attacker's perspective and the defender's perspective. You will learn how to identify vulnerabilities using tools like Nmap, and how to mitigate them using network segmentation and encryption. Your ultimate goal is to pass the CompTIA Security+ exam. The material is dense, the vocabulary is extensive, but the reward is a highly sought-after career skillset. Let's begin."
+In this course, we will look at security from both the attacker's perspective and the defender's perspective. You will learn how to identify vulnerabilities using tools like Nmap, and how to mitigate them using network segmentation and encryption. Your ultimate goal is to pass the CompTIA Security+ exam. The material is dense, the vocabulary is extensive, but the reward is a highly sought-after career skillset. Let's begin.
 
 ---
 

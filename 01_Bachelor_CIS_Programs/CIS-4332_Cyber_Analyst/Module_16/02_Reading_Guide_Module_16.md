@@ -409,8 +409,6 @@ CompTIA's official adaptive practice question platform for CySA+ provides scenar
 - CompTIA CertMaster Learn or Professor Messer's CySA+ course (recommended supplemental)
 - Module 16 Video Lecture (Professor Nash)
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

@@ -268,7 +268,7 @@ SUID on directories is not standard and has no defined behavior in the Linux+ ob
 on SUID on files.
 
 find -perm /4000 finds SUID files. find -perm /2000 finds SGID files. find -perm /1000 finds
-sticky bit directories. The /N syntax means "files that have any of these bits set."
+sticky bit directories. The /N syntax means "files that have any of these bits set.
 
 The passwd command is the canonical SUID example. Know it.
 

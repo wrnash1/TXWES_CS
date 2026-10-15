@@ -17,7 +17,7 @@ and should demonstrate your understanding of the Agile concepts from Module 15.
 
 ---
 
-## Scenario 1: "We Do Agile But Nothing Changed"
+## Scenario 1: "We Do Agile But Nothing Changed
 
 Greenfield Insurance hired an Agile coach six months ago and officially transitioned
 all IT development teams to Scrum. They renamed their project phases to sprints, their
@@ -90,7 +90,7 @@ used a similar product, so stakeholder expectations are uncertain.
 
 Recommend a project management approach for each project — waterfall, Agile (Scrum or
 Kanban), or hybrid — and justify your recommendation. Apply specific criteria from the
-module to support your reasoning. Do not simply assert that "Agile is always better"
+module to support your reasoning. Do not simply assert that "Agile is always better
 or "waterfall is outdated" — engage with the actual project characteristics. Your
 response should be 200–225 words.
 

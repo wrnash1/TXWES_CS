@@ -186,11 +186,11 @@ Field mapping can be simple or complex. Simple mapping is direct: Source field A
 
 **Concatenation:** combining First_Name and Last_Name into a single Full_Name field.
 
-**Lookup/Reference:** translating a numeric code in the source to a text value in the target — for example, SAP plant code 1001 maps to Salesforce account "Dallas Facility."
+**Lookup/Reference:** translating a numeric code in the source to a text value in the target — for example, SAP plant code 1001 maps to Salesforce account "Dallas Facility.
 
 **Default values:** if the source field is blank, populate the target with a default.
 
-**Conditional logic:** if the source status is "C," set the target status to "Closed"; if "O," set to "Open."
+**Conditional logic:** if the source status is "C," set the target status to "Closed"; if "O," set to "Open.
 
 **Type conversion:** converting SAP date format YYYYMMDD to ISO 8601 YYYY-MM-DD.
 
@@ -289,8 +289,6 @@ SAP essentials certification expects conceptual knowledge of:
 ---
 
 *Document prepared for CIS-4320 instructional use. Texas Wesleyan University. Proprietary and Confidential.*
-
-
 
 ---
 

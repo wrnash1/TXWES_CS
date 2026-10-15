@@ -14,7 +14,7 @@ This lab applies SAP MM concepts through scenario-based analysis. You will trace
 
 **Estimated Time:** 90–110 minutes
 
-**Submission:** Upload a single PDF to Canvas under "Lab 10 — SAP Materials Management."
+**Submission:** Upload a single PDF to Canvas under "Lab 10 — SAP Materials Management.
 
 ---
 
@@ -209,7 +209,7 @@ In 100–150 words, explain how the Valuation Class in the Material Master Accou
 2. Journal entries must be in debit/credit table format — account number, account name, D/C, amount.
 3. Calculations must be shown.
 4. Name your file: `Lab10_LastName_FirstName.pdf`
-5. Upload to Canvas under "Lab 10 — SAP Materials Management."
+5. Upload to Canvas under "Lab 10 — SAP Materials Management.
 6. Deadline: See course schedule. Late submissions lose 10 points per day.
 
 ---

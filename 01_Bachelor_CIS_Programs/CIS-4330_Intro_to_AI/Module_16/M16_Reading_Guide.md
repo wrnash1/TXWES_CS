@@ -255,15 +255,15 @@ Is the application a user-facing web app? → **Online endpoint**
 
 #### Common Multi-Service Scenarios
 
-**Scenario:** "A company wants to analyze customer support chat transcripts to identify common complaint topics and sentiment."
+**Scenario:** "A company wants to analyze customer support chat transcripts to identify common complaint topics and sentiment.
 
 Services needed: **Azure AI Language** (key phrase extraction + sentiment analysis)
 
-**Scenario:** "A call center wants to automatically transcribe phone calls, then analyze each call for customer satisfaction."
+**Scenario:** "A call center wants to automatically transcribe phone calls, then analyze each call for customer satisfaction.
 
 Services needed: **Azure AI Speech** (transcription) + **Azure AI Language** (sentiment analysis)
 
-**Scenario:** "A multilingual website wants to detect the language of each user review and translate it to English before sentiment analysis."
+**Scenario:** "A multilingual website wants to detect the language of each user review and translate it to English before sentiment analysis.
 
 Services needed: **Azure AI Language** (language detection) + **Azure AI Translator** (translation) + **Azure AI Language** (sentiment)
 
@@ -473,8 +473,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

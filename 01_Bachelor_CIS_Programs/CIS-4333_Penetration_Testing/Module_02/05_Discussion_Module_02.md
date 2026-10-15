@@ -32,7 +32,7 @@ Discuss: What are the tester's ethical and potential legal obligations in this s
 
 ## Scenario C — The Cloud Permission Gap
 
-A small business client engages your firm for a full penetration test of their environment. Their website, API, and customer database are all hosted on a popular cloud platform. The client signs a complete RoE and authorization letter. When you ask whether they have reviewed the cloud provider's penetration testing policy, the client says "we pay for the service, we own the data, we can authorize whatever we want."
+A small business client engages your firm for a full penetration test of their environment. Their website, API, and customer database are all hosted on a popular cloud platform. The client signs a complete RoE and authorization letter. When you ask whether they have reviewed the cloud provider's penetration testing policy, the client says "we pay for the service, we own the data, we can authorize whatever we want.
 
 Discuss: Is the client's reasoning legally correct? What specific risks does the testing firm face if they proceed without reviewing the cloud provider's policy? How would you explain the third-party authorization requirement to the client in a way that is professional and does not damage the relationship? What steps must occur before testing the cloud-hosted assets can begin?
 

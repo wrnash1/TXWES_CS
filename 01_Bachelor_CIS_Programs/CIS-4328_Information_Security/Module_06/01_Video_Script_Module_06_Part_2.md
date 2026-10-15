@@ -172,7 +172,7 @@ The Security+ exam tests four access control models. Know the defining character
 
 #### Trap 1: OAuth 2.0 is Not Authentication
 
-"A developer implements OAuth 2.0 so users can sign in with their Google account. What does OAuth 2.0 provide?"
+A developer implements OAuth 2.0 so users can sign in with their Google account. What does OAuth 2.0 provide?
 
 Wrong answer: authentication.
 
@@ -188,7 +188,7 @@ The exam will present a scenario and ask which protocol is appropriate. Key disc
 
 #### Trap 3: MFA Factor Categories
 
-"A user logs in with a password and answers a secret question. How many authentication factors are used?"
+A user logs in with a password and answers a secret question. How many authentication factors are used?
 
 Wrong answer: two (two-factor authentication).
 
@@ -196,11 +196,11 @@ Correct answer: **one factor** — both are "something you know." MFA requires f
 
 #### Trap 4: Kerberos vs. NTLM
 
-"Which authentication protocol is used by default in modern Active Directory environments?"
+Which authentication protocol is used by default in modern Active Directory environments?
 
 Correct answer: **Kerberos**. NTLM is a legacy fallback.
 
-"A penetration tester captures NTLM hashes on a Windows network. What attack is being set up?"
+A penetration tester captures NTLM hashes on a Windows network. What attack is being set up?
 
 Answer: **Pass-the-Hash** — NTLM hashes can be used directly for authentication without knowing the plaintext password.
 

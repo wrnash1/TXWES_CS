@@ -130,7 +130,7 @@ A developer writes a DELETE route handler but adds `return res.status(204).json(
 
 **Distractor Analysis:**
 
-- Why A is incorrect: The HTTP specification explicitly defines `204` as having no response body — `{}` is not semantically equivalent to "no body."
+- Why A is incorrect: The HTTP specification explicitly defines `204` as having no response body — `{}` is not semantically equivalent to "no body.
 - Why B is incorrect: Express does not throw when `json({})` is called — it sends the JSON body without error, but the resulting response violates the spec.
 - Why C is correct: `204` must have no body per RFC 7231 — use `res.status(204).send()` for DELETE success responses.
 - Why D is incorrect: Postman and Thunder Client do not block `204` responses — they display whatever the server returns.

@@ -234,7 +234,7 @@ The Pareto chart's 80/20 principle means you should focus your corrective action
 The Ishikawa diagram is a brainstorming tool for root cause analysis. It identifies potential causes of a problem. The corrective action comes after the diagram is analyzed — the diagram itself does not solve the problem.
 
 **Tip 5 — Control chart = out-of-control process:**
-If an exam scenario describes data points outside the control limits, the answer involves a Control Chart and an investigation of special cause variation. Control charts are also the answer for "monitoring process stability over time."
+If an exam scenario describes data points outside the control limits, the answer involves a Control Chart and an investigation of special cause variation. Control charts are also the answer for "monitoring process stability over time.
 
 **Tip 6 — Grade vs. quality:**
 A product can be low grade (basic features) and high quality (works perfectly as promised). A product can be high grade (many features) and low quality (broken, unreliable). The exam tests this distinction with scenario questions about customer satisfaction.
@@ -407,8 +407,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

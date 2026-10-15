@@ -530,8 +530,6 @@ Splunk Security Essentials is a free Splunk app providing a library of detection
 <https://www.cisa.gov/sites/default/files/publications/CISA_Cyber_Essentials_Toolkit_6.pdf>
 CISA's guidance document covering security orchestration and automation for organizations building or maturing SOC capabilities. Reading this alongside Section 7 of this guide reinforces when SOAR automation is appropriate, what tasks are best automated versus reserved for human judgment, and how automation supports faster response metrics.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

@@ -1,5 +1,23 @@
 # Video Script: Module 06 - EtherChannel Link Aggregation
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course &bull; Module 06</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" title="Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 2: Network Access - 20%)
 **Estimated Duration:** 21 minutes
@@ -7,13 +25,10 @@
 
 ---
 
-## Section 1: Introduction - The Problem EtherChannel Solves [00:00 - 03:00]
-
+## Section 1: Introduction - The Problem EtherChannel Solves
 Welcome to Module 06. I am Professor Nash. Today we cover EtherChannel — Cisco's link aggregation technology that combines multiple physical Ethernet links into one logical channel.
 
 Here is the problem. Between two switches, you might have redundant cables for reliability. But STP blocks all but one of those links. You are paying for redundancy but getting no bandwidth benefit from it. EtherChannel solves this by bundling those redundant links into a single logical port-channel that STP sees as one interface. STP does not block anything because there is only one logical link.
-
-[SHOW DIAGRAM: Two switches with three physical cables between them. Left side shows STP blocking two of the three cables. Right side shows EtherChannel bundling all three into one logical port-channel, with bandwidth labeled as 3 Gbps combined]
 
 Today's topics:
 
@@ -26,11 +41,8 @@ Today's topics:
 
 ---
 
-## Section 2: LACP and PAgP Protocol Comparison [03:00 - 08:00]
-
+## Section 2: LACP and PAgP Protocol Comparison
 EtherChannel can be formed using three methods: LACP (dynamic, open standard), PAgP (dynamic, Cisco-proprietary), or static (no protocol, manual).
-
-[SHOW DIAGRAM: Three-column comparison table: LACP, PAgP, and Static (On) with rows for Standard, Vendor, Modes, and Compatibility]
 
 ### LACP - Link Aggregation Control Protocol
 
@@ -60,9 +72,7 @@ CCNA Exam Tip: The exam tests passive + passive (LACP) and auto + auto (PAgP) �
 
 ---
 
-## Section 3: EtherChannel Configuration [08:00 - 13:30]
-
-[SHOW DIAGRAM: Two switches (SW1 and SW2) with Gi0/0 and Gi0/1 bundled into Port-Channel 1 on each switch]
+## Section 3: EtherChannel Configuration
 
 To configure EtherChannel using LACP on SW1:
 
@@ -98,8 +108,7 @@ CCNA Exam Tip: Always configure the trunk settings on the port-channel interface
 
 ---
 
-## Section 4: EtherChannel Requirements and Load Balancing [13:30 - 18:00]
-
+## Section 4: EtherChannel Requirements and Load Balancing
 ### EtherChannel Member Port Requirements
 
 All member ports in an EtherChannel must have matching configurations. A mismatch causes the channel to fail or ports to be suspended.
@@ -110,8 +119,6 @@ Matching requirements:
 - VLAN membership or trunk settings (access VLAN or allowed VLAN list must match)
 - STP settings (port cost, port priority)
 - Native VLAN (on trunk EtherChannels)
-
-[SHOW DIAGRAM: Two switches with three cables. One cable labeled with a speed mismatch (100 Mbps vs 1 Gbps). The show etherchannel summary output shows that mismatched port as "S" (suspended)]
 
 ### Load Balancing
 
@@ -136,16 +143,13 @@ CCNA Exam Tip: EtherChannel does not split individual packet streams across link
 
 ---
 
-## Section 5: Verification and Lab Preview [18:00 - 21:00]
-
+## Section 5: Verification and Lab Preview
 ```ios
 SW1# show etherchannel summary
 SW1# show etherchannel 1 detail
 SW1# show interfaces port-channel 1
 SW1# show etherchannel load-balance
 ```
-
-[SHOW DIAGRAM: Terminal output of show etherchannel summary with flag legend at top showing D=down, S=layer2, U=in use, P=bundled, I=standalone, s=suspended]
 
 The `show etherchannel summary` output shows:
 

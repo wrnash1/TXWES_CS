@@ -461,8 +461,6 @@ SANS provides free downloadable reference posters covering Windows forensic arti
 <https://volatilityfoundation.org/>
 The official documentation and plugin reference for the Volatility memory analysis framework. Even without a lab environment, reviewing the plugin list and reading example analysis walkthroughs builds understanding of what memory forensics can reveal — running processes, network connections, injected code, and encryption keys in RAM — reinforcing the volatile evidence concepts in Section 1 of this module.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

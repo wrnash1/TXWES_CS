@@ -348,7 +348,7 @@ A project manager receives a report showing that three risk triggers have fired 
 
 ## Question 18
 
-Which risk identification technique involves the team brainstorming all possible risks using a structured prompt such as "What could prevent us from delivering this milestone on time?"
+Which risk identification technique involves the team brainstorming all possible risks using a structured prompt such as "What could prevent us from delivering this milestone on time?
 
 - A) Delphi technique
 - B) Root cause analysis

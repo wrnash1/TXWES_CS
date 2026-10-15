@@ -103,11 +103,11 @@ BABOK classifies requirements into four categories:
 
 ### 1.2 Functional Requirement
 
-A functional requirement describes a specific behavior, action, or capability the system must perform. It answers the question "What does the system do?" Functional requirements are testable: for every functional requirement, a QA analyst should be able to write a test case with a clear pass/fail outcome. Example: "The system shall send an email notification to the customer when their order status changes to Shipped."
+A functional requirement describes a specific behavior, action, or capability the system must perform. It answers the question "What does the system do?" Functional requirements are testable: for every functional requirement, a QA analyst should be able to write a test case with a clear pass/fail outcome. Example: "The system shall send an email notification to the customer when their order status changes to Shipped.
 
 ### 1.3 Non-Functional Requirement (Quality Attribute)
 
-A non-functional requirement specifies a quality characteristic or constraint the system must exhibit, rather than a specific function it must perform. It answers the question "How well does the system do it?" Categories include performance, security, availability, scalability, usability, and maintainability. Example: "The system shall respond to any product search query within 2 seconds under a load of 500 concurrent users."
+A non-functional requirement specifies a quality characteristic or constraint the system must exhibit, rather than a specific function it must perform. It answers the question "How well does the system do it?" Categories include performance, security, availability, scalability, usability, and maintainability. Example: "The system shall respond to any product search query within 2 seconds under a load of 500 concurrent users.
 
 ### 1.4 Business Rule
 
@@ -121,8 +121,8 @@ Requirements traceability is the ability to link each requirement both backward 
 
 These are two distinct quality activities in BABOK KA 5:
 
-- Verification: checks that requirements are well-formed — specific, measurable, consistent, complete, and testable. Asks: "Are we building the requirements right?"
-- Validation: checks that requirements represent the actual business need — that implementing them will solve the real problem. Asks: "Are we building the right requirements?"
+- Verification: checks that requirements are well-formed — specific, measurable, consistent, complete, and testable. Asks: "Are we building the requirements right?
+- Validation: checks that requirements represent the actual business need — that implementing them will solve the real problem. Asks: "Are we building the right requirements?
 
 A requirements document can pass verification (all requirements are well-written) and fail validation (they describe the wrong thing).
 
@@ -396,8 +396,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

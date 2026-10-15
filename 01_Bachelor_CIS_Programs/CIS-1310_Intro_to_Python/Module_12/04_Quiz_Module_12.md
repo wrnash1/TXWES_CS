@@ -422,7 +422,7 @@ What does `except (ValueError, TypeError) as e:` do?
 
 **Distractor Analysis:**
 
-- *Why A is incorrect:* A single exception can only be one type at a time. The tuple syntax means "either of these types" — not "both simultaneously."
+- *Why A is incorrect:* A single exception can only be one type at a time. The tuple syntax means "either of these types" — not "both simultaneously.
 - *Why B is incorrect:* The `as e` binding applies to whichever exception was actually caught. There is one `except` clause that handles both types — not two separate clauses.
 - *Why C is correct:* `except (ValueError, TypeError) as e:` catches either exception type and binds the caught instance to `e`. This is equivalent to two separate `except` clauses that share the same handler body.
 - *Why D is incorrect:* Using `as` with a tuple of exception types is valid syntax. `except (TypeError, ValueError) as e:` is a standard Python pattern.

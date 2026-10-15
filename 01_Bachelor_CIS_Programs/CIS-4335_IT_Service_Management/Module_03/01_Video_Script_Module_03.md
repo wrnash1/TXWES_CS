@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 – 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -35,7 +35,7 @@ Let us get started.
 
 ---
 
-## [01:30 – 04:30] Why Four Dimensions?
+## Why Four Dimensions?
 
 ITIL 4 teaches that every service, every practice, and every component of the Service Value System must be considered across four dimensions. The reason for this is straightforward: services fail when organizations focus exclusively on one area while neglecting others.
 
@@ -47,9 +47,7 @@ Neglecting any single dimension creates gaps. The exam will present scenarios th
 
 ---
 
-## [04:30 – 09:00] Dimension 1: Organizations and People
-
-[SHOW DIAGRAM]
+## Dimension 1: Organizations and People
 
 The first dimension is Organizations and People. This dimension covers the human and organizational elements required to deliver services effectively.
 
@@ -63,7 +61,7 @@ For the exam: when a scenario describes confusion about who is responsible, team
 
 ---
 
-## [09:00 – 13:00] Dimension 2: Information and Technology
+## Dimension 2: Information and Technology
 
 The second dimension is Information and Technology. This dimension covers the information assets and the technology infrastructure required to deliver services.
 
@@ -79,7 +77,7 @@ For the exam: when a scenario describes technology failures, data problems, tool
 
 ---
 
-## [13:00 – 17:00] Dimension 3: Partners and Suppliers
+## Dimension 3: Partners and Suppliers
 
 The third dimension is Partners and Suppliers. This dimension covers the relationships an organization has with external parties — the vendors, contractors, managed service providers, cloud platforms, and other organizations that contribute to service delivery.
 
@@ -93,7 +91,7 @@ For the exam: when a scenario describes vendor performance problems, unclear sup
 
 ---
 
-## [17:00 – 20:30] Dimension 4: Value Streams and Processes
+## Dimension 4: Value Streams and Processes
 
 The fourth dimension is Value Streams and Processes. This dimension covers the workflows, procedures, and activities that define how work is done — how inputs are transformed into outputs that enable value.
 
@@ -109,7 +107,7 @@ For the exam: when a scenario describes inefficient workflows, unclear process s
 
 ---
 
-## [20:30 – 22:30] External Factors: The PESTLE Model
+## External Factors: The PESTLE Model
 
 Surrounding the four dimensions in the ITIL 4 model are external factors that organizations cannot control but must account for. ITIL 4 uses the PESTLE model to categorize these factors.
 
@@ -131,7 +129,7 @@ The PESTLE factors affect all four dimensions. They set the context within which
 
 ---
 
-## [22:30 – 24:00] Module Summary and What Is Next
+## Module Summary and What Is Next
 
 Let us recap Module 03.
 

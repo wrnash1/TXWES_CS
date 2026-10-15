@@ -599,8 +599,6 @@ A comprehensive reference for firewalld zones, services, ports, and rich rules. 
 **3. [SSH Config File for Client — ssh.com Documentation](https://www.ssh.com/academy/ssh/config)**
 A detailed reference for the `~/.ssh/config` and `/etc/ssh/ssh_config` client configuration files. Covers all commonly used directives: `Host`, `HostName`, `User`, `IdentityFile`, `IdentitiesOnly`, `ProxyJump`, `ForwardAgent`, `StrictHostKeyChecking`, and `ServerAliveInterval`. Understanding the SSH config file is essential for both the lab exercises and real-world sysadmin work involving multi-server environments.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

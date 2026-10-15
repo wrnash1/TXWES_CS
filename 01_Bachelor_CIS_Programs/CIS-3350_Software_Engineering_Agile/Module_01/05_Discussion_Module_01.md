@@ -17,7 +17,7 @@ Initial post length: 175–225 words. Peer responses: at least 75 words each, ad
 
 ## Scenario A — The Frozen Requirement Problem
 
-A mid-size insurance company is building a claims processing portal. The project manager insists on using Waterfall and has scheduled a three-month requirements phase followed by a six-month development phase. Two months into development, the state legislature passes a new regulation requiring all claims portals to support a new data field and reporting format. The project manager tells the team the requirements are locked and the change will be deferred to "version 2."
+A mid-size insurance company is building a claims processing portal. The project manager insists on using Waterfall and has scheduled a three-month requirements phase followed by a six-month development phase. Two months into development, the state legislature passes a new regulation requiring all claims portals to support a new data field and reporting format. The project manager tells the team the requirements are locked and the change will be deferred to "version 2.
 
 Sub-questions:
 

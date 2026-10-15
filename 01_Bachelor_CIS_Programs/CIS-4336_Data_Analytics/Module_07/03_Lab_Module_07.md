@@ -333,7 +333,7 @@ plt.show()
 
 Build a simple linear regression model from the correlation analysis and examine the residuals.
 
-1. Using `scipy.stats.linregress`, fit a regression of `sales_amount` on `ad_spend` using all 20 rows. Print the slope, intercept, r-value, p-value, and standard error. Interpret the slope in plain language: "For every additional $1 of ad spend, sales change by $___."
+1. Using `scipy.stats.linregress`, fit a regression of `sales_amount` on `ad_spend` using all 20 rows. Print the slope, intercept, r-value, p-value, and standard error. Interpret the slope in plain language: "For every additional $1 of ad spend, sales change by $___.
 2. Compute residuals (actual `sales_amount` minus predicted value for each row). Plot a residual scatter plot with `ad_spend` on the x-axis and residuals on the y-axis. Add a horizontal line at y = 0. Save as `residuals.png`. Write two sentences evaluating whether the residuals appear randomly distributed (which would support the linear model assumption) or show a pattern.
 
 ```python

@@ -86,7 +86,7 @@ Write an initial post of 175–225 words addressing all three sub-questions.
 
 The following is an example of a substantive peer response that meets the minimum standard.
 
-"Your answer on split-horizon DNS was clear. I want to add a detail about the DHCP role in making it work: the `dns-server` and `domain-name` parameters in the DHCP pool are what steer internal clients toward the internal DNS server. If those parameters are misconfigured — wrong DNS server IP or wrong domain — clients might send DNS queries to a public resolver even when an internal resolver exists. That is why DHCP pool configuration and DNS infrastructure design have to be planned together. A correct split-horizon DNS deployment breaks if the DHCP pool sends clients to the wrong DNS server."
+Your answer on split-horizon DNS was clear. I want to add a detail about the DHCP role in making it work: the `dns-server` and `domain-name` parameters in the DHCP pool are what steer internal clients toward the internal DNS server. If those parameters are misconfigured — wrong DNS server IP or wrong domain — clients might send DNS queries to a public resolver even when an internal resolver exists. That is why DHCP pool configuration and DNS infrastructure design have to be planned together. A correct split-horizon DNS deployment breaks if the DHCP pool sends clients to the wrong DNS server.
 
 ---
 

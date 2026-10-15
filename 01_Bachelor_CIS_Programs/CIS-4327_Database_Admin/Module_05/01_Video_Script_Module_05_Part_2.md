@@ -28,8 +28,6 @@
 
 ### Opening
 
-**[SHOW SLIDE: Module 05 Part 2 — Schema Patterns, Scaling, Replication, and Exam Tips]**
-
 Welcome back. I am Professor Nash, and this is Part 2 of Module 05.
 
 In Part 1 we covered Bigtable's architecture, data model, and row key design principles. Now we go deeper into column family design, cluster scaling, replication, the cbt CLI tool, and the exam scenarios where Bigtable appears.
@@ -37,8 +35,6 @@ In Part 1 we covered Bigtable's architecture, data model, and row key design pri
 ---
 
 ### Section 1 — Column Family Design
-
-**[SHOW SLIDE: Column family design guidelines]**
 
 Column families in Bigtable are analogous to column groups in traditional wide-column stores. Each column family has its own garbage collection policy and is stored contiguously on disk — rows within the same column family are read together from storage.
 
@@ -138,8 +134,6 @@ gcloud bigtable clusters update txwes-bigtable-cluster \
 
 ### Section 4 — Replication
 
-**[SHOW SLIDE: Bigtable replication — two clusters in different zones or regions]**
-
 Cloud Bigtable supports replication by adding a second cluster to an instance. The two clusters replicate data asynchronously. Replication serves two purposes.
 
 High availability: if one cluster becomes unavailable, the application can automatically failover to the second cluster. This requires an App Profile configured with multi-cluster routing.
@@ -180,8 +174,6 @@ When you see a hotspot in Key Visualizer, the diagnosis is almost always a poor 
 
 ### Section 6 — Exam Tips for Module 05
 
-**[SHOW SLIDE: Bigtable exam tips]**
-
 Tip one: workload identification. Bigtable is the answer when a scenario describes time-series data, IoT telemetry, high-throughput single-row reads and writes at petabyte scale, or financial tick data. Bigtable is not the answer when the scenario requires JOINs, multi-row ACID transactions, or complex SQL queries.
 
 Tip two: no secondary indexes. Bigtable has no secondary indexes. All efficient queries are based on the row key. If a scenario describes needing to look up data by multiple different fields efficiently, and proposes Bigtable, that is a design problem — the row key must be designed to support the required access patterns.
@@ -201,8 +193,6 @@ Tip eight: replication between Bigtable clusters is eventually consistent. If a 
 ---
 
 ### Closing — Module 05 Wrap-Up
-
-**[SHOW SLIDE: Module 05 complete]**
 
 That completes Module 05. You now understand Bigtable's wide-column data model, row key design principles, column family design, cluster scaling, and replication.
 

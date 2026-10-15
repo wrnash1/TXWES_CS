@@ -37,7 +37,7 @@ The Linux Filesystem Hierarchy Standard dictates that configuration files go in 
 
 In your view, what are the practical advantages of the FHS approach for system administrators? Are there any disadvantages or situations where the FHS structure makes administration harder? Draw on specific examples from the lab or lecture to support your points.
 
-This is an opinion question with no single right answer — I am looking for thoughtful reasoning backed by concrete examples, not a general statement that "FHS is good."
+This is an opinion question with no single right answer — I am looking for thoughtful reasoning backed by concrete examples, not a general statement that "FHS is good.
 
 ---
 

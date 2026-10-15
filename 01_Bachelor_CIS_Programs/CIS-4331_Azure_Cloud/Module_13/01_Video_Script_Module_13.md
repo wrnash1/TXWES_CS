@@ -40,8 +40,6 @@ By the end of this video you will be able to:
 
 ## Section 1: Introduction — Why Monitoring Matters (0:00-2:00)
 
-[INSTRUCTOR ON CAMERA]
-
 You've deployed an application to Azure. Congratulations. Now the question is: how do you know it's working?
 
 Is it responding quickly? Are requests failing? Is the database running out of connections? Is a VM running out of disk space? Is there an unusual spike in traffic that might indicate an attack?
@@ -67,8 +65,6 @@ Let's go through each one.
 ## Section 2: Azure Monitor — The Monitoring Platform (2:00-7:00)
 
 [SLIDE: "Azure Monitor Overview"]
-
-[INSTRUCTOR ON CAMERA]
 
 Azure Monitor is the centralized monitoring platform for Azure. It collects telemetry data from two main categories: metrics and logs.
 
@@ -116,8 +112,6 @@ In the portal, Azure Monitor is the hub from which you access all monitoring cap
 
 [SLIDE: "Log Analytics Workspace"]
 
-[INSTRUCTOR ON CAMERA]
-
 A Log Analytics workspace is the Azure Monitor data store for log data. When resources send logs to Azure Monitor, those logs land in a Log Analytics workspace where they can be queried.
 
 Think of it as a managed log database. Azure resources, VMs with the Monitor Agent, Application Insights, and Sentinel all write to Log Analytics workspaces. You query the data using KQL.
@@ -161,8 +155,6 @@ In the portal, the Logs blade shows the query editor. You can select tables from
 
 [SLIDE: "What Is Application Insights?"]
 
-[INSTRUCTOR ON CAMERA]
-
 Application Insights is an application performance monitoring (APM) service within Azure Monitor. While Azure Monitor watches your Azure infrastructure — VMs, databases, networks — Application Insights watches your application itself.
 
 It answers questions like:
@@ -185,7 +177,7 @@ Page views and user behavior — For web applications, client-side JavaScript in
 
 Performance counters — CPU, memory, and other VM-level performance counters.
 
-Custom telemetry — Your application code can emit custom events and metrics using the Application Insights API. For example: "Payment processed," "User signed up," "Search query returned 0 results."
+Custom telemetry — Your application code can emit custom events and metrics using the Application Insights API. For example: "Payment processed," "User signed up," "Search query returned 0 results.
 
 [SLIDE: "Application Map"]
 
@@ -209,8 +201,6 @@ For the exam: Application Insights is within Azure Monitor and provides applicat
 
 [SLIDE: "What Are Azure Alerts?"]
 
-[INSTRUCTOR ON CAMERA]
-
 Azure Alerts is the notification system for Azure Monitor. You define conditions — alert rules — and when those conditions are met, Alerts notifies you.
 
 The alert rule has three parts.
@@ -227,7 +217,7 @@ There are several types of alert rules.
 
 Metric alerts — Fire when a metric value crosses a threshold. Example: "Alert me when the average CPU of my VM cluster exceeds 85% for more than 5 minutes." These are fast because metrics are near real-time.
 
-Log alert rules — Fire when a KQL query against a Log Analytics workspace returns results. Example: "Alert me when there are more than 10 failed login attempts in 5 minutes."
+Log alert rules — Fire when a KQL query against a Log Analytics workspace returns results. Example: "Alert me when there are more than 10 failed login attempts in 5 minutes.
 
 Activity log alerts — Fire when specific control-plane events occur. Example: "Alert me when any resource is deleted in this subscription." Great for change management.
 
@@ -256,8 +246,6 @@ In the portal, the Alerts dashboard shows all fired alerts with their severity, 
 
 [SLIDE: "Azure Service Health"]
 
-[INSTRUCTOR ON CAMERA]
-
 Azure Service Health is a monitoring service that provides personalized notifications about Azure service outages, planned maintenance, and health advisories that affect your specific subscriptions and regions.
 
 This is different from the Azure Status page — which shows global Azure status — because Service Health is filtered to show only incidents that affect your resources. If you have VMs in East US and Azure has a storage issue in West Europe, your Service Health page will not show that issue. You only see what affects you.
@@ -277,8 +265,6 @@ For AZ-900: Know that Service Health provides personalized, subscription-specifi
 ## Section 7: Monitoring Service Selection Summary (21:00-23:00)
 
 [SLIDE: "Monitoring Service Selection Framework"]
-
-[INSTRUCTOR ON CAMERA]
 
 Let's nail down the service selection for AZ-900.
 
@@ -303,8 +289,6 @@ Scenario: "A product manager wants to know which page in their web application h
 ---
 
 ## Section 8: Closing (23:00-24:00)
-
-[INSTRUCTOR ON CAMERA]
 
 Let's wrap up. Azure Monitor is the central telemetry collection and routing platform — it collects metrics and logs from Azure resources, OS guests, and applications. Log Analytics is the log data store and query engine using KQL. Application Insights provides deep application performance monitoring — requests, dependencies, exceptions, user behavior. Azure Alerts notifies you when conditions are met, using action groups to send emails, SMS, run automation. Azure Service Health keeps you informed when Azure itself affects your resources.
 

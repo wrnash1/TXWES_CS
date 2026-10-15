@@ -1,5 +1,23 @@
 # Video Script: Module 05 - Use Case Modeling and User Stories
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture &bull; Module 05</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=UI6lqHOVHic" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/UI6lqHOVHic" title="Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3312 Systems Analysis and Design
 **Estimated Duration:** 22 minutes
 **Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
@@ -7,19 +25,14 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 - 03:00]
-
+## Section 1: Welcome and Module Overview
 Welcome to Module 05. I am Professor Nash. Today we are covering two of the most important requirements modeling techniques in business analysis: Use Case Modeling and User Stories. These are the primary ways BAs communicate system behavior to both stakeholders and developers, and they appear on the ECBA exam.
-
-[SHOW DIAGRAM: Title slide — "Module 05: Use Case Modeling and User Stories" with BABOK KA 5 label and IIBA ECBA badge]
 
 Use cases come from the UML tradition and are widely used in both traditional and Agile projects. User stories come from the Agile world. Both describe system behavior from the actor's perspective — what a user wants to accomplish — not how the system will implement it. Both are tools for capturing and communicating requirements. We will cover both in depth today.
 
 ---
 
-## Section 2: Use Case Modeling [03:00 - 10:00]
-
-[SHOW DIAGRAM: Use case diagram for a simple library system — ellipses for use cases: "Borrow Book," "Return Book," "Search Catalog," "Manage Account"; stick figures for actors: "Library Member," "Librarian"; a rectangle boundary labeled "Library Management System"; associations shown as lines between actors and use cases]
+## Section 2: Use Case Modeling
 
 A use case diagram shows the scope of a system by identifying the actors who interact with it and the goals they pursue. Let me define the key elements.
 
@@ -33,8 +46,6 @@ Associations — solid lines between actors and use cases — show which actor p
 
 Now let me cover the two most tested use case relationships: include and extend.
 
-[SHOW DIAGRAM: Two mini-diagrams side by side. Left: "Process Order" use case with a dashed arrow labeled "include" pointing to "Validate Payment." Right: "Process Return" use case with a dashed arrow labeled "extend" pointing to "Apply Restocking Fee," with a condition note "if item is open-box"]
-
 The include relationship: a solid arrowhead dashed line from the base use case to the included use case, labeled with the stereotype. Include means the included use case is always executed as a mandatory part of the base use case. "Process Order" always includes "Validate Payment" — every single time.
 
 The extend relationship: a solid arrowhead dashed line from the extending use case to the base use case, labeled with the stereotype, often with a condition note. Extend means the extending use case is optional — it runs only when a specific condition is true. "Apply Restocking Fee" extends "Process Return" only when the returned item is open-box.
@@ -43,11 +54,8 @@ The extend relationship: a solid arrowhead dashed line from the extending use ca
 
 ---
 
-## Section 3: Use Case Specifications [10:00 - 14:30]
-
+## Section 3: Use Case Specifications
 A use case diagram alone is not enough. Each use case also needs a written use case specification that documents the details.
-
-[SHOW DIAGRAM: Use case specification template — rows labeled: Use Case Name, Use Case ID, Actor(s), Preconditions, Main Success Scenario (numbered steps), Alternate Flows, Exception Flows, Postconditions]
 
 The key elements of a use case specification are:
 
@@ -63,21 +71,18 @@ Postconditions: what is true after the use case completes. The book is checked o
 
 ---
 
-## Section 4: User Stories and the INVEST Criteria [14:30 - 19:00]
+## Section 4: User Stories and the INVEST Criteria
+ at top, "I want [goal]" in middle, "so that [value]" at bottom; smaller section below: "Acceptance Criteria: Given / When / Then"]
 
-[SHOW DIAGRAM: User story template card — large card showing three sections: "As a [role]" at top, "I want [goal]" in middle, "so that [value]" at bottom; smaller section below: "Acceptance Criteria: Given / When / Then"]
+A user story is a brief, informal description of a system feature written from the perspective of the person who wants it. The standard format is: "As a [role], I want [goal] so that [value].
 
-A user story is a brief, informal description of a system feature written from the perspective of the person who wants it. The standard format is: "As a [role], I want [goal] so that [value]."
-
-Example: "As a registered customer, I want to reset my password via email so that I can regain access to my account without calling customer support."
+Example: "As a registered customer, I want to reset my password via email so that I can regain access to my account without calling customer support.
 
 User stories are intentionally lightweight — they capture the "who, what, and why" without prescribing implementation. The details live in the acceptance criteria, which are the verifiable conditions the product owner will check when deciding whether to accept the story as complete.
 
-Acceptance criteria are commonly written in Given/When/Then format: "Given the customer is on the login page and has clicked Forgot Password, when they enter their registered email address and click Submit, then they receive a reset link within 60 seconds."
+Acceptance criteria are commonly written in Given/When/Then format: "Given the customer is on the login page and has clicked Forgot Password, when they enter their registered email address and click Submit, then they receive a reset link within 60 seconds.
 
 The INVEST criteria are the quality standards for user stories.
-
-[SHOW DIAGRAM: INVEST acronym table — six rows: Independent, Negotiable, Valuable, Estimable, Small, Testable — each with a one-sentence definition]
 
 Independent: the story can be developed and delivered without depending on another story.
 Negotiable: the details are open to discussion — it is not a fixed contract.
@@ -90,8 +95,7 @@ Testable: acceptance criteria can be written that confirm whether it is done.
 
 ---
 
-## Section 5: Lab Preview and Closing [19:00 - 22:00]
-
+## Section 5: Lab Preview and Closing
 This week's lab is a hands-on use case modeling exercise. You will draw a use case diagram for a provided scenario, write a complete use case specification, and write three user stories with acceptance criteria. Make sure you understand include vs. extend before attempting the diagram.
 
 Three exam reminders. First: include = mandatory, always executed; extend = optional, condition-based. Second: user stories follow the "As a, I want, so that" format. Third: INVEST violations — especially "not small enough" — are commonly tested.

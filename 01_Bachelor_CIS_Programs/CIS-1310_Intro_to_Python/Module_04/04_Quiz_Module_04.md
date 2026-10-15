@@ -467,7 +467,7 @@ Which of the following correctly demonstrates the guardian (early exit) pattern?
 **Distractor Analysis:**
 
 - *Why A is incorrect:* Checking at the end of a function means invalid data has already been processed, potentially causing errors or wrong output. The guardian pattern checks first.
-- *Why B is correct:* The guardian pattern places input validation at the very beginning of a function or block. If the data is invalid, the function returns (or prints an error) immediately — the main logic never runs on bad data. This is "guard the entry."
+- *Why B is correct:* The guardian pattern places input validation at the very beginning of a function or block. If the data is invalid, the function returns (or prints an error) immediately — the main logic never runs on bad data. This is "guard the entry.
 - *Why C is incorrect:* `try/except` is exception handling, not the guardian pattern. Exception handling reacts to errors after they occur; the guardian pattern prevents errors by checking preconditions proactively.
 - *Why D is incorrect:* Looping until valid input is provided is input validation with a loop (covered in Module 05), not the guardian pattern. The guardian does not loop — it simply rejects invalid input and exits.
 

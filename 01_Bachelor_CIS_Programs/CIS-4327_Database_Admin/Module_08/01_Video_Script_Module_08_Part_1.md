@@ -217,7 +217,7 @@ An untested backup is not a backup. It is just data you hope is recoverable.
 **Backup testing best practices:**
 
 1. **Regular restore drills** — restore the most recent backup to a non-production environment at least monthly.
-2. **Data integrity verification** — after restore, run row count comparisons and application smoke tests, not just "did the restore complete without error."
+2. **Data integrity verification** — after restore, run row count comparisons and application smoke tests, not just "did the restore complete without error.
 3. **Timing measurement** — measure the actual restore time and compare it against your RTO. If it takes longer than your RTO, your architecture is insufficient.
 4. **Document the procedure** — the restore procedure should be a documented runbook that anyone on the team can execute, not tribal knowledge held by one engineer.
 

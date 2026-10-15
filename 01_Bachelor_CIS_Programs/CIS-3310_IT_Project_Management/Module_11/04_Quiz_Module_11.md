@@ -392,12 +392,12 @@ A project's Risk Register lists a risk with the following trigger condition: "Th
 
 A project manager is documenting a risk using the cause-event-effect format. Which of the following is a correctly structured risk statement?
 
-- A) "There is a risk that the project will be late."
-- B) "Due to the vendor's limited production capacity, there is a risk that hardware deliveries will be delayed by 3 weeks, which may cause the system integration milestone to slip and extend the project completion date."
-- C) "The vendor might cause problems."
-- D) "Risk: hardware delays. Impact: high."
+- A) "There is a risk that the project will be late.
+- B) "Due to the vendor's limited production capacity, there is a risk that hardware deliveries will be delayed by 3 weeks, which may cause the system integration milestone to slip and extend the project completion date.
+- C) "The vendor might cause problems.
+- D) "Risk: hardware delays. Impact: high.
 
-**Correct Answer:** B) "Due to the vendor's limited production capacity, there is a risk that hardware deliveries will be delayed by 3 weeks, which may cause the system integration milestone to slip and extend the project completion date."
+**Correct Answer:** B) "Due to the vendor's limited production capacity, there is a risk that hardware deliveries will be delayed by 3 weeks, which may cause the system integration milestone to slip and extend the project completion date.
 
 **Distractor Analysis:**
 

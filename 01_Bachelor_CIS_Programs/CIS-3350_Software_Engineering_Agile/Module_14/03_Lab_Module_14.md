@@ -94,7 +94,7 @@ Read the following scenario and complete the three tasks below.
 
 The Meridian ART has been running SAFe for six Program Increments. The organization adopted SAFe with high hopes eighteen months ago, but the Scrum Master community is reporting concerns:
 
-- PI Planning takes two full days and produces a plan that most teams say is "out of date by Iteration 2"
+- PI Planning takes two full days and produces a plan that most teams say is "out of date by Iteration 2
 - Teams are completing their Iteration work but the System Demo at PI end consistently reveals integration failures between Team 4 and Team 7
 - The Release Train Engineer reports that 30 percent of PI Objectives are not met — teams commit to objectives at PI Planning and then cannot deliver them
 - Team Retrospectives are happening but surfaced issues are rarely addressed at the ART level

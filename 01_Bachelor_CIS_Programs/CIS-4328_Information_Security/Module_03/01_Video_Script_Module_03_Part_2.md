@@ -28,15 +28,11 @@
 
 ## Opening
 
-**[INSTRUCTOR ON CAMERA]**
-
 Welcome back to Module 03. In Part 1 we covered the major application attack categories: injection attacks, XSS, CSRF, memory exploitation, and directory traversal. In Part 2 we will connect these to secure development principles, discuss static and dynamic testing, and work through SY0-701-style scenarios.
 
 ---
 
 ## Section 1 — Secure Coding Principles
-
-**[SHOW DIAGRAM: Secure Software Development Lifecycle. Six phases from left to right: Requirements, Design, Development, Testing, Deployment, Maintenance. Below each phase, a security activity: Requirements = Threat Modeling; Design = Security Architecture Review; Development = Secure Coding Guidelines; Testing = SAST and DAST; Deployment = Penetration Testing; Maintenance = Patch Management.]**
 
 **[Alt-text: Horizontal six-phase SDLC diagram. Phase 1: Requirements — Threat Modeling. Phase 2: Design — Security Architecture Review. Phase 3: Development — Secure Coding Guidelines. Phase 4: Testing — SAST and DAST. Phase 5: Deployment — Penetration Testing. Phase 6: Maintenance — Patch Management and Vulnerability Scanning. Caption: Security activities at each SDLC phase.]**
 
@@ -56,8 +52,6 @@ The most cost-effective place to address application vulnerabilities is during d
 
 ## Section 2 — Static and Dynamic Analysis
 
-**[SHOW DIAGRAM: Two-column comparison. Left column: Static Analysis (SAST) — runs at development time, examines source code without executing, finds hardcoded credentials and injection patterns. Right column: Dynamic Analysis (DAST) — runs against a live application, sends test inputs and analyzes responses, finds runtime authentication and session management flaws.]**
-
 **[Alt-text: Two-column table. Left column header: SAST — Static Application Security Testing. Content: Runs without executing code. Examines source, bytecode, or binaries. Finds injection flaws, hardcoded secrets, insecure functions. Right column header: DAST — Dynamic Application Security Testing. Content: Requires running application. Sends inputs and observes outputs. Finds authentication flaws, runtime injection, session management issues.]**
 
 **Static Application Security Testing (SAST)** analyzes source code, bytecode, or binaries without executing the program. It identifies hardcoded credentials, dangerous function calls, missing input validation, and SQL query construction from string concatenation.
@@ -72,8 +66,6 @@ The most cost-effective place to address application vulnerabilities is during d
 
 ## Section 3 — Vulnerability Scoring
 
-**[SHOW DIAGRAM: CVSS severity scale. Horizontal bar from 0 to 10. Colored sections: 0.0 = None; 0.1-3.9 = Low; 4.0-6.9 = Medium; 7.0-8.9 = High; 9.0-10.0 = Critical. Below the scale, three metric groups: Base (inherent), Temporal (exploit availability), Environmental (org relevance).]**
-
 **[Alt-text: Horizontal severity bar. Left to right: None (0.0), Low (0.1-3.9), Medium (4.0-6.9), High (7.0-8.9), Critical (9.0-10.0). Below the bar, three boxes: Base Metrics — inherent characteristics of the vulnerability; Temporal Metrics — current exploit availability and patch status; Environmental Metrics — relevance to the specific organization.]**
 
 **CVSS — Common Vulnerability Scoring System** rates vulnerability severity on a scale of 0 to 10. Three metric groups: Base (inherent characteristics), Temporal (exploit availability and patch status), and Environmental (relevance to the organization's specific context). A Critical score of 9.0–10.0 represents remote exploitation with no authentication and full system compromise.
@@ -85,8 +77,6 @@ Organizations prioritize patching based on CVSS score, asset criticality, and wh
 ---
 
 ## Section 4 — Exam Scenario Walkthroughs
-
-**[INSTRUCTOR ON CAMERA]**
 
 Three Module 03 scenarios.
 
@@ -112,8 +102,6 @@ Answer: Directory traversal. The fix is to validate user-supplied filenames agai
 
 ## Section 5 — Exam-Day Decision Tree for Module 03
 
-**[INSTRUCTOR ON CAMERA]**
-
 Here is your Module 03 exam-day decision tree.
 
 Attack targets a database via user input — SQL injection. Fix: parameterized queries.
@@ -135,8 +123,6 @@ Visit **professormesser.com** for video lectures and **comptia.org** for officia
 ---
 
 ## Closing
-
-**[INSTRUCTOR ON CAMERA]**
 
 Module 03 is complete. Application attacks are the layer between the network perimeter and the data. Understanding both the attack mechanics and the defensive coding patterns prepares you for the exam and for real-world security work.
 

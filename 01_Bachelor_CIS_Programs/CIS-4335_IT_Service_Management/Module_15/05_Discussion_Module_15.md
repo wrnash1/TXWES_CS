@@ -38,7 +38,7 @@ Respond to at least two classmates' posts (minimum 75 words each):
 
 ## Scenario 2: The Value Stream Wake-Up Call
 
-A government agency's IT department conducts its first-ever value stream map for its software delivery process. The results are sobering: total lead time from approved user story to production is 67 days. The total value-added time — actual coding, testing, and deployment work — is 9 days. The remaining 58 days are consumed by approval queues, meeting schedules, and handoffs between teams. The agency's CIO presents this data to senior leadership and receives the response: "Those approval steps are required for security and compliance reasons. You cannot remove them."
+A government agency's IT department conducts its first-ever value stream map for its software delivery process. The results are sobering: total lead time from approved user story to production is 67 days. The total value-added time — actual coding, testing, and deployment work — is 9 days. The remaining 58 days are consumed by approval queues, meeting schedules, and handoffs between teams. The agency's CIO presents this data to senior leadership and receives the response: "Those approval steps are required for security and compliance reasons. You cannot remove them.
 
 **Initial Post Prompt (Due Wednesday at 11:59 PM):**
 
@@ -60,7 +60,7 @@ Respond to at least two classmates' posts (minimum 75 words each):
 
 ## Scenario 3: The SRE Adoption Conflict
 
-A retail e-commerce company is piloting Site Reliability Engineering for its most critical service — the shopping cart and checkout flow. The SRE team has set an SLO of 99.95% monthly availability and calculated a monthly error budget of 21.9 minutes. In month two of the pilot, two deployments caused incidents that consumed 19 minutes of the error budget in the first two weeks of the month. The SRE team proposes freezing all non-critical deployments for the remaining two weeks. The product team pushes back: "We have 12 features ready to ship and a marketing campaign launching next week that depends on three of them."
+A retail e-commerce company is piloting Site Reliability Engineering for its most critical service — the shopping cart and checkout flow. The SRE team has set an SLO of 99.95% monthly availability and calculated a monthly error budget of 21.9 minutes. In month two of the pilot, two deployments caused incidents that consumed 19 minutes of the error budget in the first two weeks of the month. The SRE team proposes freezing all non-critical deployments for the remaining two weeks. The product team pushes back: "We have 12 features ready to ship and a marketing campaign launching next week that depends on three of them.
 
 **Initial Post Prompt (Due Wednesday at 11:59 PM):**
 

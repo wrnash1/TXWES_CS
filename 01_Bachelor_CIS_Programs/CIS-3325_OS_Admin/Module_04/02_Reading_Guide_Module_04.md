@@ -300,7 +300,7 @@ Modern standards use the 1000+ threshold.
 
 **Exam Tip 1:** The usermod -aG question is the most commonly missed item. The -a flag appends
 without replacing. Omitting -a with -G replaces all supplementary groups. Memorize: "aG = add
-to Group safely."
+to Group safely.
 
 **Exam Tip 2:** visudo is the ONLY correct answer for editing /etc/sudoers. Any answer that
 suggests nano, vi, or any other direct editor is incorrect for the exam.
@@ -492,8 +492,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

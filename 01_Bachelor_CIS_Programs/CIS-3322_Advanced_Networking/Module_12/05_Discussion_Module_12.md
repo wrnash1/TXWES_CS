@@ -75,7 +75,7 @@ Write an initial post of 175–225 words addressing all three sub-questions.
 
 The following is an example of a substantive peer response that meets the minimum standard.
 
-"Your analysis of the GRE multicast requirement was correct and I want to build on it. The reason OSPF specifically needs multicast is that it uses 224.0.0.5 (AllSPFRouters) and 224.0.0.6 (AllDRRouters) to send Hello packets on broadcast networks. The GRE tunnel interface creates a point-to-point network type by default in OSPF, which actually changes the neighbor formation behavior — on a point-to-point link there is no DR/BDR election and hellos are sent to 224.0.0.5 only. This is worth knowing because if you accidentally configure the GRE tunnel as an OSPF broadcast network type, the behavior changes. The default point-to-point type is actually more efficient for tunnel interfaces."
+Your analysis of the GRE multicast requirement was correct and I want to build on it. The reason OSPF specifically needs multicast is that it uses 224.0.0.5 (AllSPFRouters) and 224.0.0.6 (AllDRRouters) to send Hello packets on broadcast networks. The GRE tunnel interface creates a point-to-point network type by default in OSPF, which actually changes the neighbor formation behavior — on a point-to-point link there is no DR/BDR election and hellos are sent to 224.0.0.5 only. This is worth knowing because if you accidentally configure the GRE tunnel as an OSPF broadcast network type, the behavior changes. The default point-to-point type is actually more efficient for tunnel interfaces.
 
 ---
 

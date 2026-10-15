@@ -14,7 +14,7 @@ This week's discussion applies user, group, and computer account management conc
 
 ### Scenario A — Group Strategy for a Growing Organization
 
-A regional healthcare company is deploying Active Directory for the first time. They have 400 employees across four departments: Clinical, Administration, IT, and Finance. Multiple file servers host department-specific data. The IT director has proposed giving every user account direct NTFS permission on the files they need, arguing that groups "add unnecessary complexity."
+A regional healthcare company is deploying Active Directory for the first time. They have 400 employees across four departments: Clinical, Administration, IT, and Finance. Multiple file servers host department-specific data. The IT director has proposed giving every user account direct NTFS permission on the files they need, arguing that groups "add unnecessary complexity.
 
 1. Explain why the IT director's direct-assignment approach will become unmanageable as the company grows. Use specific examples of what happens when an employee changes departments or when a new file server share is created.
 2. Describe the AGDLP group structure you would design for the Clinical department. Include the specific group names, scopes, and how you would handle both Read and Write access to a Clinical data share.

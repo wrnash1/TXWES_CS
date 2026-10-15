@@ -374,7 +374,7 @@ Submit a PDF containing:
 1. Screenshots of all command outputs and verification queries.
 2. Written answers to all five Lab Questions.
 3. A comparison table showing file sizes for: plain SQL dump, custom format dump, and Cloud Storage export.
-4. A written reflection (5–8 sentences) answering: "If your organization's RPO is 1 hour and RTO is 30 minutes, is Cloud SQL's default 7-day automated backup with PITR sufficient? What would you change?"
+4. A written reflection (5–8 sentences) answering: "If your organization's RPO is 1 hour and RTO is 30 minutes, is Cloud SQL's default 7-day automated backup with PITR sufficient? What would you change?
 
 ---
 

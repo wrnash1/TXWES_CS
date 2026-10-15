@@ -224,7 +224,7 @@ A data dictionary catalogs every data element referenced in a system — name, d
 
 5. The Context Diagram shows only one process bubble. If a Level 0 diagram shows more than one process, it is actually a Level 1 diagram. This distinction is directly tested.
 
-6. Crow's Foot notation uses specific line endings. The crow's foot (three prongs) means "many." A single vertical tick means "exactly one." A circle means "zero (optional)." These are combined: a crow's foot with a circle = "zero or many"; a crow's foot with a tick = "one or many."
+6. Crow's Foot notation uses specific line endings. The crow's foot (three prongs) means "many." A single vertical tick means "exactly one." A circle means "zero (optional)." These are combined: a crow's foot with a circle = "zero or many"; a crow's foot with a tick = "one or many.
 
 7. A data dictionary is a complement to DFDs and ERDs — it formally defines every data element referenced in the diagrams. When a question asks how to remove ambiguity about a named data flow or attribute, the answer is the data dictionary.
 
@@ -396,8 +396,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

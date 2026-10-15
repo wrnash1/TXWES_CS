@@ -518,8 +518,6 @@ A practitioner-maintained repository of real malware infection traffic captures 
 <https://docs.suricata.io/en/latest/rules/index.html>
 The official Suricata rule documentation, covering rule syntax, options, and writing detection rules for network traffic. Reading through the rule structure examples — especially for content matching, threshold settings, and flowbits — directly reinforces the IDS/IPS detection and rule design concepts in Sections 5 and 6 of this guide.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

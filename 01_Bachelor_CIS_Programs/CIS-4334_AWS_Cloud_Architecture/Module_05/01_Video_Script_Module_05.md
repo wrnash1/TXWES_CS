@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -42,17 +42,13 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 06:30] VPC Fundamentals and CIDR Planning
-
-[SHOW DIAGRAM]
+## VPC Fundamentals and CIDR Planning
 
 A VPC is a logically isolated section of the AWS cloud where you launch your resources. When you create a VPC, you define a CIDR block — a range of IP addresses that all resources in the VPC will use. CIDR stands for Classless Inter-Domain Routing. A CIDR block like `10.0.0.0/16` means the first 16 bits are fixed (the network address) and the remaining 16 bits are available for hosts — giving you 65,536 IP addresses.
 
 VPC CIDR ranges must be between /16 (65,536 addresses) and /28 (16 addresses). For production use, /16 gives you the most flexibility to create subnets. RFC 1918 private ranges are recommended: `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`. Avoid using CIDR ranges that overlap with your on-premises network or other VPCs you need to peer with — overlapping CIDRs prevent peering.
 
 Now let me show you how to plan a three-tier architecture CIDR layout. Suppose your VPC is `10.0.0.0/16`. You need three tiers — public (web), private (application), and isolated (database) — across two Availability Zones. You divide the /16 into /24 subnets (256 addresses each, but AWS reserves 5 per subnet so 251 usable).
-
-[SHOW DIAGRAM]
 
 ```text
 VPC: 10.0.0.0/16
@@ -76,9 +72,7 @@ AWS reserves five IP addresses in every subnet: the network address, the VPC rou
 
 ---
 
-## [06:30 - 11:00] Internet Gateway, NAT Gateway, and Route Tables
-
-[SHOW DIAGRAM]
+## Internet Gateway, NAT Gateway, and Route Tables
 
 For resources to communicate with the internet, three things must be in place: an Internet Gateway, a route table entry pointing to it, and a public IP address (Elastic IP or auto-assigned public IP) on the resource.
 
@@ -89,8 +83,6 @@ A subnet is "public" if its route table has a route sending `0.0.0.0/0` (all int
 A subnet is "private" if its route table has no route to an Internet Gateway. Resources in private subnets cannot receive inbound connections from the internet — but they also cannot make outbound connections by default.
 
 **NAT Gateway** allows resources in private subnets to make outbound connections to the internet (for software updates, API calls to third-party services) while preventing inbound connections initiated from the internet. You place the NAT Gateway in a public subnet. The private subnet's route table points `0.0.0.0/0` to the NAT Gateway. The NAT Gateway has an Elastic IP address it uses for outbound connections.
-
-[SHOW DIAGRAM]
 
 Outbound flow from a private EC2 instance:
 
@@ -115,9 +107,7 @@ Route table design:
 
 ---
 
-## [11:00 - 16:00] Security Groups and Network ACLs
-
-[SHOW DIAGRAM]
+## Security Groups and Network ACLs
 
 Security Groups and Network ACLs are both firewall mechanisms in VPC, but they work differently and at different levels. Understanding the distinction is one of the most tested VPC concepts on the SAA-C03 exam.
 
@@ -132,8 +122,6 @@ Security group rules reference:
 The ability to reference another security group as a source is very powerful. If you have a web tier security group and an app tier security group, you can configure the app tier to allow inbound TCP on port 8080 only from the web tier security group. This means only resources with the web tier security group attached can reach the app tier on that port — regardless of IP address.
 
 **Network ACLs** operate at the subnet level. They are stateless — inbound and outbound rules are evaluated independently. If you allow inbound TCP on port 443, you must also allow outbound TCP on the ephemeral port range (1024-65535) for the response traffic to return. NACLs support both allow and deny rules evaluated in numeric order — the lowest numbered rule that matches is applied. Rule numbers typically increment by 10 or 100.
-
-[SHOW DIAGRAM]
 
 Security Group vs. Network ACL comparison:
 
@@ -150,9 +138,7 @@ The exam frequently asks: if you want to block a specific IP address from reachi
 
 ---
 
-## [16:00 - 19:30] VPC Connectivity Options
-
-[SHOW DIAGRAM]
+## VPC Connectivity Options
 
 Beyond basic internet connectivity, VPCs have several connectivity options you must know for the exam.
 
@@ -171,7 +157,7 @@ Beyond basic internet connectivity, VPCs have several connectivity options you m
 
 ---
 
-## [19:30 - 22:00] Bastion Hosts and VPC Flow Logs
+## Bastion Hosts and VPC Flow Logs
 
 **Bastion Host (Jump Server)** is an EC2 instance in a public subnet that provides a secure entry point for administrators to SSH or RDP into instances in private subnets. Instead of exposing all private EC2 instances with public IPs, you expose only the bastion host. Security group rules: bastion host allows SSH from specific admin IP ranges; private instances allow SSH only from the bastion host security group. For the exam: the modern alternative to a bastion host is AWS Systems Manager Session Manager, which provides shell access without SSH, without a public IP, and without a bastion host entirely.
 
@@ -179,7 +165,7 @@ Beyond basic internet connectivity, VPCs have several connectivity options you m
 
 ---
 
-## [22:00 - 24:00] Module Summary
+## Module Summary
 
 VPC CIDR planning: use /16 for production VPCs; allocate /24 subnets by tier and AZ; avoid overlapping with on-premises ranges.
 

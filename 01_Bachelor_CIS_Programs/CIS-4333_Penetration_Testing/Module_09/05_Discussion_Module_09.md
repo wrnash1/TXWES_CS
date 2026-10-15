@@ -76,7 +76,7 @@ In 175–225 words, address the following:
 
 A security team at a financial technology company conducts an internal penetration test of their new mobile banking API. During the test, the tester uses Burp Suite to proxy all mobile app traffic and discovers that the API has numerous undocumented endpoints not listed in the official API specification provided by the development team. One of these endpoints, `/api/internal/admin/users`, returns a complete list of all user accounts including email addresses, phone numbers, and account balances when called with a standard user authentication token.
 
-The development team's response when notified: "That endpoint is internal — it's not supposed to be accessible from outside. It must be a deployment mistake."
+The development team's response when notified: "That endpoint is internal — it's not supposed to be accessible from outside. It must be a deployment mistake.
 
 **Discussion Prompt:**
 

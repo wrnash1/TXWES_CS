@@ -504,8 +504,6 @@ The U.S. government repository for vulnerability data enriched with CVSS scores,
 <https://www.first.org/cvss/calculator/3.1>
 The interactive CVSS v3.1 calculator published by FIRST. Enter vector string values for any of the eight Base metrics and observe how the score changes. Experimenting with the calculator is the fastest way to build intuition for how Attack Vector, Privileges Required, and Scope interact to produce final severity scores.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

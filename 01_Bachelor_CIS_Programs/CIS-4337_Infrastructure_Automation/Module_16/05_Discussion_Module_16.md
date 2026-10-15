@@ -42,9 +42,9 @@ Discuss: Which part of the capstone was most technically challenging? Was there 
 
 ## Sample Peer Response Starters
 
-- "Your 30-day study plan prioritizes the right areas. I would adjust the state management allocation because..."
-- "Your governance plan addresses the right pain points. One approach I've seen work for team buy-in is..."
-- "Your capstone reflection resonates with me. The dynamic block section was also where I struggled, specifically because..."
+- "Your 30-day study plan prioritizes the right areas. I would adjust the state management allocation because...
+- "Your governance plan addresses the right pain points. One approach I've seen work for team buy-in is...
+- "Your capstone reflection resonates with me. The dynamic block section was also where I struggled, specifically because...
 
 ---
 

@@ -354,17 +354,17 @@ B. Liveness Detection
 
 An e-commerce platform wants to automatically generate alt-text descriptions for all product images to comply with accessibility standards. Which Azure AI Vision feature generates a human-readable sentence describing the content of an image?
 
-A. Tags — returns keyword labels like "chair," "wood," "indoor."
+A. Tags — returns keyword labels like "chair," "wood," "indoor.
 
 B. Objects — returns bounding boxes for detected items.
 
-C. Captions — returns a natural language sentence such as "a wooden rocking chair on a white background."
+C. Captions — returns a natural language sentence such as "a wooden rocking chair on a white background.
 
 D. Read — returns any text printed on the image.
 
 ### Q15 — Correct Answer
 
-C. Captions — returns a natural language sentence such as "a wooden rocking chair on a white background."
+C. Captions — returns a natural language sentence such as "a wooden rocking chair on a white background.
 
 ### Q15 — Distractor Analysis
 

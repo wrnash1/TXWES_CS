@@ -40,7 +40,7 @@ Create a wireframe for the member dashboard — the first screen a member sees a
 - A recent transactions preview showing the last five transactions
 - A notification area for alerts (low balance, upcoming loan payment due)
 
-Your wireframe must be clearly labeled. Use annotations to describe the behavior of at least three interactive elements. For example: "Clicking account card expands to show full transaction history."
+Your wireframe must be clearly labeled. Use annotations to describe the behavior of at least three interactive elements. For example: "Clicking account card expands to show full transaction history.
 
 ### Part 1B — Fund Transfer Screen Wireframe
 
@@ -91,7 +91,7 @@ A competitor credit union recently launched a self-service portal with the follo
 
 **Characteristic 2:** The navigation menu uses internal system codes for menu items: ACCT_VIEW, XFER_INIT, LN_APP_SUBMIT. These labels were copied directly from the database table names.
 
-**Characteristic 3:** The loan application form has 47 fields on a single scrolling page. There is no progress indicator, no "Save Draft" option, and submitting the incomplete form displays the generic message: "Submission failed."
+**Characteristic 3:** The loan application form has 47 fields on a single scrolling page. There is no progress indicator, no "Save Draft" option, and submitting the incomplete form displays the generic message: "Submission failed.
 
 **Characteristic 4:** The "Transfer Funds" button and the "Cancel Transfer" button are the same size, the same color, and placed directly next to each other.
 

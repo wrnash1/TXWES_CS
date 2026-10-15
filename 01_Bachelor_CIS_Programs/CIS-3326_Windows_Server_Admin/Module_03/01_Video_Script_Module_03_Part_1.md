@@ -44,7 +44,7 @@ Welcome to Module 03. I am Professor Nash. In Module 02 we learned what Active D
 
 Module 03 is one of the most hands-on modules in this course. By the end of Part 2, you will have installed AD DS, promoted a server to a Domain Controller, added a second DC for redundancy, verified replication, and explored the key configuration decisions you make during and after promotion.
 
-This module maps to AZ-800 objective: "Deploy and manage Active Directory Domain Services in on-premises and hybrid environments."
+This module maps to AZ-800 objective: "Deploy and manage Active Directory Domain Services in on-premises and hybrid environments.
 
 ---
 

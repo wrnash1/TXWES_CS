@@ -140,7 +140,7 @@ A development team deploys their Python application to Azure App Service. They o
 
 **Distractor Analysis:**
 
-- *Why B is correct:* Azure App Service is a PaaS offering. Microsoft manages the underlying OS, web server infrastructure, and scaling. The customer only provides application code and configuration. The key signal in the scenario is "never access or patch a server OS."
+- *Why B is correct:* Azure App Service is a PaaS offering. Microsoft manages the underlying OS, web server infrastructure, and scaling. The customer only provides application code and configuration. The key signal in the scenario is "never access or patch a server OS.
 - *Why A is incorrect:* IaaS would require the team to access, configure, and patch the operating system. The scenario explicitly states they do not do this.
 - *Why C is incorrect:* SaaS means the provider manages the application logic itself. In this scenario, the team writes their own application code — they are the application developer, not a software consumer.
 - *Why D is incorrect:* FaaS (Azure Functions) is a serverless compute model within PaaS. While Azure App Service and Azure Functions are related concepts, FaaS is not the correct AZ-900 service model classification. AZ-900 uses IaaS, PaaS, and SaaS as the three models.

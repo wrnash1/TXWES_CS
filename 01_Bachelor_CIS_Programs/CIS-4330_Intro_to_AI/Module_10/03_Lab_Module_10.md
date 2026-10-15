@@ -131,10 +131,10 @@ for other inquiries."
 
 Now test the following messages in sequence:
 
-1. "What are the library hours on weekends?"
-2. "Can I borrow DVDs?"
-3. "Can you help me write my essay on climate change?"
-4. "What is the capital of France?"
+1. "What are the library hours on weekends?
+2. "Can I borrow DVDs?
+3. "Can you help me write my essay on climate change?
+4. "What is the capital of France?
 
 Record what the model said for messages 3 and 4.
 
@@ -151,7 +151,7 @@ For each of the four experiments, provide:
 
 ### Step C1: Low Temperature Output
 
-Clear the chat. Set temperature to 0.0. Write this system message: "You are a creative writing assistant."
+Clear the chat. Set temperature to 0.0. Write this system message: "You are a creative writing assistant.
 
 Send this prompt five times (use the regenerate button if available, or resend):
 
@@ -178,7 +178,7 @@ Record all five responses. How do they differ from the low-temperature responses
 
 ### Step D1: Induce a Hallucination
 
-Clear the chat. Set temperature to 0.3. Clear the system message or use a generic "You are a helpful assistant."
+Clear the chat. Set temperature to 0.3. Clear the system message or use a generic "You are a helpful assistant.
 
 Send this prompt:
 
@@ -326,7 +326,7 @@ If your Azure account does not yet have Azure OpenAI access approved, contact Pr
 
 ### Challenge 1: Systematic Prompt Engineering Comparison
 
-1. Choose a single task: summarize a 3-paragraph news article of your choice into 3 bullet points. Write four versions of the prompt for the same article: (a) zero-shot with only task instructions, (b) few-shot with one example summary, (c) chain-of-thought asking the model to identify key facts before summarizing, and (d) a detailed system prompt defining the role as "a professional news editor."
+1. Choose a single task: summarize a 3-paragraph news article of your choice into 3 bullet points. Write four versions of the prompt for the same article: (a) zero-shot with only task instructions, (b) few-shot with one example summary, (c) chain-of-thought asking the model to identify key facts before summarizing, and (d) a detailed system prompt defining the role as "a professional news editor.
 2. Submit all four prompts to your Azure OpenAI deployment at the same temperature (0.7). Record the output for each.
 3. Build a comparison table with columns: Technique, Output Quality (1-5 rating), Adherence to 3-bullet format (Yes/No), Notable Differences.
 4. Write a 3-4 sentence recommendation: for a production news summarization pipeline that processes 10,000 articles per day, which prompting technique would you standardize on and why? Consider cost (tokens), consistency, and quality.

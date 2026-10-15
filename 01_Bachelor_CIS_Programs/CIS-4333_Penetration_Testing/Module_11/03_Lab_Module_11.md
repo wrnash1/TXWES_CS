@@ -68,7 +68,7 @@ airmon-ng start wlan1
 iwconfig wlan1mon
 ```
 
-Confirm the Mode field shows "Monitor."
+Confirm the Mode field shows "Monitor.
 
 **Deliverable A1:** Screenshot showing `iwconfig wlan1mon` output with Mode: Monitor confirmed.
 
@@ -121,7 +121,7 @@ aircrack-ng -w test_wordlist.txt lab11_capture-01.cap
 
 3. Confirm the PSK is recovered in the output.
 
-**Deliverable A4:** Screenshot of aircrack-ng output showing "KEY FOUND! [ YOUR_PSK ]."
+**Deliverable A4:** Screenshot of aircrack-ng output showing "KEY FOUND! [ YOUR_PSK ].
 
 ### Step A5 — WPS Assessment
 
@@ -186,7 +186,7 @@ aircrack-ng -w /path/to/wordlist <capture_file.cap>
 
 2. Wait for the attack to complete and the key to be found.
 
-**Deliverable B4:** Screenshot of aircrack-ng output showing "KEY FOUND! [ password ]."
+**Deliverable B4:** Screenshot of aircrack-ng output showing "KEY FOUND! [ password ].
 
 ### Step B5 — Answer the Room Questions
 

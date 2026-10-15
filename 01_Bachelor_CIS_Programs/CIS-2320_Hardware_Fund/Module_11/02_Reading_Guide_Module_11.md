@@ -504,8 +504,6 @@ The following free resources supplement Module 11 content on network cabling, co
    URL: [https://www.ieee802.org/3/](https://www.ieee802.org/3/)
    Relevance: The official IEEE 802.3 working group page provides free access to standard summaries and amendment descriptions for all Ethernet variants (1000BASE-T, 10GBASE-T, PoE/802.3af/at/bt). Understanding which amendment introduced which standard clarifies the A+ exam questions about cable category requirements for specific Ethernet speeds.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

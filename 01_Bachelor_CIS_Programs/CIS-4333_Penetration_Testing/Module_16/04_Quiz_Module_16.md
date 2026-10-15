@@ -91,7 +91,7 @@ A tester is reviewing a scope document before a web application engagement. The 
 * A) Test `api.corp.local` immediately — it is functionally part of the same application
 * B) Stop all interaction with `api.corp.local`, document the discovery, and notify the client to determine whether authorization can be extended to include it
 * C) Test `api.corp.local` passively only, since passive observation of traffic does not constitute active testing
-* D) Include `api.corp.local` findings in the report under a supplemental section labeled "Out-of-Scope Observations"
+* D) Include `api.corp.local` findings in the report under a supplemental section labeled "Out-of-Scope Observations
 
 * **Correct Answer:** B
 * **Distractor Analysis:**
@@ -348,7 +348,7 @@ A penetration tester has completed all five phases of an engagement: planning, r
 
 * A) The CVSS base score and vector string for each vulnerability
 * B) Screenshots demonstrating successful exploitation of the identified vulnerability
-* C) Specific, actionable guidance for the client's engineering team describing how to fix the vulnerability — such as "apply parameterized queries to all database calls in the authentication module" rather than "fix the SQL injection"
+* C) Specific, actionable guidance for the client's engineering team describing how to fix the vulnerability — such as "apply parameterized queries to all database calls in the authentication module" rather than "fix the SQL injection
 * D) The affected asset's hostname, IP address, and operating system version
 
 * **Correct Answer:** C

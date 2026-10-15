@@ -15,7 +15,7 @@ This is a fully asynchronous online course. Be prepared to spend significant tim
 **Estimated Duration:** 3 minutes
 **Visual:** Instructor on camera.
 **Audio:** "Welcome to Operating System Administration. I'm Professor Nash. If you want to work in cloud computing, cybersecurity, or software development, you must know Linux. Period. It runs the internet. 
-In this course, we are going to strip away the graphical user interface. You will learn to navigate the file system, manage permissions, and write basic bash scripts using nothing but a black screen and text. It can be intimidating at first, but by the end of this course, you will feel incredibly powerful. Our goal is the LPI Linux Essentials certification. Follow the reading guides, execute the labs in your virtual machine, and you'll be ready for the final exam. Let's get started."
+In this course, we are going to strip away the graphical user interface. You will learn to navigate the file system, manage permissions, and write basic bash scripts using nothing but a black screen and text. It can be intimidating at first, but by the end of this course, you will feel incredibly powerful. Our goal is the LPI Linux Essentials certification. Follow the reading guides, execute the labs in your virtual machine, and you'll be ready for the final exam. Let's get started.
 
 ---
 

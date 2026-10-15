@@ -26,27 +26,21 @@
 
 ---
 
-## [00:00 – 01:00] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 02 | Variables, Constants, and Scope | CIS-1320"]**
+Welcome back. Module 02 is about how JavaScript stores data. That sounds simple — declare a variable, give it a value. And it is simple in most cases. But JavaScript has three different ways to declare variables, and they behave differently in ways that trip up developers every day. Understanding those differences is also one of the most-tested topic areas on the JSE certification exam.
 
-"Welcome back. Module 02 is about how JavaScript stores data. That sounds simple — declare a variable, give it a value. And it is simple in most cases. But JavaScript has three different ways to declare variables, and they behave differently in ways that trip up developers every day. Understanding those differences is also one of the most-tested topic areas on the JSE certification exam.
-
-By the end of this module you will understand exactly what `var`, `let`, and `const` do, how scope determines where a variable is visible, and what hoisting means and why it matters. Let us get into it."
+By the end of this module you will understand exactly what `var`, `let`, and `const` do, how scope determines where a variable is visible, and what hoisting means and why it matters. Let us get into it.
 
 ---
 
-## [01:00 – 04:00] Part 1 — `let` and `const`: The Modern Keywords
+## Part 1 — `let` and `const`: The Modern Keywords
 
-**[SHOW SLIDE: "ES6 Variables: `let` and `const`"]**
-
-"JavaScript was created in 1995 and the original keyword for declaring variables was `var`. In 2015, ECMAScript 6 — ES6 — introduced two new keywords: `let` and `const`. They were designed to fix real problems with `var`. In this course, we use `let` and `const` for everything. We will cover `var` in detail because the exam tests it, but you should not write new code with `var`.
+JavaScript was created in 1995 and the original keyword for declaring variables was `var`. In 2015, ECMAScript 6 — ES6 — introduced two new keywords: `let` and `const`. They were designed to fix real problems with `var`. In this course, we use `let` and `const` for everything. We will cover `var` in detail because the exam tests it, but you should not write new code with `var`.
 
 **`let`** declares a variable that can be reassigned. Use `let` when you know the value will change.
 
 **`const`** declares a binding that cannot be reassigned. Use `const` when the value is fixed after initialization.
-
-**[DEMO — open DevTools Console]**
 
 ```javascript
 let score = 0;
@@ -57,13 +51,9 @@ const PI = 3.14159;
 PI = 3;               // TypeError: Assignment to constant variable
 ```
 
-[PAUSE]
-
 Let me run that. Notice `score` changes from 0 to 100 — that is a reassignment with `let`. Then `PI = 3` throws a `TypeError` immediately. You cannot reassign a `const` binding.
 
 **The practical rule:** start with `const` for everything. If you later discover you need to reassign it, change it to `let`. You will use `const` about 80 percent of the time.
-
-[PAUSE]
 
 One thing that surprises students: `const` does not make an object immutable. It only prevents you from reassigning the binding itself. The properties of an object declared with `const` can still be modified.
 
@@ -75,17 +65,13 @@ console.log(user.score);   // 100
 user = { name: 'Bob' };    // TypeError — cannot reassign the binding
 ```
 
-`const` locks the variable so it always points to the same object. It does not lock what is inside that object. We will explore this more in the Objects module."
+`const` locks the variable so it always points to the same object. It does not lock what is inside that object. We will explore this more in the Objects module.
 
 ---
 
-## [04:00 – 07:00] Part 2 — Block Scope
+## Part 2 — Block Scope
 
-**[SHOW SLIDE: "Block Scope: `let` and `const` Stay Inside `{}`"]**
-
-"Scope is the concept that determines where a variable is visible and accessible in your code. `let` and `const` are **block-scoped** — they are only accessible inside the pair of curly braces where they were declared.
-
-**[DEMO]**
+Scope is the concept that determines where a variable is visible and accessible in your code. `let` and `const` are **block-scoped** — they are only accessible inside the pair of curly braces where they were declared.
 
 ```javascript
 {
@@ -111,8 +97,6 @@ console.log(message);   // ReferenceError
 console.log(MAX);       // ReferenceError
 ```
 
-[PAUSE]
-
 The JSE exam frequently tests this. A common question shows a variable declared with `let` inside an `if` block and then accessed outside it. You need to recognize that `let` and `const` do not escape blocks — they throw `ReferenceError` if accessed outside their block.
 
 Loop variables work the same way:
@@ -125,17 +109,13 @@ for (let i = 0; i < 3; i++) {
 console.log(i);   // ReferenceError — i does not exist here
 ```
 
-This is actually a good thing. It prevents accidental access to loop counters after the loop ends."
+This is actually a good thing. It prevents accidental access to loop counters after the loop ends.
 
 ---
 
-## [07:00 – 10:30] Part 3 — `var` and Function Scope
+## Part 3 — `var` and Function Scope
 
-**[SHOW SLIDE: "`var` — Function Scope, Not Block Scope"]**
-
-"Now let us look at `var`. `var` is function-scoped, not block-scoped. This means a `var` variable declared inside an if block or a for loop is visible to the entire function that contains it.
-
-**[DEMO — paste both in console]**
+Now let us look at `var`. `var` is function-scoped, not block-scoped. This means a `var` variable declared inside an if block or a for loop is visible to the entire function that contains it.
 
 ```javascript
 if (true) {
@@ -145,8 +125,6 @@ console.log(leaky);   // I escaped the block!
 ```
 
 That variable leaks out of the if block because `var` ignores block boundaries. It is only bounded by the nearest function.
-
-[PAUSE]
 
 Here is the classic loop trap. Compare these two:
 
@@ -159,8 +137,6 @@ console.log(j);   // ReferenceError — let j did not leak
 ```
 
 This is a major source of bugs in older JavaScript code. With `var`, the loop counter stays alive after the loop ends and has the value it had when the loop stopped. With `let`, it vanishes.
-
-[PAUSE]
 
 `var` also allows re-declaration in the same scope — no error:
 
@@ -177,21 +153,17 @@ let y = 1;
 let y = 2;   // SyntaxError: Identifier 'y' has already been declared
 ```
 
-The `let` version gives you an explicit error message so you know immediately that something is wrong. The `var` version silently succeeds, which is harder to debug."
+The `let` version gives you an explicit error message so you know immediately that something is wrong. The `var` version silently succeeds, which is harder to debug.
 
 ---
 
-## [10:30 – 13:30] Part 4 — Hoisting
+## Part 4 — Hoisting
 
-**[SHOW SLIDE: "Hoisting: What Happens Before Your Code Runs"]**
-
-"Hoisting is one of the most important concepts to understand for the JSE exam. It describes a behavior that happens before your code actually executes.
+Hoisting is one of the most important concepts to understand for the JSE exam. It describes a behavior that happens before your code actually executes.
 
 When the JavaScript engine processes a script, it scans for all variable and function declarations before running any code. It 'hoists' those declarations to the top of their scope. The key difference is what gets hoisted and what does not.
 
 **`var` hoisting — declaration is hoisted AND initialized to `undefined`:**
-
-**[DEMO]**
 
 ```javascript
 console.log(myVar);   // undefined — not an error
@@ -207,8 +179,6 @@ console.log(myVar);   // undefined
 myVar = 5;            // assignment stays in place
 console.log(myVar);   // 5
 ```
-
-[PAUSE]
 
 **`let` and `const` hoisting — declaration is hoisted but NOT initialized:**
 
@@ -227,17 +197,13 @@ The practical difference is important:
 | `let` | `ReferenceError: Cannot access before initialization` |
 | `const` | `ReferenceError: Cannot access before initialization` |
 
-[PAUSE]
-
-For the JSE exam, recognize this pattern immediately: code that reads a variable before its declaration line. If the variable is `var`, you see `undefined`. If it is `let` or `const`, you see a `ReferenceError`. The word 'Temporal Dead Zone' appears in documentation but the exam focuses on the practical behavior."
+For the JSE exam, recognize this pattern immediately: code that reads a variable before its declaration line. If the variable is `var`, you see `undefined`. If it is `let` or `const`, you see a `ReferenceError`. The word 'Temporal Dead Zone' appears in documentation but the exam focuses on the practical behavior.
 
 ---
 
-## [13:30 – 15:30] Part 5 — Naming Rules and Best Practices
+## Part 5 — Naming Rules and Best Practices
 
-**[SHOW SLIDE: "Variable Naming Rules"]**
-
-"A few quick rules on naming. Variable names in JavaScript are called **identifiers**. Identifiers must follow these rules:
+A few quick rules on naming. Variable names in JavaScript are called **identifiers**. Identifiers must follow these rules:
 
 - Must start with a letter, underscore `_`, or dollar sign `$` — not a digit
 - Can contain letters, digits, underscores, and dollar signs
@@ -247,13 +213,9 @@ For the JSE exam, recognize this pattern immediately: code that reads a variable
 Valid identifiers: `score`, `playerName`, `_total`, `$price`, `MAX_SIZE`
 Invalid: `1stPlace` (starts with digit), `my-variable` (hyphen not allowed)
 
-[PAUSE]
-
 The JavaScript convention for multi-word variable names is **camelCase**: the first word is lowercase, each subsequent word starts with a capital letter. `playerScore`, `totalAmount`, `isGameOver`, `firstName`. This is the near-universal convention in JavaScript code.
 
 For constants that represent fixed configuration values, many teams use `UPPER_SNAKE_CASE`: `MAX_RETRIES`, `API_TIMEOUT_MS`. This signals 'this value never changes' to anyone reading the code.
-
-[PAUSE]
 
 Here is the style guide I want you to follow in this course:
 
@@ -263,7 +225,7 @@ Here is the style guide I want you to follow in this course:
 4. Use descriptive names — `playerScore` is better than `ps` or `x`
 5. Follow camelCase for variables, UPPER_SNAKE_CASE for module-level constants
 
-That is Module 02. The lab will have you experimenting with all of these behaviors directly in the console and in script files. The quiz covers the `var`/`let`/`const` behavioral differences, hoisting, and scope rules. Good luck."
+That is Module 02. The lab will have you experimenting with all of these behaviors directly in the console and in script files. The quiz covers the `var`/`let`/`const` behavioral differences, hoisting, and scope rules. Good luck.
 
 ---
 

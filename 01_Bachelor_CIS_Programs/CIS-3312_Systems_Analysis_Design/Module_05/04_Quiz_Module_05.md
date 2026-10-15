@@ -79,13 +79,13 @@ Distractor Analysis:
 
 Which of the following correctly represents the standard user story format recommended by the Agile Alliance?
 
-A) "The system shall allow a registered customer to reset their password via email verification within 30 seconds."
+A) "The system shall allow a registered customer to reset their password via email verification within 30 seconds.
 
-B) "As a registered customer, I want to reset my password via email so that I can regain access to my account without contacting support."
+B) "As a registered customer, I want to reset my password via email so that I can regain access to my account without contacting support.
 
-C) "Given a customer is locked out, when they request a password reset, then the system sends a reset email within 60 seconds."
+C) "Given a customer is locked out, when they request a password reset, then the system sends a reset email within 60 seconds.
 
-D) "Password Reset: High Priority. Estimated effort: 3 story points. Assigned to Sprint 2."
+D) "Password Reset: High Priority. Estimated effort: 3 story points. Assigned to Sprint 2.
 
 Correct Answer: B
 
@@ -194,13 +194,13 @@ Distractor Analysis:
 
 A product owner reviews a user story backlog and asks the BA to identify which items are epics that need to be broken down before sprint planning. Which of the following is most clearly an epic rather than a sprint-sized story?
 
-A) "As a warehouse worker, I want to scan a barcode to mark a package as received so that inventory is updated immediately."
+A) "As a warehouse worker, I want to scan a barcode to mark a package as received so that inventory is updated immediately.
 
-B) "As a store manager, I want to view today's sales dashboard so that I can monitor performance at a glance."
+B) "As a store manager, I want to view today's sales dashboard so that I can monitor performance at a glance.
 
-C) "As a customer, I want to manage my entire account including profile, payment methods, order history, subscription preferences, and communication settings so that I have full control of my account."
+C) "As a customer, I want to manage my entire account including profile, payment methods, order history, subscription preferences, and communication settings so that I have full control of my account.
 
-D) "As a delivery driver, I want to receive a push notification when a new delivery is assigned to me so that I can start routing immediately."
+D) "As a delivery driver, I want to receive a push notification when a new delivery is assigned to me so that I can start routing immediately.
 
 Correct Answer: C
 
@@ -310,13 +310,13 @@ Distractor Analysis:
 
 Which of the following user stories best demonstrates the "Valuable" criterion of INVEST?
 
-A) "As a developer, I want to refactor the database connection pool so that the code is cleaner."
+A) "As a developer, I want to refactor the database connection pool so that the code is cleaner.
 
-B) "As a customer, I want to view my order history so that I can track past purchases and request returns without calling support."
+B) "As a customer, I want to view my order history so that I can track past purchases and request returns without calling support.
 
-C) "As a tester, I want to write automated test scripts so that regression testing is faster."
+C) "As a tester, I want to write automated test scripts so that regression testing is faster.
 
-D) "As a database administrator, I want to index the transactions table so that query performance improves."
+D) "As a database administrator, I want to index the transactions table so that query performance improves.
 
 Correct Answer: B
 
@@ -402,13 +402,13 @@ Distractor Analysis:
 
 Which of the following correctly illustrates a well-formed Given/When/Then acceptance criterion for a user story about bill payment?
 
-A) "The system shall process bill payments within 3 seconds."
+A) "The system shall process bill payments within 3 seconds.
 
-B) "As a customer, I want to pay my bill online so that I avoid late fees."
+B) "As a customer, I want to pay my bill online so that I avoid late fees.
 
-C) "Given the customer has a saved payment method and a balance due, When the customer confirms the payment, Then the system shall process the payment and display a confirmation number within 5 seconds."
+C) "Given the customer has a saved payment method and a balance due, When the customer confirms the payment, Then the system shall process the payment and display a confirmation number within 5 seconds.
 
-D) "Bill payment must be implemented in Sprint 3 and tested by QA before release."
+D) "Bill payment must be implemented in Sprint 3 and tested by QA before release.
 
 Correct Answer: C
 

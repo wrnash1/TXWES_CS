@@ -323,8 +323,6 @@ For a 500-user Salesforce Sales Cloud implementation, a realistic 5-year TCO mig
 
 *Document prepared for CIS-4320 instructional use. Texas Wesleyan University. Proprietary and Confidential.*
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

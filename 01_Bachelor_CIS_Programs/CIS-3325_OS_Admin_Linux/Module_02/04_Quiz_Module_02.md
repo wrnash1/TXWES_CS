@@ -170,7 +170,7 @@ D. `file /usr/bin/grep`
 - **A (`which`)** is incorrect. `which grep` returns the path to the grep executable in your PATH. It does not examine file content to determine file type.
 - **B (`whereis grep`)** is incorrect. `whereis` locates the binary, source, and man page. It does not examine file content to determine type.
 - **C (`type grep`)** is partially useful — it tells you whether grep is a built-in, alias, or external command — but it does not read file content to determine file type the way `file` does.
-- **D (`file /usr/bin/grep`)** is correct. `file` reads the content (magic bytes) of a file and reports its type — for a binary like grep it would output something like "ELF 64-bit LSB pie executable."
+- **D (`file /usr/bin/grep`)** is correct. `file` reads the content (magic bytes) of a file and reports its type — for a binary like grep it would output something like "ELF 64-bit LSB pie executable.
 
 ---
 
@@ -327,7 +327,7 @@ D. It prints each file name as it is copied.
 
 **Distractor Analysis**:
 
-- **A** is incorrect. Creating parent directories is the function of `mkdir -p`. In `cp`, `-p` means "preserve."
+- **A** is incorrect. Creating parent directories is the function of `mkdir -p`. In `cp`, `-p` means "preserve.
 - **B** is incorrect. Recursive copying is done by `-r`. In this command, `-r` is already handling the recursive copy.
 - **C** is correct. The `-p` flag in `cp` preserves file attributes: mode (permissions), ownership, and timestamps. This is important for backups where you need the copied files to retain their original metadata.
 - **D** is incorrect. Verbose output (printing each file) is done with the `-v` flag in `cp`.

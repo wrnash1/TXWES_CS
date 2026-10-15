@@ -530,8 +530,6 @@ Covers DHCP option precedence (server → scope → reservation), how scope opti
 
 *Review all sections before beginning Lab 09, Quiz 09, and Discussion 09.*
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

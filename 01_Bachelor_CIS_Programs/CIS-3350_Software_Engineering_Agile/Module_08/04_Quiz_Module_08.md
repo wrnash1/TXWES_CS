@@ -272,10 +272,10 @@ A team has been using story points for 12 Sprints. A new Developer joins the tea
 
 Which of the following scenarios best illustrates the correct use of velocity in Sprint Planning?
 
-- A) "Our velocity target is 50 points, so we must select stories totaling exactly 50 points."
-- B) "Our last three Sprints averaged 32 points, so we'll plan to take on approximately 30–34 points this Sprint."
-- C) "Our velocity was 45 last Sprint, so we must beat 45 this Sprint to show improvement."
-- D) "We'll take as many stories as the Product Owner requests and use velocity to prove we delivered them."
+- A) "Our velocity target is 50 points, so we must select stories totaling exactly 50 points.
+- B) "Our last three Sprints averaged 32 points, so we'll plan to take on approximately 30–34 points this Sprint.
+- C) "Our velocity was 45 last Sprint, so we must beat 45 this Sprint to show improvement.
+- D) "We'll take as many stories as the Product Owner requests and use velocity to prove we delivered them.
 
 - **Correct Answer:** B
 - **Distractor Analysis:**

@@ -396,11 +396,11 @@ Reference: learn.microsoft.com/en-us/cli/azure/container
 
 ## Section 9: AZ-900 Exam Tips
 
-1. **ACI for simplicity:** When an exam scenario describes running a single container without managing infrastructure, the answer is Azure Container Instances. Key signals: "simple," "no orchestration," "quick," "batch."
+1. **ACI for simplicity:** When an exam scenario describes running a single container without managing infrastructure, the answer is Azure Container Instances. Key signals: "simple," "no orchestration," "quick," "batch.
 
-2. **AKS for orchestration:** When a scenario describes multiple interdependent microservices, rolling updates, or Kubernetes-native features, the answer is AKS. Key signals: "microservices," "orchestration," "zero-downtime updates."
+2. **AKS for orchestration:** When a scenario describes multiple interdependent microservices, rolling updates, or Kubernetes-native features, the answer is AKS. Key signals: "microservices," "orchestration," "zero-downtime updates.
 
-3. **Container Apps in scenarios:** Container Apps answers scenarios involving event-driven scaling and scale-to-zero without Kubernetes management. Key signals: "scale to zero," "no Kubernetes management," "event-driven."
+3. **Container Apps in scenarios:** Container Apps answers scenarios involving event-driven scaling and scale-to-zero without Kubernetes management. Key signals: "scale to zero," "no Kubernetes management," "event-driven.
 
 4. **ACR is not a compute service:** ACR stores images — it does not run containers. Do not select ACR as the answer for a container deployment scenario.
 
@@ -562,8 +562,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

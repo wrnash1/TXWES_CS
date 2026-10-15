@@ -509,8 +509,6 @@ The official documentation for Cortex XSOAR (formerly Demisto), one of the most 
 - CompTIA CySA+ CS0-003 Exam Objectives — Domain 1 (Security Operations)
 - Module 14 Video Lecture (Professor Nash)
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

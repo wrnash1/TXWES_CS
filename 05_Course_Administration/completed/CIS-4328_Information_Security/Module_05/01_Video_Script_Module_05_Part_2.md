@@ -166,13 +166,13 @@ Let's work through the cryptography traps that consistently appear on Security+.
 
 #### Trap 1: Confidentiality vs. Authentication Direction
 
-"Alice signs a document." Which key does she use?
+Alice signs a document." Which key does she use?
 
 Wrong answer: public key.
 
 Correct answer: **private key**. Signing uses the private key. Verification uses the public key.
 
-"Alice encrypts a message for Bob." Which key does she use?
+Alice encrypts a message for Bob." Which key does she use?
 
 Wrong answer: her own public key.
 
@@ -180,7 +180,7 @@ Correct answer: **Bob's public key**. She encrypts with the recipient's public k
 
 #### Trap 2: What Hashing Provides
 
-"A network administrator sends a configuration file to a remote site and wants to ensure it was not modified in transit."
+A network administrator sends a configuration file to a remote site and wants to ensure it was not modified in transit.
 
 Wrong answers: encryption, digital certificate, VPN.
 
@@ -194,7 +194,7 @@ If a scenario describes a system using MD5 for password hashing, the correct rec
 
 #### Trap 4: Symmetric vs. Asymmetric Speed
 
-"A company needs to encrypt 2 TB of data at rest."
+A company needs to encrypt 2 TB of data at rest.
 
 Wrong answer: RSA encryption.
 
@@ -202,7 +202,7 @@ Correct answer: **AES** (symmetric). RSA is computationally expensive and not de
 
 #### Trap 5: Perfect Forward Secrecy
 
-"Which feature ensures that a compromise of the server's long-term private key does not expose past session traffic?"
+Which feature ensures that a compromise of the server's long-term private key does not expose past session traffic?
 
 Wrong answer: TLS 1.2, RSA key exchange.
 
@@ -210,11 +210,11 @@ Correct answer: **Perfect Forward Secrecy using ECDHE**. Static RSA key exchange
 
 #### Trap 6: Root CA vs. Intermediate CA
 
-"An organization wants to issue certificates from their internal CA but keep the root CA offline."
+An organization wants to issue certificates from their internal CA but keep the root CA offline.
 
 The structure: **Root CA (offline) signs Intermediate CA certificate → Intermediate CA issues end-entity certificates**.
 
-"Which component verifies the identity of certificate requestors before the CA issues the certificate?"
+Which component verifies the identity of certificate requestors before the CA issues the certificate?
 
 Answer: **Registration Authority (RA)**, not the CA itself.
 

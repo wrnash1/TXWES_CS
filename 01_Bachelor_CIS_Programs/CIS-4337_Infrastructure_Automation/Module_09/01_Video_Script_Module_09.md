@@ -44,8 +44,6 @@ By the end of this module you will be able to:
 
 Let's get started.
 
-[PAUSE]
-
 ---
 
 ## Section 1: What Is a Module (1:30 – 4:00)
@@ -63,8 +61,6 @@ module "network" {
 ```
 
 This tells Terraform: go into the `./modules/network` directory, process all the `.tf` files there, and treat them as a reusable component.
-
-[PAUSE]
 
 ### Module Structure
 
@@ -87,8 +83,6 @@ modules/
 
 A good module is like a well-designed function: it has a clear interface (inputs and outputs), does one thing well, and hides its implementation details.
 
-[PAUSE]
-
 ---
 
 ## Section 2: Module Sources (4:00 – 8:00)
@@ -108,8 +102,6 @@ module "shared_compute" {
 ```
 
 Local paths always start with `./` or `../`. This is the most common source type during development.
-
-[PAUSE]
 
 ### Terraform Registry
 
@@ -131,8 +123,6 @@ module "vpc" {
 
 The Registry source format is `<namespace>/<module>/<provider>`. The version constraint uses the same syntax as provider versions — we will cover this in a moment.
 
-[PAUSE]
-
 ### Git Repositories
 
 You can source a module directly from a Git repository:
@@ -150,16 +140,12 @@ module "network" {
 
 The `//` double-slash separates the repository URL from the subdirectory path within the repo. The `?ref=` query parameter pins to a tag, branch, or commit hash.
 
-[PAUSE]
-
 ### Other Sources
 
 - **GitHub shorthand**: `source = "github.com/acme/terraform-modules//network"`
 - **Bitbucket**: `source = "bitbucket.org/acme/terraform-modules//network"`
 - **S3 bucket**: `source = "s3::https://s3.amazonaws.com/bucket/module.zip"`
 - **HTTP URL**: `source = "https://example.com/modules/network.zip"`
-
-[PAUSE]
 
 ---
 
@@ -197,8 +183,6 @@ Version constraint operators:
 - `~> 1.0.0` — compatible: >= 1.0.0, < 1.1.0
 
 The `~>` operator is the most commonly used in practice. It allows patch and minor updates within a major version, preventing breaking changes while allowing security fixes to flow through.
-
-[PAUSE]
 
 ---
 
@@ -242,8 +226,6 @@ module "network" {
 
 Notice that the parent passes values for the module's variables as arguments inside the `module` block.
 
-[PAUSE]
-
 ### Module Outputs
 
 In the child module's `outputs.tf`:
@@ -277,8 +259,6 @@ output "vpc_id" {
   value = module.network.vpc_id
 }
 ```
-
-[PAUSE]
 
 ---
 
@@ -323,8 +303,6 @@ module "database" {
 
 Notice how `module.network.vpc_id` flows into both `module.compute` and `module.database`. Terraform understands this dependency and will create the network resources before compute and database resources.
 
-[PAUSE]
-
 ### Module Meta-Arguments
 
 Module blocks support several meta-arguments:
@@ -343,8 +321,6 @@ module "per_region_network" {
   environment = var.environment
 }
 ```
-
-[PAUSE]
 
 ---
 
@@ -371,8 +347,6 @@ On the Registry website you will find:
 - Source code link
 - Verified badge (for modules that pass HashiCorp's verification process)
 
-[PAUSE]
-
 ### Creating a Publishable Module
 
 To publish a module to the Registry, the GitHub repository must follow a specific naming convention: `terraform-<PROVIDER>-<MODULE>`. For example:
@@ -382,8 +356,6 @@ To publish a module to the Registry, the GitHub repository must follow a specifi
 - `terraform-google-gke`
 
 The module must also have a `README.md`, follow the standard file structure (`main.tf`, `variables.tf`, `outputs.tf`), and use semantic versioning via Git tags.
-
-[PAUSE]
 
 ---
 
@@ -406,8 +378,6 @@ Here is what we covered in Module 09:
 - The `//` syntax in Git sources separates the repo URL from the subdirectory
 - `module.<name>.<output>` is the correct reference syntax — no `var.` prefix
 - Version constraints: know the meaning of `~>`, `>=`, and `!=`
-
-[PAUSE]
 
 ---
 

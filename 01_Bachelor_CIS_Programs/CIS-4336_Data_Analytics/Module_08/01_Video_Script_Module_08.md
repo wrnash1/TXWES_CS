@@ -54,8 +54,6 @@ Data mining techniques fall into two broad categories.
 
 [SHOW CHART — Diagram: supervised vs. unsupervised learning decision tree]
 
-[PAUSE]
-
 ---
 
 ## Segment 3: Clustering — K-Means (3:00–6:30)
@@ -78,8 +76,6 @@ Step 5: Repeat steps 3 and 4 until centroids stop moving (convergence).
 
 [SHOW CHART — Animated diagram of k-means iteration: random centroids → assignment → recalculation → convergence]
 
-[PAUSE]
-
 ### Choosing K
 
 Choosing the right number of clusters is one of the most important decisions in k-means. The **elbow method** plots within-cluster sum of squares (WCSS) against values of k. As k increases, WCSS decreases — but at some point, adding more clusters yields diminishing returns. The "elbow" in the curve is the optimal k.
@@ -89,8 +85,6 @@ Choosing the right number of clusters is one of the most important decisions in 
 ### K-Means Limitations
 
 K-means assumes clusters are spherical and roughly equal in size. It is sensitive to initial centroid placement and to outliers. It also requires you to specify k in advance, which is not always obvious.
-
-[PAUSE]
 
 ### Business Use Cases for Clustering
 
@@ -117,8 +111,6 @@ A decision tree splits data based on feature values, creating a tree-like struct
 
 [SHOW CHART — Decision tree diagram: root node "Age > 30?" → branches → leaf nodes with class labels]
 
-[PAUSE]
-
 The algorithm selects the best split at each node using a measure of impurity. Two common measures:
 
 **Gini impurity:** `gini = 1 - sum(p_i^2)` where `p_i` is the proportion of class i in the node. A pure node (all one class) has Gini = 0.
@@ -136,8 +128,6 @@ The algorithm selects the best split at each node using a measure of impurity. T
 - Prone to overfitting — can memorize training data perfectly but generalize poorly
 - Sensitive to small changes in training data
 
-[PAUSE]
-
 ---
 
 ## Segment 5: Random Forests (10:00–12:30)
@@ -149,8 +139,6 @@ Here is the idea: instead of one deep tree that overfits, build hundreds of tree
 The final prediction is determined by majority vote (classification) or averaging (regression) across all trees.
 
 [SHOW CHART — Diagram: 5 trees with different training samples → voting → final prediction]
-
-[PAUSE]
 
 ### Why Random Forests Work
 
@@ -165,8 +153,6 @@ A powerful side benefit: random forests provide **feature importance scores** �
 - More accurate than a single decision tree
 - Much less interpretable — you lose the "trace the path" advantage
 - Computationally expensive with large datasets
-
-[PAUSE]
 
 ---
 
@@ -186,15 +172,13 @@ Where `b0` is the intercept and `b1` is the slope. The algorithm finds the value
 
 This is the **ordinary least squares** (OLS) method.
 
-[PAUSE]
-
 ### Multiple Linear Regression
 
 Multiple linear regression extends this to multiple input variables.
 
 `y = b0 + b1*x1 + b2*x2 + ... + bn*xn`
 
-Each `b` coefficient tells you: "holding all other variables constant, how much does y change when this variable increases by one unit?"
+Each `b` coefficient tells you: "holding all other variables constant, how much does y change when this variable increases by one unit?
 
 ### Model Fit — R-Squared
 
@@ -205,8 +189,6 @@ R-squared measures what proportion of the variance in y is explained by the mode
 Where `SST` is the total sum of squares (variance around the mean). R-squared ranges from 0 (model explains nothing) to 1 (model explains everything). Higher is better, but beware of overfitting.
 
 [SHOW CHART — Scatter plot with regression line and residuals illustrated]
-
-[PAUSE]
 
 ---
 
@@ -232,8 +214,6 @@ An association rule has the form: `{A} → {B}` — if a transaction contains A,
 
 A lift value greater than 1 means the items are positively associated. Lift = 1 means they are independent.
 
-[PAUSE]
-
 ### The Apriori Algorithm
 
 The Apriori algorithm efficiently finds frequent itemsets by pruning candidates that do not meet a minimum support threshold. It uses the anti-monotonicity property: any subset of a frequent itemset must also be frequent.
@@ -258,8 +238,6 @@ For classification models, the confusion matrix organizes four outcomes:
 - **False Negative (FN):** model predicted negative, actual is positive (Type II error)
 
 [SHOW CHART — 2x2 confusion matrix with TP, TN, FP, FN labeled]
-
-[PAUSE]
 
 ### Accuracy
 
@@ -287,8 +265,6 @@ F1 is the harmonic mean of precision and recall. It balances both concerns.
 
 F1 is the go-to metric when you care about both precision and recall and the classes are imbalanced.
 
-[PAUSE]
-
 ### Precision-Recall Trade-off
 
 Improving precision often hurts recall, and vice versa. The model threshold controls this trade-off. Raising the classification threshold increases precision but decreases recall. Lowering the threshold increases recall but decreases precision.
@@ -298,8 +274,6 @@ Improving precision often hurts recall, and vice versa. The model threshold cont
 ## Segment 9: Module Summary (20:00–21:30)
 
 Let me close with a summary.
-
-[PAUSE]
 
 Data mining techniques covered today:
 

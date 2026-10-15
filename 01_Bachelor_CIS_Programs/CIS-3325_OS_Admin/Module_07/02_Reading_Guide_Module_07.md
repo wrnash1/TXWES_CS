@@ -464,8 +464,6 @@ with unquoted variables, pitfalls with for loops over ls output, the read -r fla
 handling, and why set -e does not behave as expected with certain constructs. Directly relevant to
 the set -euo pipefail and while read loop content in this module.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

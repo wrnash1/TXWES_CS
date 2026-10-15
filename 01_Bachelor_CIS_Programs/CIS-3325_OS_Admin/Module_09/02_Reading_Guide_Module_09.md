@@ -450,8 +450,6 @@ usage, static and dynamic addressing, DNS configuration, and routing. The compan
 NetworkManager article covers nmcli, nmtui, and connection profiles. Both are kept current
 and include troubleshooting sections for common configuration problems encountered in labs.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

@@ -111,7 +111,7 @@ Select the appropriate contract type for each procurement and justify the select
 
 ### Part 2 Instructions
 
-For each of the three components you recommended buying in Part 1, complete the contract type selection table. If you recommended making a component, skip it and note "Internal — no contract."
+For each of the three components you recommended buying in Part 1, complete the contract type selection table. If you recommended making a component, skip it and note "Internal — no contract.
 
 | Component | Scope Clarity (High/Medium/Low) | Recommended Contract Type | Who Bears Cost Risk | Justification (1–2 sentences) |
 |-----------|--------------------------------|--------------------------|-------------------|-------------------------------|

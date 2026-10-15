@@ -261,7 +261,7 @@ Use an Ishikawa diagram when a team needs to systematically identify the root ca
 
 ### Pareto Chart Sample Interpretation
 
-If five defect categories total 200 defects and the top two categories account for 160 defects (80%), then fixing those two categories eliminates 80% of all defects. The remaining three categories are the "trivial many."
+If five defect categories total 200 defects and the top two categories account for 160 defects (80%), then fixing those two categories eliminates 80% of all defects. The remaining three categories are the "trivial many.
 
 ### When to Use
 
@@ -484,8 +484,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

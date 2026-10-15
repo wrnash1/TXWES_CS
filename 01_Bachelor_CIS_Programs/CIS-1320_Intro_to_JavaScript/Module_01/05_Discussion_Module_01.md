@@ -40,7 +40,7 @@ The reading guide describes three ways to include JavaScript in a web page: inli
 
 In 175–225 words, respond to the following:
 
-- Describe a real-world scenario where an internal script block would be a reasonable choice. What characteristics of the project make it acceptable rather than just convenient? Give a concrete example — not just "a small project."
+- Describe a real-world scenario where an internal script block would be a reasonable choice. What characteristics of the project make it acceptable rather than just convenient? Give a concrete example — not just "a small project.
 - Describe a real-world scenario where an external `.js` file is clearly the right choice. What specific advantage of external files makes it the correct decision in your example?
 - The reading guide says inline JavaScript in event attributes is "poor practice." Some developers argue this is too absolute — that small `onclick` snippets on single-purpose buttons are harmless. Make an argument for or against this position based on the separation-of-concerns principle. You do not have to agree with the reading guide's position, but your argument must be specific.
 

@@ -757,8 +757,6 @@ The complete sudoers manual page online. Covers the full syntax including User_A
 **3. [Ubuntu Server Guide — User Management](https://ubuntu.com/server/docs/user-management)**
 Canonical's official Ubuntu Server documentation for user management. Covers `adduser` vs `useradd`, group management, password aging with `chage`, and the `/etc/adduser.conf` configuration file. Includes Ubuntu-specific conventions that differ from RHEL, which is important context for understanding cross-distribution portability.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

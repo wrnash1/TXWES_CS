@@ -148,7 +148,7 @@ remediation status to assign this finding?
   classification.
 - *Why B is incorrect:* "Not Remediated" implies the original finding was completely
   unaddressed. The client did take action — they deployed a WAF rule — and that action
-  did block the original exploitation path. Partial credit is appropriate. "Not Remediated"
+  did block the original exploitation path. Partial credit is appropriate. "Not Remediated
   should be reserved for cases where the original attack path still succeeds unchanged.
 - *Why D is incorrect:* The retest is scoped to the original vulnerability class (SQL
   injection in the login form area) and the new finding is directly related to the same
@@ -329,7 +329,7 @@ must the tester look to verify it has been removed?
   executes the specified binary when the user logs in. This is one of the most common
   persistence mechanisms in Windows environments. Verification requires checking the key
   in the Registry Editor or with `reg query
-  "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"` after deletion to confirm the value
+  HKCU\Software\Microsoft\Windows\CurrentVersion\Run"` after deletion to confirm the value
   no longer exists.
 - *Why A is incorrect:* `schtasks /query` lists scheduled tasks — entries in the Windows
   Task Scheduler. A registry Run key is a distinct persistence mechanism from a scheduled

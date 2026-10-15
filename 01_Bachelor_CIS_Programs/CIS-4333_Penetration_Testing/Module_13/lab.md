@@ -130,7 +130,7 @@ Choose three of the five raw findings and write each as a complete professional 
 
 For each of your three findings, write a 2-sentence executive version: the first sentence states what is vulnerable and what an attacker can do; the second sentence states what must happen.
 
-Example: "The company's external VPN firewall has an unpatched critical vulnerability that allows attackers to take full control of the device remotely without a password. This system must be patched or replaced within 48 hours to prevent network perimeter compromise."
+Example: "The company's external VPN firewall has an unpatched critical vulnerability that allows attackers to take full control of the device remotely without a password. This system must be patched or replaced within 48 hours to prevent network perimeter compromise.
 
 **Lab Report Item 4:** Submit all three executive translations.
 

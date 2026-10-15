@@ -531,8 +531,6 @@ Description: Microsoft's free documentation on the STRIDE threat modeling method
 URL: https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final
 Description: Free NIST publication with the most comprehensive government-published guidance on Business Impact Analysis methodology. Chapter 3 covers BIA planning, data collection, critical resource identification, and the establishment of MTD, RTO, and RPO values — directly aligned with the BIA content in this module.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

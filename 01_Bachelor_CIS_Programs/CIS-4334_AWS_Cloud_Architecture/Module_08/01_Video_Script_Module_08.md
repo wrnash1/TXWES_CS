@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -43,9 +43,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 06:00] Lambda Execution Model
-
-[SHOW DIAGRAM]
+## Lambda Execution Model
 
 AWS Lambda runs code in response to events. You upload your function code, configure the runtime, and Lambda handles all the underlying compute infrastructure — provisioning servers, scaling, patching, and availability.
 
@@ -57,8 +55,6 @@ When an event triggers the function, Lambda creates an execution environment —
 
 After the handler returns, the execution environment is not immediately destroyed. Lambda may reuse it for subsequent invocations — this is called a warm start and has no initialization overhead. Any objects initialized outside the handler function (database connections, SDK clients, configuration values) persist across warm invocations within the same execution environment.
 
-[SHOW DIAGRAM]
-
 Lambda function configuration options:
 
 Memory: from 128 MB to 10,240 MB in 1 MB increments. CPU allocation scales proportionally with memory — there is no separate CPU setting. A function with 1,769 MB of memory receives one full vCPU. A function that is CPU-bound benefits from increasing memory even if it does not need the extra RAM.
@@ -69,9 +65,7 @@ Concurrency: Lambda scales by running multiple execution environments simultaneo
 
 ---
 
-## [06:00 - 10:30] Invocation Types and Event Sources
-
-[SHOW DIAGRAM]
+## Invocation Types and Event Sources
 
 Lambda functions are invoked in one of three ways:
 
@@ -80,8 +74,6 @@ Synchronous invocation: the caller waits for the function to complete and receiv
 Asynchronous invocation: the caller sends the event and Lambda returns immediately without waiting for the function to finish. S3 event notifications, SNS, and EventBridge use asynchronous invocation. Lambda retries failed asynchronous invocations up to two additional times. After all retries are exhausted, the event can be sent to a Dead Letter Queue (SQS or SNS) for investigation.
 
 Event source mapping (stream and queue polling): Lambda polls the event source and processes batches of records. DynamoDB Streams, Kinesis Data Streams, and SQS queues use event source mapping. Failures with SQS return messages to the queue and eventually to the SQS DLQ.
-
-[SHOW DIAGRAM]
 
 Common event sources and their invocation types:
 
@@ -97,9 +89,7 @@ SNS triggers Lambda asynchronously. SNS pushes notification events directly to L
 
 ---
 
-## [10:30 - 14:30] Serverless Application Patterns
-
-[SHOW DIAGRAM]
+## Serverless Application Patterns
 
 The classic serverless web application pattern combines three services: API Gateway, Lambda, and DynamoDB.
 
@@ -107,13 +97,9 @@ A client sends an HTTP request to an API Gateway endpoint. API Gateway authentic
 
 This architecture is entirely serverless: no EC2 instances to manage, no fixed capacity to provision, scales automatically from zero to millions of requests, and you pay only for actual invocations.
 
-[SHOW DIAGRAM]
-
 A second common pattern is event-driven file processing:
 
 A user uploads a file to an S3 bucket. S3 publishes an event notification to a Lambda function. The Lambda function processes the file — resizing an image, parsing a CSV, extracting metadata — and stores the result in S3, DynamoDB, or another service. The original file upload triggers the entire pipeline without any polling or scheduling.
-
-[SHOW DIAGRAM]
 
 A third pattern is queue-based decoupling with SQS and Lambda:
 
@@ -121,9 +107,7 @@ An application writes messages to an SQS queue instead of directly calling a pro
 
 ---
 
-## [14:30 - 18:30] Lambda Permissions and Security
-
-[SHOW DIAGRAM]
+## Lambda Permissions and Security
 
 Lambda security has two sides: what can invoke the function, and what the function can do.
 
@@ -131,15 +115,13 @@ Execution role: every Lambda function has an IAM execution role. When the functi
 
 Resource-based policy: Lambda functions have a resource-based policy that controls which AWS services and accounts are allowed to invoke the function. When you configure an S3 bucket to send events to Lambda, the function policy grants s3.amazonaws.com the lambda:InvokeFunction action, scoped to the specific bucket ARN.
 
-[SHOW DIAGRAM]
-
 VPC integration: by default, Lambda functions run in a Lambda-managed VPC with internet access. If a function must access resources inside a customer VPC — an RDS database, an ElastiCache cluster, an internal API — configure the function with a VPC, subnets, and a security group. Lambda creates an elastic network interface in the specified subnet.
 
 Be aware that Lambda in a VPC loses its default internet access. If the function also needs internet access, add a NAT Gateway to the VPC and route the private subnet's 0.0.0.0/0 traffic through it. Placing Lambda in a public subnet does not restore internet access — Lambda ENIs do not receive public IP addresses.
 
 ---
 
-## [18:30 - 22:00] Lambda@Edge and Container Images
+## Lambda@Edge and Container Images
 
 Lambda@Edge runs Lambda functions at CloudFront edge locations. Instead of running in a single region, the function executes at the edge location closest to the user. Lambda@Edge can be triggered at four points in the CloudFront request lifecycle: viewer request, origin request, origin response, and viewer response.
 
@@ -149,7 +131,7 @@ Lambda also supports deploying functions as container images up to 10 GB in size
 
 ---
 
-## [22:00 - 24:00] Module Summary
+## Module Summary
 
 AWS Lambda is a serverless compute service that runs code in response to events without requiring infrastructure management. Execution environments have a lifecycle: cold start initialization and warm reuse. Memory and CPU scale together, and the maximum function timeout is 15 minutes.
 

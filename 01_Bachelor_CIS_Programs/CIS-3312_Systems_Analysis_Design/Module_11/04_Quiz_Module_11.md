@@ -462,7 +462,7 @@ Distractor Analysis:
 A logical ERD for a hospital system shows a Patient entity and a Physician entity. A
 business rule states: "Each patient is assigned to exactly one primary care physician.
 A physician may have zero patients in the system initially." A second business rule adds:
-"A patient may also have referrals to zero or more specialist physicians." How many
+A patient may also have referrals to zero or more specialist physicians." How many
 separate relationships are needed, and what cardinality does each require?
 
 A. One relationship — Patient-Physician — with many-to-many cardinality resolved by a

@@ -175,7 +175,7 @@ De-identification transformations include:
 #### ACE Exam Focus: Cloud DLP
 
 - Cloud DLP is the correct answer for "detect and protect PII in Cloud Storage or
-  BigQuery"
+  BigQuery
 - De-identification (not just detection) is the pattern for HIPAA and GDPR compliance
 - DLP jobs can scan Cloud Storage, BigQuery, and Datastore
 - Findings are published to Cloud Logging or BigQuery for analysis

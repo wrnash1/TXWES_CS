@@ -22,7 +22,7 @@ Read all three scenarios below. Choose ONE scenario to respond to in your initia
 
 A regional logistics company is modernizing its operations by replacing a thirty-year-old filing system with a new database application. The BA assigned to the project has been handed a master spreadsheet with 47 columns. The spreadsheet tracks shipments, customers, drivers, routes, and billing all in a single flat file. Some columns contain comma-separated values (e.g., "StopsOnRoute" lists multiple city names). Several column groups repeat — Stop1City, Stop1Arrival, Stop2City, Stop2Arrival, up to Stop8.
 
-The project sponsor is impatient and tells the BA: "Just build the database from the spreadsheet. We don't have time for all this normalization stuff. We've been using this spreadsheet for thirty years without problems."
+The project sponsor is impatient and tells the BA: "Just build the database from the spreadsheet. We don't have time for all this normalization stuff. We've been using this spreadsheet for thirty years without problems.
 
 For your initial post, address the following questions. What specific normalization violations exist in this spreadsheet, and which normal forms do they violate? How would you respond to the sponsor's claim that the spreadsheet has worked "without problems"? What is the business risk of building the new database directly from this unnormalized structure? What is your recommended first step?
 

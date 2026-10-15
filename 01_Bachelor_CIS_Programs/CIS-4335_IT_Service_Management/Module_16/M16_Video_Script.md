@@ -81,7 +81,7 @@ Passing the ITIL 4 Foundation exam requires both content knowledge and test-taki
 
 The exam tests application, not recall. Questions are scenario-based — they describe a situation and ask which principle, practice, or concept best applies. Memorizing definitions without understanding application will leave you uncertain on 50% of questions.
 
-Study by asking: "Why does this concept exist? What problem does it solve?"
+Study by asking: "Why does this concept exist? What problem does it solve?
 
 ### Strategy 2: Identify the ITIL Language
 
@@ -258,8 +258,8 @@ A question like "the service desk closes an incident but the same failure recurs
 
 ### Utility vs. Warranty
 
-"The application processes payroll correctly" = **utility** (fit for purpose).
-"The application is available 99.9% of the time" = **warranty** (fit for use).
+The application processes payroll correctly" = **utility** (fit for purpose).
+The application is available 99.9% of the time" = **warranty** (fit for use).
 You need BOTH for value.
 
 ### Service vs. Product

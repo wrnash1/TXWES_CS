@@ -158,7 +158,7 @@ C. An incident manager resolves a reported outage but realizes that the fix affe
 
 D. A project manager chooses to use an iterative delivery approach instead of a waterfall plan.
 
-**Answer: C** — "Think and Work Holistically" warns against solving problems in isolation without considering downstream effects. The scenario where an incident fix creates a problem in a dependent service is the classic failure this principle addresses. Option A is "Optimize and Automate." Option B is iteration with feedback. Option D is "Progress Iteratively."
+**Answer: C** — "Think and Work Holistically" warns against solving problems in isolation without considering downstream effects. The scenario where an incident fix creates a problem in a dependent service is the classic failure this principle addresses. Option A is "Optimize and Automate." Option B is iteration with feedback. Option D is "Progress Iteratively.
 
 ---
 
@@ -176,7 +176,7 @@ C. Start Where You Are
 
 D. Focus on Value
 
-**Answer: C** — Assessing the current state before proposing changes — understanding what works and what does not — is the core behavior described by "Start Where You Are."
+**Answer: C** — Assessing the current state before proposing changes — understanding what works and what does not — is the core behavior described by "Start Where You Are.
 
 ---
 
@@ -184,7 +184,7 @@ D. Focus on Value
 
 Which statement correctly describes the relationship between a service, utility, and warranty?
 
-A. Utility is "fit for use" and warranty is "fit for purpose."
+A. Utility is "fit for use" and warranty is "fit for purpose.
 
 B. A service has value when it provides either utility or warranty, but not necessarily both.
 

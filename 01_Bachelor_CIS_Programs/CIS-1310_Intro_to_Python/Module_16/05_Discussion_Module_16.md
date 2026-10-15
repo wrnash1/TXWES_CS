@@ -51,7 +51,7 @@ You have worked through 15 modules of PCAP-aligned content and a comprehensive r
 In 175–225 words, respond to the following:
 
 - Of the 15 exam traps listed in the Module 16 reading guide, identify the two that you find most counterintuitive or that you personally struggled with the most. Explain why each one is tricky — what mental model or incorrect assumption leads students to get it wrong?
-- Describe your exam preparation strategy for the next week. What specific study activities will you do? Be concrete: "I will re-read the exception handling reading guide and trace the execution order for 10 different code examples" is better than "I will review exception handling."
+- Describe your exam preparation strategy for the next week. What specific study activities will you do? Be concrete: "I will re-read the exception handling reading guide and trace the execution order for 10 different code examples" is better than "I will review exception handling.
 - Identify one topic from the course where you still feel least confident. What is your plan to close that gap before the exam? What specific resource from the reading guides or the official Python documentation will you use?
 
 ---

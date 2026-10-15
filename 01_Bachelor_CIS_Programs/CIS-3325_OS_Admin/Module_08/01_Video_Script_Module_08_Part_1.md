@@ -69,7 +69,7 @@ sudo fdisk -l /dev/sda
 ```
 
 fdisk -l shows the partition table. Note whether it says "Disklabel type: dos" (MBR) or
-"Disklabel type: gpt" (GPT).
+Disklabel type: gpt" (GPT).
 
 ---
 

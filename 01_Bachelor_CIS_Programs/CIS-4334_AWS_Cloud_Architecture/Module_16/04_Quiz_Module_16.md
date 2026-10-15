@@ -168,7 +168,7 @@ A global e-commerce company serves customers across North America, Europe, and A
 
 ### Q7 Analysis
 
-A is incorrect. Creating multiple S3 buckets with CRR requires updating application code to use different bucket URLs per region, or adding a routing layer. This is not "minimal architectural changes."
+A is incorrect. Creating multiple S3 buckets with CRR requires updating application code to use different bucket URLs per region, or adding a routing layer. This is not "minimal architectural changes.
 
 B is incorrect. An ALB in ap-southeast-1 proxying to us-east-1 still sends every request across the Pacific — it adds the ALB hop without reducing latency.
 

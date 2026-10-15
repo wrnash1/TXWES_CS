@@ -41,14 +41,10 @@ that describes how demand from customers is converted into real, tangible value.
 Think of it as the engine inside the car. The SVS is the car. The Service Value Chain is
 the engine that makes it move.
 
-[SHOW DIAGRAM: ITIL 4 Service Value System overview — highlight the Service Value Chain in the center]
-
 By the end of this module, you will be able to name and describe all six activities of the
 Service Value Chain, explain how they interconnect, trace how demand flows through the chain
 to produce value, and understand the concept of value streams. These are all testable topics
 on the ITIL 4 Foundation exam.
-
-[PAUSE]
 
 ---
 
@@ -68,8 +64,6 @@ The six activities are:
 - **Obtain/Build**
 - **Deliver and Support**
 
-[SHOW DIAGRAM: The six SVC activities arranged in the ITIL 4 oval chain diagram]
-
 Here is the critical insight that separates ITIL 4 from ITIL v3: these activities are **not
 a linear pipeline**. They are not Step 1, Step 2, Step 3 in order. Any activity can receive
 inputs from or send outputs to any other activity, depending on the situation.
@@ -77,8 +71,6 @@ inputs from or send outputs to any other activity, depending on the situation.
 That flexibility is intentional. It allows the Service Value Chain to support many different
 approaches — Agile, DevOps, Waterfall, or hybrid. You combine the activities in different
 sequences to create what ITIL calls **value streams**.
-
-[PAUSE]
 
 Let me give you a practical anchor. Imagine a university IT department. Every day, students
 submit help desk tickets, faculty request new software, and administrators need reports. The
@@ -93,8 +85,6 @@ Let us walk through each activity in detail, starting with **Plan**.
 
 Plan ensures a shared understanding of the vision, current status, and improvement
 direction for all four dimensions of service management and all products and services.
-
-[SHOW DIAGRAM: Plan activity — inputs and outputs]
 
 Think of Plan as the steering wheel. Without it, the other five activities have no direction.
 Plan produces:
@@ -111,8 +101,6 @@ A key point for the exam: Plan is not just a one-time project kickoff. It is a *
 activity**. As the environment changes, as technology evolves, as stakeholder needs shift,
 the Plan activity recalibrates.
 
-[PAUSE]
-
 ---
 
 ## Section 3: The Activity — Improve (6:00–8:00)
@@ -120,11 +108,9 @@ the Plan activity recalibrates.
 Next is **Improve**. Improve ensures continual improvement of products, services, and
 practices across all value chain activities and the four dimensions of service management.
 
-[SHOW DIAGRAM: Improve activity — positioned as touching all other activities with double-headed arrows]
-
 Improve is the only activity that has a relationship with **every other activity**. It
 literally spans the entire chain. This is ITIL 4's structural commitment to the guiding
-principle "Always improve."
+principle "Always improve.
 
 What does Improve produce?
 
@@ -139,16 +125,12 @@ Engage, Design and Transition, Obtain/Build, and Deliver and Support.
 A real-world analogy: think of Improve as the quality assurance team that observes every
 department and continuously recommends enhancements. No process is exempt from improvement.
 
-[PAUSE]
-
 ---
 
 ## Section 4: The Activity — Engage (8:00–10:00)
 
 **Engage** provides a good understanding of stakeholder needs, transparency, and continual
 engagement and good relationships with all stakeholders.
-
-[SHOW DIAGRAM: Engage activity — two-way arrows to external stakeholders outside the SVC boundary]
 
 Engage is the front door of the Service Value Chain. All external stakeholder input —
 customer requirements, user feedback, partner communications, supplier contracts — enters
@@ -166,8 +148,6 @@ desk, that is Engage in action. When a product manager interviews stakeholders t
 what they need, that is Engage. When IT communicates service status back to the business,
 that is also Engage.
 
-[PAUSE]
-
 Engage is two-directional. It is not just about receiving requests — it is about maintaining
 ongoing, transparent relationships so that value expectations are aligned.
 
@@ -180,8 +160,6 @@ communicated back** to stakeholders.
 
 **Design and Transition** ensures that products and services continually meet stakeholder
 expectations for quality, costs, and time-to-market.
-
-[SHOW DIAGRAM: Design and Transition — inputs from Engage and Plan, outputs to Obtain/Build and Deliver and Support]
 
 This activity covers everything involved in designing new or changed services and moving
 them into production. It includes:
@@ -199,8 +177,6 @@ One thing that surprises students: Design and Transition is **not just IT archit
 It includes process design, workforce planning, supplier agreements, and user documentation.
 All four dimensions must be addressed.
 
-[PAUSE]
-
 A key exam concept: Design and Transition is responsible for ensuring that changes are
 properly assessed, tested, and authorized before moving to production. This is where
 Change Management practices plug into the value chain.
@@ -211,8 +187,6 @@ Change Management practices plug into the value chain.
 
 **Obtain/Build** ensures that service components are available when and where they are
 needed and that they meet agreed specifications.
-
-[SHOW DIAGRAM: Obtain/Build — inputs from Design and Transition, outputs flowing back to Design and Transition and forward to Deliver and Support]
 
 This activity is about acquiring or constructing the components that services require —
 hardware, software, cloud services, trained staff, and documentation.
@@ -231,8 +205,6 @@ Inputs come from:
 - Design and Transition — specifications and requirements
 - Engage — contract and supplier requirements from partners
 
-[PAUSE]
-
 Notice that Obtain/Build does not exist in isolation. A component built here must meet
 specifications established in Design and Transition and must serve operational needs in
 Deliver and Support.
@@ -243,8 +215,6 @@ Deliver and Support.
 
 **Deliver and Support** ensures that services are delivered and supported according to
 agreed specifications and stakeholders' expectations.
-
-[SHOW DIAGRAM: Deliver and Support — the operational activity closest to the user, with outputs flowing to Engage]
 
 This is the operational heartbeat of IT. Every day, services must run reliably. Incidents
 must be resolved. Service requests must be fulfilled. Users must receive the value they
@@ -266,8 +236,6 @@ Key practices that operate within Deliver and Support include Incident Managemen
 Request Fulfillment, Service Desk, and Monitoring and Event Management. We will explore all
 of these in Module 08.
 
-[PAUSE]
-
 ---
 
 ## Section 8: Value Streams Explained (16:30–18:30)
@@ -277,8 +245,6 @@ Now that you understand each activity, let us talk about **value streams**.
 A value stream is a specific combination of value chain activities and practices, carefully
 sequenced to create a particular outcome for a specific stakeholder scenario. Think of it
 as a recipe that uses ingredients from the six SVC activities.
-
-[SHOW DIAGRAM: Two example value streams — one for incident resolution, one for new service deployment]
 
 **Example Value Stream 1 — Incident Resolution:**
 
@@ -299,8 +265,6 @@ A simple three-activity stream producing one unit of value: the user's service i
 
 More complex, but every activity is purposeful.
 
-[PAUSE]
-
 The flexibility of value streams is one of ITIL 4's greatest strengths. Organizations can
 define their own streams to match their unique context, culture, and tools. There is no
 single prescribed sequence. That is a deliberate design choice.
@@ -310,8 +274,6 @@ single prescribed sequence. That is a deliberate design choice.
 ## Section 9: Demand and Value Flows (18:30–20:30)
 
 Let us close with the big picture: how **demand** enters the chain and how **value** exits it.
-
-[SHOW DIAGRAM: SVS overview — Demand on the left, Value on the right, Service Value Chain in the center]
 
 Demand flows in from external sources — customers, users, partners — through the Engage
 activity. It also flows internally through the Plan and Improve activities, which generate
@@ -327,8 +289,6 @@ Value flows out in multiple forms:
 Value is co-created. ITIL 4 is emphatic on this point. The service provider does not produce
 value alone. The customer must consume and use the service for value to materialize. A
 perfectly built service that nobody uses creates no value.
-
-[PAUSE]
 
 The entire Service Value Chain is designed around this co-creation principle. Every activity
 contributes to enabling the customer to realize outcomes. Engage aligns expectations. Plan
@@ -354,8 +314,6 @@ reductions.
 **Value streams** are specific sequences of activities and practices designed to produce
 a particular outcome. Every organization designs its own streams for its unique context.
 
-[SHOW DIAGRAM: Summary reference table — six activities, primary purpose, and key inputs/outputs]
-
 For the ITIL 4 Foundation exam, know:
 
 - The name and purpose of each of the six activities
@@ -363,8 +321,6 @@ For the ITIL 4 Foundation exam, know:
 - That Engage is the primary interface with external stakeholders
 - The difference between a value stream and the Service Value Chain itself
 - That value is co-created between provider and consumer
-
-[PAUSE]
 
 Next module, Module 08, we move into specific ITIL Management Practices: the Service Desk,
 Incident Management, and Monitoring and Event Management. These practices plug directly

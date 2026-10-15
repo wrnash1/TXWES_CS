@@ -109,7 +109,7 @@ The lab is divided into two parts. Part 1 focuses on building the topology and t
 
 #### Step 1: Switch to Simulation Mode
 
-1. In the bottom right of the Packet Tracer window, locate the mode toggle. It reads "Realtime." Click it to switch to "Simulation."
+1. In the bottom right of the Packet Tracer window, locate the mode toggle. It reads "Realtime." Click it to switch to "Simulation.
 2. In the Simulation Panel on the right, ensure ICMP is checked in the Event List Filters. If no filters are shown, click "Show All/None" and then check only ICMP.
 
 #### Step 2: Generate a Ping in Simulation Mode
@@ -172,7 +172,7 @@ Submit the following to the Canvas assignment dropbox:
 
 ### Common Issues and Fixes
 
-**Issue:** Ping shows "Request timed out."
+**Issue:** Ping shows "Request timed out.
 
 **Fix:** Check IP addresses and subnet masks on all PCs. Ensure all are in the 192.168.1.0/24 range with mask 255.255.255.0. Confirm switch port link lights are green.
 

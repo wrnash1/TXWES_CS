@@ -17,7 +17,7 @@ Initial post length: 175–225 words. Peer responses: at least 75 words each, ad
 
 ## Scenario A — The Overloaded Product Owner
 
-Sarah is the Product Owner for a fintech startup's mobile banking app. She also serves as the Head of Product for the company, which means she sits in three executive meetings per day, writes investor reports weekly, and is pulled into sales calls for key accounts. When her Scrum Team holds Sprint Planning, Sarah is often unavailable. Developers have started making their own priority decisions rather than waiting for her. The Scrum Master, frustrated, has started ordering the Product Backlog herself to "keep things moving."
+Sarah is the Product Owner for a fintech startup's mobile banking app. She also serves as the Head of Product for the company, which means she sits in three executive meetings per day, writes investor reports weekly, and is pulled into sales calls for key accounts. When her Scrum Team holds Sprint Planning, Sarah is often unavailable. Developers have started making their own priority decisions rather than waiting for her. The Scrum Master, frustrated, has started ordering the Product Backlog herself to "keep things moving.
 
 Sub-questions:
 
@@ -41,7 +41,7 @@ Sub-questions:
 
 ## Scenario C — Too Many Meetings
 
-A Scrum Team at a healthcare software company conducts all five Scrum events as defined, but also attends: a Monday morning all-hands status meeting (1 hour), a Wednesday architecture review (2 hours), a Friday project report meeting run by the PMO (90 minutes), and ad-hoc "sync" calls initiated by stakeholders throughout the week. Developers are complaining that they spend more time in meetings than writing software. The Scrum Master responds: "The Scrum events are mandatory — I can't eliminate the others."
+A Scrum Team at a healthcare software company conducts all five Scrum events as defined, but also attends: a Monday morning all-hands status meeting (1 hour), a Wednesday architecture review (2 hours), a Friday project report meeting run by the PMO (90 minutes), and ad-hoc "sync" calls initiated by stakeholders throughout the week. Developers are complaining that they spend more time in meetings than writing software. The Scrum Master responds: "The Scrum events are mandatory — I can't eliminate the others.
 
 Sub-questions:
 

@@ -419,7 +419,7 @@ D. Implement connection pooling in the Lambda function code using a persistent c
 
 - A is incorrect. Reducing Lambda concurrency limits the throughput of the system, which may not meet processing requirements. It does not solve the fundamental problem — it just reduces the concurrency that causes it. This is a performance sacrifice, not a solution.
 - B is correct. RDS Proxy maintains a pool of established database connections and multiplexes many Lambda connections to a much smaller number of actual database connections. Lambda connects to the Proxy endpoint (one code change), and the Proxy handles connection pooling transparently. The Proxy can support thousands of Lambda invocations while maintaining far fewer actual RDS connections.
-- C is incorrect. Switching from RDS to DynamoDB is a major architectural refactoring requiring rewriting all SQL queries as DynamoDB operations and migrating the data. This is not "minimal code changes."
+- C is incorrect. Switching from RDS to DynamoDB is a major architectural refactoring requiring rewriting all SQL queries as DynamoDB operations and migrating the data. This is not "minimal code changes.
 - D is incorrect. Lambda execution environments are ephemeral and connections established in one execution environment may not persist across invocations. While connection reuse within a warm Lambda execution environment is a good practice, it does not solve the fundamental problem: 500 concurrent Lambda invocations in different execution environments each hold a separate connection, still exceeding the 400-connection limit.
 
 ---

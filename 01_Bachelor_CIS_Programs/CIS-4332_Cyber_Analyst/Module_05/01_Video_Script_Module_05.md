@@ -28,19 +28,19 @@
 
 ---
 
-### [00:00 - 01:30] Introduction
+### Introduction
 
 Professor Nash on camera. Title card: Module 05 — Network Traffic Analysis and Packet Inspection.
 
-"Welcome to Module 05. If log analysis is reading what happened in a system's journal, then network traffic analysis is watching what actually crossed the wire. These two disciplines complement each other — logs tell you what the system reported; network data tells you what actually traveled across the network.
+Welcome to Module 05. If log analysis is reading what happened in a system's journal, then network traffic analysis is watching what actually crossed the wire. These two disciplines complement each other — logs tell you what the system reported; network data tells you what actually traveled across the network.
 
-In this module we cover the TCP/IP model and key protocols, the tools used for traffic capture and analysis, how to interpret NetFlow and packet data, and the most important traffic patterns that indicate malicious activity. This content maps to Domain 1 of the CySA+ exam and requires a solid foundation in networking fundamentals. Let's get into it."
+In this module we cover the TCP/IP model and key protocols, the tools used for traffic capture and analysis, how to interpret NetFlow and packet data, and the most important traffic patterns that indicate malicious activity. This content maps to Domain 1 of the CySA+ exam and requires a solid foundation in networking fundamentals. Let's get into it.
 
 ---
 
-### [01:30 - 05:00] TCP/IP Protocol Stack Review
+### TCP/IP Protocol Stack Review
 
-"Before we analyze traffic, we need to review the TCP/IP model, because every traffic analysis technique maps to a specific layer.
+Before we analyze traffic, we need to review the TCP/IP model, because every traffic analysis technique maps to a specific layer.
 
 The TCP/IP model has four layers. The Network Access layer — sometimes called the Link layer — handles physical addressing, Ethernet frames, and local network delivery. The Internet layer handles IP addressing and routing between networks. Key protocols here are IPv4, IPv6, ICMP, and ARP.
 
@@ -50,13 +50,13 @@ The Application layer is where end-user protocols live: HTTP, HTTPS, DNS, FTP, S
 
 Understanding which layer a protocol operates at tells you what a traffic analyzer can see and what it cannot. An IDS operating at the network layer can see IP headers. One operating at the application layer can see HTTP requests and response bodies.
 
-Key ports to memorize for the exam: FTP 21, SSH 22, Telnet 23, SMTP 25, DNS 53, HTTP 80, HTTPS 443, IMAP 143, LDAP 389, SMTPS 465, HTTPS Alternate 8443, RDP 3389. Non-standard port usage is a significant indicator — malware communicating on port 4444 or 8080 instead of 443 is a red flag."
+Key ports to memorize for the exam: FTP 21, SSH 22, Telnet 23, SMTP 25, DNS 53, HTTP 80, HTTPS 443, IMAP 143, LDAP 389, SMTPS 465, HTTPS Alternate 8443, RDP 3389. Non-standard port usage is a significant indicator — malware communicating on port 4444 or 8080 instead of 443 is a red flag.
 
 ---
 
-### [05:00 - 09:00] Network Traffic Capture and Analysis Tools
+### Network Traffic Capture and Analysis Tools
 
-"There are two fundamental approaches to capturing and analyzing network data: full packet capture and flow data analysis.
+There are two fundamental approaches to capturing and analyzing network data: full packet capture and flow data analysis.
 
 Full packet capture uses tools like Wireshark, tcpdump, or network TAPs to capture every byte of every packet on a network segment. This gives you complete visibility — you can see every payload, every header, reconstruct sessions, and extract files transferred over unencrypted protocols. The limitation is storage. A busy network generates terabytes of packet data per day. Full packet capture is usually reserved for targeted segments or triggered captures during incident investigation.
 
@@ -66,15 +66,15 @@ The tradeoff: flow data cannot show you what was in the payload of an encrypted 
 
 For most enterprise SOCs, the practical approach is: flow data for all network segments continuously, plus targeted full packet capture on high-value segments (DMZ, database tier) and triggered captures when an investigation warrants it.
 
-Wireshark is the standard tool for packet analysis and appears on the CySA+ exam by name. Key Wireshark skills: display filters to isolate specific traffic, follow stream to reconstruct a TCP session, statistics menus for traffic summary, and the ability to read a packet dissection showing each protocol layer's fields."
+Wireshark is the standard tool for packet analysis and appears on the CySA+ exam by name. Key Wireshark skills: display filters to isolate specific traffic, follow stream to reconstruct a TCP session, statistics menus for traffic summary, and the ability to read a packet dissection showing each protocol layer's fields.
 
 [SHOW SCREEN: Wireshark interface with labeled panels: top panel showing packet list with columns for No., Time, Source, Destination, Protocol, Length, Info. Middle panel showing selected packet decomposition with Ethernet frame, IP header, TCP header, and HTTP payload layers expanded. Bottom panel showing hex dump. Display filter bar showing "ip.addr==203.0.113.47 and tcp.port==80" entered.]
 
 ---
 
-### [09:00 - 13:00] Interpreting TCP Flags and Packet Behavior
+### Interpreting TCP Flags and Packet Behavior
 
-"TCP flag analysis is a critical skill for network traffic investigation. The six TCP flags you need to know are:
+TCP flag analysis is a critical skill for network traffic investigation. The six TCP flags you need to know are:
 
 SYN — Synchronize. Initiates a connection. A SYN packet without a corresponding SYN-ACK may indicate a port scan or a half-open scan.
 
@@ -96,13 +96,13 @@ A stealth scan (Nmap SYN scan) sends SYN packets and waits for RST (port closed)
 
 An XMAS scan sends packets with FIN, URG, and PSH flags set simultaneously — technically invalid per RFC 793. This technique can bypass some older packet filter implementations that only watch for SYN packets.
 
-ICMP is used for network diagnostics. ICMP echo requests and replies are ping. ICMP type 3 (Destination Unreachable) fires when a port is closed. Excessive ICMP traffic, especially ICMP with unusually large payloads, can indicate reconnaissance or data exfiltration over covert channels."
+ICMP is used for network diagnostics. ICMP echo requests and replies are ping. ICMP type 3 (Destination Unreachable) fires when a port is closed. Excessive ICMP traffic, especially ICMP with unusually large payloads, can indicate reconnaissance or data exfiltration over covert channels.
 
 ---
 
-### [13:00 - 16:30] Key Traffic Patterns and Malicious Indicators
+### Key Traffic Patterns and Malicious Indicators
 
-"Let me walk through the traffic patterns that indicate specific attack types. These patterns appear in CySA+ scenario questions where you are given traffic data and asked to identify the attack.
+Let me walk through the traffic patterns that indicate specific attack types. These patterns appear in CySA+ scenario questions where you are given traffic data and asked to identify the attack.
 
 Pattern 1: Port scanning. A single external IP generating RST responses from dozens to hundreds of different destination ports on one target, or SYN packets to many ports in rapid sequence. Port scanners like Nmap generate distinctive traffic signatures.
 
@@ -114,15 +114,13 @@ Pattern 4: Data exfiltration. Large outbound transfers, especially over HTTPS PO
 
 Pattern 5: Lateral movement via SMB. SMB connections (TCP 445) from a workstation to other workstations — not the file server. Workstation-to-workstation SMB is unusual in most environments and indicates lateral movement attempts using tools like PsExec or ransomware spreading.
 
-Pattern 6: Abnormal DNS queries. A host querying thousands of unique domains in a short period — possible Domain Generation Algorithm malware trying to reach its active C2 server by cycling through algorithmically generated domain names."
-
-[SHOW DIAGRAM: Network diagram showing: External attacker IP on left with arrows to DMZ server. Four labeled traffic pattern examples positioned around the diagram: SYN flood showing many SYN arrows with no ACK responses; Beaconing showing regular timed arrows from internal host to external IP; DNS tunneling showing DNS queries with encoded data in subdomains; SMB lateral movement showing workstation-to-workstation port 445 connections.]
+Pattern 6: Abnormal DNS queries. A host querying thousands of unique domains in a short period — possible Domain Generation Algorithm malware trying to reach its active C2 server by cycling through algorithmically generated domain names.
 
 ---
 
-### [16:30 - 19:30] Intrusion Detection and Prevention Systems
+### Intrusion Detection and Prevention Systems
 
-"Network traffic analysis in a SOC relies on two categories of sensors: Intrusion Detection Systems (IDS) and Intrusion Prevention Systems (IPS).
+Network traffic analysis in a SOC relies on two categories of sensors: Intrusion Detection Systems (IDS) and Intrusion Prevention Systems (IPS).
 
 A Network IDS, or NIDS, monitors network traffic and generates alerts when it detects signatures matching known attacks or anomalies. It is passive — it watches traffic on a SPAN port or network TAP but does not block anything. NIDS is valuable because it generates no latency and cannot be used as a chokepoint for denial of service. The limitation is that it detects but cannot block.
 
@@ -136,13 +134,13 @@ Anomaly-based detection builds a baseline of normal traffic and alerts on deviat
 
 Behavioral detection (sometimes called heuristic detection) looks for behavioral patterns characteristic of attacks — beaconing regularity, scanning velocity, lateral movement patterns — rather than specific byte sequences.
 
-Exam tip: NIDS alerts but does not block. NIPS is inline and can block. If an exam question describes a device that monitors traffic and generates alerts on a SPAN port, it is a NIDS. If it is inline and prevents traffic, it is a NIPS."
+Exam tip: NIDS alerts but does not block. NIPS is inline and can block. If an exam question describes a device that monitors traffic and generates alerts on a SPAN port, it is a NIDS. If it is inline and prevents traffic, it is a NIPS.
 
 ---
 
-### [19:30 - 22:00] Encrypted Traffic Challenges
+### Encrypted Traffic Challenges
 
-"One of the most significant challenges in modern network traffic analysis is encryption. The majority of internet traffic today is encrypted — HTTPS accounts for most web traffic, and many malware C2 channels now use TLS to blend in.
+One of the most significant challenges in modern network traffic analysis is encryption. The majority of internet traffic today is encrypted — HTTPS accounts for most web traffic, and many malware C2 channels now use TLS to blend in.
 
 This means full packet capture cannot show you the payload of most traffic. What can you still see?
 
@@ -154,13 +152,13 @@ JA3 and JA3S fingerprints: tools that hash the TLS Client Hello and Server Hello
 
 Behavioral indicators: even with payload encryption, beaconing regularity, transfer volumes, and connection timing remain visible in flow data and provide strong indicators.
 
-SSL inspection (TLS decryption): some enterprise security architectures use man-in-the-middle SSL inspection to decrypt, inspect, and re-encrypt traffic. This provides full visibility but introduces privacy implications, compliance considerations, and introduces a new attack surface."
+SSL inspection (TLS decryption): some enterprise security architectures use man-in-the-middle SSL inspection to decrypt, inspect, and re-encrypt traffic. This provides full visibility but introduces privacy implications, compliance considerations, and introduces a new attack surface.
 
 ---
 
-### [22:00 - 24:00] Module Summary and Lab Preview
+### Module Summary and Lab Preview
 
-"Let's summarize Module 05.
+Let's summarize Module 05.
 
 The TCP/IP model has four layers. TCP provides reliable connection-oriented communication; UDP provides fast connectionless communication. Know key port numbers.
 
@@ -178,7 +176,7 @@ Encrypted traffic is analyzed through metadata, TLS SNI, JA3 fingerprinting, and
 
 In the Module 05 lab, you will analyze network traffic scenarios and identify suspicious patterns using flow data and packet-level detail. Read the Reading Guide for the protocol reference tables and traffic pattern descriptions before starting the lab.
 
-Study resources: professormesser.com and comptia.org. See you in Module 06."
+Study resources: professormesser.com and comptia.org. See you in Module 06.
 
 ---
 

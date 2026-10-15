@@ -28,8 +28,6 @@
 
 ### Opening
 
-**[SHOW SLIDE: Module 03 Part 2 — Read Replicas, Backups, High Availability, and Exam Tips]**
-
 Welcome back. I am Professor Nash, and this is Part 2 of Module 03.
 
 In Part 1 we configured a Cloud SQL instance, explored connection methods, and set up users. Now we cover the operational features that keep production databases available and recoverable: read replicas, automated backups, high availability failover, and connection pooling. These topics appear frequently on the GCP Database Engineer exam.
@@ -37,8 +35,6 @@ In Part 1 we configured a Cloud SQL instance, explored connection methods, and s
 ---
 
 ### Section 1 — Read Replicas
-
-**[SHOW SLIDE: Primary instance with two read replicas — read traffic distributed, write traffic to primary]**
 
 A read replica is a copy of the primary Cloud SQL instance that serves read-only queries. Read replicas replicate data asynchronously from the primary. Applications can direct read-heavy workloads — reporting queries, analytics, dashboards — to replicas, reducing load on the primary instance.
 
@@ -101,8 +97,6 @@ Best practice: always restore to a new instance first, verify data integrity, th
 
 ### Section 3 — High Availability
 
-**[SHOW SLIDE: Cloud SQL HA architecture — primary in zone A, standby in zone B, shared persistent disk]**
-
 Cloud SQL high availability provides automatic failover when the primary instance fails. The HA configuration has a primary instance in one zone and a hot standby in a different zone in the same region. Both share the same persistent disk, so the standby always has current data.
 
 When the primary fails, Cloud SQL promotes the standby automatically. Typical failover time is around 60 seconds. Applications must handle connection errors and reconnect — most database client libraries do this with retry logic.
@@ -126,8 +120,6 @@ HA doubles compute cost because two instances are running. Always disable HA on 
 ---
 
 ### Section 4 — Connection Pooling with PgBouncer
-
-**[SHOW SLIDE: Direct connections vs. connection pool — many app threads sharing fewer database connections]**
 
 Every database connection consumes memory and CPU on the Cloud SQL instance. Applications with many short-lived connections — serverless functions, microservices — can exhaust the connection limit quickly.
 
@@ -182,8 +174,6 @@ gcloud sql instances describe txwes-pg-prod \
 
 ### Section 6 — Exam Tips for Module 03
 
-**[SHOW SLIDE: Cloud SQL exam tips]**
-
 Tip one: Cloud SQL Auth Proxy is always the recommended connection method for applications. It handles TLS and IAM authentication without managing IP allowlists or SSL certificates manually.
 
 Tip two: Private IP is the security best practice for production. Any scenario mentioning elimination of public internet exposure to the database points to Private IP.
@@ -203,8 +193,6 @@ Tip eight: Cloud SQL Enterprise Plus provides 99.99% SLA, better I/O, near-zero 
 ---
 
 ### Closing — Module 03 Wrap-Up
-
-**[SHOW SLIDE: Module 03 complete — next up Module 04 Cloud Spanner]**
 
 That completes Module 03. You now know how to create, configure, connect to, and operate Cloud SQL for MySQL and PostgreSQL on GCP.
 

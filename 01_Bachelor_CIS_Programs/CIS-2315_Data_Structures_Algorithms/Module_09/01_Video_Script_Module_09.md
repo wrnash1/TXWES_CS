@@ -26,21 +26,15 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 09 | Graph Representations | CIS-2315"]**
-
-"Graphs are the most general data structure in computer science. A linked list is a special graph. A tree is a special graph. A grid is a special graph. Social networks, road maps, airline routes, dependency systems, the internet — all of these are graphs. This module covers the two primary ways to represent a graph in code — adjacency lists and adjacency matrices — and the vocabulary you need to describe and reason about graphs. The next two modules will add BFS, DFS, and shortest-path algorithms. Everything starts with representation."
+Graphs are the most general data structure in computer science. A linked list is a special graph. A tree is a special graph. A grid is a special graph. Social networks, road maps, airline routes, dependency systems, the internet — all of these are graphs. This module covers the two primary ways to represent a graph in code — adjacency lists and adjacency matrices — and the vocabulary you need to describe and reason about graphs. The next two modules will add BFS, DFS, and shortest-path algorithms. Everything starts with representation.
 
 ---
 
-## [01:30 – 07:00] Part 1 — Graph Vocabulary and Types
+## Part 1 — Graph Vocabulary and Types
 
-**[SHOW SLIDE: "Graph Terminology"]**
-
-"A **graph** G = (V, E) consists of a set of **vertices** (also called nodes) and a set of **edges** (also called arcs) connecting pairs of vertices.
-
-**[SHOW DIAGRAM: 5-node undirected graph with edges A-B, A-C, B-D, C-D, D-E]**
+A **graph** G = (V, E) consists of a set of **vertices** (also called nodes) and a set of **edges** (also called arcs) connecting pairs of vertices.
 
 ```text
     A --- B
@@ -61,21 +55,17 @@ Vocabulary you must know:
 - **Tree:** a connected, acyclic undirected graph with V-1 edges.
 - **DAG (Directed Acyclic Graph):** a directed graph with no cycles. Used in dependency resolution and topological sort.
 
-[PAUSE]
-
 For interview problems, you will almost always receive a graph as either:
 
 1. An **edge list**: a list of `(u, v)` or `(u, v, weight)` tuples.
 2. An **adjacency list**: a dict or list mapping each vertex to its neighbors.
-3. A **2D grid**: an implicit graph where adjacent cells are connected."
+3. A **2D grid**: an implicit graph where adjacent cells are connected.
 
 ---
 
-## [07:00 – 14:00] Part 2 — Adjacency List Representation
+## Part 2 — Adjacency List Representation
 
-**[SHOW SLIDE: "Adjacency List — The Standard Interview Representation"]**
-
-"The **adjacency list** represents a graph as a mapping from each vertex to the list of its neighbors.
+The **adjacency list** represents a graph as a mapping from each vertex to the list of its neighbors.
 
 For the undirected graph A-B, A-C, B-D, C-D, D-E:
 
@@ -115,9 +105,7 @@ def build_weighted(edges):
     return graph
 ```
 
-**[DEMO: build weighted graph from `[('A','B',4), ('A','C',2), ('B','C',1)]`]**
-
-[PAUSE]
+**`]**
 
 **Space complexity:** O(V + E) — one entry per vertex plus one entry per edge endpoint. For sparse graphs (few edges), this is much more memory-efficient than a matrix.
 
@@ -131,15 +119,13 @@ def build_weighted(edges):
 
 - Most interview problems
 - Sparse graphs (E << V²)
-- When you need to iterate over neighbors frequently"
+- When you need to iterate over neighbors frequently
 
 ---
 
-## [14:00 – 19:00] Part 3 — Adjacency Matrix Representation
+## Part 3 — Adjacency Matrix Representation
 
-**[SHOW SLIDE: "Adjacency Matrix — V×V Grid"]**
-
-"The **adjacency matrix** represents a graph as a V×V boolean (or weight) matrix. `matrix[i][j] = 1` if there is an edge from vertex i to vertex j; 0 otherwise.
+The **adjacency matrix** represents a graph as a V×V boolean (or weight) matrix. `matrix[i][j] = 1` if there is an edge from vertex i to vertex j; 0 otherwise.
 
 For the same 5-node graph with vertices indexed A=0, B=1, C=2, D=3, E=4:
 
@@ -163,10 +149,6 @@ for row in matrix:
 # [0, 0, 0, 0]
 ```
 
-**[DEMO: show the matrix for the 4-vertex example above]**
-
-[PAUSE]
-
 **Properties of the adjacency matrix:**
 
 - **Undirected graph:** matrix is symmetric (`matrix[i][j] == matrix[j][i]`)
@@ -181,8 +163,6 @@ for row in matrix:
 - When O(1) edge existence check is critical
 - Floyd-Warshall all-pairs shortest path uses a matrix by design
 
-[PAUSE]
-
 **Comparison table:**
 
 ```text
@@ -196,11 +176,9 @@ Best for            Sparse graphs     Dense graphs
 
 ---
 
-## [19:00 – 23:00] Part 4 — Graph Properties and Helper Functions
+## Part 4 — Graph Properties and Helper Functions
 
-**[SHOW SLIDE: "Degree, Connected Components, and Cycle Detection"]**
-
-"Several graph properties come up often in interviews. Here are the key helper operations.
+Several graph properties come up often in interviews. Here are the key helper operations.
 
 **Degree of a vertex:**
 
@@ -232,8 +210,6 @@ def is_connected(graph):
     return len(visited) == len(graph)
 ```
 
-[PAUSE]
-
 **Detecting a cycle in an undirected graph (DFS):**
 
 ```python
@@ -259,9 +235,7 @@ def has_cycle_undirected(graph):
 
 The key insight: in an undirected graph, a back edge to any node other than the direct parent indicates a cycle.
 
-**[DEMO: run has_cycle_undirected on a graph with cycle A-B-C-A and confirm True; run on a tree and confirm False]**
-
-The Module 09 lab walks through building adjacency lists from edge lists, implementing degree functions, and testing connectivity and cycle detection on several example graphs."
+The Module 09 lab walks through building adjacency lists from edge lists, implementing degree functions, and testing connectivity and cycle detection on several example graphs.
 
 ---
 

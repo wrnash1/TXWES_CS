@@ -105,7 +105,7 @@ For organizations needing more granular MFA control — requiring MFA only from 
 
 ### What Is Conditional Access?
 
-Conditional Access is an Entra ID P1 feature that applies access control policies based on conditions. Instead of a blanket MFA requirement for all users on all devices from all locations, Conditional Access lets you define: "IF a user is signing in from outside our corporate network AND accessing a sensitive application, THEN require MFA."
+Conditional Access is an Entra ID P1 feature that applies access control policies based on conditions. Instead of a blanket MFA requirement for all users on all devices from all locations, Conditional Access lets you define: "IF a user is signing in from outside our corporate network AND accessing a sensitive application, THEN require MFA.
 
 Conditional Access policies evaluate signals — conditions — and apply access controls.
 
@@ -124,9 +124,9 @@ Conditional Access policies evaluate signals — conditions — and apply access
 - Block access entirely
 - Limit session duration
 
-Example policy: "Require MFA for all users accessing the Azure Portal from outside our corporate IP range."
+Example policy: "Require MFA for all users accessing the Azure Portal from outside our corporate IP range.
 
-Example policy: "Block access to all corporate apps from countries where we have no employees."
+Example policy: "Block access to all corporate apps from countries where we have no employees.
 
 [SHOW AZURE PORTAL] Navigate to Microsoft Entra ID > Security > Conditional Access > Policies. Show an existing policy. Walk through the "Users," "Target resources," "Conditions," and "Grant" configuration sections. Show how to set a location condition.
 
@@ -186,10 +186,10 @@ Azure Policy is a governance service that creates, assigns, and enforces rules a
 
 Examples of what Azure Policy can enforce:
 
-- "All storage accounts must use HTTPS-only and TLS 1.2 minimum"
-- "Virtual machines may only be created in East US or West US 2 regions"
-- "All resources must have a specific cost center tag"
-- "Azure SQL Databases must have Transparent Data Encryption enabled"
+- "All storage accounts must use HTTPS-only and TLS 1.2 minimum
+- "Virtual machines may only be created in East US or West US 2 regions
+- "All resources must have a specific cost center tag
+- "Azure SQL Databases must have Transparent Data Encryption enabled
 
 ### Policy Effects
 

@@ -28,8 +28,6 @@
 
 ### Opening
 
-**[SHOW SLIDE: Module 02 Part 2 — Entity-Relationship Diagrams and Schema Translation]**
-
 Welcome back. I am Professor Nash, and this is Part 2 of Module 02.
 
 In Part 1 we normalized a schema from unnormalized form through 1NF, 2NF, and 3NF. Now we are going to work on the design phase that should happen before you write any SQL at all: the Entity-Relationship Diagram, or ERD.
@@ -40,23 +38,19 @@ An ERD is a visual representation of the entities in your system, the attributes
 
 ### Section 1 — ERD Components: Entities, Attributes, and Relationships
 
-**[SHOW SLIDE: ERD symbol reference — rectangle, oval, diamond, connecting lines]**
-
 An ERD uses four main symbols.
 
 A rectangle represents an entity — a real-world object or concept that you store data about. Customer, Order, Product, and Employee are all entities.
 
 An oval represents an attribute — a property of an entity. Customer has attributes like customer_id, full_name, and email.
 
-A diamond represents a relationship — an association between two entities. The relationship between Customer and Order might be called "places."
+A diamond represents a relationship — an association between two entities. The relationship between Customer and Order might be called "places.
 
 Lines connect entities to their attributes and entities to relationships. The style of the line at each end indicates the cardinality of the relationship.
 
 ---
 
 ### Section 2 — Cardinality Notation
-
-**[SHOW SLIDE: Crow's Foot notation symbols — one, many, zero-or-one, one-or-many, zero-or-many]**
 
 Cardinality describes how many instances of one entity relate to instances of another entity. The most common notation you will see in professional tools is Crow's Foot notation.
 
@@ -70,15 +64,11 @@ One-to-many (1:N): One customer can place many orders, but each order belongs to
 
 Many-to-many (M:N): One student can enroll in many courses, and one course can have many students. Drawn as crow's feet on both sides.
 
-**[SHOW SLIDE: Many-to-many resolved with junction table — students, enrollments, courses]**
-
 A many-to-many relationship in an ERD cannot be directly implemented in a relational database. It must be resolved into two one-to-many relationships using a junction table — also called an associative entity or bridge table. The enrollments table we built in Part 1 is exactly this: it resolves the many-to-many between students and courses.
 
 ---
 
 ### Section 3 — Identifying vs. Non-Identifying Relationships
-
-**[SHOW SLIDE: Identifying vs. non-identifying relationship lines — solid vs. dashed]**
 
 An identifying relationship means the child entity's primary key includes the parent entity's primary key as a component. The child cannot exist independently — its identity depends on the parent. In Crow's Foot notation, identifying relationships are shown with a solid line.
 
@@ -158,8 +148,6 @@ Notice the direct mapping from ERD to SQL. Each entity becomes a table. Each att
 
 In practice, you will design your ERD first — either on paper, in a tool like draw.io, Lucidchart, or dbdiagram.io — and then translate it to DDL. GCP's Cloud SQL Studio provides a visual schema browser, but the initial design still happens before the instance is created.
 
-**[SHOW SLIDE: Design checklist for Cloud SQL schemas]**
-
 When designing a Cloud SQL schema, follow this checklist.
 
 One: define all entities and their primary keys before writing any JOIN logic.
@@ -176,8 +164,6 @@ Five: document cardinality constraints in comments within your DDL. Future devel
 
 ### Section 6 — Boyce-Codd Normal Form (Brief)
 
-**[SHOW SLIDE: BCNF definition — for every nontrivial FD X→Y, X must be a superkey]**
-
 For completeness, I want to mention Boyce-Codd Normal Form, or BCNF. BCNF is a stricter version of 3NF. A table is in BCNF if for every functional dependency X → Y, X is a superkey — meaning X uniquely identifies every row in the table.
 
 Most tables that are in 3NF are also in BCNF. The distinction matters in tables with multiple overlapping candidate keys, which is a rare edge case. You will occasionally see BCNF referenced in the GCP exam's database design domain, so you should know the definition. For most practical schemas, achieving 3NF is sufficient.
@@ -185,8 +171,6 @@ Most tables that are in 3NF are also in BCNF. The distinction matters in tables 
 ---
 
 ### Section 7 — Exam Tips for Module 02
-
-**[SHOW SLIDE: Five exam tips for normalization and ERDs]**
 
 Here are five exam tips specifically for the design domain.
 
@@ -203,8 +187,6 @@ Tip five: the term "referential integrity" on the exam always connects to foreig
 ---
 
 ### Closing — Module 02 Wrap-Up
-
-**[SHOW SLIDE: Module 02 complete]**
 
 That completes Module 02. You now know how to design a normalized relational schema using both formal normalization theory and entity-relationship diagrams.
 

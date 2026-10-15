@@ -26,7 +26,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening
+## Opening
 
 Welcome back. I am Professor Nash, and this is Module 02 of CIS-4330 at Texas Wesleyan. In Module 01 we established the hierarchy — AI contains machine learning, which contains deep learning — and introduced the three learning paradigms. Today we go deep on the two most commonly tested paradigms for the AI-900 exam: supervised learning and unsupervised learning.
 
@@ -34,9 +34,7 @@ These concepts appear in exam scenarios constantly. You will be given a business
 
 ---
 
-## [01:30 - 05:30] Supervised Learning — The Core Structure
-
-[SHOW DIAGRAM: Table with two columns labeled "Input Features (X)" and "Output Label (y)" with sample rows. Arrow points from table to box labeled "Algorithm Training." Arrow from that box points to "Trained Model." Arrow from model points to "Predictions on New X."]
+## Supervised Learning — The Core Structure
 
 Supervised learning is the most common form of machine learning in production systems today. The word supervised refers to the fact that the training data includes labels — the correct answers — so the algorithm receives guidance during learning.
 
@@ -54,7 +52,7 @@ Here is a good rule of thumb for the AI-900 exam: if you could put the output on
 
 ---
 
-## [05:30 - 09:30] Key Supervised Learning Algorithms
+## Key Supervised Learning Algorithms
 
 You do not need to code these algorithms from scratch for AI-900, but you need to understand what each one does and when to use it. These appear in exam scenarios.
 
@@ -74,9 +72,7 @@ For AI-900 scenario questions: if the data is structured and tabular and accurac
 
 ---
 
-## [09:30 - 13:00] Unsupervised Learning — The Core Structure
-
-[SHOW DIAGRAM: Scatter plot of unlabeled data points on the left. Arrow labeled "Clustering Algorithm." Same scatter plot on the right with colored circles around three groups of points. Left label: "No labels — raw data." Right label: "Discovered clusters."]
+## Unsupervised Learning — The Core Structure
 
 Unsupervised learning operates without labels. The training data contains only input features — no correct answers. The algorithm's job is to discover patterns, structure, or groupings that are not explicitly defined in advance.
 
@@ -92,7 +88,7 @@ The second key unsupervised task is dimensionality reduction. Real datasets ofte
 
 ---
 
-## [13:00 - 15:30] When to Choose Supervised vs Unsupervised
+## When to Choose Supervised vs Unsupervised
 
 This decision comes down to one question: do you have labels?
 
@@ -112,9 +108,7 @@ Pattern four: "explore the data." Unsupervised methods are often used in explora
 
 ---
 
-## [15:30 - 18:30] Model Training, Validation, and the Train-Test Split
-
-[SHOW DIAGRAM: Full dataset bar divided into three segments: "Training Set 70%" on the left, "Validation Set 15%" in the middle, "Test Set 15%" on the right. Three arrows: Training Set → Train Model. Validation Set → Tune Hyperparameters. Test Set → Final Honest Evaluation.]
+## Model Training, Validation, and the Train-Test Split
 
 Before deploying any supervised model, you need an honest estimate of its performance on new data. You cannot evaluate the model on the same data you trained it on — that would produce an artificially inflated score, because the model has already "memorized" those examples.
 
@@ -130,9 +124,7 @@ A common practical alternative is cross-validation. In K-fold cross-validation, 
 
 ---
 
-## [18:30 - 20:30] Overfitting and Underfitting
-
-[SHOW DIAGRAM: Three panels side by side. Left panel: curve barely fitting data points — labeled "Underfitting (high bias)." Center panel: smooth curve closely following data — labeled "Good Fit." Right panel: jagged curve threading through every data point — labeled "Overfitting (high variance)."]
+## Overfitting and Underfitting
 
 Two failure modes threaten every supervised model.
 
@@ -144,7 +136,7 @@ You can diagnose both conditions using learning curves — plots of training and
 
 ---
 
-## [20:30 - 22:30] Azure Machine Learning AutoML
+## Azure Machine Learning AutoML
 
 Azure Machine Learning includes Automated ML — AutoML — which automates the model selection and training process for supervised learning. When you provide a labeled dataset and specify a task type, AutoML:
 
@@ -160,7 +152,7 @@ On the AI-900 exam, AutoML represents the answer to scenarios that say "train a 
 
 ---
 
-## [22:30 - 24:00] Module Summary and Lab Preview
+## Module Summary and Lab Preview
 
 Let me summarize Module 02.
 

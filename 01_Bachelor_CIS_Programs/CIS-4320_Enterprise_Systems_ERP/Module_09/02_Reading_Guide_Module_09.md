@@ -406,7 +406,7 @@ INCOME STATEMENT
 
 > **Exam Tip 4 — F110 is the Automatic Payment Program.** When a scenario describes paying multiple vendor invoices automatically, the answer is F110. Know that it selects invoices based on due dates, generates payment files, and posts the clearing entry automatically.
 
-> **Exam Tip 5 — Open Item Management.** AR and AP accounts use open item management. Each invoice is an open item until cleared by a payment. FBL5N shows customer open items. FBL1N shows vendor open items. These are the go-to transactions for answering "which invoices are unpaid?"
+> **Exam Tip 5 — Open Item Management.** AR and AP accounts use open item management. Each invoice is an open item until cleared by a payment. FBL5N shows customer open items. FBL1N shows vendor open items. These are the go-to transactions for answering "which invoices are unpaid?
 
 > **Exam Tip 6 — Dunning is automated AR follow-up.** F150 is the dunning run. It sends escalating payment reminders to overdue customers. Know that dunning levels exist and escalate — this is often tested in a scenario about reducing overdue AR.
 
@@ -554,8 +554,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

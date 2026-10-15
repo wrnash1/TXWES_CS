@@ -321,7 +321,7 @@ Correct Answer: C
 
 Distractor Analysis:
 
-- Why A is incorrect: Structured interviews rely on stakeholders articulating their practices; users often do not mention workarounds because they consider them "just how things work."
+- Why A is incorrect: Structured interviews rely on stakeholders articulating their practices; users often do not mention workarounds because they consider them "just how things work.
 - Why B is incorrect: Surveys are unlikely to surface undocumented workarounds because users answer questions about the official system, not their shadow processes.
 - Why D is incorrect: Prototyping presents a proposed future-state design; it does not reveal current-state workarounds.
 - Why C is correct: Observation captures what users actually do, not what they say they do. An analyst watching a user would immediately notice the unofficial spreadsheet being opened, prompting the investigation that uncovers the broken reporting feature.
@@ -346,7 +346,7 @@ Distractor Analysis:
 
 - Why A is incorrect: Scheduling meetings is a logistics activity, not the BA preparation described in KA 4.
 - Why B is incorrect: Writing a requirements specification outline is a premature design of the requirements document; it belongs after elicitation, not before.
-- Why D is incorrect: Sponsor sign-off on an elicitation plan is a governance activity; while sometimes appropriate, it is not the definition of "Prepare for Elicitation."
+- Why D is incorrect: Sponsor sign-off on an elicitation plan is a governance activity; while sometimes appropriate, it is not the definition of "Prepare for Elicitation.
 - Why C is correct: BABOK KA 4 task "Prepare for Elicitation" covers reviewing existing documentation, understanding stakeholder context, selecting the appropriate elicitation technique, and creating supporting materials (question guides, prototypes, surveys) before the session begins.
 
 ---

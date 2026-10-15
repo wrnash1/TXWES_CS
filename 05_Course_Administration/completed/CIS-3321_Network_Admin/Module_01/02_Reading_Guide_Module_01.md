@@ -140,7 +140,7 @@ Memorizing these port numbers is mandatory for the Network+ exam.
 
 When a web browser sends an HTTP request, here is the layer-by-layer encapsulation sequence:
 
-1. Layer 7 (Application): HTTP request created — "GET /index.html HTTP/1.1"
+1. Layer 7 (Application): HTTP request created — "GET /index.html HTTP/1.1
 2. Layer 6 (Presentation): Data formatted; TLS encryption applied if HTTPS
 3. Layer 5 (Session): Session established and tracked
 4. Layer 4 (Transport): TCP header added — source port (random ephemeral), destination port 80 or 443, sequence number, ACK flag. PDU = Segment

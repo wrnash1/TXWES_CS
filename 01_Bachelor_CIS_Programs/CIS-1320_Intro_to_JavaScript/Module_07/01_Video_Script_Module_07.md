@@ -26,21 +26,17 @@
 
 ---
 
-## [00:00 – 01:00] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 07 | Objects and Properties | CIS-1320"]**
+Module 07 is about objects. If functions are the primary unit of behavior in JavaScript, objects are the primary unit of data. An object groups related values together under a single name. A person has a name, an age, and a role. A product has a title, a price, and a quantity. An object lets you represent all of those properties as one coherent thing rather than a collection of unrelated variables.
 
-"Module 07 is about objects. If functions are the primary unit of behavior in JavaScript, objects are the primary unit of data. An object groups related values together under a single name. A person has a name, an age, and a role. A product has a title, a price, and a quantity. An object lets you represent all of those properties as one coherent thing rather than a collection of unrelated variables.
-
-JavaScript objects are also more flexible than objects in languages like Java or C++ — you can add, modify, and remove properties at runtime. We will cover object creation, property access, methods, the `this` keyword, object destructuring, shorthand syntax, and optional chaining. Let us start with the basics."
+JavaScript objects are also more flexible than objects in languages like Java or C++ — you can add, modify, and remove properties at runtime. We will cover object creation, property access, methods, the `this` keyword, object destructuring, shorthand syntax, and optional chaining. Let us start with the basics.
 
 ---
 
-## [01:00 – 05:00] Part 1 — Creating Objects and Accessing Properties
+## Part 1 — Creating Objects and Accessing Properties
 
-**[SHOW SLIDE: "Object Literals"]**
-
-"The most common way to create an object in JavaScript is the **object literal** syntax — curly braces containing key-value pairs separated by commas:
+The most common way to create an object in JavaScript is the **object literal** syntax — curly braces containing key-value pairs separated by commas:
 
 ```javascript
 const person = {
@@ -51,8 +47,6 @@ const person = {
 ```
 
 Each key-value pair is called a **property**. The key is a string (usually written without quotes in a literal), and the value can be any type — number, string, boolean, array, another object, or a function.
-
-**[DEMO]**
 
 ```javascript
 const product = {
@@ -85,8 +79,6 @@ const config = { 'max-retries': 3 };
 console.log(config['max-retries']);   // 3 — dot notation would fail here
 ```
 
-[PAUSE]
-
 **Adding and modifying properties:**
 
 Objects are mutable even when assigned to `const`. `const` prevents reassigning the variable — it does not freeze the object's content:
@@ -116,13 +108,9 @@ console.log('email' in user);   // false — we deleted it
 
 ---
 
-## [05:00 – 09:00] Part 2 — Methods and `this`
+## Part 2 — Methods and `this`
 
-**[SHOW SLIDE: "Object Methods and `this`"]**
-
-"A property whose value is a function is called a **method**. Methods let an object carry behavior alongside its data:
-
-**[DEMO]**
+A property whose value is a function is called a **method**. Methods let an object carry behavior alongside its data:
 
 ```javascript
 const calculator = {
@@ -145,8 +133,6 @@ console.log(calculator.getResult());   // 12
 ```
 
 Inside a method, `this` refers to the object the method was called on. When you write `this.value` inside `add`, it refers to `calculator.value`.
-
-[PAUSE]
 
 **ES6 method shorthand:**
 
@@ -173,8 +159,6 @@ console.log(counter.getCount());   // 0
 ```
 
 The shorthand `methodName() {}` is equivalent to `methodName: function() {}` for regular methods.
-
-[PAUSE]
 
 **The `this` trap with arrow functions:**
 
@@ -206,19 +190,15 @@ const working = {
 working.greet();   // 'Hello from WorkingObject'
 ```
 
-Rule: **always use regular functions (or method shorthand) for object methods. Use arrow functions for callbacks and utilities.**"
+Rule: **always use regular functions (or method shorthand) for object methods. Use arrow functions for callbacks and utilities.**
 
 ---
 
-## [09:00 – 13:00] Part 3 — Destructuring and Shorthand
+## Part 3 — Destructuring and Shorthand
 
-**[SHOW SLIDE: "Destructuring and Shorthand Syntax"]**
-
-"ES6 introduced two syntax features that make working with objects much cleaner: **object destructuring** and **shorthand property names**.
+ES6 introduced two syntax features that make working with objects much cleaner: **object destructuring** and **shorthand property names**.
 
 **Object destructuring** extracts properties into variables in one line:
-
-**[DEMO]**
 
 ```javascript
 const person = { name: 'Alice', age: 30, city: 'Dallas' };
@@ -238,8 +218,6 @@ console.log(city);   // 'Dallas'
 
 The variable names in the braces must match the property names exactly. The engine looks up each key on the object and assigns its value to the matching variable.
 
-[PAUSE]
-
 **Renaming during destructuring:**
 
 ```javascript
@@ -256,8 +234,6 @@ const { name, role = 'user' } = person;
 console.log(role);   // 'user' — property doesn't exist, default used
 ```
 
-[PAUSE]
-
 **Destructuring in function parameters:**
 
 ```javascript
@@ -270,8 +246,6 @@ displayUser({ name: 'Carol' });                // 'Carol — user' (default)
 ```
 
 This is a very common pattern in modern JavaScript — functions receive an object and immediately destructure the properties they need from the parameter list.
-
-[PAUSE]
 
 **Shorthand property names:**
 
@@ -291,19 +265,15 @@ const user = { name, age, role };
 console.log(user);   // { name: 'Dave', age: 25, role: 'editor' }
 ```
 
-Both forms produce identical objects. The shorthand version is preferred in modern JavaScript."
+Both forms produce identical objects. The shorthand version is preferred in modern JavaScript.
 
 ---
 
-## [13:00 – 16:30] Part 4 — Optional Chaining and Computed Properties
+## Part 4 — Optional Chaining and Computed Properties
 
-**[SHOW SLIDE: "Optional Chaining and Computed Properties"]**
-
-"Two more features that appear on the JSE exam: optional chaining and computed property names.
+Two more features that appear on the JSE exam: optional chaining and computed property names.
 
 **Optional chaining (`?.`)** allows you to safely access nested properties without throwing an error if an intermediate value is `null` or `undefined`:
-
-**[DEMO]**
 
 ```javascript
 const user1 = { name: 'Alice', address: { city: 'Dallas' } };
@@ -332,8 +302,6 @@ const city = user2?.address?.city ?? 'Unknown';
 console.log(city);   // 'Unknown' — the whole chain returned undefined
 ```
 
-[PAUSE]
-
 **Computed property names:**
 
 Bracket notation works in object literals too, allowing dynamic property names:
@@ -351,15 +319,13 @@ console.log(record);        // { email: 'alice@example.com', id: 42 }
 console.log(record.email);  // 'alice@example.com'
 ```
 
-Computed property names are useful when building objects dynamically — for example, mapping user-chosen keys to values, or building objects in a loop."
+Computed property names are useful when building objects dynamically — for example, mapping user-chosen keys to values, or building objects in a loop.
 
 ---
 
-## [16:30 – 18:00] Closing — Lab Preview
+## Closing — Lab Preview
 
-**[SHOW SLIDE: "Module 07 Lab Preview"]**
-
-"The Module 07 lab has four parts.
+The Module 07 lab has four parts.
 
 Part 1 covers object creation, dot and bracket notation, property addition and deletion, and the `in` operator.
 
@@ -369,7 +335,7 @@ Part 3 covers destructuring — extracting properties, renaming, defaults, and d
 
 Part 4 covers optional chaining and shorthand property names. You will work through a realistic scenario where nested properties may be missing and observe the difference between accessing them safely and unsafely.
 
-The quiz focuses on `this` in methods, destructuring syntax, and `?.` behavior. Read the reading guide before the lab. Good luck."
+The quiz focuses on `this` in methods, destructuring syntax, and `?.` behavior. Read the reading guide before the lab. Good luck.
 
 ---
 

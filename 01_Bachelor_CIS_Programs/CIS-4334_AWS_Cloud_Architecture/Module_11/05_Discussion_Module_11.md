@@ -28,7 +28,7 @@ Explain why a "deny all by default, allow specific actions only" SCP at the orga
 
 ## Scenario C — Defense in Depth for a Healthcare Application
 
-A healthcare company is building a patient portal on AWS that will store Protected Health Information (PHI) in compliance with HIPAA. The CTO asks you to design the security architecture. A colleague says "we just need a private VPC and HTTPS — that's enough for HIPAA."
+A healthcare company is building a patient portal on AWS that will store Protected Health Information (PHI) in compliance with HIPAA. The CTO asks you to design the security architecture. A colleague says "we just need a private VPC and HTTPS — that's enough for HIPAA.
 
 Explain why HTTPS and a private VPC alone are insufficient for a HIPAA-compliant healthcare application on AWS. Describe the complete defense-in-depth security architecture, addressing at minimum: encryption at rest (which KMS key type and why), encryption in transit, access control (IAM principles for least privilege), threat detection (which AWS service and what it monitors), audit logging (what must be logged and for how long), and application-layer protection (WAF rules for a patient-facing web portal). Reference at least two AWS services from Module 11 that are specifically relevant to PHI protection.
 

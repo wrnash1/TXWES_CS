@@ -25,14 +25,10 @@
 ---
 
 ### Pre-Roll Slide
-[SHOW SLIDE: "CSC-6361 — Module 05 Part 2: Network Automation — Python, Ansible & APIs | Texas Wesleyan University"]
 
 ---
 
 ### Section 1: Why Network Automation?
-
-[00:00 – 02:30]
-[SHOW SLIDE: Side-by-side: manual CLI changes on 50 switches vs Ansible playbook running on all 50 simultaneously]
 
 Network automation is no longer optional for enterprise network engineers. CCNP ENCOR includes automation topics, and every major employer expects engineers to understand scripting, APIs, and infrastructure-as-code tools.
 
@@ -46,9 +42,6 @@ A large enterprise might have 500 network devices. If you need to change the NTP
 ---
 
 ### Section 2: Python for Network Automation
-
-[02:30 – 07:00]
-[SHOW SLIDE: Python code connecting to a router via Netmiko]
 
 **Netmiko — SSH-based Network Automation (Free, Open Source):**
 Netmiko is the most widely used Python library for automating Cisco CLI devices via SSH. It handles SSH connection management, device type detection, and command output parsing.
@@ -113,9 +106,6 @@ for neighbor in output:
 
 ### Section 3: Ansible for Network Automation
 
-[07:00 – 11:00]
-[SHOW DIAGRAM: Ansible architecture — Control Node running playbook → Managed devices (routers, switches) via SSH/API]
-
 [Alt-text: A diagram showing a laptop labeled "Ansible Control Node." Arrows from the control node go to three network devices: "Router-1," "Switch-A," and "Firewall-1." Each arrow is labeled "SSH / NETCONF." The laptop has a folder icon labeled "Playbook.yml" and another labeled "Inventory.ini."]
 
 Ansible is an agentless automation framework. No software needs to be installed on the network devices — Ansible connects via SSH (or API) from a control node and pushes changes.
@@ -179,9 +169,6 @@ For complex network configurations, Ansible supports **roles** — a structured 
 
 ### Section 4: REST APIs and NETCONF/YANG
 
-[11:00 – 14:00]
-[SHOW DIAGRAM: REST API call — GET /restconf/data/ietf-interfaces:interfaces → JSON response]
-
 **REST APIs on Modern Cisco Devices:**
 IOS-XE (17.x+) supports **RESTCONF**, a REST API that exposes network configuration as JSON or XML resources. This allows automation tools, scripts, and orchestration platforms to configure network devices via HTTP — no CLI needed.
 
@@ -221,9 +208,6 @@ restconf
 ---
 
 ### Section 5: Module 05 Lab Preview
-
-[14:00 – 15:30]
-[SHOW SLIDE: Module 05 Lab — QoS + HSRP configuration]
 
 The Module 05 lab covers two components:
 1. **QoS:** Configure a DiffServ QoS policy using MQC (LLQ for voice, CBWFQ for data). Apply it to the WAN interface of a router. Verify traffic classification.

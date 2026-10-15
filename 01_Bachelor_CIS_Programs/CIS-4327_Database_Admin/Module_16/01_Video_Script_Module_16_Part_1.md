@@ -285,32 +285,32 @@ These question patterns appear frequently and are designed to catch common misco
 
 **Trap 1 — BigQuery jobUser role**:
 
-"A user has `roles/bigquery.dataViewer` but cannot run queries."
+A user has `roles/bigquery.dataViewer` but cannot run queries.
 Answer: They also need `roles/bigquery.jobUser`. dataViewer alone allows reading
 metadata but not executing query jobs.
 
 **Trap 2 — DMS and stored procedures**:
 
-"A DMS migration completed successfully but stored procedures are missing."
+A DMS migration completed successfully but stored procedures are missing.
 Answer: DMS does not migrate stored procedures. They must be converted and deployed separately.
 
 **Trap 3 — Cloud SQL replica promotion**:
 
-"After DMS cutover, replication is still running and we want to go back."
+After DMS cutover, replication is still running and we want to go back.
 Answer: Promotion is irreversible. DMS replication cannot be resumed after promotion.
 Rollback means switching the application back to the source.
 
 **Trap 4 — Spanner and CMEK**:
 
-"The team wants to use a customer-managed key for Spanner but the key was created
-after the Spanner instance."
+The team wants to use a customer-managed key for Spanner but the key was created
+after the Spanner instance.
 Answer: CMEK for Spanner is set at instance creation and cannot be added later.
 You must create a new instance with CMEK configured from the start.
 
 **Trap 5 — BigQuery partition filter**:
 
-"A BigQuery table has `require_partition_filter=true`. A user queries it without
-a date filter."
+A BigQuery table has `require_partition_filter=true`. A user queries it without
+a date filter.
 Answer: The query is REJECTED with an error — it does not just scan more data.
 
 ---

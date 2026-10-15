@@ -22,8 +22,6 @@ We have six segments today. First, a targeted review of the Salesforce Administr
 
 The Salesforce Certified Administrator credential and the SAP Certified Foundation Associate — SAP S/4HANA Cloud Private Edition credentials represent real market value. Salesforce administrators with certification earn on average $92,000 to $115,000 annually in the United States as of 2025 data. SAP functional consultants with S/4HANA certifications are similarly well-compensated. But beyond compensation: these certifications signal to employers that you have validated, standardized knowledge — not just classroom theory.
 
-[PAUSE]
-
 ---
 
 ## Segment 2: Salesforce Administrator Exam Review (Lines 36–95)
@@ -202,8 +200,6 @@ The key difference is pace and complexity. SAP S/4HANA full implementations take
 
 Data quality issues appear in every ERP implementation regardless of platform. The ETL phases — Extract, Transform, Load — are where data quality problems are discovered and remediated. Both platforms have tools: Salesforce's duplicate management, Data Loader validation, and import rules; SAP's MDG (Master Data Governance) and migration cockpit tools.
 
-[PAUSE]
-
 ---
 
 ## Segment 5: Exam Strategy and Logistics (Lines 186–215)
@@ -233,8 +229,6 @@ SAP certification exams are administered through the SAP Training and Certificat
 Practice questions are the single most effective preparation tool. For the Salesforce Admin exam: Salesforce Ben's practice exams, Focus on Force, and the official Salesforce study guide are all well-regarded. For SAP: the SAP Certification Preparation materials on the SAP Learning Hub are authoritative.
 
 For this course: the 20 practice questions in the capstone lab provide a representative sample. Review each wrong answer and trace it back to the reading guide content that covers the topic.
-
-[PAUSE]
 
 ---
 

@@ -72,7 +72,7 @@ Activities in Step 1:
 
 The key tool here is effective questioning. Open-ended questions ("What were you doing when the problem started?") reveal more than yes/no questions.
 
-The output of Step 1 is a clear, specific problem statement — for example: "Users on the third floor cannot access the file server. The issue began this morning. Other floors are unaffected. Users can ping the default gateway but cannot reach the file server by name or IP."
+The output of Step 1 is a clear, specific problem statement — for example: "Users on the third floor cannot access the file server. The issue began this morning. Other floors are unaffected. Users can ping the default gateway but cannot reach the file server by name or IP.
 
 ### Step 2 — Establish a Theory of Probable Cause
 

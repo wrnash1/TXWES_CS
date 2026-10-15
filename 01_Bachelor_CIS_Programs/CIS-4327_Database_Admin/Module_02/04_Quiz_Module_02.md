@@ -249,7 +249,7 @@ In Crow's Foot ERD notation, what does a circle followed by a crow's foot on one
 - **Distractor Analysis:**
   - B) One and only one is represented by two vertical bars (||); a circle indicates the zero/optional side.
   - C) One or many is represented by a vertical bar followed by a crow's foot (|<); a circle, not a bar, is on the minimum side in option A.
-  - D) Zero or one is represented by a circle followed by a single vertical bar (O|); a crow's foot indicates "many," not "one."
+  - D) Zero or one is represented by a circle followed by a single vertical bar (O|); a crow's foot indicates "many," not "one.
 
 ---
 

@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -42,9 +42,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 06:00] RDS Core Concepts
-
-[SHOW DIAGRAM]
+## RDS Core Concepts
 
 Amazon RDS is a managed relational database service. "Managed" means AWS handles the hardware provisioning, database setup, patching (of the OS and database engine), automated backups, and failover. You manage the schema, queries, users, and application-level configuration.
 
@@ -71,9 +69,7 @@ Storage autoscaling automatically increases storage capacity when available spac
 
 ---
 
-## [06:00 - 11:00] High Availability: Multi-AZ Deployments
-
-[SHOW DIAGRAM]
+## High Availability: Multi-AZ Deployments
 
 RDS Multi-AZ is the primary HA mechanism for RDS. When you enable Multi-AZ, AWS provisions a standby DB instance in a different AZ within the same Region. The primary and standby instances are synchronized using synchronous replication — every transaction committed on the primary is simultaneously committed on the standby before the application receives acknowledgment.
 
@@ -86,15 +82,11 @@ Critical exam points about Multi-AZ:
 - Failover triggers include: primary instance failure, primary AZ failure, primary DB instance OS failure, manual failover initiation, and certain maintenance events.
 - Multi-AZ does not protect against logical data corruption or accidental DELETE statements — that is what backups and point-in-time recovery address.
 
-[SHOW DIAGRAM]
-
 RDS Multi-AZ Cluster (introduced after Multi-AZ Instance) deploys one writer and two reader DB instances across three AZs using semi-synchronous replication. Reads can be distributed to the reader instances. This provides both HA and limited read scaling in one deployment. It is currently available for MySQL and PostgreSQL.
 
 ---
 
-## [11:00 - 15:00] Read Replicas for Horizontal Read Scaling
-
-[SHOW DIAGRAM]
+## Read Replicas for Horizontal Read Scaling
 
 Read Replicas are separate DB instances that receive asynchronous replication from the primary (or another Read Replica). They serve read traffic — SELECT queries — without adding load to the primary instance.
 
@@ -120,9 +112,7 @@ For the SAA-C03 exam: if a scenario mentions reducing read load on the primary d
 
 ---
 
-## [15:00 - 19:00] Amazon Aurora
-
-[SHOW DIAGRAM]
+## Amazon Aurora
 
 Amazon Aurora is AWS's cloud-native relational database engine. It is MySQL-compatible or PostgreSQL-compatible, meaning you can use the same application drivers and tools as MySQL or PostgreSQL. However, Aurora's underlying storage and replication architecture is fundamentally different.
 
@@ -138,7 +128,7 @@ Amazon Aurora is AWS's cloud-native relational database engine. It is MySQL-comp
 
 ---
 
-## [19:00 - 22:00] Backup, Security, and Operational Topics
+## Backup, Security, and Operational Topics
 
 **Automated Backups** — RDS automatically takes daily snapshots and captures transaction logs. Retention period: 1 to 35 days (default 7 days). Point-in-time recovery lets you restore the database to any second within the retention window. Automated backups are stored in S3 and do not count against your RDS storage.
 
@@ -146,15 +136,13 @@ Amazon Aurora is AWS's cloud-native relational database engine. It is MySQL-comp
 
 **Encryption** — enable encryption at rest when creating the RDS instance. Uses AWS KMS. Encrypted instances have encrypted storage, automated backups, snapshots, and Read Replicas. You cannot encrypt an existing unencrypted instance — you must create a snapshot, copy it with encryption enabled, and restore from the encrypted snapshot.
 
-[SHOW DIAGRAM]
-
 **Network isolation** — deploy RDS instances in private subnets (DB Subnet Group). Security groups control network access. No public IP address should be assigned to production RDS instances. VPC Endpoint connections to RDS are not available — all RDS connections go through the private VPC network or VPN/Direct Connect.
 
 **IAM Database Authentication** — enables authentication to MySQL and PostgreSQL RDS using IAM credentials instead of a database password. The application calls the RDS API to generate a short-lived authentication token (15 minutes). The token is used to connect. No password stored in the application. Works with EC2 instance roles for fully passwordless authentication.
 
 ---
 
-## [22:00 - 24:00] Module Summary
+## Module Summary
 
 RDS manages six database engines with managed patching, backups, and failover. Multi-AZ provides synchronous standby for automatic failover — availability, not performance. Read Replicas provide asynchronous read copies for scaling reads — not for automatic failover.
 

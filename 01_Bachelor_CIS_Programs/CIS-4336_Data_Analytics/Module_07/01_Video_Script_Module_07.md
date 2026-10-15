@@ -58,8 +58,6 @@ Third: **measures of shape** — skewness and kurtosis. These describe the symme
 
 [SHOW CHART — Normal distribution bell curve with labels for mean, standard deviation bands]
 
-[PAUSE]
-
 Let me give you a concrete example. Suppose you work for a retail company and you have monthly sales figures for 10 stores:
 
 `42000, 38000, 55000, 41000, 39000, 44000, 52000, 37000, 60000, 47000`
@@ -80,8 +78,6 @@ For our store data, the sum is 455,000 and n equals 10, so `mean = 455000 / 10 =
 
 The mean is sensitive to outliers. If one store had an extraordinary month at $200,000, the mean would jump dramatically even though nine stores were unchanged.
 
-[PAUSE]
-
 ### The Median
 
 The median is the middle value when data is sorted. With an even count, the median is the average of the two middle values.
@@ -91,8 +87,6 @@ Sorted: `37000, 38000, 39000, 41000, 42000, 44000, 47000, 52000, 55000, 60000`
 The two middle values are 42,000 and 44,000. So `median = (42000 + 44000) / 2 = 43000`.
 
 The median is resistant to outliers. When data is skewed — think income data, where a few billionaires exist — the median is a better representation of the typical value than the mean.
-
-[PAUSE]
 
 ### The Mode
 
@@ -116,8 +110,6 @@ For our sales data: `range = 60000 - 37000 = 23000`.
 
 The range is simple but fragile. One extreme value can make it misleading.
 
-[PAUSE]
-
 ### Variance
 
 Variance measures the average squared deviation from the mean. We square deviations so that positive and negative differences do not cancel each other out.
@@ -129,8 +121,6 @@ Sample variance uses Bessel's correction — dividing by `n - 1` — to produce 
 `sample_variance = sum((x - mean)^2) / (n - 1)`
 
 For our sales data, the sample variance is approximately 72,277,778.
-
-[PAUSE]
 
 ### Standard Deviation
 
@@ -145,8 +135,6 @@ A typical store's sales fall within about $8,502 of the $45,500 mean. That is an
 [SHOW CHART — Bell curve: mean ± 1 SD covers 68%, mean ± 2 SD covers 95%, mean ± 3 SD covers 99.7%]
 
 This is the **68-95-99.7 rule**, also called the empirical rule. It applies to normally distributed data. For the Data+ exam, memorize all three percentages.
-
-[PAUSE]
 
 ### Interquartile Range
 
@@ -174,8 +162,6 @@ The value of `r` always falls between -1 and +1.
 
 [SHOW CHART — Four scatter plots: r=+1, r=-1, r=+0.7, r=0]
 
-[PAUSE]
-
 General interpretation guidelines:
 
 - `|r| >= 0.9` — very strong
@@ -185,8 +171,6 @@ General interpretation guidelines:
 - `|r| < 0.3` — negligible
 
 **Critical warning:** Correlation does not imply causation. Two variables can move together for entirely unrelated reasons. The classic example: ice cream sales and drowning incidents both rise in summer — but eating ice cream does not cause drowning. Both respond to a third variable: temperature.
-
-[PAUSE]
 
 When data is ordinal or not normally distributed, use **Spearman rank correlation** instead. It ranks each variable first, then computes Pearson correlation on the ranks.
 
@@ -209,8 +193,6 @@ Bar charts compare discrete categories. The length or height of each bar represe
 
 Example: quarterly sales by region. Each region is a category; bar height is total sales.
 
-[PAUSE]
-
 ### Line Charts
 
 Line charts show trends over time. The x-axis is a time dimension; the y-axis is a continuous measure.
@@ -223,8 +205,6 @@ Use line charts when:
 
 Do not use a line chart for unordered categories — the connecting lines imply a false sense of continuity.
 
-[PAUSE]
-
 ### Scatter Plots
 
 Scatter plots show the relationship between two continuous variables. Each point represents one observation.
@@ -236,8 +216,6 @@ Scatter plots reveal:
 - Outliers that deviate from the main pattern
 
 Adding a trend line — a regression line — helps viewers see the overall direction of the relationship.
-
-[PAUSE]
 
 ### Histograms
 
@@ -253,8 +231,6 @@ Histograms reveal:
 [SHOW CHART — Histogram with right skew labeled, long tail to the right]
 
 **Do not confuse histograms with bar charts.** Histograms show distributions of continuous data — bars are adjacent with no gaps. Bar charts compare discrete categories — gaps between bars are acceptable and common.
-
-[PAUSE]
 
 ### Choosing the Right Chart
 
@@ -276,8 +252,6 @@ Match your analytical question to the correct visual:
 
 You can compute descriptive statistics directly in SQL — a critical skill for analysts who work in database environments.
 
-[PAUSE]
-
 ```sql
 -- Descriptive statistics for store sales
 SELECT
@@ -292,8 +266,6 @@ FROM store_monthly_sales
 WHERE sale_month = '2024-01';
 ```
 
-[PAUSE]
-
 Most SQL dialects support `STDDEV()` and `VARIANCE()` as built-in aggregate functions. When working in databases that lack these, compute variance manually:
 
 ```sql
@@ -306,8 +278,6 @@ FROM (
     FROM store_monthly_sales
 ) sub;
 ```
-
-[PAUSE]
 
 For percentiles — needed for IQR, median, and quartile analysis — use `PERCENTILE_CONT`:
 
@@ -325,8 +295,6 @@ FROM store_monthly_sales;
 ## Segment 8: Module Summary and Exam Prep (19:30–21:00)
 
 Let me bring everything together.
-
-[PAUSE]
 
 Descriptive statistics describe your data. Key measures:
 

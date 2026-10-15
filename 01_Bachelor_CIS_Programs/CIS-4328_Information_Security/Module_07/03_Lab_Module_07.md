@@ -245,7 +245,7 @@ A regional bank with 300 employees operates the following infrastructure: branch
 
 ### Reflection Questions
 
-1. After completing both challenges, explain why network segmentation alone is insufficient to achieve zero trust, even when every department has its own VLAN with firewall rules between them. Address the specific gap that microsegmentation fills, the specific gap that identity-aware access control fills, and why the combination of all three layers (VLAN segmentation + microsegmentation + identity verification) is required to satisfy the zero-trust principle of "never trust, always verify."
+1. After completing both challenges, explain why network segmentation alone is insufficient to achieve zero trust, even when every department has its own VLAN with firewall rules between them. Address the specific gap that microsegmentation fills, the specific gap that identity-aware access control fills, and why the combination of all three layers (VLAN segmentation + microsegmentation + identity verification) is required to satisfy the zero-trust principle of "never trust, always verify.
 
 2. In Challenge 1, you analyzed egress filtering as a control against command-and-control beaconing and data exfiltration. A network engineer argues that since all C2 traffic now uses HTTPS on port 443, egress filtering is ineffective because you cannot block port 443 without breaking all web traffic. Identify two specific controls beyond port-based egress filtering that address HTTPS-based C2 and exfiltration, explain the mechanism by which each control detects or blocks the malicious traffic despite it using standard HTTPS, and describe the operational tradeoffs each control introduces.
 

@@ -240,7 +240,7 @@ D. Replace the accuracy metric with AUC, which is a more sophisticated evaluatio
 **Distractor Analysis:**
 
 - **A** is incorrect. 96% accuracy is already high. The problem is not model performance — it is communication. Stakeholders do not understand model accuracy; they understand business outcomes.
-- **B** is correct. Bridging the gap between model metrics and business outcomes is a core AI project management skill. The team should show: "96% accuracy means 4% of transactions are misclassified. That translates to $X in annual fraud losses vs. the current 12% misclassification rate, which costs $Y."
+- **B** is correct. Bridging the gap between model metrics and business outcomes is a core AI project management skill. The team should show: "96% accuracy means 4% of transactions are misclassified. That translates to $X in annual fraud losses vs. the current 12% misclassification rate, which costs $Y.
 - **C** is incorrect. Deploying without stakeholder understanding and buy-in creates organizational resistance and reduces the chance of successful adoption.
 - **D** is incorrect. Switching metrics does not address the communication problem. AUC is even less interpretable to non-technical stakeholders than accuracy.
 

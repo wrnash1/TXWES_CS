@@ -22,7 +22,7 @@ Test-Driven Development is one of those practices that sounds simple in theory a
 
 ## Scenario A: The Resistant Team
 
-A mid-sized software company has just hired you as a senior developer. During your first week, you discover that the team writes no automated tests. When you suggest adopting TDD, two teammates push back. The first says: "We ship features faster without tests — writing tests first slows us down." The second says: "Our codebase is too messy to add tests now. We'd have to refactor everything before TDD could even work."
+A mid-sized software company has just hired you as a senior developer. During your first week, you discover that the team writes no automated tests. When you suggest adopting TDD, two teammates push back. The first says: "We ship features faster without tests — writing tests first slows us down." The second says: "Our codebase is too messy to add tests now. We'd have to refactor everything before TDD could even work.
 
 Both teammates have valid points rooted in real experience. How would you respond to each objection? What evidence or reasoning from the module supports your position? What would you propose as a realistic first step toward TDD adoption that doesn't derail the team's Sprint commitments?
 

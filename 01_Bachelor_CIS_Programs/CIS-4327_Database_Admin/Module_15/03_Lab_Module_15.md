@@ -215,8 +215,8 @@ Configure the following alert:
 - **Filter**: `database_id = "PROJECT:lab15-pg-instance"`
 - **Condition threshold**: > 0.60 (60%) for 2 minutes
 - **Notification channel**: Your email address
-- **Alert name**: "Lab15 — Cloud SQL CPU High"
-- **Documentation**: "CPU exceeded 60%. Check for long-running queries."
+- **Alert name**: "Lab15 — Cloud SQL CPU High
+- **Documentation**: "CPU exceeded 60%. Check for long-running queries.
 
 ### Step 2.2 — Create a Connections Alert
 
@@ -225,7 +225,7 @@ Create a second alert:
 - **Metric**: `cloudsql.googleapis.com/database/postgresql/num_backends`
 - **Filter**: `database_id = "PROJECT:lab15-pg-instance"`
 - **Condition threshold**: > 20 backends for 1 minute
-- **Alert name**: "Lab15 — Cloud SQL Connections High"
+- **Alert name**: "Lab15 — Cloud SQL Connections High
 
 ### Step 2.3 — Generate Load to Trigger CPU Alert
 

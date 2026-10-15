@@ -472,8 +472,6 @@ ISACA's practitioner guidance on digital forensics best practices, forensic read
 <https://www.sans.org/white-papers/windows-forensic-analysis/>
 A collection of SANS practitioner papers covering Windows artifact analysis, memory forensics fundamentals, and chain of custody best practices. Useful for understanding how forensic techniques are applied to real-world Windows environments covered in this module's lab scenario.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

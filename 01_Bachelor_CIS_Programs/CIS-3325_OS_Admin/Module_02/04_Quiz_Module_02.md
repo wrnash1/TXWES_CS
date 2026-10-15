@@ -203,7 +203,7 @@ Correct Answer: B) All lines in sshd_config that do not begin with the # comment
 Distractor Analysis:
 
 - Why A is incorrect: The -v flag inverts the match. Without -v, grep "^#" would show comment lines. With -v, it shows everything except comment lines.
-- Why C is incorrect: The pattern ^# matches lines starting with a hash. It has nothing to do with the word "ssh." The ^ is a regex anchor meaning "start of line."
+- Why C is incorrect: The pattern ^# matches lines starting with a hash. It has nothing to do with the word "ssh." The ^ is a regex anchor meaning "start of line.
 - Why D is incorrect: Blank lines do not start with # so they would be included in the output. This command does not specifically target blank lines. To exclude blank lines you would use grep -v "^$".
 
 ---
@@ -247,7 +247,7 @@ Distractor Analysis:
 
 - Why A alone is partially correct: grep -c "" counts lines matching an empty pattern, which matches every line. It produces the same result as wc -l.
 - Why B alone is partially correct: wc -l is the standard, direct tool for counting lines and is correct by itself.
-- Why C is incorrect: There is no standard Linux command called count. This command would fail with "command not found."
+- Why C is incorrect: There is no standard Linux command called count. This command would fail with "command not found.
 
 ---
 
@@ -258,11 +258,11 @@ An administrator creates a symbolic link with the command ln -s /etc/nginx/nginx
 happens when the administrator tries to open /home/admin/nginx.conf?
 
 - A) The file opens normally because the symbolic link keeps a copy of the original data.
-- B) The symbolic link becomes broken and attempting to open it results in "No such file or directory."
+- B) The symbolic link becomes broken and attempting to open it results in "No such file or directory.
 - C) The symbolic link automatically updates to point to the nearest file named nginx.conf.
 - D) The symbolic link is automatically deleted by the kernel when the target is removed.
 
-Correct Answer: B) The symbolic link becomes broken and attempting to open it results in "No such file or directory."
+Correct Answer: B) The symbolic link becomes broken and attempting to open it results in "No such file or directory.
 
 Distractor Analysis:
 
@@ -376,11 +376,11 @@ Distractor Analysis:
 **Question 19**
 
 An administrator needs to search all .log files in /var/log for lines containing the phrase
-"authentication failure" (case-insensitive). Which command is correct?
+authentication failure" (case-insensitive). Which command is correct?
 
 - A) grep "authentication failure" /var/log/*.log
 - B) grep -ri "authentication failure" /var/log/
-- C) find /var/log -name "*.log" | grep "authentication failure"
+- C) find /var/log -name "*.log" | grep "authentication failure
 - D) grep -l "authentication failure" /var/log/
 
 Correct Answer: B) grep -ri "authentication failure" /var/log/

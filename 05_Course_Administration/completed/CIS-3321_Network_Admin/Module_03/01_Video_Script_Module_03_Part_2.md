@@ -25,25 +25,15 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: "Module 03 Part 2 — CIDR Notation, Subnet Calculations, and Exam Practice"]
-
 ---
 
 ### Section 1: Part 2 Introduction
-
-[00:00 – 00:45]
-
-[SHOW SLIDE: Professor Nash on camera]
 
 Welcome back to Module 03. In Part 1 we covered IPv4 address structure, classful addressing, RFC 1918 private ranges, and binary conversion. Now in Part 2 we tackle CIDR notation and the core subnetting calculations you will need for both the exam and your career. I am going to walk you through a step-by-step process, then we will do several practice problems together. Have your pencil ready.
 
 ---
 
 ### Section 2: CIDR Notation and the Subnet Table
-
-[00:45 – 03:30]
-
-[SHOW DIAGRAM: A subnet reference table. Three columns: CIDR Prefix, Subnet Mask, Block Size, Usable Hosts. Rows: /24 = 255.255.255.0, block 256, 254 hosts. /25 = 255.255.255.128, block 128, 126 hosts. /26 = 255.255.255.192, block 64, 62 hosts. /27 = 255.255.255.224, block 32, 30 hosts. /28 = 255.255.255.240, block 16, 14 hosts. /29 = 255.255.255.248, block 8, 6 hosts. /30 = 255.255.255.252, block 4, 2 hosts.]
 
 [Alt-text: A seven-row reference table. Column headers are CIDR Prefix, Subnet Mask, Block Size, and Usable Hosts. Rows from top to bottom: /24 with mask 255.255.255.0, block size 256, 254 usable hosts. /25 with mask 255.255.255.128, block size 128, 126 hosts. /26 with mask 255.255.255.192, block size 64, 62 hosts. /27 with mask 255.255.255.224, block size 32, 30 hosts. /28 with mask 255.255.255.240, block size 16, 14 hosts. /29 with mask 255.255.255.248, block size 8, 6 hosts. /30 with mask 255.255.255.252, block size 4, 2 hosts.]
 
@@ -60,10 +50,6 @@ This block size approach is the fastest way to identify which subnet an address 
 ---
 
 ### Section 3: Four-Step Subnet Calculation Process
-
-[03:30 – 07:00]
-
-[SHOW SLIDE: Four-step process listed vertically: Step 1 — Identify the CIDR prefix and calculate block size. Step 2 — Find the network address. Step 3 — Find the broadcast address. Step 4 — Identify the usable host range.]
 
 Here is the four-step process I want you to use for every subnet calculation problem.
 
@@ -93,10 +79,6 @@ That is 30 usable hosts (2 to the power of 5 minus 2 = 30). The host at 192.168.
 
 ### Section 4: Exam-Style Practice Problems
 
-[07:00 – 10:30]
-
-[SHOW SLIDE: Problem set with three IP addresses and masks]
-
 Let's do three more practice problems at exam pace.
 
 **Problem 1:** Host IP 10.50.20.130, mask 255.255.255.192 (/26).
@@ -117,10 +99,6 @@ Block size 4, /30, mask 255.255.255.252. 2 to the power of 2 minus 2 = 2 usable 
 
 ### Section 5: Number of Subnets vs. Hosts
 
-[10:30 – 12:00]
-
-[SHOW SLIDE: Table showing borrowed bits, number of subnets, hosts per subnet. Starting from /24: borrow 1 bit = 2 subnets, 126 hosts each. Borrow 2 = 4 subnets, 62 hosts. Borrow 3 = 8 subnets, 30 hosts. Borrow 4 = 16 subnets, 14 hosts.]
-
 When you subnet a network, you borrow bits from the host portion of the address. Each bit you borrow doubles the number of subnets but halves the number of hosts per subnet.
 
 Starting from a /24 (254 usable hosts, one subnet):
@@ -140,10 +118,6 @@ Design principle: always choose the smallest subnet that accommodates your host 
 ---
 
 ### Section 6: Lab Preview and Module Closing
-
-[12:00 – 13:30]
-
-[SHOW SLIDE: Lab preview — subnet calculation worksheet]
 
 In this week's lab, you will work through a set of subnet calculation exercises — given an IP address and mask, you will determine the network address, broadcast address, usable range, and number of hosts. You will also configure IP addresses on Packet Tracer virtual hosts to verify your calculations by testing connectivity.
 

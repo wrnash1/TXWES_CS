@@ -60,7 +60,7 @@ You may draw from the module content or from your own experience.
 
 **Part C — Automation Ethics and Responsibility**
 
-A fellow student says: "I write scripts fast and just test them in production — if they break something I fix it. It's faster than writing a bunch of error handling."
+A fellow student says: "I write scripts fast and just test them in production — if they break something I fix it. It's faster than writing a bunch of error handling.
 
 Respond to this approach. Consider:
 

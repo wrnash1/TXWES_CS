@@ -338,7 +338,7 @@ At 90 questions in 90 minutes, the budget is 60 seconds per question. Move faste
 #### Answer Selection Technique
 
 * Read the full question stem before looking at answers
-* Identify the key qualifier: "most appropriate," "first step," "primary reason"
+* Identify the key qualifier: "most appropriate," "first step," "primary reason
 * Eliminate options that are clearly wrong
 * Of the remaining options, choose the one that is most complete and most directly answers the qualifier
 
@@ -508,8 +508,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

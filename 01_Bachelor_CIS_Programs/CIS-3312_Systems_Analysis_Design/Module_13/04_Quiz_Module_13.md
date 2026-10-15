@@ -75,7 +75,7 @@ D. Consistency and standards
 
 **Correct answer: C**
 
-"Match between system and the real world" requires that the interface use language and concepts familiar to users, not technical or system-internal terminology. Database field names are a classic violation of this heuristic.
+Match between system and the real world" requires that the interface use language and concepts familiar to users, not technical or system-internal terminology. Database field names are a classic violation of this heuristic.
 
 **Why A is wrong:** Visibility of system status is about keeping users informed of what the system is doing — loading states, confirmations, progress indicators. It is not about labeling conventions.
 
@@ -115,7 +115,7 @@ A BA is running a design validation session. A participant is trying to find the
 A. Immediately point out the correct button to save time
 B. Continue observing and note the specific navigation behavior without intervening
 C. End the task and move to the next scenario
-D. Ask the participant directly: "Did you find the submit button confusing?"
+D. Ask the participant directly: "Did you find the submit button confusing?
 
 ### Distractor Analysis — Question 5
 
@@ -144,7 +144,7 @@ D. Whether the development team will reuse the prototype code
 
 **Correct answer: B**
 
-"Show the executive committee a demo" could mean anything from a click-through mockup to a fully interactive prototype. Before committing to a timeline, the BA must clarify what level of fidelity will satisfy the sponsor's actual need.
+Show the executive committee a demo" could mean anything from a click-through mockup to a fully interactive prototype. Before committing to a timeline, the BA must clarify what level of fidelity will satisfy the sponsor's actual need.
 
 **Why A is wrong:** The throwaway vs. evolutionary distinction is about the long-term fate of the prototype, not about what is appropriate for an executive demo. It is a secondary concern at this point.
 
@@ -299,10 +299,10 @@ requirements would constrain the visual design phase unnecessarily.
 A BA wants to test whether users can find the password reset function on a portal login
 page. Which approach best follows the think-aloud protocol for design validation?
 
-A. Show the participant the login page and ask: "Is the password reset link visible enough?"
+A. Show the participant the login page and ask: "Is the password reset link visible enough?
 
 B. Tell the participant: "Your goal is to reset your password because you forgot it. Begin
-   on this screen and narrate everything you are thinking as you try to complete that goal."
+   on this screen and narrate everything you are thinking as you try to complete that goal.
 
 C. Walk the participant through each screen while explaining how each element works, then
    ask if they understood
@@ -345,7 +345,7 @@ A. Classify as a cosmetic finding — users always resist change and it will res
 
 B. Classify as a requirements gap and investigate whether existing workflows and
    terminology should be incorporated into the new design to reduce the learning curve,
-   referencing the "consistency and standards" and "match between system and the real world"
+   referencing the "consistency and standards" and "match between system and the real world
    heuristics
 
 C. Dismiss the feedback — the purpose of a new system is to improve on the old one, not
@@ -360,7 +360,7 @@ D. Classify as out of scope because the wireframe review is a design activity, n
 
 The supervisor's concern maps directly to two Nielsen heuristics: "consistency and
 standards" (is the new system consistent with user expectations from prior systems?) and
-"match between system and the real world" (does the interface use terminology and
+match between system and the real world" (does the interface use terminology and
 workflows familiar to the users?). These are legitimate requirements concerns that should
 be investigated, not dismissed.
 
@@ -382,7 +382,7 @@ outside the scope of the session.
 ## Question 14
 
 A project team is building a tax filing portal for individual taxpayers. During an initial
-throwaway prototyping session, users are confused by a field labeled "Filing Status Code"
+throwaway prototyping session, users are confused by a field labeled "Filing Status Code
 and enter numbers instead of selecting from a dropdown. What type of requirement does this
 finding generate, and which Nielsen heuristic does it address?
 
@@ -393,7 +393,7 @@ B. A functional requirement specifying that the Filing Status Code field must be
    system and the real world" heuristic
 
 C. A security requirement — user input must be validated server-side, addressing the
-   "error prevention" heuristic
+   error prevention" heuristic
 
 D. A training requirement — users must receive onboarding before using the portal,
    addressing the "help and documentation" heuristic
@@ -405,7 +405,7 @@ D. A training requirement — users must receive onboarding before using the por
 The finding reveals that the field name and input mechanism do not match users' mental
 model. The correct response is a functional requirement specifying plain-language options
 (Married Filing Jointly, Single, etc.) in a dropdown control. This directly addresses the
-"match between system and the real world" heuristic.
+match between system and the real world" heuristic.
 
 **Why A is wrong:** Performance requirements address response time, not usability or
 labeling. The observed problem is comprehension, not speed.
@@ -510,7 +510,7 @@ heuristic?
 
 A. A blank text field where users type command names to execute actions
 
-B. An error message that reads "Error 403 — operation not permitted"
+B. An error message that reads "Error 403 — operation not permitted
 
 C. A dropdown menu listing all available report types with descriptive labels so users
    do not need to remember report names
@@ -588,18 +588,18 @@ sponsor. The report lists 12 findings: 2 critical, 3 major, 5 minor, and 2 cosme
 The project sponsor asks: "Can we just fix the critical ones and go to development?" The
 BA's most professionally appropriate response is which of the following?
 
-A. "Yes — critical findings are the only ones that block development."
+A. "Yes — critical findings are the only ones that block development.
 
 B. "No — all 12 findings must be resolved before development can begin, per the BABOK
-   Guide."
+   Guide.
 
 C. "The critical findings must be resolved before development begins. I recommend
    addressing the major findings as well, because they cause significant task difficulty
    and will likely create defects or change requests after go-live. The minor and cosmetic
-   findings can be deferred to a subsequent release."
+   findings can be deferred to a subsequent release.
 
 D. "Yes — if you approve proceeding, we will document the remaining findings as known
-   limitations."
+   limitations.
 
 ### Distractor Analysis — Question 19
 

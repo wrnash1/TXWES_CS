@@ -236,7 +236,7 @@ Knowing the content is necessary but not sufficient. You also need a strategy fo
 
 [SLIDE: Strategy 1 — Read the Full Question Before Reading Answers]
 
-Read the entire question stem before looking at the answer choices. Many candidates skim the question and jump to answers, then get tripped up by a qualifier they missed — words like "only," "always," "never," "most cost-effective," "which would NOT," and "which is the minimum."
+Read the entire question stem before looking at the answer choices. Many candidates skim the question and jump to answers, then get tripped up by a qualifier they missed — words like "only," "always," "never," "most cost-effective," "which would NOT," and "which is the minimum.
 
 These qualifiers completely change the correct answer. Highlight them mentally before evaluating choices.
 

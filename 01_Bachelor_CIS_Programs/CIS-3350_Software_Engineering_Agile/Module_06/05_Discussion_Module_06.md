@@ -17,7 +17,7 @@ Initial post length: 175–225 words. Peer responses: at least 75 words each, ad
 
 ## Scenario A — The Frozen Backlog
 
-TechFlow's Product Owner, Diana, created a detailed Product Backlog of 85 items at the start of the project. She ordered all 85 items, wrote acceptance criteria for each one, and told the team: "This is our roadmap — we will work through these in order." Six months later, a competitor releases a new feature that changes market expectations significantly. Several of Diana's top-priority items are now irrelevant, and three important new features are not on the backlog at all. Diana is reluctant to change the backlog because "we planned this carefully and I don't want to disrupt the team's focus."
+TechFlow's Product Owner, Diana, created a detailed Product Backlog of 85 items at the start of the project. She ordered all 85 items, wrote acceptance criteria for each one, and told the team: "This is our roadmap — we will work through these in order." Six months later, a competitor releases a new feature that changes market expectations significantly. Several of Diana's top-priority items are now irrelevant, and three important new features are not on the backlog at all. Diana is reluctant to change the backlog because "we planned this carefully and I don't want to disrupt the team's focus.
 
 Sub-questions:
 

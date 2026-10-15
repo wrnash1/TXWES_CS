@@ -447,8 +447,6 @@ wiki.archlinux.org/title/RAID covers mdadm configuration, monitoring, and schedu
 Both articles are maintained with current kernel and tool versions and include common
 troubleshooting scenarios.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

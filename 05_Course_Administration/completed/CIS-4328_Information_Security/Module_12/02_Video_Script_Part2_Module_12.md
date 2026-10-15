@@ -146,7 +146,7 @@ If criminal prosecution is contemplated, involve law enforcement before collecti
 The Fourth Amendment protects against unreasonable search and seizure by government actors. Private employers are NOT government actors and are generally not bound by the Fourth Amendment in their own investigations. However:
 
 - Law enforcement investigations ARE bound by Fourth Amendment protections
-- Evidence collected improperly by law enforcement may be excluded under the "exclusionary rule"
+- Evidence collected improperly by law enforcement may be excluded under the "exclusionary rule
 - In some jurisdictions, evidence obtained by a private party at law enforcement's direction may face the same scrutiny
 
 ### Anti-Forensics Awareness

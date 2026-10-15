@@ -55,7 +55,7 @@ Complete the following table in your submission:
 ### Guidance Notes
 
 - For GDPR, consider whether LMA has any patients who are EU residents or citizens.
-- For NIST CSF, recall that it is voluntary — but "voluntary" does not mean "not applicable."
+- For NIST CSF, recall that it is voluntary — but "voluntary" does not mean "not applicable.
 - For ISO 27001, consider what "applies" means for a voluntary certifiable standard.
 - Your justifications should be 2–4 sentences each.
 
@@ -140,7 +140,7 @@ After completing all nine control assessments, write a 3–5 sentence executive 
 
 ### Part 4 Instructions
 
-LMA's Acceptable Use Policy is seven years old and does not address mobile devices, cloud services, or remote work — all now common at LMA. Draft a new section to be added to the AUP titled "Mobile Device and Remote Access Policy."
+LMA's Acceptable Use Policy is seven years old and does not address mobile devices, cloud services, or remote work — all now common at LMA. Draft a new section to be added to the AUP titled "Mobile Device and Remote Access Policy.
 
 Your policy section must:
 

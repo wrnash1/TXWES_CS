@@ -48,7 +48,7 @@ In 175-225 words, address all three of the following points:
 
 ## Scenario C: Scan Coverage Gap Discovery
 
-During a routine audit, you discover that the vulnerability management program has been scanning 85% of the organization's IP address space for the past year. The missing 15% is a manufacturing floor network segment containing legacy Windows XP and Windows 7 systems that run industrial automation software. The network team excluded this segment from scanning because "the systems are fragile and scans might crash them."
+During a routine audit, you discover that the vulnerability management program has been scanning 85% of the organization's IP address space for the past year. The missing 15% is a manufacturing floor network segment containing legacy Windows XP and Windows 7 systems that run industrial automation software. The network team excluded this segment from scanning because "the systems are fragile and scans might crash them.
 
 In 175-225 words, address all three of the following points:
 

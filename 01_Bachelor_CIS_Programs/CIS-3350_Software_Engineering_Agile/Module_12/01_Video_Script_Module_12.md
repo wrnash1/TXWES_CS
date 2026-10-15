@@ -52,8 +52,6 @@ By the end of this module you will be able to:
 
 In 1994, four authors — Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides — published a book called *Design Patterns: Elements of Reusable Object-Oriented Software*. They catalogued 23 patterns and organized them into three categories. Software engineers universally call these authors the Gang of Four, and their framework remains the definitive vocabulary of object-oriented design.
 
-[SHOW DIAGRAM — three-category taxonomy tree]
-
 The three categories are based on what kind of problem the pattern addresses:
 
 **Creational patterns** concern how objects are created. They decouple the instantiation process from the clients that need objects, making systems flexible and independent of specific classes.
@@ -102,8 +100,6 @@ const configA = AppConfig.getInstance();
 const configB = AppConfig.getInstance();
 console.log(configA === configB); // true
 ```
-
-[PAUSE]
 
 The `_instance` is stored as a class-level property. The first call to `getInstance()` creates it; every subsequent call returns the same object. Notice the constructor is not private here — JavaScript doesn't enforce that — but the convention is to always use `getInstance()` and never call `new AppConfig()` directly.
 
@@ -160,8 +156,6 @@ function createPaymentProcessor(method) {
 const processor = createPaymentProcessor('paypal');
 console.log(processor.process(49.99)); // "Sent $49.99 via PayPal"
 ```
-
-[PAUSE]
 
 Adding a new payment method means adding a new class and one entry in the `processors` map. No existing code changes. This is the Open/Closed Principle: open for extension, closed for modification.
 
@@ -231,8 +225,6 @@ console.log(query);
 // ORDER BY created_at LIMIT 25
 ```
 
-[PAUSE]
-
 The key insight of Builder: `return this` on each method enables **fluent method chaining**, and `build()` produces the final object. Each optional part of the construction can be included or omitted independently.
 
 ---
@@ -278,8 +270,6 @@ logger.info('Application started');
 logger.warn('Low disk space');
 logger.error('Database connection failed');
 ```
-
-[PAUSE]
 
 The adapter wraps the legacy system and exposes the modern interface. Application code is completely decoupled from the legacy implementation — swap out the legacy logger and only the adapter changes.
 
@@ -331,8 +321,6 @@ const request = new RetryDecorator(new LoggingDecorator(new BaseRequest()));
 request.send('https://api.example.com/data');
 ```
 
-[PAUSE]
-
 Each decorator wraps the object before it and adds one layer of behavior. You can stack any combination — logging, retry, caching, authentication headers — without modifying `BaseRequest`. New behaviors are new decorators, not modifications to existing classes.
 
 ### The Facade Pattern
@@ -380,8 +368,6 @@ class HomeTheaterFacade {
 const theater = new HomeTheaterFacade();
 theater.watchMovie('Inception');
 ```
-
-[PAUSE]
 
 The Facade is especially useful when a complex subsystem needs a simple entry point for most common use cases, while still allowing direct access to subsystem components when needed.
 
@@ -447,8 +433,6 @@ aapl.setPrice(175);  // Portfolio update: AAPL = $175
 aapl.setPrice(145);  // Portfolio update + ALERT
 ```
 
-[PAUSE]
-
 The subject — `StockTicker` — knows nothing specific about its observers. It only knows they have an `update()` method. New observer types can be added in future Sprints without changing the subject at all. This loose coupling is one of Observer's defining strengths.
 
 ### The Strategy Pattern
@@ -506,8 +490,6 @@ sorter.setStrategy(new BubbleSortStrategy());
 console.log(sorter.sort([5, 3, 8, 1, 9])); // same result, different algorithm
 ```
 
-[PAUSE]
-
 ### The Command Pattern
 
 Command encapsulates a request as an object, allowing requests to be queued, logged, or undone.
@@ -556,8 +538,6 @@ history.undo();
 console.log(editor.text); // "Hello"
 ```
 
-[PAUSE]
-
 Command makes operations first-class objects that can be stored, queued, logged, and reversed. The undo functionality in every text editor, graphics program, and database uses a variant of this pattern.
 
 ---
@@ -575,8 +555,6 @@ How do you choose which pattern to apply? Here is a practical decision framework
 - If you need one change to notify many dependents automatically — **Observer**
 - If you need interchangeable algorithms at runtime — **Strategy**
 - If you need operations that can be queued, logged, or undone — **Command**
-
-[PAUSE]
 
 In Scrum, design patterns directly support **Agile Manifesto Principle 9**: continuous attention to technical excellence and good design enhances agility. A codebase built on well-chosen patterns absorbs Sprint-over-Sprint feature additions without constant rework. New features become new Strategy classes, new Observer implementations, new Factory branches — not modifications to existing, tested code.
 

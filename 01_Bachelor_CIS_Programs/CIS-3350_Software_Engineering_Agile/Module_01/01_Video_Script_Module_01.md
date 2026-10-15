@@ -1,5 +1,23 @@
 # Video Script: Module 01 – Software Engineering Overview and SDLC Models
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture &bull; Module 01</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=LzMnsfqjzkA" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/LzMnsfqjzkA" title="freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Estimated Duration:** 22 minutes
@@ -7,9 +25,8 @@
 
 ---
 
-## Section 1 — Welcome and Learning Objectives [00:00–04:00]
-
-"Welcome to Module 1 of CIS-3350, Software Engineering and Agile. I am Professor Nash at Texas Wesleyan University, and I am glad you are here.
+## Section 1 — Welcome and Learning Objectives
+Welcome to Module 1 of CIS-3350, Software Engineering and Agile. I am Professor Nash at Texas Wesleyan University, and I am glad you are here.
 
 This module establishes the entire intellectual foundation of the course. Before we can understand Scrum — before we can talk about Sprints, Product Backlogs, or Daily Scrums — we need to understand the bigger picture: what software engineering actually is, and why the industry has developed so many different approaches to building software over the past six decades.
 
@@ -23,15 +40,12 @@ By the end of this module you will be able to:
 
 That last point is directly testable on the PSM I certification exam. Everything we cover today sets up that argument.
 
-Let's start at the beginning."
+Let's start at the beginning.
 
 ---
 
-## Section 2 — What Is Software Engineering? [04:00–08:30]
-
-"The term 'software engineering' was first used at a 1968 NATO conference in Germany. The industry had a crisis. Software projects were failing at massive rates — over budget, behind schedule, and full of defects. Researchers and practitioners gathered and asked: can we apply the rigor and discipline of traditional engineering to software? That conference gave birth to software engineering as a formal discipline.
-
-[SHOW DIAGRAM: Timeline from 1968 NATO Conference to present, marking key milestones: Waterfall 1970, Spiral 1986, Agile Manifesto 2001, Scrum Guide 2010, Scrum Guide 2020]
+## Section 2 — What Is Software Engineering?
+The term 'software engineering' was first used at a 1968 NATO conference in Germany. The industry had a crisis. Software projects were failing at massive rates — over budget, behind schedule, and full of defects. Researchers and practitioners gathered and asked: can we apply the rigor and discipline of traditional engineering to software? That conference gave birth to software engineering as a formal discipline.
 
 The IEEE defines software engineering as: 'The application of a systematic, disciplined, quantifiable approach to the development, operation, and maintenance of software.' Notice three key words: systematic, disciplined, and quantifiable. Those words tell you software engineering is not hacking — it is principled construction.
 
@@ -43,15 +57,12 @@ Second, requirements change. Stakeholders do not always know what they want unti
 
 Third, software teams are large and distributed. Coordinating twenty engineers working on the same codebase requires discipline that a single programmer working alone never needs.
 
-The SDLC — the Software Development Life Cycle — is our answer to these challenges. It is the framework that says: here is a structured sequence of phases, here is how information flows between them, and here is how we know when we are done."
+The SDLC — the Software Development Life Cycle — is our answer to these challenges. It is the framework that says: here is a structured sequence of phases, here is how information flows between them, and here is how we know when we are done.
 
 ---
 
-## Section 3 — The Six Phases of the SDLC [08:30–13:30]
-
-"Every SDLC model, regardless of whether it is Waterfall or Agile, covers the same fundamental activities. The models differ in how they order and repeat these activities, not in whether they perform them.
-
-[SHOW DIAGRAM: SDLC six-phase cycle — Requirements, Design, Implementation, Testing, Deployment, Maintenance — shown as a circular diagram with arrows]
+## Section 3 — The Six Phases of the SDLC
+Every SDLC model, regardless of whether it is Waterfall or Agile, covers the same fundamental activities. The models differ in how they order and repeat these activities, not in whether they perform them.
 
 Phase one is Requirements. This is where we answer the question: what should the software do? We gather input from stakeholders, users, and domain experts. We document functional requirements — the specific behaviors the system must exhibit — and non-functional requirements — qualities like performance, security, and scalability.
 
@@ -65,15 +76,12 @@ Phase five is Deployment. We release the software to the production environment 
 
 Phase six is Maintenance. Software is never truly finished. After deployment, teams fix defects, make enhancements, and adapt the software to changing environments. Studies suggest that maintenance consumes between 60 and 80 percent of a software system's total lifetime cost.
 
-Now, the critical question is not what these phases are — every model agrees on the phases. The question is: how do you sequence them? And that is where the SDLC models diverge dramatically."
+Now, the critical question is not what these phases are — every model agrees on the phases. The question is: how do you sequence them? And that is where the SDLC models diverge dramatically.
 
 ---
 
-## Section 4 — Comparing the SDLC Models [13:30–19:00]
-
-"Let's walk through the four major models and compare them honestly.
-
-[SHOW DIAGRAM: Four-quadrant comparison matrix — Waterfall, Spiral, Iterative, Agile — with axes for 'Flexibility to Change' (low to high) and 'Customer Involvement' (low to high)]
+## Section 4 — Comparing the SDLC Models
+Let's walk through the four major models and compare them honestly.
 
 The Waterfall model, described by Winston Royce in 1970, arranges the six phases in a strict linear sequence. Requirements are fully defined and signed off. Then design begins. Then coding. Then testing. Then deployment. No phase begins until the previous one is complete.
 
@@ -81,31 +89,24 @@ The Waterfall model's strength is documentation clarity and traceability. If you
 
 Its weakness is catastrophic when requirements do change. If you discover in the testing phase that a fundamental requirement was misunderstood six months ago, you must re-do design and implementation. Studies of 1970s and 1980s government software projects found that requirements errors discovered late in Waterfall projects cost ten to one hundred times more to fix than errors discovered early. This is the 'cost of change curve' and it is the core argument against Waterfall for complex, uncertain projects.
 
-[SHOW DIAGRAM: Cost-of-Change curve under Waterfall (exponential) vs. Agile (relatively flat)]
-
 The Spiral model, proposed by Barry Boehm in 1986, addresses Waterfall's weakness by explicitly building risk analysis into the development cycle. Each loop of the spiral has four quadrants: determine objectives, identify and resolve risks, develop and test, and plan the next iteration. The spiral is excellent for large, high-risk projects — NASA uses spiral-derived approaches for mission-critical systems.
 
 The Iterative model builds software in repeated cycles, each producing a working — though incomplete — version. Unlike Spiral, Iterative does not mandate formal risk analysis steps. It simply says: build a little, show it, get feedback, build more. The Rational Unified Process (RUP) is the most famous iterative framework.
 
 The Agile model is not a single methodology — it is a family of approaches united by the values declared in the 2001 Agile Manifesto. Agile methods deliver working software in short cycles, welcome changing requirements even late in development, and build projects around motivated individuals with face-to-face communication.
 
-[SHOW DIAGRAM: Sprint cycle — Plan, Build, Test, Review, Retrospect — shown as a tight loop with 'Potentially Shippable Increment' as output]
-
 Scrum is the most widely-used Agile framework. And this is where the PSM I exam becomes directly relevant.
 
-PSM I Exam Tip: The Scrum Guide describes Scrum as founded on three pillars of empiricism: transparency, inspection, and adaptation. These pillars are a direct philosophical response to Waterfall's assumptions. Waterfall assumes you can predict the future accurately enough to plan the entire project upfront. Empiricism says: you cannot predict accurately, so inspect frequently and adapt constantly. Know this distinction. It appears in multiple PSM I scenario questions."
+PSM I Exam Tip: The Scrum Guide describes Scrum as founded on three pillars of empiricism: transparency, inspection, and adaptation. These pillars are a direct philosophical response to Waterfall's assumptions. Waterfall assumes you can predict the future accurately enough to plan the entire project upfront. Empiricism says: you cannot predict accurately, so inspect frequently and adapt constantly. Know this distinction. It appears in multiple PSM I scenario questions.
 
 ---
 
-## Section 5 — Why This Matters for the PSM I Exam [19:00–22:00]
-
-"Let me close with the direct connection between this module and your PSM I certification.
+## Section 5 — Why This Matters for the PSM I Exam
+Let me close with the direct connection between this module and your PSM I certification.
 
 The Scrum Guide opens with a statement about complexity. It says Scrum was developed in the early 1990s by Ken Schwaber and Jeff Sutherland for developing and sustaining complex products. The word 'complex' is doing serious work there. Complex environments are ones where cause and effect are only understood in retrospect — where you cannot plan your way to success, you must experiment your way there.
 
 Waterfall was designed for complicated problems — problems where expertise and upfront analysis can produce a correct plan. Scrum was designed for complex problems — problems where the right answer emerges through iteration and feedback.
-
-[SHOW DIAGRAM: Stacey Matrix — Simple / Complicated / Complex / Chaotic quadrants with Waterfall and Scrum positioned appropriately]
 
 PSM I Exam Tip: When a PSM I question gives you a scenario where a team is facing uncertain requirements and asks which approach to use, the answer will always leverage Scrum's empirical pillars. Never choose 'finalize requirements before starting development' as a Scrum answer.
 
@@ -120,7 +121,7 @@ The 'over' language is critical. The right side has value — the Manifesto says
 
 As you move into Module 2 we will go deep on the Agile Manifesto and its 12 Principles. But today's foundation — understanding where Agile came from and why it exists — makes every subsequent module more coherent.
 
-Thank you for your attention. Head to the Reading Guide, complete the Lab, take the Quiz, and participate in the Discussion Forum this week. I will see you in Module 2."
+Thank you for your attention. Head to the Reading Guide, complete the Lab, take the Quiz, and participate in the Discussion Forum this week. I will see you in Module 2.
 
 ---
 

@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 – 01:30] Opening and Module Overview
+## Opening and Module Overview
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -35,7 +35,7 @@ These are not just academic definitions. The ITIL 4 Foundation certification exa
 
 ---
 
-## [01:30 – 04:30] What Is a Service? What Is IT Service Management?
+## What Is a Service? What Is IT Service Management?
 
 Before we can talk about ITIL, we need to agree on what a service actually is. In everyday language, people use the word loosely. ITIL 4 is very precise about it.
 
@@ -55,7 +55,7 @@ ITIL 4 is the world's most widely adopted ITSM framework. It is not a law or a s
 
 ---
 
-## [04:30 – 08:00] The Evolution of ITIL: From ITIL v1 to ITIL 4
+## The Evolution of ITIL: From ITIL v1 to ITIL 4
 
 Understanding where ITIL came from helps you understand why it is structured the way it is today.
 
@@ -71,7 +71,7 @@ The exam will sometimes present a scenario involving an outdated ITIL v3 concept
 
 ---
 
-## [08:00 – 11:00] Utility, Warranty, and Value
+## Utility, Warranty, and Value
 
 ITIL 4 defines value through two complementary lenses: **utility** and **warranty**.
 
@@ -91,9 +91,7 @@ The exam frequently presents scenarios that ask you to classify a characteristic
 
 ---
 
-## [11:00 – 15:00] The ITIL 4 Service Value System — Overview
-
-[SHOW DIAGRAM]
+## The ITIL 4 Service Value System — Overview
 
 Now let us introduce the ITIL 4 Service Value System, or SVS. This is the top-level model in ITIL 4, and it describes how all the components of an organization work together to enable value creation.
 
@@ -117,11 +115,9 @@ The SVS is the framework that holds all of ITIL 4 together. When you are answeri
 
 ---
 
-## [15:00 – 18:00] The Four Dimensions of Service Management
+## The Four Dimensions of Service Management
 
 ITIL 4 states that every service, practice, and system must be considered across **four dimensions** to ensure it is balanced, realistic, and effective. Neglecting any one dimension creates risk.
-
-[SHOW DIAGRAM]
 
 **Dimension 1: Organizations and People.** This dimension covers the roles, responsibilities, culture, and skills of everyone involved in service management. It includes the formal organizational structure as well as informal culture and communication. A technically perfect system can fail if the people who use it lack training, if accountability is unclear, or if organizational culture resists adoption.
 
@@ -137,7 +133,7 @@ The exam tests the four dimensions regularly. When you read a scenario question,
 
 ---
 
-## [18:00 – 20:30] ITIL 4 Key Stakeholder Roles
+## ITIL 4 Key Stakeholder Roles
 
 ITIL 4 uses precise terminology for the people and organizations involved in service relationships. Knowing these terms is important for both the exam and for practical communication.
 
@@ -155,7 +151,7 @@ Understanding these distinctions matters because ITIL practices are designed to 
 
 ---
 
-## [20:30 – 22:30] Connecting It All: Why ITIL 4 Matters in Practice
+## Connecting It All: Why ITIL 4 Matters in Practice
 
 I want to spend a few minutes making this concrete before we wrap up.
 
@@ -171,7 +167,7 @@ ITIL 4 gives us a shared vocabulary and a coherent framework for making all of t
 
 ---
 
-## [22:30 – 24:00] Module Summary and What Is Next
+## Module Summary and What Is Next
 
 Let us review what we covered today.
 

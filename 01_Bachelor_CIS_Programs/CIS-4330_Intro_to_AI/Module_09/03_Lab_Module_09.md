@@ -57,7 +57,7 @@ If you still have your `cis4330-mod08-rg` resource group and Language resource f
    - **Name**: `lab09-faq`
    - **Description**: University IT Help Desk FAQ
    - **Default answer language**: English
-   - **Default answer when no match found**: "I'm sorry, I don't have an answer for that. Please contact the IT help desk at <helpdesk@example.edu>."
+   - **Default answer when no match found**: "I'm sorry, I don't have an answer for that. Please contact the IT help desk at <helpdesk@example.edu>.
 
 5. Click **Next** and then **Create project**.
 
@@ -79,7 +79,7 @@ Configure at least two multi-turn follow-up prompt chains.
 
 Example chain for password reset:
 
-1. Main answer: "Visit myaccount.example.edu and click Forgot Password..."
+1. Main answer: "Visit myaccount.example.edu and click Forgot Password...
 2. Follow-up prompt 1: "What if I don't receive the reset email?" → Link to or create answer about checking spam and contacting the help desk.
 3. Follow-up prompt 2: "What are the password requirements?" → Link to or create answer listing length, complexity, and history requirements.
 

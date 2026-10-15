@@ -43,7 +43,7 @@ gcloud services enable \
 1. In the Cloud Console, click the navigation menu and select **Billing**.
 2. Click your billing account name to open the billing account overview.
 3. Review the **Overview** page — note the current month's cost and the trend graph.
-4. Click **Reports** — explore the chart. Change the time range to "Last 3 months."
+4. Click **Reports** — explore the chart. Change the time range to "Last 3 months.
 5. Click **Cost table** — review the breakdown by project and service.
 6. Record: Which service is your highest cost item this month (or last month)?
 

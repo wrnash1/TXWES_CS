@@ -1,5 +1,23 @@
 # Video Script: Module 04 – Scrum in Practice: Sprint Planning and Daily Scrum
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture &bull; Module 04</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=LzMnsfqjzkA" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/LzMnsfqjzkA" title="freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Estimated Duration:** 22 minutes
@@ -7,9 +25,8 @@
 
 ---
 
-## Section 1 — Welcome and Module Focus [00:00–02:30]
-
-"Welcome to Module 4. We have covered the Scrum framework's structure. Now we go deeper into two of its most operationally important events: Sprint Planning and the Daily Scrum.
+## Section 1 — Welcome and Module Focus
+Welcome to Module 4. We have covered the Scrum framework's structure. Now we go deeper into two of its most operationally important events: Sprint Planning and the Daily Scrum.
 
 These two events happen at the beginning and throughout every Sprint — every one to four weeks, without exception. How well a team executes Sprint Planning directly determines whether the Sprint has direction and purpose. How well the team uses the Daily Scrum determines whether they stay aligned and remove friction fast.
 
@@ -21,15 +38,12 @@ By the end of this module you will be able to:
 - Identify the most common failure modes in Sprint Planning and the Daily Scrum
 - Answer PSM I questions about both events with precision
 
-Let's start with Sprint Planning."
+Let's start with Sprint Planning.
 
 ---
 
-## Section 2 — Sprint Planning: Purpose and Participants [02:30–08:00]
-
-"Sprint Planning initiates the Sprint. The entire Scrum Team attends — the Product Owner, the Scrum Master, and all Developers. Note the word 'entire': Sprint Planning is not just a developer activity. The Product Owner's presence is essential because they bring the prioritized Product Backlog and the Product Goal context that informs what to work on.
-
-[SHOW DIAGRAM: Sprint Planning flow — Product Backlog (left) → Sprint Planning session (center) → Sprint Goal + Sprint Backlog (right), with the three questions labeled above the session box]
+## Section 2 — Sprint Planning: Purpose and Participants
+Sprint Planning initiates the Sprint. The entire Scrum Team attends — the Product Owner, the Scrum Master, and all Developers. Note the word 'entire': Sprint Planning is not just a developer activity. The Product Owner's presence is essential because they bring the prioritized Product Backlog and the Product Goal context that informs what to work on.
 
 Sprint Planning is timeboxed to eight hours for a one-month Sprint. Shorter Sprints have proportionally shorter Sprint Planning sessions — a two-week Sprint typically has a four-hour planning session.
 
@@ -45,15 +59,12 @@ Topic 2 — What can be Done this Sprint? The Developers select items from the P
 
 The Product Owner provides the ordered Product Backlog. The Developers have the final say on what they can accomplish — nobody outside the team can force a higher commitment. If the selected work seems too much or too little, the team renegotiates with the Product Owner.
 
-Topic 3 — How will the chosen work get done? The Developers plan the work by decomposing selected Product Backlog items into tasks of one day or less. This is technical planning — the Developers are the experts, not the Product Owner or Scrum Master. The resulting plan is the Sprint Backlog."
+Topic 3 — How will the chosen work get done? The Developers plan the work by decomposing selected Product Backlog items into tasks of one day or less. This is technical planning — the Developers are the experts, not the Product Owner or Scrum Master. The resulting plan is the Sprint Backlog.
 
 ---
 
-## Section 3 — The Sprint Goal Deep Dive [08:00–12:30]
-
-"Let me spend more time on the Sprint Goal because it is the most tested element of Sprint Planning on PSM I.
-
-[SHOW DIAGRAM: Sprint Goal positioned as an umbrella over the Sprint Backlog items, showing how multiple PBIs support one Sprint Goal]
+## Section 3 — The Sprint Goal Deep Dive
+Let me spend more time on the Sprint Goal because it is the most tested element of Sprint Planning on PSM I.
 
 A Sprint Goal is a short, focused statement of what the Scrum Team will achieve during the Sprint. A good Sprint Goal has these characteristics:
 
@@ -67,15 +78,12 @@ That goal has a user-facing outcome, gives the Developers flexibility about impl
 
 PSM I Exam Tip: When a PSM I question asks what happens when unexpected work arises during a Sprint, the correct answer involves the team renegotiating the Sprint Backlog scope with the Product Owner while protecting the Sprint Goal. The Sprint Goal is fixed during the Sprint; the Sprint Backlog is flexible.
 
-The Sprint Goal also provides resilience. If Developers discover during the Sprint that one of the selected Product Backlog items is technically different than expected, they can negotiate with the Product Owner about which item to substitute — as long as the Sprint Goal is still achievable."
+The Sprint Goal also provides resilience. If Developers discover during the Sprint that one of the selected Product Backlog items is technically different than expected, they can negotiate with the Product Owner about which item to substitute — as long as the Sprint Goal is still achievable.
 
 ---
 
-## Section 4 — The Daily Scrum: Purpose and Best Practices [12:30–18:30]
-
-"The Daily Scrum is a 15-minute event held every working day of the Sprint at the same time and place. It is for the Developers — not the Scrum Master, not the Product Owner, not visiting managers.
-
-[SHOW DIAGRAM: Daily Scrum timeline — Sprint day 1 through day 10 (for a two-week Sprint) with Daily Scrum markers at each day, showing Sprint Goal at top as the focus point]
+## Section 4 — The Daily Scrum: Purpose and Best Practices
+The Daily Scrum is a 15-minute event held every working day of the Sprint at the same time and place. It is for the Developers — not the Scrum Master, not the Product Owner, not visiting managers.
 
 The purpose of the Daily Scrum is to inspect progress toward the Sprint Goal and adapt the Sprint Backlog as necessary. That is it. Everything else — status reporting, problem-solving, architectural discussions — happens outside the Daily Scrum.
 
@@ -91,15 +99,12 @@ Third, it is not a reporting event to the Scrum Master. Developers report to eac
 
 PSM I Exam Tip: Questions about the Daily Scrum frequently test these failure modes. Watch for choices that say the Scrum Master runs the Daily Scrum, or that managers attend and ask questions, or that the meeting extends as long as needed to resolve all issues. All of these are wrong.
 
-The Scrum Master ensures the Daily Scrum happens and helps the Developers understand its purpose. They may attend, but they serve the team — not the other way around."
+The Scrum Master ensures the Daily Scrum happens and helps the Developers understand its purpose. They may attend, but they serve the team — not the other way around.
 
 ---
 
-## Section 5 — Sprint Backlog Updates and Flow [18:30–22:00]
-
-"One more critical concept for Sprint Planning and Daily Scrum: the Sprint Backlog is a living document.
-
-[SHOW DIAGRAM: Sprint Backlog as a board with columns To Do, In Progress, Done — items moving across the board with new tasks being added as the sprint progresses]
+## Section 5 — Sprint Backlog Updates and Flow
+One more critical concept for Sprint Planning and Daily Scrum: the Sprint Backlog is a living document.
 
 At Sprint Planning, the Developers create an initial plan — a Sprint Backlog with selected items and associated tasks. But the plan is based on what the team knows at the start of the Sprint. As work proceeds, they learn more. Technical approaches turn out to be harder or easier than expected. A dependency surfaces. A new piece of information from the Product Owner changes the implementation approach.
 
@@ -109,7 +114,7 @@ This is the power of the Daily Scrum as an inspection point. Every day, the team
 
 PSM I Exam Tip: The Sprint Backlog belongs to the Developers, but the Sprint Goal belongs to the entire Scrum Team. If a question asks who can modify the Sprint Backlog scope, the answer is the Developers — with Product Owner collaboration on scope trade-offs. Nobody else can change what is in the Sprint Backlog.
 
-In Module 5 we cover the Sprint Review and Sprint Retrospective — the closing events of the Sprint that create the feedback loop that makes Scrum work. See you there."
+In Module 5 we cover the Sprint Review and Sprint Retrospective — the closing events of the Sprint that create the feedback loop that makes Scrum work. See you there.
 
 ---
 

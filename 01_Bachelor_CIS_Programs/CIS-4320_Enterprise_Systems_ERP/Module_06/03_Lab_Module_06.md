@@ -14,7 +14,7 @@ This lab develops your ability to trace the Procure-to-Pay process through SAP M
 
 **Estimated Time:** 90 minutes
 
-**Submission:** Upload to Canvas under "Lab 06 — Supply Chain Management Integrations."
+**Submission:** Upload to Canvas under "Lab 06 — Supply Chain Management Integrations.
 
 ---
 
@@ -189,7 +189,7 @@ The Hartwell operations manager says: "I don't understand why we need all these 
 
 1. Compile all responses into a single document.
 2. Name your file: `Lab06_LastName_FirstName.pdf`
-3. Upload to Canvas under "Lab 06 — Supply Chain Management Integrations."
+3. Upload to Canvas under "Lab 06 — Supply Chain Management Integrations.
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
 
 ---

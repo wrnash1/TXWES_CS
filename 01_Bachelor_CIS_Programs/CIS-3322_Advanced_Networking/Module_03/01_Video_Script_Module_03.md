@@ -1,5 +1,23 @@
 # Video Script: Module 03 - IPv6 Addressing and Configuration
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course &bull; Module 03</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" title="Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 1: Network Fundamentals - 20%)
 **Estimated Duration:** 23 minutes
@@ -7,13 +25,10 @@
 
 ---
 
-## Section 1: Why IPv6 Exists and What You Need to Know [00:00 - 03:30]
-
+## Section 1: Why IPv6 Exists and What You Need to Know
 Welcome to Module 03. I am Professor Nash. Today we cover IPv6 — the addressing system that will eventually replace IPv4 across the entire internet and enterprise network world.
 
 IPv4 uses 32-bit addresses, which gives us approximately 4.3 billion addresses. That number sounds large, but the internet ran out of unallocated IPv4 blocks in 2011. IPv6 uses 128-bit addresses, providing 340 undecillion unique addresses — enough for every device on earth for the foreseeable future.
-
-[SHOW DIAGRAM: A visual comparison of IPv4 (32 bits, 8 decimal octets) versus IPv6 (128 bits, 8 hexadecimal groups of 4 digits each), with a size comparison annotation]
 
 The CCNA 200-301 exam tests IPv6 across both the Network Fundamentals and IP Connectivity domains. You will see questions on IPv6 address types, SLAAC configuration, EUI-64 conversion, and Cisco IOS CLI commands. This module gives you everything you need.
 
@@ -28,8 +43,7 @@ Topics covered today:
 
 ---
 
-## Section 2: IPv6 Address Format and Abbreviation [03:30 - 08:00]
-
+## Section 2: IPv6 Address Format and Abbreviation
 An IPv6 address is 128 bits written as eight groups of four hexadecimal digits, separated by colons.
 
 Full form: `2001:0DB8:0000:0001:0000:0000:0000:0001`
@@ -44,15 +58,11 @@ Rule 2 - Double-colon compression: One continuous sequence of consecutive all-ze
 
 `2001:DB8:0:0:0:0:0:1` becomes `2001:DB8::1`
 
-[SHOW DIAGRAM: Three-step compression example: full address → drop leading zeros → apply double-colon, each step shown on a separate row]
-
 CCNA Exam Tip: The exam presents compressed IPv6 addresses and asks you to expand them, or vice versa. To expand a double-colon, count the existing groups, then insert enough all-zero groups to reach a total of 8 groups. If `2001:DB8::1` has 3 groups written out (2001, DB8, and 1), insert 5 groups of zeros between the two colons.
 
 ---
 
-## Section 3: IPv6 Address Types [08:00 - 13:00]
-
-[SHOW DIAGRAM: IPv6 address type table with prefix, name, scope, and example for each type]
+## Section 3: IPv6 Address Types
 
 ### Link-Local Addresses (FE80::/10)
 
@@ -89,8 +99,7 @@ CCNA Exam Tip: Memorize the three most testable address types: link-local starts
 
 ---
 
-## Section 4: SLAAC and EUI-64 [13:00 - 18:30]
-
+## Section 4: SLAAC and EUI-64
 ### SLAAC - Stateless Address Autoconfiguration
 
 SLAAC allows an IPv6 host to configure its own global unicast address without a DHCPv6 server. The process:
@@ -118,14 +127,11 @@ Final EUI-64 interface ID: `021A:2BFF:FE3C:4D5E`
 
 Full address with prefix 2001:DB8::/64: `2001:DB8::021A:2BFF:FE3C:4D5E`
 
-[SHOW DIAGRAM: EUI-64 conversion table showing MAC address, split with FFFE insertion, bit 7 inversion in binary, and final interface ID]
-
 CCNA Exam Tip: The exam may give you a MAC address and ask for the EUI-64 interface identifier. Practice the three steps: split, insert FFFE, invert bit 7. The most common mistake is forgetting to invert bit 7.
 
 ---
 
-## Section 5: Cisco IOS IPv6 Configuration and Lab Preview [18:30 - 23:00]
-
+## Section 5: Cisco IOS IPv6 Configuration and Lab Preview
 To enable IPv6 routing on a Cisco router, you must enter one global command first:
 
 ```ios
@@ -169,8 +175,6 @@ Router# show ipv6 interface brief
 Router# show ipv6 route
 Router# show ipv6 neighbors
 ```
-
-[SHOW DIAGRAM: Terminal output of show ipv6 interface brief showing Gi0/0 and Gi0/1 with global unicast and link-local addresses, both showing Up/Up status]
 
 CCNA Exam Tip: Know these three IPv6 show commands cold. The exam uses all three in simulation questions. `show ipv6 neighbors` is the IPv6 equivalent of `show ip arp` — it displays the neighbor cache built by the Neighbor Discovery Protocol.
 

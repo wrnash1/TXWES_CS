@@ -14,7 +14,7 @@ This lab places you in the role of a junior project analyst on an ERP implementa
 
 **Estimated Time:** 90 minutes
 
-**Submission:** Upload to Canvas under "Lab 04 — ERP Implementation Lifecycle."
+**Submission:** Upload to Canvas under "Lab 04 — ERP Implementation Lifecycle.
 
 ---
 
@@ -189,7 +189,7 @@ Based on your readiness assessment above, write a 175-225 word go/no-go recommen
 
 1. Compile all responses into a single document.
 2. Name your file: `Lab04_LastName_FirstName.pdf`
-3. Upload to Canvas under "Lab 04 — ERP Implementation Lifecycle."
+3. Upload to Canvas under "Lab 04 — ERP Implementation Lifecycle.
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
 
 ---

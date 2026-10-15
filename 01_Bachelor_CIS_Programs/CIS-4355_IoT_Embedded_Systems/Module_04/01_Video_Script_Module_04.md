@@ -7,8 +7,7 @@
 
 ---
 
-## Segment 1: Introduction and Learning Objectives [00:00 – 02:00]
-
+## Segment 1: Introduction and Learning Objectives
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -42,9 +41,7 @@ Let us begin with the protocol that is most commonly tested: MQTT.
 
 ---
 
-## Segment 2: MQTT – Message Queuing Telemetry Transport [02:00 – 08:00]
-
-[SHOW DIAGRAM]
+## Segment 2: MQTT – Message Queuing Telemetry Transport
 
 MQTT was designed in the late 1990s by Andy Stanford-Clark at IBM and Arlen Nipper for monitoring oil pipelines over satellite links. The design goals were: minimal bandwidth consumption, minimal battery drain on remote devices, and reliable message delivery over unreliable networks. These goals make MQTT perfect for IoT.
 
@@ -92,8 +89,7 @@ For production: always use port 8883 with TLS, require client authentication (X.
 
 ---
 
-## Segment 3: MQTT Publish-Subscribe Code Example [08:00 – 11:30]
-
+## Segment 3: MQTT Publish-Subscribe Code Example
 [SHOW CODE]
 
 Let me show you a working MQTT publish-subscribe example using the Paho Python library. This is the library used in professional IoT deployments.
@@ -171,9 +167,7 @@ The key concepts in this code:
 
 ---
 
-## Segment 4: CoAP – Constrained Application Protocol [11:30 – 14:30]
-
-[SHOW DIAGRAM]
+## Segment 4: CoAP – Constrained Application Protocol
 
 CoAP is defined in IETF RFC 7252 and is designed specifically for constrained nodes and constrained networks. Where MQTT uses TCP and a broker, CoAP uses UDP and a direct request-response pattern similar to HTTP.
 
@@ -196,8 +190,7 @@ CoAP is secured with DTLS (Datagram TLS), which is the UDP equivalent of TLS. DT
 
 ---
 
-## Segment 5: HTTP/REST and AMQP in IoT [14:30 – 17:00]
-
+## Segment 5: HTTP/REST and AMQP in IoT
 ### HTTP/REST
 
 HTTP/REST is the default web protocol and is widely used in IoT cloud APIs, dashboards, and management interfaces. REST over HTTPS provides strong security through TLS and is easily debugged with standard tools. However, HTTP's per-request overhead — full headers, status lines, verbose text payloads — makes it unsuitable for constrained devices with strict bandwidth budgets.
@@ -214,9 +207,7 @@ AMQP is common in industrial IoT backends and financial systems where guaranteed
 
 ---
 
-## Segment 6: Zigbee and IEEE 802.15.4 [17:00 – 20:00]
-
-[SHOW DIAGRAM]
+## Segment 6: Zigbee and IEEE 802.15.4
 
 Zigbee is a wireless mesh networking protocol designed for low-data-rate, low-power, short-range IoT applications. It is based on IEEE 802.15.4 at the Physical and MAC layers.
 
@@ -247,8 +238,7 @@ Mitigation: use installcode-based joining (replaces broadcast link key with a de
 
 ---
 
-## Segment 7: Summary and Lab Preview [20:00 – 22:00]
-
+## Segment 7: Summary and Lab Preview
 Protocol selection summary: MQTT for low-overhead pub/sub telemetry over TCP. CoAP for constrained request-response over UDP. HTTP/REST for cloud APIs and high-bandwidth endpoints. AMQP for enterprise backend message routing. Zigbee for local wireless mesh sensor networks.
 
 Security summary: all protocols require encrypted transport (TLS for TCP-based, DTLS for UDP-based) and device authentication. Unauthenticated MQTT brokers and Zigbee networks using default keys are among the most commonly exploited configurations in real IoT deployments.

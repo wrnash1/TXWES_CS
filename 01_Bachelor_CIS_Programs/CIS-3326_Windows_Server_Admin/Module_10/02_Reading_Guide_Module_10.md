@@ -554,8 +554,6 @@ Reference for Print Server role installation, shared printer configuration, prin
 
 *Review all sections before beginning Lab 10, Quiz 10, and Discussion 10.*
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

@@ -287,7 +287,7 @@ What is the difference between `element.append('Hello')` and `element.appendChil
 - *Why A is incorrect:* `element.append('Hello')` automatically converts the string to a text node before inserting it. Both calls result in the same DOM structure.
 - *Why B is correct:* `append` accepts strings and converts them to text nodes internally. `document.createTextNode` explicitly creates a text node. Both produce the same result: a text node with content `'Hello'` appended as the last child of `element`.
 - *Why C is incorrect:* `append` is a modern API; `appendChild` is the older one. Neither is Internet Explorer-specific. `append` has broad modern browser support.
-- *Why D is incorrect:* `append` specifically supports strings as arguments. From MDN: "The Element.append() method inserts a set of Node objects or string objects after the last child of the Element."
+- *Why D is incorrect:* `append` specifically supports strings as arguments. From MDN: "The Element.append() method inserts a set of Node objects or string objects after the last child of the Element.
 
 ---
 

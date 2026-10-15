@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -41,9 +41,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 07:00] S3 Storage Classes
-
-[SHOW DIAGRAM]
+## S3 Storage Classes
 
 S3 offers multiple storage classes optimized for different access frequencies and cost profiles. The SAA-C03 exam regularly presents scenarios requiring you to select the right class. Let me walk through each one.
 
@@ -61,8 +59,6 @@ S3 offers multiple storage classes optimized for different access frequencies an
 
 **S3 Glacier Deep Archive** is the lowest-cost S3 storage class. Retrieval takes 12-48 hours. Minimum storage duration is 180 days. Use Deep Archive for data retained for regulatory compliance that is rarely or never accessed — 7-year financial records, medical records archives, long-term research data.
 
-[SHOW DIAGRAM]
-
 The retrieval trade-off pattern for the SAA-C03 exam:
 
 - Instant access needed, low cost: Standard or Standard-IA
@@ -72,9 +68,7 @@ The retrieval trade-off pattern for the SAA-C03 exam:
 
 ---
 
-## [07:00 - 11:30] S3 Lifecycle Policies
-
-[SHOW DIAGRAM]
+## S3 Lifecycle Policies
 
 Lifecycle policies automate the transition of objects between storage classes or the expiration (deletion) of objects based on age or other criteria. This is how you implement systematic cost optimization without manual intervention.
 
@@ -125,9 +119,7 @@ Important transition order constraints: you can only transition down the cost hi
 
 ---
 
-## [11:30 - 16:30] S3 Security
-
-[SHOW DIAGRAM]
+## S3 Security
 
 S3 security has multiple layers and the SAA-C03 exam tests them all. Let me cover each control.
 
@@ -176,11 +168,9 @@ For the exam: if a question requires an audit trail of who accessed which encryp
 
 ---
 
-## [16:30 - 20:00] Versioning, Replication, and Object Lock
+## Versioning, Replication, and Object Lock
 
 **S3 Versioning** keeps every version of an object. When you enable versioning on a bucket, every PUT creates a new version and every DELETE creates a delete marker without removing the previous version. Versioning protects against accidental deletion and overwrites. Once enabled, versioning can be suspended but never fully disabled on a bucket that has had it enabled.
-
-[SHOW DIAGRAM]
 
 **S3 Cross-Region Replication (CRR)** automatically replicates objects from a source bucket in one Region to a destination bucket in a different Region. Use cases: compliance (data must exist in two countries), latency reduction for global users, disaster recovery for a second Region. Versioning must be enabled on both the source and destination buckets. CRR replicates only new objects created after replication is configured — it does not retroactively replicate existing objects.
 
@@ -195,7 +185,7 @@ Object Lock is used for regulatory compliance requiring WORM (Write Once Read Ma
 
 ---
 
-## [20:00 - 22:00] Presigned URLs and Transfer Acceleration
+## Presigned URLs and Transfer Acceleration
 
 **Presigned URLs** allow you to grant temporary, time-limited access to a specific S3 object without making the bucket public and without requiring the requester to have AWS credentials. You generate a presigned URL using your IAM credentials — the URL embeds a time-limited signature. Anyone with the URL can access the object until the URL expires.
 
@@ -205,7 +195,7 @@ Use case: your application generates a download link for a user's report file st
 
 ---
 
-## [22:00 - 24:00] Module Summary
+## Module Summary
 
 S3 storage classes — know the hierarchy: Standard → Intelligent-Tiering → Standard-IA → One Zone-IA → Glacier Instant → Glacier Flexible → Deep Archive. Match the access pattern to the class.
 

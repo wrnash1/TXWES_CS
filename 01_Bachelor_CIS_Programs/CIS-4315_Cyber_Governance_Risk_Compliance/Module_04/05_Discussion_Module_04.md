@@ -45,7 +45,7 @@ Are all three executives' arguments reasonable? For each argument, explain wheth
 
 ClearPath Software is a startup that has just launched a B2B SaaS application for small business accounting. The platform handles payroll data, bank account information, and tax documents for 3,200 small business clients. The founding team built the application quickly to meet a market window and did not conduct formal threat modeling during development. Following a security review, the security consultant recommended conducting a STRIDE threat model of the application.
 
-The CTO pushed back: "We already passed our SOC 2 Type 1 audit. Our code has been reviewed by our developers. Why do we need a separate threat modeling exercise? This feels like redundant work."
+The CTO pushed back: "We already passed our SOC 2 Type 1 audit. Our code has been reviewed by our developers. Why do we need a separate threat modeling exercise? This feels like redundant work.
 
 In 175–225 words, respond to the following questions in complete sentences.
 

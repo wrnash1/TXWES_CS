@@ -28,8 +28,6 @@
 
 ### Opening
 
-**[SHOW SLIDE: Module 05 — Cloud Bigtable: Wide-Column NoSQL at Scale]**
-
 Hello, and welcome back to CIS-4327. I am Professor Nash. This is Module 05: Cloud Bigtable.
 
 Bigtable is not a relational database. It does not have tables with foreign keys, JOINs, or transactions that span multiple rows. What it does have is massive horizontal scalability, single-digit millisecond read and write latency at petabyte scale, and a storage model designed for exactly one class of workloads: high-throughput, low-latency access to huge volumes of data organized by a single key.
@@ -42,8 +40,6 @@ In Part 1 we cover Bigtable's architecture, data model, row key design, and the 
 
 ### Section 1 — What Is Bigtable?
 
-**[SHOW SLIDE: Bigtable origin — Google's internal infrastructure for Search indexing, Maps, Gmail]**
-
 Cloud Bigtable is the managed version of the Bigtable system Google built internally starting in 2004 to power Google Search's web index, Google Maps, and Gmail. The original Bigtable paper, published in 2006, described a distributed storage system for structured data designed to handle petabytes of data across thousands of commodity servers.
 
 Cloud Bigtable made this infrastructure available as a managed GCP service. You get the same storage system without managing the cluster hardware, replication, or compaction processes yourself.
@@ -53,8 +49,6 @@ Bigtable is a key-value store with a sorted structure. Every row has a unique ro
 ---
 
 ### Section 2 — Bigtable Data Model
-
-**[SHOW SLIDE: Bigtable data model diagram — row key, column family, column qualifier, cell, timestamp]**
 
 The Bigtable data model has five components.
 
@@ -68,15 +62,11 @@ Cells are the intersection of a row and a column (family:qualifier). Each cell s
 
 Timestamps add a versioning dimension to each cell. By default, Bigtable retains multiple versions of a cell value over time. You can read the most recent version, a specific timestamp version, or a range of versions.
 
-**[SHOW SLIDE: Sparse table — most cells are empty in wide rows]**
-
 An important characteristic: Bigtable tables are sparse. A row does not need to have values in every column qualifier. Empty cells consume no storage. This makes Bigtable efficient for workloads where different rows have different sets of columns.
 
 ---
 
 ### Section 3 — Bigtable Architecture
-
-**[SHOW SLIDE: Bigtable architecture — cluster nodes, tablets, persistent disk, Colossus storage]**
 
 A Bigtable instance consists of one or more clusters. Each cluster runs in a single GCP zone. A cluster has nodes that serve read and write requests. Data is stored on Colossus — Google's distributed file system — separately from the compute nodes.
 
@@ -87,8 +77,6 @@ Data within a table is divided into tablets. A tablet is a contiguous range of r
 ---
 
 ### Section 4 — Row Key Design
-
-**[SHOW SLIDE: Row key design — the most important Bigtable design decision]**
 
 Row key design is the most critical decision in Bigtable schema design. Because all reads and range scans are based exclusively on the row key, your key structure determines everything about query efficiency and write distribution.
 
@@ -104,8 +92,6 @@ Good pattern — salting: prepend a random or hash-based prefix to distribute wr
 
 Good pattern — composite keys for multi-dimensional access: for IoT sensor data, a key like `sensorId#reversedTimestamp` groups all readings for one sensor together in descending time order. You can range-scan the most recent N readings for a sensor efficiently.
 
-**[SHOW SLIDE: Bigtable row key examples — IoT, user events, web index, time series]**
-
 | Workload | Recommended Row Key Pattern |
 |---|---|
 | IoT sensor readings | `sensorId#reversedTimestamp` |
@@ -117,8 +103,6 @@ Good pattern — composite keys for multi-dimensional access: for IoT sensor dat
 ---
 
 ### Section 5 — Bigtable Workloads
-
-**[SHOW SLIDE: Workloads suited for Bigtable — time series, IoT, recommendation data, operational data]**
 
 Bigtable is the right choice for these workload patterns:
 
@@ -141,8 +125,6 @@ Ad-hoc analytical queries — BigQuery is the correct choice for that pattern.
 ---
 
 ### Closing — Part 1 Summary
-
-**[SHOW SLIDE: Module 05 Part 1 key concepts]**
 
 In Part 1 we covered Bigtable's architecture: clusters, nodes, tablets, and Colossus storage. We covered the data model: row key, column family, column qualifier, cell, and timestamp versioning.
 

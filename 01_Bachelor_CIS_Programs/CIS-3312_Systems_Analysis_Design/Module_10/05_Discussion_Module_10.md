@@ -79,7 +79,7 @@ A student submits the following DFD fragment description for peer review:
 
 The diagram shows a data store labeled "D3 Patient Records" with an arrow going directly
 from an external entity labeled "Insurance Company" to the data store. A second process
-bubble labeled "Generate Claim Report" has two outgoing arrows labeled "Claim Summary"
+bubble labeled "Generate Claim Report" has two outgoing arrows labeled "Claim Summary
 going to two different external entities but has no incoming arrows from any source. A
 third process bubble labeled "Verify Coverage" has one arrow entering from D3 Patient
 Records and no arrows exiting.
@@ -196,7 +196,7 @@ they did not mention that further supports the recommendation?
 For Scenario B — the error identification question — I am looking for the specific error
 name, not just a description of what looks wrong. Use the formal names: Black Hole, Miracle,
 and Direct Entity-to-Store connection. Using vague language like "the arrow is wrong" or
-"the process is missing something" will not earn full credit. Practice identifying these
+the process is missing something" will not earn full credit. Practice identifying these
 errors by name before posting, and use the error reference table in the Reading Guide as
 your checklist.
 

@@ -46,8 +46,6 @@ By the end of this module you will be able to:
 
 Let's get into it.
 
-[PAUSE]
-
 ---
 
 ## Section 1: What Is Terraform State (1:30 – 4:30)
@@ -90,15 +88,11 @@ Terraform uses this file to:
 - Track resource dependencies for safe ordering
 - Store sensitive output values and resource metadata
 
-[PAUSE]
-
 ### What Happens Without State
 
 Without state, Terraform has no memory. Every plan would compare your configuration against nothing — resulting in a proposal to create every resource again. That would be catastrophic in production.
 
 State is also why `terraform plan` is fast — Terraform does not call every cloud API to check current resource status on every run. It reads the state file and uses it as a cached snapshot.
-
-[PAUSE]
 
 ---
 
@@ -114,8 +108,6 @@ Local state works fine when you are the only person working on an infrastructure
 - **Secret exposure**: State files often contain sensitive values; local files are hard to audit
 
 These problems are why remote backends exist.
-
-[PAUSE]
 
 ---
 
@@ -139,8 +131,6 @@ terraform {
 
 This configuration tells Terraform to store state in an S3 bucket and use a DynamoDB table for locking. We will cover locking in a moment.
 
-[PAUSE]
-
 ### S3 Backend
 
 S3 is the most common backend for AWS users. The bucket must exist before you run `terraform init`.
@@ -163,8 +153,6 @@ Best practices for S3 backends:
 - Restrict bucket access with IAM policies — only Terraform runners should write to it
 - Never put the bucket in the same Terraform configuration you are using it to manage
 
-[PAUSE]
-
 ### Azure Blob Backend
 
 For Azure users, the equivalent is Azure Blob Storage:
@@ -182,8 +170,6 @@ terraform {
 
 Azure provides built-in blob lease locking, so you do not need a separate locking resource like you do with S3/DynamoDB.
 
-[PAUSE]
-
 ### GCS Backend
 
 For Google Cloud users:
@@ -198,8 +184,6 @@ terraform {
 ```
 
 GCS provides object versioning and native locking via object metadata. Enable versioning on the bucket as with S3.
-
-[PAUSE]
 
 ---
 
@@ -256,8 +240,6 @@ terraform force-unlock LOCK-ID-FROM-ERROR-MESSAGE
 
 Use this carefully — only when you are certain no other process is running.
 
-[PAUSE]
-
 ---
 
 ## Section 5: Terraform State Commands (13:30 – 18:00)
@@ -293,8 +275,6 @@ terraform state show aws_instance.web
 
 This outputs the full attribute map of the resource as Terraform knows it — extremely useful for debugging.
 
-[PAUSE]
-
 ### terraform state mv
 
 Renames or moves a resource in state without destroying and recreating it. This is essential when you refactor your configuration:
@@ -309,8 +289,6 @@ terraform state mv aws_instance.web module.compute.aws_instance.web
 
 **Important**: Always run `terraform plan` after a `state mv` to confirm the change has the effect you expect.
 
-[PAUSE]
-
 ### terraform state rm
 
 Removes a resource from Terraform's tracking without destroying the actual infrastructure. Use this when you want Terraform to "forget" about a resource — for example, when you are migrating a resource to a different state file.
@@ -320,8 +298,6 @@ terraform state rm aws_instance.web
 ```
 
 After this command, running `terraform plan` will show a plan to create `aws_instance.web` because Terraform no longer knows it exists.
-
-[PAUSE]
 
 ### terraform state pull and push
 
@@ -336,8 +312,6 @@ terraform state push backup.tfstate
 ```
 
 Use `pull` to create backups. Use `push` only in emergency recovery situations — it bypasses locking.
-
-[PAUSE]
 
 ---
 
@@ -375,8 +349,6 @@ terraform.tfstate.backup
 .terraform/
 ```
 
-[PAUSE]
-
 ---
 
 ## Summary and Exam Tips (21:00 – 23:00)
@@ -397,8 +369,6 @@ Here is what we covered in Module 08:
 - `terraform state mv` is used for refactoring without destroy/recreate cycles
 - `force-unlock` requires the Lock ID from the error message
 - State is always in the backend you configure; the default is local (current directory)
-
-[PAUSE]
 
 ---
 

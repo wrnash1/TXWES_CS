@@ -537,9 +537,6 @@ A comprehensive free article on Python strings covering indexing, slicing, all m
 
 ---
 
-
----
-
 ## Deep Theoretical Foundations & Conceptual Architecture
 
 ### 1. Epistemological Framework & First Principles
@@ -622,7 +619,6 @@ Before proceeding to this module's laboratory exercises, synthesize concise, rig
 1. **First-Principles Invariant Defense:** How does the theoretical model in this module ensure state correctness under adverse operating conditions? What mathematical proof or telemetry metric validates this behavior?
 2. **Architectural Trade-Off Analysis:** If forced to reduce execution latency by 50%, what specific compromises in consistency, redundancy, or capital expenditure would your architecture be forced to accept?
 3. **Failure Mode Pathology:** Explain the exact mechanistic chain of events that occurs when this module's primary subsystem experiences an unhandled resource starvation condition.
-
 
 ## 8. Study Checklist
 

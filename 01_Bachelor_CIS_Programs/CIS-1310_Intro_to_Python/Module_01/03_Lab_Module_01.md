@@ -32,9 +32,9 @@ VirtualBox is free, open-source virtualization software from Oracle. It runs a c
 1. Open your browser and go to [virtualbox.org](https://www.virtualbox.org/).
 2. Click **Downloads**.
 3. Under "VirtualBox platform packages," download the installer for your host OS:
-   - **Windows:** Click "Windows hosts"
-   - **macOS (Intel):** Click "macOS / Intel hosts"
-   - **macOS (Apple Silicon M1/M2/M3):** Click "macOS / ARM hosts"
+   - **Windows:** Click "Windows hosts
+   - **macOS (Intel):** Click "macOS / Intel hosts
+   - **macOS (Apple Silicon M1/M2/M3):** Click "macOS / ARM hosts
    - **Linux:** Select your distribution
 4. Save the installer to your Downloads folder.
 
@@ -102,7 +102,7 @@ Ubuntu is one of the most popular Linux distributions in the world. Ubuntu 22.04
    > Dynamically allocated means the file on your real computer only grows as Ubuntu uses space.
 4. Click **Next** → **Finish**.
 
-**Expected result:** `Ubuntu-CIS1310` appears in VirtualBox Manager with status "Powered Off."
+**Expected result:** `Ubuntu-CIS1310` appears in VirtualBox Manager with status "Powered Off.
 
 ---
 
@@ -112,7 +112,7 @@ Ubuntu is one of the most popular Linux distributions in the world. Ubuntu 22.04
 
 1. Wait for the Ubuntu `.iso` download to finish.
 2. In VirtualBox, select `Ubuntu-CIS1310` → click **Settings** → **Storage**.
-3. Click the **Empty** disc icon under "Controller: IDE."
+3. Click the **Empty** disc icon under "Controller: IDE.
 4. In the right panel, click the disc icon next to "Optical Drive" → **Choose a Disk File…**
 5. Select the Ubuntu `.iso` from Downloads. Click **OK**.
 6. Click the green **Start** button to launch the VM.

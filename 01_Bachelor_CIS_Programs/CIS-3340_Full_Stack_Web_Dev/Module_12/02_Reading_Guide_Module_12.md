@@ -166,8 +166,8 @@ Contrast with session-based auth: the server stores a session ID → user mappin
 
 This distinction is tested on DVA-C02.
 
-- **401 Unauthorized**: The request lacks valid authentication credentials. The client should obtain credentials and retry. Common error message: "No token provided" or "Token expired."
-- **403 Forbidden**: The client is authenticated but does not have permission for the requested resource. Retry with different credentials will not help. Common error message: "Insufficient permissions."
+- **401 Unauthorized**: The request lacks valid authentication credentials. The client should obtain credentials and retry. Common error message: "No token provided" or "Token expired.
+- **403 Forbidden**: The client is authenticated but does not have permission for the requested resource. Retry with different credentials will not help. Common error message: "Insufficient permissions.
 
 ---
 
@@ -594,8 +594,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

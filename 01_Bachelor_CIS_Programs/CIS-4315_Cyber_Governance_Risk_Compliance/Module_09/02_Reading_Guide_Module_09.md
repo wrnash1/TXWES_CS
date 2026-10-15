@@ -607,8 +607,6 @@ Description: Free NIST publication covering the full log management lifecycle â€
 URL: https://www.splunk.com/en_us/software/splunk-security-essentials.html
 Description: Free Splunk resource providing a catalog of pre-built SIEM detection use cases organized by MITRE ATT&CK tactic, covering lateral movement, credential theft, data exfiltration, and insider threat scenarios. Each use case includes detection logic, tuning guidance, and false positive reduction recommendations â€” directly applicable to the SIEM correlation rule design and alert fatigue content in Sections 3 and 4 of this module.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

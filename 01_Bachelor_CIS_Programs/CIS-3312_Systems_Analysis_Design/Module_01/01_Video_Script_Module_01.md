@@ -1,5 +1,23 @@
 # Video Script: Module 01 - Introduction to Systems Analysis and the SDLC
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture &bull; Module 01</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=UI6lqHOVHic" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/UI6lqHOVHic" title="Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Lucidchart / Enterprise &bull; Systems Analysis & Software Architecture</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3312 Systems Analysis and Design
 **Estimated Duration:** 22 minutes
 **Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
@@ -7,11 +25,8 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 - 03:30]
-
+## Section 1: Welcome and Module Overview
 Hello, everyone, and welcome to Module 01 of CIS-3312 Systems Analysis and Design. I am Professor Nash at Texas Wesleyan University, and I am glad you are here. This module sets the foundation for everything you will learn in this course, and it is directly aligned to the IIBA Entry Certificate in Business Analysis — the ECBA certification — so every concept we cover today is also an investment in your professional credentials.
-
-[SHOW DIAGRAM: Title slide — "Module 01: Introduction to Systems Analysis and the SDLC" with the IIBA ECBA logo and Texas Wesleyan University crest]
 
 Let me give you a quick roadmap of what we are covering today. We have four main sections. First, we will define what a system is and why organizations invest in systems analysis. Second, we will walk through the SDLC phases in order, and I will make sure you understand what happens in each one. Third, we will establish the role of the business analyst and how it fits into the SDLC. Finally, we will close with certification exam tips and a preview of this week's lab.
 
@@ -19,11 +34,8 @@ One thing I want to say upfront: do not think of this module as "just theory." T
 
 ---
 
-## Section 2: What Is a System and Why Does Systems Analysis Exist? [03:30 - 08:00]
-
+## Section 2: What Is a System and Why Does Systems Analysis Exist?
 Let us start with the word "system." A system is a collection of interrelated components that work together to achieve a common purpose. That is a broad definition, and intentionally so. An airline reservation system, a university course registration system, a hospital patient records system — they all fit this definition. They have inputs, processing activities, outputs, a boundary separating them from their environment, and feedback loops.
-
-[SHOW DIAGRAM: System components diagram — rectangle labeled "System" with arrows labeled "Inputs" entering from the left, "Processing" in the center, "Outputs" exiting right, a dashed boundary rectangle, and a "Feedback" arrow looping from output back to input]
 
 So why does systems analysis exist as a discipline? Because building or changing a system is expensive and risky, and most project failures trace back to requirements problems — not technology problems. Standish Group research consistently shows that inadequate requirements are among the top causes of project failure. Scope creep, missed stakeholder needs, systems that work perfectly but solve the wrong problem — all of these are requirements failures.
 
@@ -35,9 +47,7 @@ Now, the BABOK Guide — which is the primary reference for the IIBA ECBA exam �
 
 ---
 
-## Section 3: The Software Development Life Cycle [08:00 - 14:30]
-
-[SHOW DIAGRAM: SDLC phase waterfall diagram — five sequential boxes labeled: 1. Planning, 2. Systems Analysis, 3. Systems Design, 4. Implementation, 5. Maintenance and Support — connected by downward arrows]
+## Section 3: The Software Development Life Cycle
 
 The Software Development Life Cycle, or SDLC, is the structured framework that guides organizations through the process of building or changing an information system. Every methodology — Waterfall, Agile, Spiral, Iterative — has the same core phases. The methodology determines how you sequence and repeat them. Let us walk through the five classic phases.
 
@@ -51,19 +61,14 @@ Phase four is Implementation. Developers write code. Testers run test cases. Use
 
 Phase five is Maintenance and Support. Most systems spend the majority of their useful lives in this phase. Users submit bug reports, request enhancements, and the team evaluates, prioritizes, and delivers changes. The SDLC essentially restarts at a smaller scale with each change request.
 
-[SHOW DIAGRAM: SDLC phase diagram annotated with "BA is most active here" arrow pointing to Systems Analysis phase, and "BA contributes here" arrows pointing to Planning and Systems Design]
-
 > IIBA ECBA Exam Tip: The ECBA exam tests phase sequencing. Requirements come before design. Design comes before implementation. A question that asks you to identify an error in a project approach will often describe a team that jumped from a business problem directly to solution selection or coding. The correct answer will always anchor on completing requirements before design.
 
 ---
 
-## Section 4: The Role of the Business Analyst [14:30 - 19:00]
-
+## Section 4: The Role of the Business Analyst
 Let us spend a few minutes on the BA role itself because the ECBA exam is essentially an exam about what a BA does.
 
 According to BABOK Guide v3, the business analyst is the person responsible for identifying business needs, analyzing the current state, defining the future state, and facilitating the changes needed to move from one to the other. The BA is not the one who decides which solution to build — that is the sponsor's decision. The BA is not the one who builds it — that is the developer's job. The BA is the one who makes sure the right question is asked, that stakeholders are engaged, that requirements are complete and understood, and that the delivered solution actually solves the business problem.
-
-[SHOW DIAGRAM: BA as bridge graphic — on the left, a group labeled "Business Stakeholders" with thought bubbles; on the right, a group labeled "Technical Team" with code symbols; in the center, a figure labeled "Business Analyst" holding a requirements document, with two-headed arrows connecting to both sides]
 
 BAs use the BABOK Guide as their primary professional reference. BABOK stands for Business Analysis Body of Knowledge, published by the IIBA. It organizes all BA work into seven Knowledge Areas. You do not need to memorize all seven today — we will revisit them throughout the course — but know this: the ECBA exam is built on these seven Knowledge Areas and the tasks and techniques within them.
 
@@ -73,8 +78,7 @@ Stakeholder identification is among the earliest and most critical BA activities
 
 ---
 
-## Section 5: Lab Preview, Exam Tips, and Closing [19:00 - 22:00]
-
+## Section 5: Lab Preview, Exam Tips, and Closing
 Let me preview this week's lab activity. You will not be writing any code this week — that is intentional. Systems analysis is a thinking and communication discipline, not a programming one. In this week's lab, you will do three things. First, you will be given five project scenarios and asked to identify which SDLC phase each one represents. Second, you will read a short case study and identify the stakeholders, classify them by type, and explain why each one matters. Third, you will sketch a simple system boundary diagram for a university registration system showing inputs, the system process, and outputs.
 
 Before I let you go, let me give you three exam tips to keep in your notes from this module.

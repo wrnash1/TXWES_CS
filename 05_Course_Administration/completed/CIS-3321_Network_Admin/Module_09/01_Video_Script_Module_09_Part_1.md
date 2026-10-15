@@ -28,25 +28,15 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: Course banner — "CIS-3321 Network Administration | Module 09: Network Services — DNS, DHCP, and NTP | Texas Wesleyan University"]
-
 ---
 
 ### Section 1: Introduction
-
-[00:00 – 01:00]
-
-[SHOW SLIDE: Professor Nash on camera with module title card]
 
 Welcome to Module 09. I am Professor Nash. Every time you open a browser and type a website name, three invisible infrastructure services work together to make that connection happen — DNS resolves the hostname to an IP address, DHCP assigned your device an address in the first place, and NTP ensures every device on the network agrees on the current time. These services run silently in the background, and when they fail, users cannot reach anything. Module 09 covers all three in depth. Part 1 focuses on DNS — the naming system that makes the internet navigable — and DHCP, which automates address assignment. Part 2 covers NTP and NAT, two additional services critical for enterprise network operation.
 
 ---
 
 ### Section 2: DNS — The Naming System
-
-[01:00 – 06:00]
-
-[SHOW DIAGRAM: A hierarchical DNS tree. At the top is a root node labeled "." (dot). Below it are two branches: .com and .org. Under .com are two sub-branches: example.com and google.com. Under example.com is www.example.com. Arrows labeled "recursive query" trace the path from a client to the resolver, then from the resolver to the root, TLD, and authoritative servers in sequence. Each server level is labeled: Root Name Server, TLD Name Server (.com), Authoritative Name Server (example.com), Resolver.]
 
 [Alt-text: A DNS hierarchy diagram with five levels. The top node is the root (dot). The second level shows .com and .org top-level domains. The third level under .com shows example.com and google.com. The fourth level under example.com shows www.example.com. Six labeled arrows trace the DNS resolution path: (1) Client to Resolver, (2) Resolver to Root, (3) Root to Resolver with referral to TLD, (4) Resolver to TLD Server, (5) TLD to Resolver with referral to authoritative server, (6) Resolver to Authoritative Server returning the IP address.]
 
@@ -74,10 +64,6 @@ DNS uses UDP port 53 for standard queries and TCP port 53 for zone transfers and
 
 ### Section 3: DNS Record Types
 
-[06:00 – 09:30]
-
-[SHOW DIAGRAM: A table showing eight DNS record types with columns for record type abbreviation, full name, purpose, and example.]
-
 [Alt-text: A DNS record type reference table with four columns: Record Type abbreviation, Full Name, Purpose, Example. The eight rows cover A, AAAA, CNAME, MX, NS, PTR, TXT, and SOA records with descriptions and examples for each.]
 
 You need to know these DNS record types for the Network+ exam:
@@ -103,10 +89,6 @@ SOA record — Start of Authority. Contains administrative metadata about the DN
 ---
 
 ### Section 4: DHCP — Dynamic Host Configuration Protocol
-
-[09:30 – 13:30]
-
-[SHOW DIAGRAM: The DHCP DORA four-step process showing a client PC and DHCP Server with four arrows: DISCOVER (broadcast from client), OFFER (server to client), REQUEST (broadcast from client), ACK (server to client). Below the arrows, a lease parameters box lists IP Address, Subnet Mask, Default Gateway, DNS Server, and Lease Duration.]
 
 [Alt-text: A DHCP sequence diagram with a client PC on the left and a DHCP Server on the right. Four horizontal arrows trace the DORA process. Arrow 1 labeled DISCOVER points right (client broadcasts to find any DHCP server). Arrow 2 labeled OFFER points left (server proposes an IP and configuration). Arrow 3 labeled REQUEST points right (client broadcasts acceptance of the offer). Arrow 4 labeled ACK points left (server confirms the lease). A box below lists the parameters in the ACK: IP Address, Subnet Mask, Default Gateway, DNS Server IP, Lease Duration.]
 

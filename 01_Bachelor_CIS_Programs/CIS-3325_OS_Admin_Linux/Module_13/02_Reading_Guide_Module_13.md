@@ -545,8 +545,6 @@ The official Linux software RAID documentation. Covers all RAID levels supported
 **3. [Arch Linux Wiki — LVM](https://wiki.archlinux.org/title/LVM)**
 A comprehensive, distribution-agnostic LVM reference maintained by the Arch Linux community. Covers advanced topics including thinly provisioned volumes, LVM on top of RAID, LVM cache (SSD caching of HDD volumes), and the `lvs`/`pvs`/`vgs` display attribute columns. The "Snapshots" section is particularly useful for understanding LVM snapshot mechanics and the copy-on-write behavior that makes snapshots efficient.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

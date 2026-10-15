@@ -210,7 +210,7 @@ Modern security programs implement automated, continuous monitoring of key contr
 
 SCAP is a NIST standard that defines a common language for expressing security configurations and checking whether systems comply. SCAP-compatible tools can automatically scan systems against defined configuration benchmarks and report deviations.
 
-Continuous monitoring shifts the compliance model from "we passed the audit last year" to "we know our current compliance status right now."
+Continuous monitoring shifts the compliance model from "we passed the audit last year" to "we know our current compliance status right now.
 
 ---
 

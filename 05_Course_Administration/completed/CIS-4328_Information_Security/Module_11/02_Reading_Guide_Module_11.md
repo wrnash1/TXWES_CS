@@ -164,7 +164,7 @@ Hardware write blockers are preferred in legal proceedings because they operate 
 
 ### Chain of Custody
 
-Chain of custody is the documented, unbroken record of who handled evidence, when, and under what circumstances. It answers the question: "How do we know this evidence has not been modified since collection?"
+Chain of custody is the documented, unbroken record of who handled evidence, when, and under what circumstances. It answers the question: "How do we know this evidence has not been modified since collection?
 
 Chain of custody documentation includes:
 

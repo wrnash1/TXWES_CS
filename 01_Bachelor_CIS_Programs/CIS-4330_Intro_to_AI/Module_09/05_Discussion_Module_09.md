@@ -34,7 +34,7 @@ Respond to the following prompts in 175–225 words:
 
 A technology company is replacing its email-based IT help desk with a Copilot Studio bot deployed to Microsoft Teams. The bot handles common IT requests: ResetPassword, RequestSoftware, ReportIssue, and CheckTicketStatus. It connects to a Power Automate flow that creates tickets in ServiceNow and sends confirmation messages to users.
 
-A senior engineer argues the bot should have been built with the Azure Bot Framework SDK instead of Copilot Studio because the company's IT processes are "too complex for a low-code tool."
+A senior engineer argues the bot should have been built with the Azure Bot Framework SDK instead of Copilot Studio because the company's IT processes are "too complex for a low-code tool.
 
 Respond to the following prompts in 175–225 words:
 

@@ -119,15 +119,15 @@ The BABOK Guide lists testability as a core characteristic of well-formed requir
 - Describes a specific, observable behavior
 - States conditions under which the behavior occurs
 - Defines a measurable outcome
-- Is free of subjective qualifiers like "user-friendly," "fast," or "appropriate"
+- Is free of subjective qualifiers like "user-friendly," "fast," or "appropriate
 
 ### 1.2 Converting Poor Requirements Into Testable Requirements
 
-Consider this requirement: "The system should respond quickly."
+Consider this requirement: "The system should respond quickly.
 
 This is not testable. "Quickly" has no agreed meaning. A tester cannot pass or fail this.
 
-A testable version: "The search results page shall load within 2.0 seconds for 95% of requests under a concurrent load of 500 users."
+A testable version: "The search results page shall load within 2.0 seconds for 95% of requests under a concurrent load of 500 users.
 
 Now a tester can define a specific test, execute it, measure the result, and make a definitive pass/fail determination.
 
@@ -200,7 +200,7 @@ A complete test case includes the following elements.
 
 **Preconditions:** All conditions that must be true before the test begins. Unmet preconditions invalidate the test result.
 
-**Test Data:** Specific input values to be used. "Amount: 500.00" not "enter an amount."
+**Test Data:** Specific input values to be used. "Amount: 500.00" not "enter an amount.
 
 **Test Steps:** Numbered sequence of specific actions.
 
@@ -276,9 +276,9 @@ Entry criteria define conditions that must be met before UAT begins. Starting UA
 
 UAT scenarios differ from technical test cases. They are business process scenarios — end-to-end workflows that represent real work, described in business language.
 
-A technical test case might say: "Verify that the POST /api/transfers endpoint returns HTTP 200 with the correct transaction ID."
+A technical test case might say: "Verify that the POST /api/transfers endpoint returns HTTP 200 with the correct transaction ID.
 
-A UAT scenario says: "Process a payment to a new external vendor who has never been paid before, including the required two-approver authorization workflow, and confirm that the vendor receives a remittance email."
+A UAT scenario says: "Process a payment to a new external vendor who has never been paid before, including the required two-approver authorization workflow, and confirm that the vendor receives a remittance email.
 
 The UAT scenario is what business users can understand and execute. The BA bridges the gap by ensuring that technical test cases cover the same ground as the business scenarios.
 
@@ -557,8 +557,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

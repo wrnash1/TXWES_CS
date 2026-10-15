@@ -126,8 +126,8 @@ Distractor Analysis:
 
 An administrator needs to investigate why a production server was slow between 2 AM and 3 AM yesterday. The administrator was not on duty at that time. Which tool and command sequence would allow them to review CPU utilization for that specific time window?
 
-- A) vmstat --since "yesterday 02:00" --until "yesterday 03:00"
-- B) top -b -n 1 | grep "02:00"
+- A) vmstat --since "yesterday 02:00" --until "yesterday 03:00
+- B) top -b -n 1 | grep "02:00
 - C) sar -u -s 02:00:00 -e 03:00:00 -f /var/log/sysstat/sa$(date -d yesterday +%d)
 - D) journalctl --since "yesterday 02:00:00" --until "yesterday 03:00:00" -u cpu
 
@@ -224,11 +224,11 @@ A system administrator needs to find all log entries related to failed sudo atte
 the last 24 hours on an Ubuntu 22.04 system. Which command is most appropriate?
 
 - A) grep "sudo" /var/log/auth.log | tail -100
-- B) journalctl -u sudo --since "24 hours ago"
-- C) journalctl --since "24 hours ago" | grep -i "sudo.*incorrect\|sudo.*authentication failure"
+- B) journalctl -u sudo --since "24 hours ago
+- C) journalctl --since "24 hours ago" | grep -i "sudo.*incorrect\|sudo.*authentication failure
 - D) cat /var/log/secure | grep FAILED
 
-Correct Answer: C) journalctl --since "24 hours ago" | grep -i "sudo.*incorrect\|sudo.*authentication failure"
+Correct Answer: C) journalctl --since "24 hours ago" | grep -i "sudo.*incorrect\|sudo.*authentication failure
 
 Distractor Analysis:
 
@@ -302,13 +302,13 @@ Which `journalctl` command displays all log entries from the **previous** boot s
 - A) journalctl -b -1
 - B) journalctl --boot=last
 - C) journalctl -b --previous
-- D) journalctl --since "last boot"
+- D) journalctl --since "last boot
 
 Correct Answer: A) journalctl -b -1
 
 Distractor Analysis:
 
-- Why B is incorrect: --boot=last is not valid journalctl syntax. The correct long-form equivalent of -b -1 is --boot=-1. The value after --boot or -b is a numeric offset or a boot ID, not a keyword like "last."
+- Why B is incorrect: --boot=last is not valid journalctl syntax. The correct long-form equivalent of -b -1 is --boot=-1. The value after --boot or -b is a numeric offset or a boot ID, not a keyword like "last.
 - Why C is incorrect: There is no --previous flag in journalctl. The correct syntax uses the numeric offset with -b: -b 0 for current boot, -b -1 for previous boot, -b -2 for two boots ago, and so on.
 - Why D is incorrect: --since accepts time expressions like "yesterday", "1 hour ago", or ISO timestamps, not "last boot." The --since flag filters by timestamp, not by boot session boundary.
 
@@ -377,7 +377,7 @@ Correct Answer: C) iotop -o
 
 Distractor Analysis:
 
-- Why A is incorrect: iostat -x shows per-device I/O statistics (device utilization, throughput, await times). It shows which disks are busy but does not break down I/O by individual process. It answers "which disk" but not "which process."
+- Why A is incorrect: iostat -x shows per-device I/O statistics (device utilization, throughput, await times). It shows which disks are busy but does not break down I/O by individual process. It answers "which disk" but not "which process.
 - Why B is incorrect: vmstat -d shows disk statistics similar to iostat — reads, writes, and I/O times per disk device. Like iostat, it does not attribute I/O to specific processes.
 - Why D is incorrect: sar -d shows historical disk statistics collected by sysstat. The -o flag here is for iotop (show only processes doing I/O), not sar. sar cannot show per-process I/O attribution; it only shows aggregate device statistics.
 

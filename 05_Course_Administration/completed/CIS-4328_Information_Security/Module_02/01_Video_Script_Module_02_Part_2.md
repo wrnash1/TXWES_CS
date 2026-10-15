@@ -28,15 +28,11 @@
 
 ## Opening — Recap and Transition
 
-**[INSTRUCTOR ON CAMERA]**
-
 Welcome back to Module 02. In Part 1 we covered the social engineering taxonomy, phishing variants, pretexting, and physical techniques. In Part 2 we are going to look at the technical controls organizations deploy to counter email-based attacks, walk through how social engineering chains into broader attacks, and practice SY0-701 scenario reasoning.
 
 ---
 
 ## Section 1 — Technical Email Security Controls
-
-**[SHOW DIAGRAM: Email delivery path from left to right. Sender mail server → DNS lookup → Receiving organization mail gateway → Inbox. Above the gateway, three protocol labels: SPF, DKIM, DMARC. Below each: SPF = checks sender IP; DKIM = digital signature on message; DMARC = policy enforcement combining SPF and DKIM results.]**
 
 **[Alt-text: Horizontal flow diagram titled Email Security Control Chain. Left: Sender mail server. Arrow points right to DNS lookup. Arrow points right to Receiving Organization Mail Gateway. Arrow points right to Employee Inbox. Above the gateway box, three stacked labels: SPF — verifies sending IP address against authorized IP list in DNS; DKIM — attaches a cryptographic digital signature to the email header; DMARC — policy that tells receiving servers what to do when SPF or DKIM checks fail: quarantine or reject.]**
 
@@ -53,8 +49,6 @@ Three email authentication protocols are heavily tested on SY0-701:
 ---
 
 ## Section 2 — Phishing as an Attack Chain Entry Point
-
-**[SHOW DIAGRAM: Attack chain flow. Step 1: Phishing email delivers malicious link or attachment. Step 2: Employee clicks — malware executes or credentials captured. Step 3: Attacker uses stolen credentials or malware foothold. Step 4: Lateral movement — attacker spreads through internal network. Step 5: Data exfiltration or ransomware deployment. Arrows connect each step. Label above the chain: Phishing as Initial Access Vector.]**
 
 **[Alt-text: Five-step horizontal attack chain diagram. Step 1: Phishing Email — delivers link or malicious attachment. Step 2: Employee Interaction — clicks link or opens attachment. Step 3: Initial Compromise — credentials stolen or malware executed. Step 4: Lateral Movement — attacker pivots through internal systems. Step 5: Final Objective — data exfiltration or ransomware. Arrows connect steps left to right. Top label: Phishing as Initial Access Vector.]**
 
@@ -75,8 +69,6 @@ After a successful phishing attack, typical next steps for the attacker include:
 ---
 
 ## Section 3 — Defending Against Phishing — The Defense-in-Depth Approach
-
-**[SHOW DIAGRAM: Three concentric defense rings. Outer ring: Technical Controls — SPF/DKIM/DMARC, Email filtering, URL sandboxing, EDR, MFA. Middle ring: Process Controls — Phishing simulation, Incident reporting procedures, Verification callback policy. Inner ring: Human Controls — Security awareness training, Healthy skepticism culture.]**
 
 **[Alt-text: Concentric rings titled Defense-in-Depth Against Phishing. Outer ring: Technical Controls — lists SPF, DKIM, DMARC, email filtering, URL sandboxing, EDR, and MFA. Middle ring: Process Controls — lists phishing simulation programs, incident reporting procedures, and verification callback policy. Inner ring: Human Controls — lists security awareness training and healthy skepticism culture.]**
 
@@ -105,8 +97,6 @@ Effective phishing defense requires multiple layers because no single control is
 
 ## Section 4 — Exam Scenario Walkthroughs
 
-**[INSTRUCTOR ON CAMERA]**
-
 Let me walk you through three exam-style scenarios for Module 02.
 
 **Scenario A:**
@@ -131,8 +121,6 @@ Answer: Multi-factor authentication. Even if an employee clicks a phishing link 
 
 ## Section 5 — Exam-Day Strategy for Module 02
 
-**[INSTRUCTOR ON CAMERA]**
-
 For Module 02 on exam day:
 
 First, when you see a social engineering scenario, identify the delivery channel first. Email = phishing. Phone = vishing. SMS = smishing. Then identify whether it is targeted (spear phishing, whaling) or broad.
@@ -150,8 +138,6 @@ Study all social engineering objectives with Professor Messer at **professormess
 ---
 
 ## Closing
-
-**[INSTRUCTOR ON CAMERA]**
 
 Module 02 complete. You now understand why social engineering is so dangerous — it bypasses every technical control if the human factor is not addressed. Phishing is the entry point for the majority of major breaches you will read about in the news.
 

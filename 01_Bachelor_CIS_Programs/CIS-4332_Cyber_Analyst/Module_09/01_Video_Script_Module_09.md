@@ -40,8 +40,6 @@ I want to frame this module with a principle that will serve you on the exam and
 
 ## SEGMENT 2 — Containment: Short-Term and Long-Term (1:30–5:00)
 
-[SHOW DIAGRAM: Short-term vs. long-term containment side by side with timeline arrow]
-
 Containment has two phases, and the exam tests both.
 
 Short-term containment is your immediate response. The goal is to stop the attacker from accessing any more of your environment right now — before you even fully understand the scope of what happened. The critical point is that short-term containment must not destroy evidence. This is where most analysts make a costly mistake: they shut down the compromised system.
@@ -59,8 +57,6 @@ Think of short-term containment as the tourniquet and long-term containment as t
 ## SEGMENT 3 — Eradication (5:00–9:00)
 
 After containment, you eradicate. This means completely removing every trace of the threat from every affected system.
-
-[SHOW DIAGRAM: Five-step eradication checklist as numbered flow]
 
 Step one: Remove all malware artifacts. Every malicious file, every dropped binary, every encoded script that the attacker deployed. Do not assume you found everything in the initial triage. Search for all IOCs identified during scope determination, including those found through pivoting. If the malware had multiple components, they all need to go.
 
@@ -84,8 +80,6 @@ The second approach is reimaging from a clean baseline. For systems that cannot 
 
 The third approach is in-place remediation. For systems where eradication was thorough and verified, and where a rebuild is not practical — a production database server, for example — you may perform in-place remediation: manual removal, patching, credential reset, and persistence cleanup, followed by verification. This approach is appropriate when the scope of compromise was limited and the verification evidence is strong.
 
-[SHOW DIAGRAM: Recovery validation checklist as five-item list]
-
 Regardless of which recovery approach you use, you must complete validation before returning the system to production.
 
 First: confirm the attack vector is closed. The exploited vulnerability must be patched. Do a targeted scan to verify. If you recovered from backup but did not patch, you are back at square one.
@@ -103,8 +97,6 @@ Fifth: document everything. The recovery validation evidence — scan output, hu
 ## SEGMENT 5 — Ransomware Response (13:30–16:30)
 
 Ransomware deserves specific attention because it has a different operational sequence than other malware and because exam questions frequently test ransomware response decisions.
-
-[SHOW DIAGRAM: Ransomware response decision flow — contain, assess, eradicate, recover]
 
 Step one is contain immediately. Every minute a ransomware infection is running, more files are being encrypted. Immediate EDR network isolation of every confirmed and potentially compromised system is the priority. Do not wait for a full scope determination before containing what you have confirmed.
 

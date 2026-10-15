@@ -26,27 +26,21 @@
 
 ---
 
-## [00:00 – 00:45] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 02 | Literals, Operators, and Expressions | CIS-1310"]**
+Welcome back, everyone. I'm Professor Nash. If you're here, that means you have Python running in Ubuntu inside VirtualBox, you understand the difference between the REPL and script mode, and you've written your first real Python scripts. That's solid work.
 
-"Welcome back, everyone. I'm Professor Nash. If you're here, that means you have Python running in Ubuntu inside VirtualBox, you understand the difference between the REPL and script mode, and you've written your first real Python scripts. That's solid work.
-
-This module is where we get into the actual building blocks of every Python program you will ever write: **literals** — the raw fixed values written directly in code — **data types** — what kind of value each literal represents — and **operators** — the symbols that let you compute new values from existing ones. The PCAP exam hits all of this hard. Let's go."
+This module is where we get into the actual building blocks of every Python program you will ever write: **literals** — the raw fixed values written directly in code — **data types** — what kind of value each literal represents — and **operators** — the symbols that let you compute new values from existing ones. The PCAP exam hits all of this hard. Let's go.
 
 ---
 
-## [00:45 – 02:30] What Is a Literal?
+## What Is a Literal?
 
-**[SHOW SLIDE: "Literals — Fixed Values Written Directly in Code"]**
-
-"Every program works with data. Some data comes from users, files, or databases. But the simplest kind of data is a **literal** — a value you write directly into your source code.
+Every program works with data. Some data comes from users, files, or databases. But the simplest kind of data is a **literal** — a value you write directly into your source code.
 
 When you type `42` in a Python program, that is an **integer literal** — the actual number forty-two is right there in the code. `3.14` is a **float literal**. `'Hello'` is a **string literal**. `True` is a **boolean literal**.
 
 Python reads those values exactly as written. They are *literally* right there.
-
-**[DEMO — switch to REPL]**
 
 ```python
 >>> 42
@@ -74,17 +68,15 @@ Now let's check their types using the `type()` function:
 
 The `type()` function is one of your best debugging tools. It tells you exactly what Python is working with. Use it constantly — especially when an operation isn't behaving the way you expect.
 
-Let's go through each type in detail."
+Let's go through each type in detail.
 
 ---
 
-## [02:30 – 06:00] Python's Core Data Types
-
-**[SHOW SLIDE: "The Four Core Data Types: int, float, str, bool"]**
+## Python's Core Data Types
 
 ### int — Integer Numbers
 
-"An `int` is any whole number — positive, negative, or zero. No decimal point.
+An `int` is any whole number — positive, negative, or zero. No decimal point.
 
 ```python
 >>> 42
@@ -114,8 +106,6 @@ Integer literals can be written in different bases — and the PCAP exam tests a
 
 All three are just regular Python `int` values — different notation, same type.
 
-**[PAUSE]**
-
 ### float — Floating-Point Numbers
 
 A `float` is a number with a decimal point. Python uses **IEEE 754 double-precision** — 64-bit binary floating-point.
@@ -143,8 +133,6 @@ Now — here is the most important PCAP trap in this entire module. Watch this:
 That is **not** a Python bug. That is how IEEE 754 binary floating-point works in every programming language that uses it — C, Java, JavaScript, Python, all of them. `0.1` cannot be represented exactly in binary. Neither can `0.2`. When you add two approximations, the tiny errors accumulate, and you get a result that is slightly more than `0.3`.
 
 The PCAP exam tests this. The lesson: never use `==` to compare two floats for exact equality. Instead, check if they are close enough using `abs(a - b) < 0.0001` or the `math.isclose()` function.
-
-**[PAUSE]**
 
 ### str — Strings
 
@@ -179,8 +167,6 @@ It's easy
 - `\\` — literal backslash
 - `\'` — literal single quote (inside single-quoted strings)
 - `\"` — literal double quote (inside double-quoted strings)
-
-**[PAUSE]**
 
 ### bool — Booleans
 
@@ -218,15 +204,13 @@ False
 False
 ```
 
-`None` is not zero. `None` is not `False`. `None` is strictly `None`. We use it as a placeholder and as the default return value of functions that don't return anything explicitly."
+`None` is not zero. `None` is not `False`. `None` is strictly `None`. We use it as a placeholder and as the default return value of functions that don't return anything explicitly.
 
 ---
 
-## [06:00 – 08:30] Arithmetic Operators
+## Arithmetic Operators
 
-**[SHOW SLIDE: "Python's Seven Arithmetic Operators"]**
-
-"Python has seven arithmetic operators. All seven appear on the PCAP exam.
+Python has seven arithmetic operators. All seven appear on the PCAP exam.
 
 ```python
 >>> 5 + 3
@@ -311,15 +295,13 @@ Python's modulo follows the sign of the **divisor** (the second number). This is
 3.0
 ```
 
-`**` works with floats — `4 ** 0.5` is the square root of 4. `27 ** (1/3)` is the cube root of 27."
+`**` works with floats — `4 ** 0.5` is the square root of 4. `27 ** (1/3)` is the cube root of 27.
 
 ---
 
-## [08:30 – 10:30] Operator Precedence — The Rules and the Traps
+## Operator Precedence — The Rules and the Traps
 
-**[SHOW SLIDE: "Operator Precedence — Highest to Lowest"]**
-
-"When an expression has multiple operators, Python uses **precedence rules** to decide the order of evaluation. Higher precedence operations go first.
+When an expression has multiple operators, Python uses **precedence rules** to decide the order of evaluation. Higher precedence operations go first.
 
 For arithmetic, highest to lowest:
 
@@ -362,8 +344,6 @@ To get `4`, you need parentheses:
 4
 ```
 
-**[PAUSE]**
-
 **`**` is right-associative — this matters:**
 
 ```python
@@ -382,15 +362,13 @@ Most operators evaluate left to right. `**` evaluates right to left. So this is 
 14
 ```
 
-When in doubt, add parentheses. They make your intent explicit and your code readable."
+When in doubt, add parentheses. They make your intent explicit and your code readable.
 
 ---
 
-## [10:30 – 11:45] Comparison and Logical Operators
+## Comparison and Logical Operators
 
-**[SHOW SLIDE: "Comparison and Logical Operators"]**
-
-"Two more sets of operators you need for Module 04 (Control Flow) and the PCAP exam.
+Two more sets of operators you need for Module 04 (Control Flow) and the PCAP exam.
 
 **Comparison operators** — they produce `True` or `False`:
 
@@ -426,15 +404,13 @@ True
 
 `and` — both must be `True`. `or` — at least one must be `True`. `not` — flips the value.
 
-We'll use these constantly starting in Module 04."
+We'll use these constantly starting in Module 04.
 
 ---
 
-## [11:45 – 13:15] Type Conversion Functions
+## Type Conversion Functions
 
-**[SHOW SLIDE: "Type Conversion: int(), float(), str(), bool()"]**
-
-"Python gives you four built-in functions to convert values between types:
+Python gives you four built-in functions to convert values between types:
 
 ```python
 >>> int(3.9)
@@ -482,15 +458,13 @@ False
 
 **Falsy** values — things that convert to `False`: `0`, `0.0`, `''` (empty string), `[]` (empty list), `{}` (empty dict), `None`.
 
-Everything else is **truthy** — converts to `True`. This concept is essential for control flow in Module 04."
+Everything else is **truthy** — converts to `True`. This concept is essential for control flow in Module 04.
 
 ---
 
-## [13:15 – 15:00] Lab Preview & PCAP Exam Summary
+## Lab Preview & PCAP Exam Summary
 
-**[SHOW SLIDE: "Module 02 — Key Exam Points & Lab Preview"]**
-
-"Let me wrap up with the exam essentials you need to lock in from this module:
+Let me wrap up with the exam essentials you need to lock in from this module:
 
 **1.** `0.1 + 0.2` does NOT equal `0.3` exactly — floating-point precision issue.
 
@@ -519,7 +493,7 @@ For your **Module 02 lab**, you will:
 
 Full step-by-step instructions are in your lab document. Complete the lab, post to the discussion board by Wednesday, reply to two classmates by Sunday.
 
-Module 03 covers variables — how to store and name values in Python — plus user input with `input()` and formatted output with f-strings. See you there."
+Module 03 covers variables — how to store and name values in Python — plus user input with `input()` and formatted output with f-strings. See you there.
 
 ---
 

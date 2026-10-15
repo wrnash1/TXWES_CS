@@ -491,8 +491,6 @@ Official Pandas documentation covering `dropna`, `fillna`, imputation strategies
 <https://www.tensorflow.org/guide/data>
 Google's official guide to `tf.data.Dataset` covering `from_tensor_slices`, `shuffle`, `batch`, `prefetch`, and `map`. Includes performance benchmarks showing why shuffle-before-batch and prefetch matter for training throughput.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

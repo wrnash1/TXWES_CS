@@ -330,7 +330,7 @@ aws kms delete-alias \
 A startup has the following AWS security architecture:
 
 - All workloads run in a single AWS account
-- EC2 instances have IAM roles with `AdministratorAccess` policies for "convenience"
+- EC2 instances have IAM roles with `AdministratorAccess` policies for "convenience
 - S3 buckets containing customer PII have no bucket policies; access is controlled only by IAM user policies
 - CloudTrail is enabled but logs are stored in the same account that is being audited
 - No GuardDuty, WAF, or Security Hub is configured

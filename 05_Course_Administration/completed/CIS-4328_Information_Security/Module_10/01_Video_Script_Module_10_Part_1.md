@@ -30,13 +30,9 @@
 
 ## Pre-Roll Slate
 
-**[SHOW SLIDE: Course title card — "CIS-4328 Information Security | Module 10 | Texas Wesleyan University"]**
-
 ---
 
 ## Opening
-
-**[INSTRUCTOR ON CAMERA]**
 
 Welcome back to CIS-4328. I'm Professor Nash, and this is Module 10 — Application Security.
 
@@ -50,8 +46,6 @@ Let's get started.
 
 ## Section 1 — Why Application Security Matters
 
-**[SHOW SLIDE: Attack surface diagram — network, OS, application layers]**
-
 Think of a target organization as three concentric rings. The outermost ring is the network perimeter — firewalls, routers, DMZ zones. The middle ring is the operating system and host — patch management, endpoint protection. The innermost ring is the application layer — the code that processes user input and business logic.
 
 Perimeter defenses have matured dramatically over the last twenty years. Firewalls, IDS/IPS, and network segmentation make direct network attacks harder. Attackers adapted. They started going through the front door — through applications that are intentionally exposed to the internet because that is how business gets done.
@@ -62,8 +56,6 @@ The 2021 IBM Cost of a Data Breach report found that web application attacks acc
 
 ## Section 2 — OWASP and the Top 10
 
-**[SHOW SLIDE: OWASP logo and Top 10 list, 2021 edition]**
-
 OWASP stands for the Open Web Application Security Project. It is a nonprofit foundation that maintains free, vendor-neutral guidance on application security. Their flagship publication is the OWASP Top 10 — a ranked list of the most critical web application security risks, updated roughly every three to four years.
 
 The current edition is 2021. The Security+ SY0-701 exam references OWASP throughout its objectives. Let me walk you through each category.
@@ -71,8 +63,6 @@ The current edition is 2021. The Security+ SY0-701 exam references OWASP through
 ---
 
 ## Section 3 — A01: Broken Access Control
-
-**[SHOW SLIDE: A01 heading with padlock icon]**
 
 Number one on the 2021 list is Broken Access Control. Access control enforces the rule that users can only act within their intended permissions. When access control breaks down, users can escalate privilege, view other users' data, or perform privileged actions.
 
@@ -86,8 +76,6 @@ Countermeasures include enforcing access control server-side, using indirect ref
 
 ## Section 4 — A02: Cryptographic Failures
 
-**[SHOW SLIDE: A02 heading — formerly "Sensitive Data Exposure"]**
-
 A02 was renamed from "Sensitive Data Exposure" in 2021 to better capture the root cause. The problem is not just that data was exposed — it is that encryption was absent, broken, or misconfigured, and that failure led to exposure.
 
 Common failures include transmitting sensitive data in cleartext over HTTP instead of HTTPS, using weak hashing algorithms like MD5 or SHA-1 for password storage, storing encryption keys alongside encrypted data, and using deprecated TLS versions like TLS 1.0.
@@ -97,8 +85,6 @@ A memorable example is the 2013 Adobe breach. Adobe stored 153 million user pass
 ---
 
 ## Section 5 — A03: Injection
-
-**[SHOW SLIDE: A03 heading — SQL injection diagram]**
 
 Injection ranks third in 2021, though it held the top spot for over a decade in prior editions. Injection occurs when untrusted data is sent to an interpreter as part of a command or query.
 
@@ -112,8 +98,6 @@ Defenses include parameterized queries, prepared statements, stored procedures w
 
 ## Section 6 — A04: Insecure Design
 
-**[SHOW SLIDE: A04 heading — design vs. implementation distinction]**
-
 A04 is a newer category that distinguishes design flaws from implementation bugs. An insecure design cannot be fixed by proper implementation alone — the design itself is flawed.
 
 An example is a password recovery feature that asks users to answer secret questions. Even if the implementation is technically correct, the design is weak because secret questions provide guessable answers. The correct design uses a time-limited token sent to a verified email or phone number.
@@ -123,8 +107,6 @@ Threat modeling is the countermeasure for insecure design. Threat modeling is a 
 ---
 
 ## Section 7 — A05: Security Misconfiguration
-
-**[SHOW SLIDE: A05 heading — default credentials image]**
 
 Security Misconfiguration moved up in 2021 because cloud infrastructure expanded the attack surface dramatically. Misconfiguration includes default credentials left unchanged, unnecessary features or services enabled, overly permissive cloud storage bucket permissions, verbose error messages that reveal stack traces to attackers, and missing security hardening.
 
@@ -136,8 +118,6 @@ The countermeasure is a repeatable hardening process — configuration baselines
 
 ## Section 8 — A06: Vulnerable and Outdated Components
 
-**[SHOW SLIDE: A06 — dependency tree diagram]**
-
 Modern applications do not exist in isolation. They import dozens or hundreds of open-source libraries, frameworks, and components. A06 addresses the risk introduced by components with known vulnerabilities that developers fail to track and update.
 
 The 2017 Equifax breach is the textbook example. Apache Struts — an open-source Java framework — had a critical remote code execution vulnerability, CVE-2017-5638. A patch was available two months before the Equifax breach began, but the organization had not updated its components. Attackers exploited the known vulnerability to exfiltrate 147 million records.
@@ -148,8 +128,6 @@ Defenses include maintaining a software bill of materials, or SBOM, subscribing 
 
 ## Section 9 — A07: Identification and Authentication Failures
 
-**[SHOW SLIDE: A07 heading — authentication attack vectors]**
-
 A07 covers failures in identity verification and session management. Examples include permitting credential stuffing attacks by not implementing rate limiting, allowing weak passwords, storing passwords in plain text, and exposing session tokens in URLs where they may be logged.
 
 Session fixation is a subtle attack in this category. An attacker tricks a user into using a session token the attacker already knows, then after the user authenticates, the attacker uses that same token to hijack the authenticated session.
@@ -159,8 +137,6 @@ Countermeasures include multi-factor authentication, strong password policies, s
 ---
 
 ## Closing — Part 1
-
-**[INSTRUCTOR ON CAMERA]**
 
 We have covered the first seven categories of the OWASP Top 10 — broken access control, cryptographic failures, injection, insecure design, security misconfiguration, vulnerable components, and authentication failures. Every one of these has appeared on Security+ exams and in real breach post-mortems.
 

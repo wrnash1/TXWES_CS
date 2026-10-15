@@ -128,7 +128,7 @@ a Domain Admin resolves the conflict in Group Policy Management Console.
 
 An administrator runs `gpresult /r` on a workstation and notices the GPO
 `TXWES_Students_Restrictions` is listed under "The following GPOs were not
-applied because they were filtered out." The reason given is "Denied (Security)."
+applied because they were filtered out." The reason given is "Denied (Security).
 What is the most likely cause?
 
 A) The GPO has Block Inheritance enabled, which filters the GPO from applying

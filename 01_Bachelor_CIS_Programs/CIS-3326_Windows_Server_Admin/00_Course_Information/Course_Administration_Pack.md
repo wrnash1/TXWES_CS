@@ -15,7 +15,7 @@ Please review the Syllabus located in the 'Course Information' folder. Your firs
 **Estimated Duration:** 3 minutes
 **Visual:** Instructor on camera.
 **Audio:** "Welcome to Windows Server Administration. I'm Professor Nash. Active Directory, Group Policy, DNS, DHCP—these are the acronyms that keep corporate America running. In this class, you are going to act as a Systems Administrator. 
-You won't just be reading about theories; you will be building a complete Windows domain from scratch using VirtualBox. We will focus heavily on Server Core and PowerShell, preparing you for modern, GUI-less server management. Your final goal is to master the concepts required for Microsoft's Server Administration certifications. Get your hypervisor ready, and let's jump in."
+You won't just be reading about theories; you will be building a complete Windows domain from scratch using VirtualBox. We will focus heavily on Server Core and PowerShell, preparing you for modern, GUI-less server management. Your final goal is to master the concepts required for Microsoft's Server Administration certifications. Get your hypervisor ready, and let's jump in.
 
 ---
 

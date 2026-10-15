@@ -141,7 +141,7 @@ commissioning exercise. The three problems appear to be unrelated, but they
 all trace back to setup steps performed out of order or skipped entirely.
 Problem 3 is the most commonly missed: many administrators never check SRV
 records because everything looks correct until someone tries to log on. If
-you have never run `Resolve-DnsName -Name "_ldap._tcp.dc._msdcs.<domain>"
+you have never run `Resolve-DnsName -Name "_ldap._tcp.dc._msdcs.<domain>
 -Type SRV`, add it to your AD health-check routine now. For Scenario B, pay
 close attention to the distinction between exclusion ranges and reservations —
 the exam will test this difference, and the practical implication is significant

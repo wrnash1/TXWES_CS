@@ -30,27 +30,21 @@
 
 ## Pre-Roll Slate
 
-**[SHOW SLIDE: Course title card — "CIS-4328 Information Security | Module 12 | Texas Wesleyan University"]**
-
 ---
 
 ## Opening
-
-**[INSTRUCTOR ON CAMERA]**
 
 Welcome to Module 12 — Digital Forensics.
 
 In Module 11 we learned how to respond to incidents. In this module we go deeper into the science behind how we investigate them. Digital forensics is the application of scientific methods to the recovery, analysis, and presentation of digital evidence in a way that is legally defensible.
 
-"Legally defensible" is the phrase that defines this field. An investigator can be the most technically skilled analyst in the world, but if they cannot stand before a judge and explain exactly what they did, how they did it, and how they know the evidence is unaltered, their findings may be inadmissible. Digital forensics is equal parts technical science and legal craft.
+Legally defensible" is the phrase that defines this field. An investigator can be the most technically skilled analyst in the world, but if they cannot stand before a judge and explain exactly what they did, how they did it, and how they know the evidence is unaltered, their findings may be inadmissible. Digital forensics is equal parts technical science and legal craft.
 
 In Part 1 we cover the forensic process — the four stages that every investigation follows — and we go deep on evidence collection: write blockers, disk imaging with dd and FTK Imager, and memory acquisition. In Part 2 we cover memory analysis, log analysis, and the legal and ethical considerations that govern the field.
 
 ---
 
 ## Section 1 — What Is Digital Forensics?
-
-**[SHOW SLIDE: Forensics definition and scope diagram]**
 
 Digital forensics is a branch of forensic science. Just as a physical crime scene investigator applies scientific methods to fingerprints and DNA, a digital forensic examiner applies scientific methods to files, logs, network packets, and memory contents.
 
@@ -68,8 +62,6 @@ The Security+ exam tests digital forensics primarily in the incident response co
 ---
 
 ## Section 2 — The Forensic Process
-
-**[SHOW SLIDE: Forensic process stages — Identification, Preservation, Collection, Analysis, Reporting]**
 
 The digital forensic process is typically described in four to five stages. Different frameworks use slightly different labels, but the NIST and ISO definitions align closely on this structure.
 
@@ -117,8 +109,6 @@ The forensic report documents the investigator's methodology, findings, and conc
 
 ## Section 3 — Write Blockers
 
-**[SHOW SLIDE: Hardware write blocker photograph with labeled ports]**
-
 A write blocker is the first tool an examiner deploys when working with original evidence media.
 
 Without a write blocker, simply connecting a storage device to a computer running Windows or macOS will modify the device. The operating system writes to update last-access timestamps, mount records, and volume metadata. These modifications change the digital fingerprint of the evidence. In court, opposing counsel will challenge whether the changes were investigator-introduced or pre-existing.
@@ -134,8 +124,6 @@ After attaching the write blocker, the examiner verifies the device can be read 
 ---
 
 ## Section 4 — Disk Imaging with dd
-
-**[SHOW SLIDE: dd command syntax diagram]**
 
 The `dd` command is a Unix/Linux utility that copies data at the bit level. It has been used for forensic imaging for decades. The basic syntax for creating a forensic image is:
 
@@ -168,8 +156,6 @@ If the hashes match, the image is forensically sound. The hash values are docume
 
 ## Section 5 — Disk Imaging with FTK Imager
 
-**[SHOW SLIDE: FTK Imager interface screenshot]**
-
 FTK Imager, developed by AccessData (now Exterro), is a free Windows-based graphical forensic imaging tool that is widely used by law enforcement and corporate investigators. It provides a GUI alternative to the command-line dd.
 
 FTK Imager capabilities include:
@@ -188,8 +174,6 @@ When FTK Imager completes imaging, it automatically generates a verification rep
 ---
 
 ## Closing — Part 1
-
-**[INSTRUCTOR ON CAMERA]**
 
 We have covered the five-stage forensic process — Identification, Preservation, Collection, Analysis, and Reporting. We went deep on the tools that make sound collection possible: write blockers, dd, and FTK Imager.
 

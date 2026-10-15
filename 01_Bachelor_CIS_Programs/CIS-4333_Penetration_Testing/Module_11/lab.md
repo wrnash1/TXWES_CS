@@ -80,7 +80,7 @@ Write the email body in HTML mode. Include:
 - Urgency language about account expiration
 - A call-to-action button linking to `{{.URL}}`
 - Personalized greeting using `{{.FirstName}}`
-- Signature from "IT Security Team — Txwes-Lab-Corp"
+- Signature from "IT Security Team — Txwes-Lab-Corp
 
 **Lab Report Item 3:** Screenshot your completed email template in preview mode. Identify three psychological influence principles from Cialdini's framework that your template employs.
 
@@ -108,7 +108,7 @@ Set the Redirect URL to `http://mail.lab.txwes-pentest.local/owa` (redirect afte
 
 ### Step 2.2: Upload Target List
 
-Navigate to Users & Groups and create a new group named "Lab-Targets."
+Navigate to Users & Groups and create a new group named "Lab-Targets.
 
 Import the target CSV provided by the instructor (20 fictional employees). The CSV format is:
 

@@ -53,7 +53,7 @@ For each of the six scenarios below, identify which Responsible AI principle is 
 
 5. When the AI system that manages traffic lights in a major city fails, it provides no fallback behavior. The resulting gridlock delays emergency vehicles and contributes to two preventable deaths.
 
-6. A company deploys an AI customer service agent that gives advice on medication dosages. When patients are harmed by incorrect advice, the company claims it cannot be held responsible because "the AI made the decision."
+6. A company deploys an AI customer service agent that gives advice on medication dosages. When patients are harmed by incorrect advice, the company claims it cannot be held responsible because "the AI made the decision.
 
 ### Step A2: Multi-Principle Scenarios
 
@@ -212,7 +212,7 @@ The following resources are recommended for completing this lab.
 - Microsoft Responsible AI: microsoft.com/ai/responsible-ai
 - Microsoft Responsible AI Standard (full document): available from the Responsible AI site
 - NIST AI Risk Management Framework: nist.gov/system/files/documents/2023/01/26/AI-RMF-1-0.pdf
-- Model Cards for Model Reporting (original paper): search "Mitchell et al. 2019 model cards"
+- Model Cards for Model Reporting (original paper): search "Mitchell et al. 2019 model cards
 - Fairlearn documentation: fairlearn.org
 
 ---

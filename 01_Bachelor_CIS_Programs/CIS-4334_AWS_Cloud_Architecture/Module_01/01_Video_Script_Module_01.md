@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -43,17 +43,13 @@ Let us get started.
 
 ---
 
-## [01:30 - 06:00] AWS Regions and Availability Zones
-
-[SHOW DIAGRAM]
+## AWS Regions and Availability Zones
 
 Look at this world map. The colored circles represent AWS Regions. As of 2024, AWS operates more than 30 geographic Regions worldwide, with more announced regularly. Each Region is a distinct geographic area — think US East Northern Virginia, US West Oregon, EU Ireland, Asia Pacific Tokyo.
 
 Here is what makes a Region special: it is completely independent. Each Region has its own power grid, its own network connectivity, its own cooling infrastructure. If there is a major event in US East 1 — a power failure, a network issue, a natural disaster — it does not propagate to US West 2. They are isolated by design.
 
 Now look inside a single Region. Each Region contains a minimum of two Availability Zones, and most Regions have three or more. In US East 1 Northern Virginia, there are six Availability Zones: us-east-1a through us-east-1f.
-
-[SHOW DIAGRAM]
 
 What is an Availability Zone? An AZ is one or more discrete data centers — sometimes a campus of buildings — with redundant power, redundant networking, and redundant cooling. The key word is redundant. If one power feed fails, a backup kicks in. If one network path fails, another takes over.
 
@@ -63,13 +59,11 @@ Here is the critical exam concept: AZs are physically separated from each other 
 
 When you deploy across multiple AZs, you achieve high availability. If AZ-a fails, your application keeps running in AZ-b and AZ-c without interruption.
 
-[SHOW DIAGRAM]
-
 Now let me be precise about something the exam tests constantly. Multi-AZ deployment within a single Region gives you high availability protection against AZ-level failures. It does NOT protect you against a full Region outage. For regional disaster recovery, you must deploy across multiple Regions. We will cover multi-region architectures in detail when we get to Route 53 and disaster recovery patterns.
 
 ---
 
-## [06:00 - 10:00] Edge Locations, Local Zones, and Wavelength Zones
+## Edge Locations, Local Zones, and Wavelength Zones
 
 AWS Global Infrastructure extends beyond Regions and AZs. There are three additional infrastructure types you must know for the SAA-C03 exam.
 
@@ -77,23 +71,17 @@ AWS Global Infrastructure extends beyond Regions and AZs. There are three additi
 
 There are many more Edge Locations than Regions. Think of it this way: Regions are where you deploy your workloads. Edge Locations are where AWS puts cached copies of your content and DNS answers close to your users.
 
-[SHOW DIAGRAM]
-
 **Local Zones** are an extension of an AWS Region to a specific metropolitan area. They let you run latency-sensitive applications — like video rendering, gaming, live streaming — within single-digit millisecond latency of a major population center. For example, the AWS Local Zone in Los Angeles lets you place EC2 instances and EBS storage physically in the Los Angeles metro area while the workload is still logically attached to the US West 2 Oregon Region. Local Zones are great for hybrid scenarios where on-premises systems need ultra-low latency access to AWS compute.
 
 **Wavelength Zones** embed AWS compute and storage services at the edge of 5G carrier networks. This eliminates the network hops between a mobile device and the application. The use case is mobile edge computing — imagine a self-driving vehicle application, an augmented reality app running on a 5G phone, or real-time IoT processing for industrial equipment. The application runs inside the carrier's 5G network at sub-10-millisecond latency.
-
-[SHOW DIAGRAM]
 
 The SAA-C03 exam will give you a scenario and ask you to choose between Regions, Local Zones, and Wavelength Zones. The pattern is: if the requirement mentions 5G mobile edge computing, the answer is Wavelength Zone. If the requirement mentions sub-millisecond latency for on-premises or metro users without 5G, the answer is Local Zone. If the requirement mentions global distribution or disaster recovery, the answer involves multiple Regions.
 
 ---
 
-## [10:00 - 14:30] AWS Core Service Categories
+## AWS Core Service Categories
 
 AWS offers over 200 services. The SAA-C03 exam does not test all of them equally. It focuses heavily on core services grouped into these categories. Let me walk through each one.
-
-[SHOW DIAGRAM]
 
 **Compute services** are the workhorses of AWS. Amazon EC2 gives you virtual servers — pick your CPU, memory, and storage, install your OS and application. EC2 Auto Scaling automatically adjusts the number of instances based on demand. AWS Lambda is serverless compute — you provide a function, AWS runs it on demand without you provisioning servers. Amazon ECS and EKS run Docker containers. AWS Elastic Beanstalk is a platform-as-a-service that deploys and manages applications automatically.
 
@@ -111,9 +99,7 @@ These categories map directly to the SAA-C03 exam domains. Knowing which service
 
 ---
 
-## [14:30 - 19:00] The AWS Shared Responsibility Model
-
-[SHOW DIAGRAM]
+## The AWS Shared Responsibility Model
 
 The Shared Responsibility Model is one of the most important concepts for both the exam and for professional cloud practice. Misunderstanding who is responsible for what leads to security gaps in production systems. Let me make this crystal clear.
 
@@ -135,8 +121,6 @@ You are responsible for security **in** the cloud. That means you are responsibl
 - Data protection — choosing to encrypt data at rest, encrypting data in transit, managing encryption keys
 - Application security — your application code, its dependencies, its configuration
 
-[SHOW DIAGRAM]
-
 Here is where it gets nuanced — and where the SAA-C03 exam loves to test you. The responsibility boundary shifts depending on the service model.
 
 For EC2 — Infrastructure as a Service — you manage the most. You pick the OS, you patch it, you install the software, you configure the firewall rules. AWS manages the physical host beneath your instance.
@@ -149,7 +133,7 @@ A critical exam pattern: for any managed service, always ask yourself — who ow
 
 ---
 
-## [19:00 - 22:00] Selecting the Right Region
+## Selecting the Right Region
 
 Region selection is an architectural decision with implications for compliance, performance, cost, and service availability. The SAA-C03 exam will present scenarios requiring you to justify Region selection. Here are the four factors you must consider.
 
@@ -163,7 +147,7 @@ Region selection is an architectural decision with implications for compliance, 
 
 ---
 
-## [22:00 - 24:00] Module Summary and Exam Preview
+## Module Summary and Exam Preview
 
 Let me summarize what you need to know cold for the SAA-C03 exam.
 

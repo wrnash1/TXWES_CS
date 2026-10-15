@@ -23,7 +23,7 @@ classmate's reasoning — not simply agree or restate their point.
 ### Scenario A — The Missing Extend
 
 A junior business analyst on your team has submitted a use case diagram for a university
-course registration system. The diagram includes a use case called "Register for Course"
+course registration system. The diagram includes a use case called "Register for Course
 and a separate use case called "Apply Waitlist." The junior BA has drawn the relationship
 as an include arrow from "Register for Course" to "Apply Waitlist." During review, you
 notice that waitlist processing only occurs when a course section is full — it does not

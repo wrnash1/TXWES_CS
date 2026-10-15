@@ -181,10 +181,10 @@ A deletion anomaly occurs when deleting one piece of information inadvertently d
 
 A BA is normalizing a SalesOrders table with primary key (SalesRepID, CustomerID, ProductID). Which question best helps the BA determine whether OrderQuantity is fully or partially dependent on this composite key?
 
-A. "Can the same product be ordered by multiple customers?"
-B. "Is OrderQuantity ever stored in a separate table?"
-C. "Do you need to know the sales rep, the customer, AND the product to determine how many units were ordered?"
-D. "Is OrderQuantity ever null in the current spreadsheet?"
+A. "Can the same product be ordered by multiple customers?
+B. "Is OrderQuantity ever stored in a separate table?
+C. "Do you need to know the sales rep, the customer, AND the product to determine how many units were ordered?
+D. "Is OrderQuantity ever null in the current spreadsheet?
 
 ### Distractor Analysis — Question 8
 
@@ -443,17 +443,17 @@ objects: "Normalization creates too many tables and makes queries slow." The BA'
 effective response is which of the following?
 
 A. "Normalization is required by the BABOK Guide, so we must follow it regardless of
-   performance."
+   performance.
 
 B. "You are right — we should skip normalization and optimize for performance from the
-   start."
+   start.
 
 C. "Normalization eliminates data anomalies and is the correct starting point. Where
    query performance is a documented concern, we can evaluate specific, documented
-   denormalization decisions with stakeholder approval."
+   denormalization decisions with stakeholder approval.
 
 D. "Normalized designs always perform better than denormalized designs because the tables
-   are smaller."
+   are smaller.
 
 ### Distractor Analysis — Question 16
 
@@ -582,7 +582,7 @@ primary key in the parent (Diagnoses) table, not to the foreign key in the child
 (Appointments) table. This is the standard one-to-many relationship behavior.
 
 **Why A is wrong:** Foreign keys are not required to be unique. If they were, the
-relationship would be one-to-one, not one-to-many. A diagnosis code like "Hypertension"
+relationship would be one-to-one, not one-to-many. A diagnosis code like "Hypertension
 will appear in thousands of appointment records.
 
 **Why C is wrong:** Having the same DiagnosisCode in multiple rows is not only permitted

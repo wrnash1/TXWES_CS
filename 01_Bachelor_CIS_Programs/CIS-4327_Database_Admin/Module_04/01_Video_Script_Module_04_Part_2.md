@@ -28,8 +28,6 @@
 
 ### Opening
 
-**[SHOW SLIDE: Module 04 Part 2 — DML, Secondary Indexes, Staleness, and Exam Tips]**
-
 Welcome back. I am Professor Nash, and this is Part 2 of Module 04.
 
 In Part 1 we covered Spanner's architecture, consistency model, DDL, and primary key design. Now we cover DML — how to query and mutate data in Spanner — secondary indexes, the concept of stale reads, and the exam scenarios that test when to choose Spanner.
@@ -98,15 +96,11 @@ Without STORING, Spanner performs a back-join from the index to the base table t
 
 ### Section 3 — Stale Reads and Bounded Staleness
 
-**[SHOW SLIDE: Strong reads vs. stale reads timeline]**
-
 Spanner provides two read modes.
 
 Strong reads return the most recent committed data as of the current transaction timestamp. All strong reads go through the Paxos leader, which adds latency because the leader must confirm that no newer transaction has committed since the read timestamp.
 
 Stale reads allow the client to read data as of a timestamp slightly in the past. This is called bounded staleness. The client specifies either an exact timestamp or a maximum staleness duration (e.g., 15 seconds ago). Stale reads can be served by any replica, not just the leader, which dramatically reduces latency for read-heavy workloads.
-
-**[SHOW SLIDE: Staleness trade-off — lower latency vs. potentially slightly outdated data]**
 
 For the GCP exam, know this trade-off: if a scenario requires absolute current consistency (financial balance checks, inventory reservation), use strong reads. If a scenario describes a dashboard or reporting query where data that is a few seconds old is acceptable, bounded staleness reads provide lower latency and reduce load on the primary replica.
 
@@ -170,8 +164,6 @@ Cloud Spanner supports managed backups with configurable expiration dates. Spann
 
 ### Section 6 — Exam Tips for Module 04
 
-**[SHOW SLIDE: Cloud Spanner exam tips]**
-
 Tip one: the exam will present a scenario with a requirement for global consistency and horizontal scalability. The answer is Cloud Spanner. No other GCP service provides both properties simultaneously.
 
 Tip two: Cloud Spanner's SLA is 99.999% (five nines) for multi-region configurations. This is the highest availability SLA of any GCP database service. Scenarios with contractual five-nines availability requirements point to Spanner.
@@ -191,8 +183,6 @@ Tip eight: Cloud Spanner is significantly more expensive than Cloud SQL. Any exa
 ---
 
 ### Closing — Module 04 Wrap-Up
-
-**[SHOW SLIDE: Module 04 complete]**
 
 That completes Module 04. You now understand Cloud Spanner's architecture, schema design principles, DML, secondary indexes, read modes, and how to position it against Cloud SQL.
 

@@ -46,7 +46,7 @@ Record:
 
 - The DNS server name and IP address shown at the top (this is your resolver)
 - The IP address(es) returned for txwes.edu
-- Whether the output is labeled "Non-authoritative answer"
+- Whether the output is labeled "Non-authoritative answer
 
 #### Step 2: Query an AAAA Record
 

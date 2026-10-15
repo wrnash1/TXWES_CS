@@ -19,9 +19,9 @@ This is the final discussion of the course. The scenarios below are designed to 
 You have just been hired as a Scrum Master at a 200-person software company. During your first week, you observe the following:
 
 - The team holds a "standup" every morning where each person says what they did yesterday and what they will do today. The meeting takes 45 minutes. The Scrum Master (your predecessor) asked clarifying questions throughout.
-- Sprint Reviews are 30-minute demos where the team walks through a slide deck — no live software demonstration. Stakeholders are not invited because "they don't have time."
-- The Definition of Done has not been updated in two years. It contains three items: "Code complete," "QA tested," and "Approved by manager."
-- The team tells you: "We've been doing Scrum for four years. We know how it works."
+- Sprint Reviews are 30-minute demos where the team walks through a slide deck — no live software demonstration. Stakeholders are not invited because "they don't have time.
+- The Definition of Done has not been updated in two years. It contains three items: "Code complete," "QA tested," and "Approved by manager.
+- The team tells you: "We've been doing Scrum for four years. We know how it works.
 
 Write an initial post (175–225 words) addressing the following:
 

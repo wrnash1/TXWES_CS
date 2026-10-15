@@ -47,7 +47,7 @@ B. Removing the Delete permission from an object the user's profile allows delet
 
 C. Adding field-level access to a field that is hidden in the user's profile
 
-D. Enabling a system permission such as "Manage Users"
+D. Enabling a system permission such as "Manage Users
 
 **Correct Answer: B**
 
@@ -100,7 +100,7 @@ D. The complete authorization trace for all transactions the user has attempted 
 **Distractor Analysis:**
 
 - **A:** To see a user's role assignments, the administrator uses transaction SU01 (User Maintenance). SU53 does not list all roles.
-- **B:** This is partially true in description but not what SU53 primarily shows. SU53 specifically shows the LAST failed authorization check. It displays the authorization object that failed, the field values that were checked, and what the user currently has. This is subtly different from "all values present."
+- **B:** This is partially true in description but not what SU53 primarily shows. SU53 specifically shows the LAST failed authorization check. It displays the authorization object that failed, the field values that were checked, and what the user currently has. This is subtly different from "all values present.
 - **C — SU53 shows the last failed authorization check (Correct):** SU53 is the primary diagnostic tool for authorization failures. It displays: the authorization object that caused the failure, the required field values, and what the user actually has assigned. This allows the administrator to identify exactly which authorization is missing and which role or profile needs to be updated.
 - **D:** SU53 only captures the most recent failed authorization check, not a full history of authorization activity. For full authorization tracing, the administrator uses transaction ST01 (System Trace), which must be activated before the transaction is attempted.
 

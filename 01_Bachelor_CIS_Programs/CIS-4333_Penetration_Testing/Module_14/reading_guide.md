@@ -121,7 +121,7 @@ The SOW (sometimes called Statement of Work or Scope of Work — terms are used 
 
 **Parties and signatures:** Full legal names of both parties, authorized signatories, dates. The authorizing individual must have actual authority to bind the organization.
 
-**Engagement description:** What type of assessment is being performed. Be specific: "External network penetration test, web application assessment, and wireless security assessment" rather than "security test."
+**Engagement description:** What type of assessment is being performed. Be specific: "External network penetration test, web application assessment, and wireless security assessment" rather than "security test.
 
 **Scope:**
 
@@ -139,7 +139,7 @@ Production vs. development: Destructive testing (certain DoS tests, database man
 
 **Timeline:** Testing start and end dates, draft report due date, final report due date.
 
-**Authorization statement:** "The Client authorizes [Firm] to conduct security assessment activities as described herein against the systems specified in Appendix A."
+**Authorization statement:** "The Client authorizes [Firm] to conduct security assessment activities as described herein against the systems specified in Appendix A.
 
 ### 2.3 Rules of Engagement
 
@@ -147,7 +147,7 @@ The ROE is a technical companion document to the SOW. It provides operational gu
 
 **Standard ROE components:**
 
-Testing hours: Specific windows — "8 AM to 6 PM Eastern, Monday through Friday unless prior approval obtained for after-hours testing."
+Testing hours: Specific windows — "8 AM to 6 PM Eastern, Monday through Friday unless prior approval obtained for after-hours testing.
 
 Permitted techniques: Enumerated list of authorized attack categories.
 
@@ -157,7 +157,7 @@ Notification thresholds: Conditions requiring immediate client notification — 
 
 Emergency contacts: Client security team contacts, escalation contacts for critical situations.
 
-Abort conditions: "Testing stops immediately if: the client experiences a production outage, a third-party system is inadvertently affected, or an active threat actor is identified."
+Abort conditions: "Testing stops immediately if: the client experiences a production outage, a third-party system is inadvertently affected, or an active threat actor is identified.
 
 Test status communication: How often the tester updates the client — daily status emails, weekly calls.
 
@@ -264,7 +264,7 @@ Carve-outs from the limitation typically include:
 
 A well-written bug bounty policy provides:
 
-**Safe harbor:** "We will not pursue legal action against researchers who follow these guidelines."
+**Safe harbor:** "We will not pursue legal action against researchers who follow these guidelines.
 
 **Good faith standard:** Testing is within scope, does not extract data beyond confirmation, does not degrade service availability.
 
@@ -300,11 +300,11 @@ CISA's coordinated vulnerability disclosure (CVD) framework allows flexible time
 
 Common exam scenario patterns:
 
-"A tester is asked to test a web application and discovers the application is hosted by a third-party SaaS provider. What must the tester do before testing?" — Obtain authorization from the SaaS provider (not just the client).
+A tester is asked to test a web application and discovers the application is hosted by a third-party SaaS provider. What must the tester do before testing?" — Obtain authorization from the SaaS provider (not just the client).
 
-"During a test, the tester discovers systems outside the authorized scope that appear vulnerable. What is the correct action?" — Stop testing those systems, document the discovery, and report to the client with a scope expansion recommendation.
+During a test, the tester discovers systems outside the authorized scope that appear vulnerable. What is the correct action?" — Stop testing those systems, document the discovery, and report to the client with a scope expansion recommendation.
 
-"A penetration tester performs testing on a cloud provider's infrastructure without checking the provider's testing policy. Which law is most directly at risk?" — The Cloud Provider's Terms of Service violation could implicate CFAA (§ 1030 — exceeds authorized access).
+A penetration tester performs testing on a cloud provider's infrastructure without checking the provider's testing policy. Which law is most directly at risk?" — The Cloud Provider's Terms of Service violation could implicate CFAA (§ 1030 — exceeds authorized access).
 
 ---
 
@@ -355,8 +355,6 @@ Common exam scenario patterns:
 - DOJ Cybersecurity Unit, "A Framework for a Vulnerability Disclosure Program for Online Systems" (2017)
 - CISA Coordinated Vulnerability Disclosure: https://www.cisa.gov/coordinated-vulnerability-disclosure
 - AWS Penetration Testing Policy: https://aws.amazon.com/security/penetration-testing/
-
-
 
 ---
 

@@ -216,7 +216,7 @@ A CISM candidate is reviewing a proposal for a new security awareness program. T
 
 An organization's security awareness program has been running for two years. Annual phishing simulation click rates have dropped from 32% to 8%. Despite this improvement, the CISO reports the program is "not achieving its goals" at the quarterly board meeting. Which Kirkpatrick evaluation level finding would most directly support the CISO's conclusion?
 
-- A) Level 1 — post-training satisfaction surveys show employees rate the training as "irrelevant to their daily work"
+- A) Level 1 — post-training satisfaction surveys show employees rate the training as "irrelevant to their daily work
 - B) Level 2 — pre- and post-training knowledge assessments show no improvement in employees' ability to identify phishing indicators
 - C) Level 3 — manager observations confirm that employees continue to click phishing links in their personal lives but not at work
 - D) Level 4 — the organization's phishing-related security incident count has not decreased despite the lower simulation click rate

@@ -157,7 +157,7 @@ The following examples illustrate functional dependencies found in common busine
 
 During requirements elicitation, you uncover functional dependencies by asking:
 
-- "If I give you a [CustomerID], can you always tell me exactly one [CustomerName]?"
+- "If I give you a [CustomerID], can you always tell me exactly one [CustomerName]?
 - "Can two different [OrderIDs] ever have the same [OrderDate]?" (If yes, OrderDate is still functionally dependent on OrderID — two orders can share a date, but each order has exactly one date.)
 - "Does [ProductPrice] ever change independently of [ProductID]?" (If price can vary by time period, the dependency is more complex.)
 
@@ -218,7 +218,7 @@ A table is in Second Normal Form when:
 
 ### 4.2 Identifying Partial Dependencies
 
-Ask: "For this non-key attribute, do I need both parts of the composite key, or just one part?"
+Ask: "For this non-key attribute, do I need both parts of the composite key, or just one part?
 
 If only one part of the key determines the attribute, you have a partial dependency.
 
@@ -298,7 +298,7 @@ Fix by decomposing:
 
 ### 5.4 The 3NF Mnemonic
 
-"Every non-key attribute must depend on the key, the whole key, and nothing but the key."
+Every non-key attribute must depend on the key, the whole key, and nothing but the key.
 
 This phrase encapsulates all three normal forms simultaneously and is frequently referenced in ECBA exam materials.
 
@@ -407,7 +407,7 @@ Expect scenario-based questions where you must identify which normal form a tabl
 Answer these questions before attempting the quiz.
 
 1. What three anomalies does normalization prevent?
-2. Write the functional dependency notation for "CustomerID determines CustomerName."
+2. Write the functional dependency notation for "CustomerID determines CustomerName.
 3. A table has primary key (ProjectID, TaskID). TaskDescription depends only on TaskID. Which normal form is violated?
 4. A table has EmployeeID as primary key. DeptName depends on DeptID, which depends on EmployeeID. Which normal form is violated?
 5. Can a table with a single-column primary key violate 2NF? Explain why or why not.
@@ -576,8 +576,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

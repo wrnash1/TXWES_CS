@@ -173,7 +173,7 @@ Describe at least three specific QC activities the team will perform before rele
 
 #### Component D: Defect Reporting Process
 
-Describe how defects found during QC will be documented, assigned, tracked, and resolved. Include at minimum: the tool or document used to track defects, who reviews and prioritizes them, and what determines when a defect is "resolved."
+Describe how defects found during QC will be documented, assigned, tracked, and resolved. Include at minimum: the tool or document used to track defects, who reviews and prioritizes them, and what determines when a defect is "resolved.
 
 **Part 3 Point Value:** 30 points
 

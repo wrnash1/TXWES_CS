@@ -260,7 +260,7 @@ Before submitting, verify:
 
 A regional bank's service desk currently resolves 32% of incidents at Tier 1. The remaining 68% are escalated. A review of last month's ticket data reveals the following top five Tier 1 escalation reasons:
 
-1. VPN connectivity issues (18% of escalations) — agents say "too many variables"
+1. VPN connectivity issues (18% of escalations) — agents say "too many variables
 2. Multi-factor authentication failures (14%) — agents unsure how to reset authenticator apps
 3. Outlook calendar sync errors with mobile devices (11%) — no documented resolution steps
 4. Printer driver conflicts on Windows 11 (9%) — requires registry changes agents are not authorized to make

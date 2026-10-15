@@ -32,14 +32,9 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: Course banner — "CSC-6361 Advanced Computer Networks | Module 06 Part 2: AWS Direct Connect, Azure ExpressRoute & Hybrid Design Patterns | Texas Wesleyan University | Graduate Level"]
-
 ---
 
 ### Section 1: Welcome to Part 2
-
-[00:00 – 01:30]
-[SHOW SLIDE: Professor Nash on camera, hybrid cloud diagram visible behind.]
 
 Welcome back. In Part 1 we built the foundation: SD-WAN architecture with the four Viptela components, OMP protocol, centralized control vs. data policies, VXLAN encapsulation, and EVPN as the BGP control plane.
 
@@ -50,9 +45,6 @@ These topics appear directly on the CCNP ENCOR 350-401 exam in the Infrastructur
 ---
 
 ### Section 2: AWS Direct Connect — Architecture and VIF Types
-
-[01:30 – 07:00]
-[SHOW DIAGRAM: AWS Direct Connect architecture — enterprise router at colocation facility connecting to AWS Direct Connect location, then to AWS backbone, then to VPC Virtual Private Gateway and Transit Gateway]
 
 [Alt-text: A diagram showing three zones from left to right. Zone 1 (left): "Enterprise Network — on-premise router connected to enterprise WAN." Zone 2 (center): "Colocation/Carrier Facility — cross-connect between enterprise router and AWS Direct Connect router. Labeled: 'AWS Direct Connect Location (e.g., Equinix Dallas).' A DX router icon is shown." Zone 3 (right): "AWS Region — Virtual Private Gateway attached to VPC-A and VPC-B. Transit Gateway attached to multiple VPCs. Both connected to the DX router in Zone 2 via Virtual Interfaces (VIFs)."]
 
@@ -107,9 +99,6 @@ A LAG bundles multiple Direct Connect connections at the same DX location into a
 
 ### Section 3: Azure ExpressRoute — Architecture and Peering Types
 
-[07:00 – 12:00]
-[SHOW DIAGRAM: Azure ExpressRoute architecture — enterprise network connecting through ExpressRoute circuit to Microsoft Edge, then to Azure Virtual Network and Microsoft 365 services]
-
 [Alt-text: A diagram showing "Enterprise Network" on the left connected via "ExpressRoute Circuit (provider-managed)" to a central "Microsoft Enterprise Edge (MSEE) Router." From the MSEE, two paths go right: (1) "Private Peering — Azure Virtual Networks (VNets)" and (2) "Microsoft Peering — Microsoft 365, Azure Public Services." A third element "ExpressRoute Global Reach" is shown connecting two enterprise sites to each other through the MSEE.]
 
 #### What is Azure ExpressRoute?
@@ -155,9 +144,6 @@ ExpressRoute Global Reach is a feature that connects two on-premise networks to 
 ---
 
 ### Section 4: Hybrid Connectivity Design Patterns
-
-[12:00 – 15:30]
-[SHOW DIAGRAM: Two patterns side by side — active/active (both Direct Connect circuits carry traffic) and active/standby (primary circuit carries all traffic, standby sits idle until failover)]
 
 #### Active/Active Hybrid Design
 
@@ -212,9 +198,6 @@ Azure ExpressRoute BGP communities (inbound, from Microsoft):
 ---
 
 ### Section 5: Part 2 Summary and Module Wrap-Up
-
-[15:30 – 17:30]
-[SHOW SLIDE: Module 06 complete summary — SD-WAN + VXLAN/EVPN + cloud connectivity]
 
 In Part 2 you have learned:
 

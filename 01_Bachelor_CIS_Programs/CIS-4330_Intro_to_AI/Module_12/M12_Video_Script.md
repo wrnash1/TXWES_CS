@@ -10,8 +10,6 @@
 
 ## SEGMENT 1 — Hook and Module Overview (Slides 1–3) [3 min]
 
-[ON CAMERA]
-
 Welcome back, everyone. I want to start today with a question — have you ever wondered what happens *after* a machine learning model is built? In most courses, we train a model, look at the accuracy, and call it done. But in the real world, that's maybe 20% of the actual work.
 
 The other 80% is getting that model deployed, monitored, updated, and governed reliably at scale. That discipline has a name: **MLOps**.
@@ -171,7 +169,7 @@ AML experiment tracking logs:
 
 In the Studio Jobs view, you can select multiple runs and open a comparison panel. This shows a side-by-side table of all logged parameters and metrics. You can also plot metrics over time — for instance, validation loss curves for two runs on the same chart.
 
-This is how you justify your model selection to a stakeholder: "We ran 47 experiments. Here is the best run, and here is what made it different."
+This is how you justify your model selection to a stakeholder: "We ran 47 experiments. Here is the best run, and here is what made it different.
 
 [SLIDE 19: The Model Registry]
 

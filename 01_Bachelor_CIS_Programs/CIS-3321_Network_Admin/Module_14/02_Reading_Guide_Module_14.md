@@ -53,10 +53,10 @@ The seven steps must be memorized in order. The exam presents scenarios that ask
 Effective information gathering uses open-ended questions:
 
 - "What is not working?" (not "Is the network down?" — yes/no answers are less informative)
-- "When did the problem start?"
-- "What changed recently? New hardware? Software update? Configuration change?"
-- "Who else is affected? Just you, your floor, or the whole building?"
-- "What error messages are you seeing?"
+- "When did the problem start?
+- "What changed recently? New hardware? Software update? Configuration change?
+- "Who else is affected? Just you, your floor, or the whole building?
+- "What error messages are you seeing?
 
 Duplicate the problem yourself if possible. You need firsthand observation, not just a user's description.
 
@@ -481,8 +481,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

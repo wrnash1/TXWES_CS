@@ -1,5 +1,23 @@
 # Video Script: Module 06 – Product Backlog: Creation and Refinement
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture &bull; Module 06</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=LzMnsfqjzkA" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/LzMnsfqjzkA" title="freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Software Engineering Principles & SDLC Architecture</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Estimated Duration:** 21 minutes
@@ -7,9 +25,8 @@
 
 ---
 
-## Section 1 — Welcome and the Backlog as Living Artifact [00:00–03:30]
-
-"Welcome to Module 6. In the last two modules we covered all five Scrum events. Now we turn to the Scrum artifacts — and specifically to the one artifact that is the center of gravity for everything a product team does: the Product Backlog.
+## Section 1 — Welcome and the Backlog as Living Artifact
+Welcome to Module 6. In the last two modules we covered all five Scrum events. Now we turn to the Scrum artifacts — and specifically to the one artifact that is the center of gravity for everything a product team does: the Product Backlog.
 
 By the end of this module you will be able to:
 
@@ -20,19 +37,16 @@ By the end of this module you will be able to:
 - Explain ordering versus prioritization and why the distinction matters
 - Create a Product Backlog for a hypothetical product
 
-The Product Backlog is never finished. I want you to hold that phrase in your mind as we go through this module. A Product Backlog is never finished. It grows, it shrinks, it changes order, items are added, items are removed, items are broken down and rewritten. It is a living artifact that reflects the current best understanding of what the product needs to become."
+The Product Backlog is never finished. I want you to hold that phrase in your mind as we go through this module. A Product Backlog is never finished. It grows, it shrinks, it changes order, items are added, items are removed, items are broken down and rewritten. It is a living artifact that reflects the current best understanding of what the product needs to become.
 
 ---
 
-## Section 2 — What the Product Backlog Is [03:30–09:00]
-
-"The Scrum Guide defines the Product Backlog as an emergent, ordered list of what is needed to improve the product. It is the single source of work undertaken by the Scrum Team.
+## Section 2 — What the Product Backlog Is
+The Scrum Guide defines the Product Backlog as an emergent, ordered list of what is needed to improve the product. It is the single source of work undertaken by the Scrum Team.
 
 Let me break down that definition word by word.
 
 Emergent: The Product Backlog is not written once and followed. It emerges over time as the team builds the product and learns. Early in a product's life, the backlog might have only high-level features. As development proceeds and the team learns more about user needs and technical realities, items become more detailed, more accurate, and more actionable.
-
-[SHOW DIAGRAM: Product Backlog as an iceberg — items near the top are small, well-defined, and ready for Sprints; items deeper down are large, vague, and need more refinement]
 
 Ordered: The Product Backlog is ordered, not just prioritized. Ordering is a more precise concept. Prioritization implies sorting by importance. Ordering implies a complete ranking — item 1 is done before item 2, item 2 before item 3. The Product Owner orders the backlog. They may use priority (value), dependency, risk, learning value, or any other factor in their ordering decisions.
 
@@ -40,15 +54,12 @@ Single source: There is one Product Backlog per product. If there are multiple t
 
 Product Backlog items — often called PBIs — typically include features, bug fixes, technical improvements, and knowledge acquisition work (spikes). Each PBI has a description, an order, an estimate (size), and a value. Developers add estimates; the Product Owner manages everything else.
 
-PSM I Exam Tip: The Product Backlog is never complete and never frozen. If an exam question describes a Product Backlog that is finished or locked, that description reflects a Waterfall mindset, not Scrum."
+PSM I Exam Tip: The Product Backlog is never complete and never frozen. If an exam question describes a Product Backlog that is finished or locked, that description reflects a Waterfall mindset, not Scrum.
 
 ---
 
-## Section 3 — Product Backlog Ownership and the Product Goal [09:00–13:00]
-
-"The Product Owner is accountable for the Product Backlog. The Scrum Guide is very clear on this.
-
-[SHOW DIAGRAM: Product Owner at center, with arrows to Product Backlog activities: creating items, ordering items, communicating value, collaborating with Developers on estimates]
+## Section 3 — Product Backlog Ownership and the Product Goal
+The Product Owner is accountable for the Product Backlog. The Scrum Guide is very clear on this.
 
 The Product Owner's accountability includes:
 
@@ -63,15 +74,12 @@ The Product Goal is the commitment associated with the Product Backlog. It is a 
 
 PSM I Exam Tip: If a stakeholder wants to add an item to the Product Backlog, they must go through the Product Owner. Stakeholders do not directly add or order items in the Product Backlog. The Product Owner is the gatekeeper.
 
-One Product Owner may work with multiple Scrum Teams, but there is still one Product Backlog per product. The Product Owner ensures that all teams working on the product are pulling from the same ordered list."
+One Product Owner may work with multiple Scrum Teams, but there is still one Product Backlog per product. The Product Owner ensures that all teams working on the product are pulling from the same ordered list.
 
 ---
 
-## Section 4 — Product Backlog Refinement [13:00–18:00]
-
-"Product Backlog Refinement is the ongoing activity of breaking down and further defining Product Backlog items into smaller, more precise items.
-
-[SHOW DIAGRAM: Large, vague PBI at top of backlog being broken down through Refinement into three smaller, well-defined items with story point estimates and clear descriptions]
+## Section 4 — Product Backlog Refinement
+Product Backlog Refinement is the ongoing activity of breaking down and further defining Product Backlog items into smaller, more precise items.
 
 Refinement is not a one-time event. It happens continuously throughout the Sprint. The Scrum Guide says it typically consumes no more than 10% of the Developers' capacity per Sprint. For a two-week Sprint with five Developers, that is roughly four hours per Developer per Sprint devoted to refinement activities.
 
@@ -88,15 +96,12 @@ Testable: you can write a test that definitively says whether the item is done
 
 PSM I Exam Tip: Refinement is an ongoing activity, not a Scrum event. It is not listed among the five official Scrum events. When an exam question asks about Scrum events, refinement is not on the list. But the Scrum Guide acknowledges that it happens and allocates capacity for it.
 
-A common question on PSM I: who participates in refinement? The Scrum Guide says Product Backlog Refinement is done with the Product Owner and the Developers. Not the Scrum Master alone. Not the Product Owner alone. It is a collaborative activity because Developers add the estimates and ask the technical clarifying questions."
+A common question on PSM I: who participates in refinement? The Scrum Guide says Product Backlog Refinement is done with the Product Owner and the Developers. Not the Scrum Master alone. Not the Product Owner alone. It is a collaborative activity because Developers add the estimates and ask the technical clarifying questions.
 
 ---
 
-## Section 5 — What a Good Product Backlog Looks Like [18:00–21:00]
-
-"Let me close with a description of a healthy Product Backlog and the most common problems you will see in the field and on the PSM I exam.
-
-[SHOW DIAGRAM: Healthy Product Backlog — top 10 items are small, well-estimated, and INVEST-ready; items 11–30 are medium-sized with partial estimates; items 31+ are large, vague epics]
+## Section 5 — What a Good Product Backlog Looks Like
+Let me close with a description of a healthy Product Backlog and the most common problems you will see in the field and on the PSM I exam.
 
 A healthy Product Backlog has a gradient of detail. Items at the top — those closest to being selected for a Sprint — are well-defined, small, and estimated. Items in the middle are partially refined. Items at the bottom may be large, vague features or epics that will be broken down further as they get closer to the top.
 
@@ -112,7 +117,7 @@ Problem 3: Items that are too large. If most items require two or three Sprints 
 
 Problem 4: A backlog managed by committee. When multiple stakeholders can directly add and order items without going through the Product Owner, the backlog loses coherence and the Product Owner loses accountability for value.
 
-In Module 7 we go deeper on the items themselves — how to write user stories and acceptance criteria that make Product Backlog items clear, testable, and valuable. See you there."
+In Module 7 we go deeper on the items themselves — how to write user stories and acceptance criteria that make Product Backlog items clear, testable, and valuable. See you there.
 
 ---
 

@@ -66,7 +66,7 @@ A university domain has the following GPO configuration:
 
 - Two GPOs are linked to `OU=Faculty\OU=ChemistryDept` in GPMC: Chem-GPO-A
   (link order 1) and Chem-GPO-B (link order 2). Chem-GPO-A sets the wallpaper
-  to "blue.jpg" and Chem-GPO-B sets it to "green.jpg."
+  to "blue.jpg" and Chem-GPO-B sets it to "green.jpg.
 
 1. Walk through LSDOU processing for a faculty member in the ChemistryDept OU
    and identify which wallpaper setting is ultimately applied. Explain the
@@ -112,7 +112,7 @@ on to their regular desk workstations, they should receive their normal policy.
 3. After deploying the kiosk GPO with Loopback Processing, a staff member reports
    that the auto-logoff timer is not triggering on the kiosk. You run
    `gpresult /r` on a kiosk computer and the kiosk GPO is listed under
-   "Applied GPOs." What additional troubleshooting steps would you take to
+   Applied GPOs." What additional troubleshooting steps would you take to
    determine why the auto-logoff setting specifically is not working?
 
 Write your initial post in 175-225 words, addressing all three sub-questions

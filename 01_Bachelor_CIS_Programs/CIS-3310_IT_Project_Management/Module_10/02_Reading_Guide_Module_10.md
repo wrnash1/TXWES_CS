@@ -266,7 +266,7 @@ This single rule applies to every EVM metric without exception. Memorize it and 
 Students frequently confuse EV and AC. AC comes from the accounting system and reflects money paid out. EV is a calculated value based on completed scope. They are equal only when cost efficiency is exactly 1.0.
 
 **Tip 4 — Match the EAC formula to the stated assumption:**
-"Current performance continues" = `BAC / CPI`. "New estimate provided" = `AC + ETC`. "Remaining work at original planned rate" = `AC + (BAC - EV)`. The exam will specify the assumption — read carefully.
+Current performance continues" = `BAC / CPI`. "New estimate provided" = `AC + ETC`. "Remaining work at original planned rate" = `AC + (BAC - EV)`. The exam will specify the assumption — read carefully.
 
 **Tip 5 — SV and CV both start with EV minus something:**
 `SV = EV - PV` (EV minus Planned Value). `CV = EV - AC` (EV minus Actual Cost). Keep EV in the first position always.
@@ -432,8 +432,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

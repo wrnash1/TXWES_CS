@@ -1,5 +1,23 @@
 # Video Script: Module 05 - Asynchronous JavaScript
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Full Stack Web Development for Beginners &bull; Module 05</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=nu_pCVPKzTk" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/nu_pCVPKzTk" title="freeCodeCamp &bull; Full Stack Web Development for Beginners" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Full Stack Web Development for Beginners</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3340 Full Stack Web Development
 **Estimated Duration:** 23 minutes
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
@@ -7,8 +25,7 @@
 
 ---
 
-## Section 1: Introduction - Why Asynchronous Matters [00:00 - 04:00]
-
+## Section 1: Introduction - Why Asynchronous Matters
 Welcome to Module 05. I am Professor Nash. Today we cover one of the most important concepts in JavaScript — asynchronous programming.
 
 JavaScript is single-threaded. It has one call stack and processes one instruction at a time. This creates an obvious problem: what happens when we need to fetch data from a server? If JavaScript stopped and waited for the network response before doing anything else, the entire browser UI would freeze. Buttons would not work. Animations would pause. Pages would appear broken.
@@ -25,8 +42,7 @@ Let me demonstrate the execution order problem in the browser console.
 
 ---
 
-## Section 2: The Event Loop and Call Stack [04:00 - 08:30]
-
+## Section 2: The Event Loop and Call Stack
 [SHOW BROWSER]
 
 Open Chrome DevTools Console. Type these three lines and observe the output order:
@@ -65,8 +81,7 @@ console.log('2 — synchronous');
 
 ---
 
-## Section 3: Promises [08:30 - 14:00]
-
+## Section 3: Promises
 [SHOW CODE]
 
 A Promise is an object that represents the eventual completion or failure of an asynchronous operation.
@@ -128,8 +143,7 @@ Promise.all([p1, p2, p3])
 
 ---
 
-## Section 4: Async/Await and the Fetch API [14:00 - 19:30]
-
+## Section 4: Async/Await and the Fetch API
 [SHOW CODE]
 
 `async/await` is syntactic sugar over Promises. An `async` function always returns a Promise. `await` pauses execution inside the async function until the awaited Promise settles.
@@ -203,8 +217,7 @@ Let me use the DevTools Network tab to show the fetch in action. Watch the reque
 
 ---
 
-## Section 5: Error Handling and Lab Preview [19:30 - 23:00]
-
+## Section 5: Error Handling and Lab Preview
 [SHOW CODE]
 
 Robust async error handling:

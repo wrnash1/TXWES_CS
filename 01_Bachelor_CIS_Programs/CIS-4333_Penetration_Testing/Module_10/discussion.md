@@ -18,7 +18,7 @@ Initial post due: Thursday 11:59 PM. Peer responses due: Sunday 11:59 PM.
 
 ## Scenario A: The Coffee Shop Incident
 
-A junior penetration tester on your team was conducting a wireless assessment at a corporate client's headquarters. The scope of work authorized testing of all access points listed in an appendix. While sitting in the building's lobby, the tester's airodump-ng captured a handshake from an SSID not on the list. The tester saved the capture file and began cracking it offline, reasoning that "since we're already on site and it's in our capture range, it's fair game."
+A junior penetration tester on your team was conducting a wireless assessment at a corporate client's headquarters. The scope of work authorized testing of all access points listed in an appendix. While sitting in the building's lobby, the tester's airodump-ng captured a handshake from an SSID not on the list. The tester saved the capture file and began cracking it offline, reasoning that "since we're already on site and it's in our capture range, it's fair game.
 
 Address the following: Was the tester's reasoning correct? What specific laws or regulations were potentially violated? As the project lead, what steps would you take immediately? What policy would you implement to prevent this situation in future engagements?
 

@@ -42,7 +42,7 @@ Your initial post should be 175–225 words and address all three sub-questions.
 
 ## Scenario C: The Opportunity That Slipped Away
 
-A healthcare IT company is developing a patient engagement mobile application. During the project, the team learns that a large regional hospital network — not the client — is actively looking for an app vendor and issuing a contract in 60 days. The product being built is highly aligned with the hospital network's stated requirements. One team member proposes that the company pursue the contract in parallel, potentially using the current project's deliverables as a demonstration. The project manager acknowledges the scenario but says: "That is not our problem — we are focused on delivering this project. Let's just accept the opportunity and move on."
+A healthcare IT company is developing a patient engagement mobile application. During the project, the team learns that a large regional hospital network — not the client — is actively looking for an app vendor and issuing a contract in 60 days. The product being built is highly aligned with the hospital network's stated requirements. One team member proposes that the company pursue the contract in parallel, potentially using the current project's deliverables as a demonstration. The project manager acknowledges the scenario but says: "That is not our problem — we are focused on delivering this project. Let's just accept the opportunity and move on.
 
 Sub-questions for Scenario C:
 

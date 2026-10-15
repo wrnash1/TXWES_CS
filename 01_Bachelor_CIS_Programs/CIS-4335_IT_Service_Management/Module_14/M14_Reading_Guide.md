@@ -190,7 +190,7 @@ A complete risk register entry contains:
 | Review date | Next scheduled reassessment |
 | Status | Open / In Progress / Accepted / Closed |
 
-**Risk statement format:** The "if/then/affects" format is recommended because it forces specificity. Vague risk descriptions like "cybersecurity risk" are unactionable. A well-formed statement: "If an employee clicks a phishing link and credentials are stolen, then an attacker could gain unauthorized access to the financial system, which affects the confidentiality and integrity of customer financial data."
+**Risk statement format:** The "if/then/affects" format is recommended because it forces specificity. Vague risk descriptions like "cybersecurity risk" are unactionable. A well-formed statement: "If an employee clicks a phishing link and credentials are stolen, then an attacker could gain unauthorized access to the financial system, which affects the confidentiality and integrity of customer financial data.
 
 ### 2.4 Risk Response Strategies in Depth
 
@@ -499,8 +499,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

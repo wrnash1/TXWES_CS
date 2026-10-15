@@ -503,8 +503,6 @@ CISA publishes detailed malware analysis reports for high-impact threat families
 <https://www.virustotal.com/>
 The industry-standard multi-engine file analysis platform used for static IOC verification and prevalence checks. Beyond detection ratios, VirusTotal's "Behavior" tab (for dynamic sandbox results) and "Relations" graph provide the same enrichment capabilities used in professional SOC triage. Practice submitting known benign files to understand what normal results look like before analyzing suspicious ones.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

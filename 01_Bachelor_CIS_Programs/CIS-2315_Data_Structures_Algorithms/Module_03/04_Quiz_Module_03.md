@@ -208,7 +208,7 @@ A call stack overflows with `RecursionError: maximum recursion depth exceeded`. 
 **Distractor Analysis:**
 
 - *Why A is incorrect:* BFS uses a queue, not a call stack. A BFS queue growing large would not cause a Python `RecursionError` — it would be a memory error or a logical error in the traversal.
-- *Why B is incorrect:* Heap exhaustion (running out of memory for object allocation) raises `MemoryError`, not `RecursionError`. The error message specifically names "recursion depth" and "maximum."
+- *Why B is incorrect:* Heap exhaustion (running out of memory for object allocation) raises `MemoryError`, not `RecursionError`. The error message specifically names "recursion depth" and "maximum.
 - *Why C is correct:* Python implements function calls using a call stack. Each call pushes a new frame; each return pops it. Python enforces a recursion limit (default 1000) to prevent infinite recursion from consuming all memory. Exceeding it raises `RecursionError`. This is literally a stack overflow.
 - *Why D is incorrect:* Hash collisions are a separate concept from recursion and function calls. They have no relationship to the call stack or recursion depth.
 

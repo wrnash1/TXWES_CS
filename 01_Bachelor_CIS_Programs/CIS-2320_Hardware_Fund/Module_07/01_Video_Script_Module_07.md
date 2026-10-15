@@ -28,29 +28,25 @@
 
 ---
 
-### [00:00 - 02:30] Section 1: Introduction — Displays Are the User's Window Into the System
+### Section 1: Introduction — Displays Are the User's Window Into the System
 
-[INSTRUCTOR ON CAMERA — title card visible: "Module 07: Display Technologies and Connectors"]
-
-"Welcome back, everyone. I'm Professor Nash. Today we are covering display technologies and connectors — the hardware that translates all of the computing your CPU and GPU do into the image you actually see.
+Welcome back, everyone. I'm Professor Nash. Today we are covering display technologies and connectors — the hardware that translates all of the computing your CPU and GPU do into the image you actually see.
 
 This topic shows up on the CompTIA A+ Core 1 exam in both hardware configuration scenarios and troubleshooting scenarios. You need to know what panel technologies exist and how they differ, which connector to use for which situation, how cable versions affect resolution and refresh rate, and how to set up a multi-monitor environment.
-
-[PAUSE]
 
 Think about what a technician is actually asked to do in the field. A user brings in a new 4K monitor and their old PC does not display at full resolution. A company wants to set up dual monitors on every workstation. A user's laptop is connected to a projector but gets no image. All of these situations require you to understand what signal is coming out of the GPU, what signal the display expects, which connector or adapter bridges the two, and whether the cable version supports the resolution and refresh rate the user needs.
 
 By the end of this module you will be able to identify HDMI, DisplayPort, DVI, and VGA connectors by sight, explain the capabilities of each, describe the differences between IPS, TN, VA, and OLED panel technologies, and calculate whether a given cable version supports a target resolution and refresh rate. Let's get into it.
 
-Exam Tip: The A+ Core 1 exam tests connector identification, display technology differences, and cable version limitations. Expect both identification questions and scenario questions that ask which cable or adapter to use."
+Exam Tip: The A+ Core 1 exam tests connector identification, display technology differences, and cable version limitations. Expect both identification questions and scenario questions that ask which cable or adapter to use.
 
 ---
 
-### [02:30 - 09:00] Section 2: Display Panel Technologies
+### Section 2: Display Panel Technologies
 
 [SLIDE: "Panel Technologies — What's Inside the Screen?"]
 
-"Before we talk about connectors, let's understand what kind of panel is behind the glass.
+Before we talk about connectors, let's understand what kind of panel is behind the glass.
 
 #### LCD — Liquid Crystal Display
 
@@ -66,8 +62,6 @@ IPS — In-Plane Switching. IPS panels align liquid crystals parallel to the scr
 
 VA — Vertical Alignment. VA panels sit between TN and IPS in terms of viewing angles and response time. Their standout characteristic is contrast ratio — VA panels can achieve native contrast ratios of 3000:1 to 6000:1, compared to 1000:1 for typical IPS panels. This produces deeper blacks and better shadow detail. VA panels are popular for media consumption and mixed-use monitors.
 
-[PAUSE]
-
 #### OLED — Organic Light-Emitting Diode
 
 OLED panels are fundamentally different from LCD. Each individual pixel in an OLED display is its own light source — it emits light directly when an electrical current passes through the organic compound. This means each pixel can be turned completely off, producing true black with effectively infinite contrast ratio.
@@ -78,15 +72,15 @@ Disadvantages: OLED is susceptible to burn-in — if a static image (like a Wind
 
 [PAUSE — exam tip]
 
-Exam Tip: On the A+ exam, TN = fastest response, worst viewing angles. IPS = best color and viewing angles. VA = best contrast ratio. OLED = true black, infinite contrast, burn-in risk. These are the four associations you need to memorize for panel type questions."
+Exam Tip: On the A+ exam, TN = fastest response, worst viewing angles. IPS = best color and viewing angles. VA = best contrast ratio. OLED = true black, infinite contrast, burn-in risk. These are the four associations you need to memorize for panel type questions.
 
 ---
 
-### [09:00 - 16:00] Section 3: Display Connectors — HDMI, DisplayPort, DVI, VGA
+### Section 3: Display Connectors — HDMI, DisplayPort, DVI, VGA
 
 [SLIDE: "Connectors — Matching Signal to Display"]
 
-"Now let's cover the connector types. This is where a significant number of A+ exam questions originate.
+Now let's cover the connector types. This is where a significant number of A+ exam questions originate.
 
 #### HDMI — High-Definition Multimedia Interface
 
@@ -152,15 +146,15 @@ Let me put the connectors side by side for the exam:
 - DVI-I: digital + analog, no audio, legacy, can adapt to VGA with passive adapter
 - VGA: 15-pin three-row analog, video only, no audio, fully legacy
 
-Exam Tip: When you see a scenario about connecting multiple monitors to a single port, always select DisplayPort as the answer. HDMI, DVI, and VGA do not support MST."
+Exam Tip: When you see a scenario about connecting multiple monitors to a single port, always select DisplayPort as the answer. HDMI, DVI, and VGA do not support MST.
 
 ---
 
-### [16:00 - 19:30] Section 4: Resolution, Refresh Rate, and Cable Bandwidth
+### Section 4: Resolution, Refresh Rate, and Cable Bandwidth
 
 [SLIDE: "Resolution and Refresh Rate — The Numbers That Matter"]
 
-"A display connector is only useful if it can carry the signal your monitor needs. Let's connect the physical connector to the performance specifications.
+A display connector is only useful if it can carry the signal your monitor needs. Let's connect the physical connector to the performance specifications.
 
 [SHOW COMPONENT: Resolution comparison slide — 1080p, 1440p, 4K pixel counts]
 
@@ -194,23 +188,21 @@ This is where cable version becomes critical:
 
 A user connects a 4K monitor using an HDMI cable but the display is stuck at 1080p or 4K at 30Hz. The most likely cause is an HDMI 1.4 cable that cannot carry the required bandwidth for 4K at 60Hz. The fix is replacing the cable with an HDMI 2.0 or DisplayPort cable.
 
-Exam Tip: The A+ exam will present a scenario where a monitor is not displaying at its advertised resolution and refresh rate, and the correct answer involves identifying the cable version as the limiting factor."
+Exam Tip: The A+ exam will present a scenario where a monitor is not displaying at its advertised resolution and refresh rate, and the correct answer involves identifying the cable version as the limiting factor.
 
 ---
 
-### [19:30 - 22:30] Section 5: Lab Preview and Exam Wrap-Up
+### Section 5: Lab Preview and Exam Wrap-Up
 
 [SLIDE: "Module 07 Lab Overview"]
 
-"For this week's lab, you are going to do three things.
+For this week's lab, you are going to do three things.
 
 First, a connector identification exercise. You will be given descriptions and connector characteristics and must match them to the correct connector name, pin count, whether they carry audio, and whether daisy-chaining is supported. This mirrors A+ performance-based question format exactly.
 
 Second, a resolution and refresh rate compatibility table. Given a set of scenarios — a monitor specification paired with a cable version — you will determine whether the combination will display at the advertised settings, and if not, identify the limiting factor and suggest the correct cable.
 
 Third, a signal path tracing exercise. Given a multi-monitor setup diagram, you will trace the signal path from GPU to each display, identify which connectors are in use, and identify one configuration error.
-
-[PAUSE]
 
 Key takeaways for the exam:
 
@@ -226,7 +218,7 @@ Five — For multi-monitor from one port: DisplayPort MST, not HDMI.
 
 [OUTRO — instructor on camera]
 
-That covers Module 07. Complete the reading guide and lab before attempting the quiz. Post your discussion by Wednesday night. Good luck, and I'll see you in the next module."
+That covers Module 07. Complete the reading guide and lab before attempting the quiz. Post your discussion by Wednesday night. Good luck, and I'll see you in the next module.
 
 ---
 

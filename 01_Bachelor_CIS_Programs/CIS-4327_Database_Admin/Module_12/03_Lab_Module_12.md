@@ -113,7 +113,7 @@ This creates a 5-million-row synthetic orders table. Wait for the job to complet
 
 ### Step 2.2 — Run a Baseline Query and Note Bytes Scanned
 
-In the BigQuery console, run the following query and record the "Bytes processed"
+In the BigQuery console, run the following query and record the "Bytes processed
 shown in the Job information panel:
 
 ```sql

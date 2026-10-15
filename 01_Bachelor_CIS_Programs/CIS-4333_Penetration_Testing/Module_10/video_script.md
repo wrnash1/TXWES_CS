@@ -82,8 +82,6 @@ Airodump-ng captures 802.11 frames. Running `airodump-ng wlan0mon` displays all 
 
 To capture a WPA2 handshake, you need to observe a client authenticating. You can wait for a natural authentication event, or — with authorization — you can use Aireplay-ng to send deauthentication frames that force clients to reconnect.
 
-[DEMO TRANSCRIPT]
-
 In your authorized lab environment, the capture command looks like this:
 
 ```

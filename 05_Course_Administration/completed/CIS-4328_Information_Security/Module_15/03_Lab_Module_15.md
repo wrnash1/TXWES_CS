@@ -24,7 +24,7 @@ Both parts reinforce the Security Operations domain (Domain 4, 28% of SY0-701) t
 
 #### Step 1: Install Nessus Essentials
 
-1. Navigate to [https://www.tenable.com/products/nessus/nessus-essentials](https://www.tenable.com/products/nessus/nessus-essentials) and click "Download Nessus Essentials."
+1. Navigate to [https://www.tenable.com/products/nessus/nessus-essentials](https://www.tenable.com/products/nessus/nessus-essentials) and click "Download Nessus Essentials.
 2. Register with your student email to receive a free activation code.
 3. Download the installer appropriate for your operating system (Windows .msi or Linux .deb/.rpm).
 4. Run the installer. Nessus runs as a local web service; after installation, open a browser and navigate to `https://localhost:8834`.

@@ -40,9 +40,9 @@ Discuss: What is the correct technical approach to splitting the workspace witho
 
 ## Sample Peer Response Starters
 
-- "Your count incident analysis is accurate. An additional safeguard I would add is..."
-- "The two import approaches both have merit. I think the batch approach is superior because..."
-- "Your workspace split plan is well sequenced. One risk during the transition period that you may have underweighted is..."
+- "Your count incident analysis is accurate. An additional safeguard I would add is...
+- "The two import approaches both have merit. I think the batch approach is superior because...
+- "Your workspace split plan is well sequenced. One risk during the transition period that you may have underweighted is...
 
 ---
 

@@ -51,7 +51,7 @@ Workflows.
 
 Instead of building custom Pub/Sub subscriptions and routing logic, Eventarc
 provides a declarative way to say: "When this event happens in this GCP service,
-trigger this Cloud Run service."
+trigger this Cloud Run service.
 
 ### Event Sources
 

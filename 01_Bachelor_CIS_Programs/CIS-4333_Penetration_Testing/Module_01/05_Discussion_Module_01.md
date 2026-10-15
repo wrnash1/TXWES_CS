@@ -32,7 +32,7 @@ Discuss: What is the correct professional and legal response to this discovery? 
 
 ## Scenario C — The Compliance-Driven Test
 
-A healthcare organization asks you to perform a penetration test to satisfy their HIPAA risk analysis requirement. During the scoping call, their IT manager says they want a "full test of everything" but has not provided any network documentation. When you ask about Protected Health Information (PHI) systems, the IT manager says "just avoid those, everyone knows which servers they are."
+A healthcare organization asks you to perform a penetration test to satisfy their HIPAA risk analysis requirement. During the scoping call, their IT manager says they want a "full test of everything" but has not provided any network documentation. When you ask about Protected Health Information (PHI) systems, the IT manager says "just avoid those, everyone knows which servers they are.
 
 Discuss: Why is "just avoid those systems" insufficient as a scope exclusion? What specific information must be documented in the scoping document before testing begins? How do data handling obligations under HIPAA affect what you include in your RoE, and what happens if you accidentally access a PHI system during testing?
 

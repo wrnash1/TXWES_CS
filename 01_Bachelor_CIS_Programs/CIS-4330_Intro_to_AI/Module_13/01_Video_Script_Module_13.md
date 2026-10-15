@@ -28,15 +28,13 @@
 
 ---
 
-## [00:00 - 01:30] Opening
+## Opening
 
 Welcome back. Professor Nash here, and this is Module 13. In the last module we covered AI business strategy — use cases, ROI, and build-versus-buy decisions. In this module we go back inside the machine learning pipeline and focus on the work that happens before any model is trained: data preparation and feature engineering. If you have heard the phrase "garbage in, garbage out," this module is about why that is true and what to do about it. Data preparation is typically the most time-consuming phase of any ML project — estimates consistently put it at 60 to 80 percent of total project time — and it is also the phase where most projects either succeed or fail. Understanding this work is essential for AI-900 and for any real engagement with ML projects. Let us get into it.
 
 ---
 
-## [01:30 - 06:30] Why Data Quality Determines Model Quality
-
-[SHOW DIAGRAM: Pipeline flow from left to right. Boxes labeled: Raw Data → Data Cleaning → Feature Engineering → Training Data → Model Training → Model. Arrow from Raw Data box has a red annotation: "Most project time spent here." Arrow into Model Training has a green annotation: "Quality of this input determines model ceiling."]
+## Why Data Quality Determines Model Quality
 
 Let me start with a core principle: a model cannot learn patterns that are not present in its training data, and a model will learn patterns that are present in the training data even if those patterns are noise or artifacts. This means the quality of your training data sets a hard ceiling on how good your model can ever be.
 
@@ -52,9 +50,7 @@ Fourth: relevance. Not every column in your raw data is useful for prediction. S
 
 ---
 
-## [06:30 - 11:00] Data Cleaning Techniques
-
-[SHOW DIAGRAM: Table with four rows. Column 1: Data Problem. Column 2: Description. Column 3: Common Technique. Rows: Missing values, Duplicate records, Outliers, Inconsistent formats.]
+## Data Cleaning Techniques
 
 Data cleaning is the process of finding and correcting problems in raw data before model training. Let me walk through the most common problems and how to handle them.
 
@@ -68,9 +64,7 @@ Data cleaning is the process of finding and correcting problems in raw data befo
 
 ---
 
-## [11:00 - 16:00] Feature Engineering
-
-[SHOW DIAGRAM: Left side shows raw columns: "OrderDate," "CustomerBirthDate," "ProductPrice," "ProductCategory." Right side shows engineered features: "DayOfWeek," "HourOfDay," "CustomerAge," "PriceCategory (binned)," "IsWeekend (binary)." Arrow connecting them labeled "Feature Engineering."]
+## Feature Engineering
 
 Feature engineering is the process of transforming raw data columns into features that make it easier for a model to learn the patterns you care about. Raw data often does not directly express the signal the model needs — you need to transform it.
 
@@ -86,9 +80,7 @@ Feature engineering is the process of transforming raw data columns into feature
 
 ---
 
-## [16:00 - 19:00] Train-Test Split and Data Leakage
-
-[SHOW DIAGRAM: Dataset bar split into three segments. Left 70% labeled "Training Set — model learns from this." Middle 15% labeled "Validation Set — tune hyperparameters." Right 15% labeled "Test Set — evaluate final model only. Never used during training." Red annotation on Test Set: "Must be sealed until final evaluation. If used earlier, you have data leakage."]
+## Train-Test Split and Data Leakage
 
 Before training any model, you must split your labeled dataset into at least two parts: a training set and a test set. The training set is used to fit the model. The test set is held out until the end to evaluate how the model performs on data it has never seen.
 
@@ -102,9 +94,7 @@ Cross-validation is a technique that repeatedly splits the training data into di
 
 ---
 
-## [19:00 - 22:00] Data Preparation in Azure Machine Learning
-
-[SHOW DIAGRAM: Azure ML Studio pipeline canvas with nodes: Data Asset (blue cylinder), Data Transformation component (gear icon), Normalize Data component (gear icon), Split Data component (fork shape), Train Model component (triangle), Evaluate Model component (bar chart icon). Arrow flow from left to right.]
+## Data Preparation in Azure Machine Learning
 
 Azure Machine Learning Studio provides built-in components for all of the data preparation tasks we have discussed.
 
@@ -118,7 +108,7 @@ Azure Machine Learning Studio provides built-in components for all of the data p
 
 ---
 
-## [22:00 - 24:00] Module Summary
+## Module Summary
 
 Let me summarize Module 13.
 

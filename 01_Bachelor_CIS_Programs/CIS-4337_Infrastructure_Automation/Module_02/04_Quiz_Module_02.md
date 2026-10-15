@@ -349,7 +349,7 @@ A colleague runs `terraform plan` and sees the message: `Error: No configuration
 - **Distractor Analysis:**
   - Why C is correct: "No configuration files" means Terraform cannot find any `.tf` files in the current working directory. The most common cause is running the command from the wrong directory.
   - Why A is incorrect: A missing state file does not produce "No configuration files." Terraform would treat all declared resources as new and plan to create them.
-  - Why B is incorrect: A missing `.terraform/` directory produces "Required plugins are not installed" or a similar provider initialization error, not "No configuration files."
+  - Why B is incorrect: A missing `.terraform/` directory produces "Required plugins are not installed" or a similar provider initialization error, not "No configuration files.
   - Why D is incorrect: An invalid provider version in the registry produces an error during `terraform init`, not during `terraform plan`, and the message would reference the provider registry lookup failure.
 
 ---

@@ -14,7 +14,7 @@ This lab applies SAP FI concepts through scenario-based analysis and transaction
 
 **Estimated Time:** 90–110 minutes
 
-**Submission:** Upload a single PDF to Canvas under "Lab 09 — SAP Financial Accounting."
+**Submission:** Upload a single PDF to Canvas under "Lab 09 — SAP Financial Accounting.
 
 ---
 
@@ -205,7 +205,7 @@ Both adjusted balances should agree. Show your arithmetic.
 2. Journal entries must be formatted in debit/credit table format — not prose.
 3. Calculations must be shown — not just answers.
 4. Name your file: `Lab09_LastName_FirstName.pdf`
-5. Upload to Canvas under "Lab 09 — SAP Financial Accounting."
+5. Upload to Canvas under "Lab 09 — SAP Financial Accounting.
 6. Deadline: See course schedule. Late submissions lose 10 points per day.
 
 ---

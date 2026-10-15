@@ -1,5 +1,23 @@
 # Video Script: Module 01 – Introduction to Project Management and PMI Framework
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Google Career Certificates &bull; IT Project Management &bull; Module 01</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" title="Google Career Certificates &bull; IT Project Management" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Google Career Certificates &bull; IT Project Management</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3310 IT Project Management
 **Estimated Duration:** 22 minutes
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
@@ -7,23 +25,21 @@
 
 ---
 
-## Section 1: Welcome and Course Overview [00:00 – 04:00]
-
+## Section 1: Welcome and Course Overview
 Hello, everyone, and welcome to CIS-3310 IT Project Management here at Texas Wesleyan University. I am Professor Nash, and I am excited to kick off what I think is one of the most practical and immediately applicable courses in the Computer Information Systems program.
 
 Before we get into the content, let me tell you what this course is designed to do. By the end of sixteen modules, you will have the foundational knowledge to sit for the CompTIA Project+ certification exam. Every topic we cover — scope, schedule, cost, quality, risk, procurement, communications, stakeholders — maps directly to the Project+ exam objectives. And if you go on to pursue the PMI CAPM or PMP, this course also builds that foundation.
 
 Now let me ask you a question. Have you ever been on a team that was supposed to deliver something — a website, an event, a product — and it went over budget, ran late, or the final result was nothing like what was promised? That experience is almost always a symptom of poor project management. This course teaches you how to prevent that.
 
-[SHOW SLIDE] Title card: "Module 01 — Introduction to Project Management and PMI Framework"
+ Title card: "Module 01 — Introduction to Project Management and PMI Framework
 
 Today we cover four main areas. First, we define what a project is and distinguish it from operations. Second, we explore the Triple Constraint model. Third, we introduce the PMI Process Groups. And fourth, we survey the ten PMI Knowledge Areas. Let's get started.
 
 ---
 
-## Section 2: What Is a Project? [04:00 – 09:00]
-
-[SHOW SLIDE] Project vs. Operations comparison table
+## Section 2: What Is a Project?
+ Project vs. Operations comparison table
 
 The PMI definition of a project is precise, and you need to memorize it word for word for the exam. A project is a **temporary endeavor undertaken to create a unique product, service, or result.**
 
@@ -37,11 +53,11 @@ Let's unpack those three words: temporary, unique, and endeavor.
 
 Now, compare that to operations. Operations are ongoing, repetitive activities that sustain the business. Running a help desk, processing payroll every two weeks, patching servers on Patch Tuesday — these are operational activities. They have no defined end date. They repeat.
 
-[SHOW SLIDE] Project vs. Operations comparison table — highlight "no defined end date" for Operations
+ Project vs. Operations comparison table — highlight "no defined end date" for Operations
 
 Here is your first exam tip:
 
-> **Project+ Exam Tip:** When an exam question describes activities that are "ongoing," "repetitive," or have "no defined end date," the answer is always Operations — not a project. The keywords to look for in project definitions are "temporary," "unique," and "defined end date."
+> **Project+ Exam Tip:** When an exam question describes activities that are "ongoing," "repetitive," or have "no defined end date," the answer is always Operations — not a project. The keywords to look for in project definitions are "temporary," "unique," and "defined end date.
 
 Examples of IT projects include: migrating a data center to the cloud, developing a new mobile application, deploying a company-wide cybersecurity training platform, or upgrading a network to support a new campus building.
 
@@ -49,9 +65,8 @@ Examples of IT operations include: monitoring network uptime, responding to help
 
 ---
 
-## Section 3: The Triple Constraint [09:00 – 14:00]
-
-[SHOW SLIDE] Triple Constraint triangle diagram with Scope, Time, and Cost at the three corners and Quality in the center
+## Section 3: The Triple Constraint
+ Triple Constraint triangle diagram with Scope, Time, and Cost at the three corners and Quality in the center
 
 Every project operates within three constraints. This is called the Triple Constraint, or sometimes the Iron Triangle. The three constraints are Scope, Time, and Cost.
 
@@ -65,7 +80,7 @@ Here is the most important thing to understand about the Triple Constraint: thes
 
 Let me give you an IT example. Imagine you are managing a software development project. Halfway through, the client says they want three new features that were not in the original scope. What happens? If the schedule is fixed, you need more developers — which means more cost. If the budget is fixed, you need more time. If both schedule and budget are fixed, you have to remove other features to add the new ones — you are trading scope for scope.
 
-[SHOW SLIDE] Triple Constraint diagram with arrow annotations showing trade-off relationships
+ Triple Constraint diagram with arrow annotations showing trade-off relationships
 
 Quality sits at the center of the triangle. Quality is the outcome that all three constraints affect. Compress the schedule too aggressively, and quality suffers. Cut the budget too deeply, and quality suffers. Expand scope without adjusting time or cost, and quality suffers.
 
@@ -75,9 +90,8 @@ A fourth element is sometimes added to create what some call the "Diamond" model
 
 ---
 
-## Section 4: The PMI Process Groups [14:00 – 18:30]
-
-[SHOW SLIDE] Five Process Groups in overlapping circles: Initiating, Planning, Executing, Monitoring and Controlling, Closing
+## Section 4: The PMI Process Groups
+ Five Process Groups in overlapping circles: Initiating, Planning, Executing, Monitoring and Controlling, Closing
 
 PMI organizes project management activities into five Process Groups. These are not sequential project phases — they are categories of management activities that can happen multiple times across a project and even overlap with one another.
 
@@ -93,15 +107,14 @@ The five Process Groups are:
 
 **5. Closing** — This is where the project is formally ended. Deliverables are accepted, contracts are closed, lessons are documented, and the team is released.
 
-[SHOW SLIDE] Process Groups vs. Phases table — clarifying the difference
+ Process Groups vs. Phases table — clarifying the difference
 
 > **Project+ Exam Trap:** Students frequently confuse Process Groups with project lifecycle phases. A phase is a segment of the project timeline (Design phase, Build phase, Test phase). A Process Group is a category of management activities. A single phase can include Initiating, Planning, Executing, and Monitoring and Controlling activities simultaneously.
 
 ---
 
-## Section 5: The Ten PMI Knowledge Areas [18:30 – 21:00]
-
-[SHOW SLIDE] Ten Knowledge Areas list
+## Section 5: The Ten PMI Knowledge Areas
+ Ten Knowledge Areas list
 
 PMI also organizes project management by subject matter into ten Knowledge Areas. Each Knowledge Area covers a specific discipline, and each has processes that belong to various Process Groups.
 
@@ -124,8 +137,7 @@ We will spend at least one full module on each of these areas throughout this co
 
 ---
 
-## End Card [21:00 – 22:00]
-
+## End Card
 That wraps up Module 01. Here is what you need to do before our next session.
 
 Complete the Module 01 Reading Guide — pay special attention to the glossary terms and the certification exam tips.

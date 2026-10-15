@@ -114,7 +114,7 @@ A network security team wants to detect unusual connections in network traffic l
 - A) Train a supervised binary classification model on the normal traffic data.
 - B) Apply unsupervised anomaly detection to learn the distribution of normal traffic and flag deviations.
 - C) Use Azure AutoML with a classification task type and the normal traffic data as a training set.
-- D) Apply hierarchical clustering and label the smallest cluster as "malicious."
+- D) Apply hierarchical clustering and label the smallest cluster as "malicious.
 
 **Correct Answer:** B
 

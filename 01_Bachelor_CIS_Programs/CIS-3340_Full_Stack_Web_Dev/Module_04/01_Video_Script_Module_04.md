@@ -1,5 +1,23 @@
 # Video Script: Module 04 - JavaScript DOM Manipulation
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Full Stack Web Development for Beginners &bull; Module 04</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=nu_pCVPKzTk" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/nu_pCVPKzTk" title="freeCodeCamp &bull; Full Stack Web Development for Beginners" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Full Stack Web Development for Beginners</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3340 Full Stack Web Development
 **Estimated Duration:** 24 minutes
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
@@ -7,8 +25,7 @@
 
 ---
 
-## Section 1: Introduction - JavaScript and the DOM [00:00 - 04:00]
-
+## Section 1: Introduction - JavaScript and the DOM
 Welcome to Module 04. I am Professor Nash. In the first three modules we built structured, styled, and responsive HTML pages. Starting today, we make those pages respond to user interactions with JavaScript.
 
 This module focuses on DOM manipulation — the foundation of all client-side JavaScript. Before React, before Vue, before any framework, there is the DOM API. Every JavaScript framework is an abstraction on top of this API. Understanding the raw DOM makes you a better framework developer because you understand what is happening underneath.
@@ -23,8 +40,7 @@ Let me open a blank HTML file in Chrome and demonstrate the DOM tree in DevTools
 
 ---
 
-## Section 2: Querying the DOM [04:00 - 09:00]
-
+## Section 2: Querying the DOM
 [SHOW CODE]
 
 The four query methods you will use in every project:
@@ -89,8 +105,7 @@ card.style.borderRadius    = '8px';
 
 ---
 
-## Section 3: Event Listeners [09:00 - 14:30]
-
+## Section 3: Event Listeners
 [SHOW CODE]
 
 Events are how users communicate with the page. `addEventListener` registers a callback that executes when the event fires:
@@ -148,8 +163,7 @@ btn.addEventListener('click', e => {
 
 ---
 
-## Section 4: Creating, Updating, and Removing DOM Elements [14:30 - 19:30]
-
+## Section 4: Creating, Updating, and Removing DOM Elements
 [SHOW CODE]
 
 Dynamic content — building DOM nodes from data:
@@ -205,8 +219,7 @@ grid.addEventListener('click', function(event) {
 
 ---
 
-## Section 5: Lab Preview — Searchable Card List [19:30 - 24:00]
-
+## Section 5: Lab Preview — Searchable Card List
 [SHOW CODE]
 
 The complete interactive component we will build in the lab:

@@ -192,7 +192,7 @@ Review the following description of a sample executive dashboard and answer the 
 
 ### Dashboard Description
 
-A Finance VP's monthly dashboard contains: 22 numeric tiles showing various account balances and transaction counts, no charts or visualizations, no color-coded thresholds, no trend data (just current-month point-in-time values), a last-refresh timestamp from 11 days ago, and a note at the bottom saying "Data accurate as of last BW extraction."
+A Finance VP's monthly dashboard contains: 22 numeric tiles showing various account balances and transaction counts, no charts or visualizations, no color-coded thresholds, no trend data (just current-month point-in-time values), a last-refresh timestamp from 11 days ago, and a note at the bottom saying "Data accurate as of last BW extraction.
 
 ### Critique Questions
 

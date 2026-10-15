@@ -35,7 +35,7 @@ Draw a Context Diagram (Level 0 DFD) for the Ridgeview Community Library Checkou
 
 Your diagram must include:
 
-- A single process bubble labeled "Ridgeview Library Checkout System"
+- A single process bubble labeled "Ridgeview Library Checkout System
 - A system boundary rectangle
 - All external entities identified from the case study (minimum 3)
 - All data flows between the system and the external entities, each labeled with the name of the data being carried

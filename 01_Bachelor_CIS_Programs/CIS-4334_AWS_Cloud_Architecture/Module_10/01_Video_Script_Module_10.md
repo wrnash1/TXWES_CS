@@ -42,8 +42,6 @@ Let's start at the foundation — the VPC itself.
 
 ### SEGMENT 2 — VPC Architecture (1:30–5:30)
 
-[SHOW DIAGRAM: A VPC with CIDR 10.0.0.0/16 spanning all AZs in a region. Inside the VPC: two public subnets (10.0.1.0/24 in AZ-A, 10.0.2.0/24 in AZ-B) and two private subnets (10.0.3.0/24 in AZ-A, 10.0.4.0/24 in AZ-B). Internet Gateway attached to VPC. NAT Gateway in public subnet AZ-A. Route tables shown for public and private subnets with arrows to IGW and NAT GW respectively.]
-
 A Virtual Private Cloud — VPC — is a logically isolated section of the AWS cloud where you define your own virtual network. You control the IP address range, subnets, route tables, and network gateways. Every VPC is region-scoped — it spans all Availability Zones in that region.
 
 You define the IP address range for a VPC using a CIDR block. AWS allows VPC CIDR sizes from /16 (65,536 IPs) to /28 (16 IPs). The standard enterprise practice is to use a /16 for the VPC and then subdivide it into /24 subnets, providing 256 IPs per subnet (minus 5 reserved by AWS). Choose a CIDR range from the RFC 1918 private address space: 10.0.0.0/8, 172.16.0.0/12, or 192.168.0.0/16.
@@ -58,8 +56,6 @@ The standard multi-tier VPC architecture across 3 AZs has 9 subnets: 3 public (o
 
 ### SEGMENT 3 — Internet Gateway and NAT Gateway (5:30–8:30)
 
-[SHOW DIAGRAM: Traffic flow comparison — Left: public subnet instance with IGW. Arrow shows bidirectional traffic between instance and internet via IGW. Right: private subnet instance with NAT Gateway in public subnet. Arrow shows instance → NAT GW → IGW → internet (one direction only, with annotation "Internet cannot initiate inbound connections to private instance")]
-
 **Internet Gateway (IGW)** is a horizontally scaled, redundant, highly available VPC component that enables bidirectional communication between the VPC and the internet. Attaching an IGW to a VPC and adding `0.0.0.0/0 → IGW` to a subnet's route table makes that subnet public. The IGW performs Network Address Translation between public IP addresses and private IP addresses for instances with assigned public IPs or Elastic IPs.
 
 **NAT Gateway** enables instances in private subnets to initiate outbound connections to the internet while preventing the internet from initiating inbound connections to those instances. The NAT Gateway is placed in a public subnet and has an Elastic IP address. The private subnet's route table sends `0.0.0.0/0` to the NAT Gateway, which translates the source IP and forwards the request to the IGW.
@@ -71,8 +67,6 @@ On the exam: instances in a public subnet can receive inbound traffic from the i
 ---
 
 ### SEGMENT 4 — VPC Peering and Transit Gateway (8:30–12:00)
-
-[SHOW DIAGRAM: Left side — Three VPCs each connected to each other with double-headed arrows labeled "VPC Peering." Labels show "3 VPCs = 3 peering connections." Text annotation: "10 VPCs = 45 peering connections." Right side — Six VPCs all connected to a central Transit Gateway hub with single arrows. Label: "Transit Gateway = hub-and-spoke, 1 attachment per VPC."]
 
 When you need to connect multiple VPCs, you have two primary options.
 
@@ -90,8 +84,6 @@ On the exam: if you see 3 or fewer VPCs that need to communicate → VPC Peering
 
 ### SEGMENT 5 — PrivateLink and VPC Endpoints (12:00–14:30)
 
-[SHOW DIAGRAM: Consumer VPC and Provider VPC. Without PrivateLink: traffic path goes Consumer EC2 → IGW → Internet → IGW → Provider ALB (passes through public internet). With PrivateLink: traffic path shows Consumer EC2 → Interface VPC Endpoint (ENI in consumer VPC) → PrivateLink → Provider NLB (stays entirely within AWS network, never touching internet).]
-
 **AWS PrivateLink** enables you to privately access AWS services or services hosted by other AWS customers without sending traffic over the public internet. PrivateLink creates an Interface VPC Endpoint — an Elastic Network Interface in your VPC — that routes traffic to the target service through the AWS private network.
 
 VPC Endpoints come in two types. **Interface Endpoints** (powered by PrivateLink) create ENIs in your subnets and provide private connectivity to AWS services like S3, DynamoDB, SQS, SNS, and hundreds of other services, as well as marketplace and partner services. Interface endpoints have an hourly cost and a per-GB data processing charge.
@@ -103,8 +95,6 @@ On the exam: private access to S3 from a private EC2 instance without NAT Gatewa
 ---
 
 ### SEGMENT 6 — Route 53 Routing Policies (14:30–18:00)
-
-[SHOW DIAGRAM: Route 53 logo at center with six routing policy types branching out as labeled boxes: Simple, Weighted, Latency-Based, Failover, Geolocation, Geoproximity. Each box has a one-line description.]
 
 Amazon Route 53 is AWS's DNS service. Beyond basic DNS resolution, Route 53 supports advanced routing policies that control how traffic is distributed across resources. The SAA-C03 exam tests routing policy selection heavily.
 
@@ -125,8 +115,6 @@ On the exam: "Blue-green deployment, shift traffic gradually" → Weighted. "Rou
 ---
 
 ### SEGMENT 7 — Security Groups and NACLs (18:00–20:30)
-
-[SHOW DIAGRAM: VPC with a security group boundary around an EC2 instance (labeled "Stateful — return traffic automatic") and a NACL boundary around the subnet (labeled "Stateless — must explicitly allow both inbound and outbound"). Arrows show inbound request and return traffic with annotation for each layer.]
 
 Every VPC has two network security layers: Security Groups and Network Access Control Lists (NACLs).
 

@@ -126,7 +126,7 @@ The tester decodes the payload and sees:
 
 The tester wants to test whether the application is vulnerable to the JWT "none" algorithm attack. What modification should be tested?
 
-- A) Change `user_id` to `1` and re-sign the JWT with the HS256 algorithm using the key "secret"
+- A) Change `user_id` to `1` and re-sign the JWT with the HS256 algorithm using the key "secret
 - B) Change `alg` to `"none"`, change `role` to `"admin"`, re-encode the header and payload, and send the token with an empty signature
 - C) Delete the entire JWT header and send only the payload portion
 - D) Change `alg` to `"RS256"` and re-sign with an attacker-generated RSA private key

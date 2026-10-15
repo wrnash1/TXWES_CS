@@ -98,7 +98,7 @@ Now let's talk about change management — the discipline of ensuring that peopl
 
 The most widely used model in IT project contexts is ADKAR, developed by Prosci. ADKAR is an acronym. Each letter represents a stage that an individual must work through to successfully adopt a change.
 
-**A — Awareness.** The person understands why the change is happening. Not just "we are getting a new system" but "we are getting a new system because the old one cannot handle our growth, and without it we will face regulatory penalties by year end."
+**A — Awareness.** The person understands why the change is happening. Not just "we are getting a new system" but "we are getting a new system because the old one cannot handle our growth, and without it we will face regulatory penalties by year end.
 
 Without Awareness, people do not understand why they should engage with the change. Resistance begins here.
 

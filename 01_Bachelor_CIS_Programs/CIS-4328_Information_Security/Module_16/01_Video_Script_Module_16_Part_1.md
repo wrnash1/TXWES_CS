@@ -72,7 +72,7 @@ AAA stands for Authentication, Authorization, and Accounting. These three functi
 - Somewhere you are: geolocation-based access
 - Something you do: behavioral biometrics such as typing cadence
 
-Multi-factor authentication (MFA) requires at least two distinct factor categories. Combining a password (know) with a phone-based TOTP code (have) is MFA. Combining two passwords is not MFA — both are "something you know."
+Multi-factor authentication (MFA) requires at least two distinct factor categories. Combining a password (know) with a phone-based TOTP code (have) is MFA. Combining two passwords is not MFA — both are "something you know.
 
 **Exam Trap 1**: The exam will describe a scenario where a user enters a password and then answers a security question. Students often mark this as MFA. It is not — both factors are "something you know," making it single-factor with redundancy.
 

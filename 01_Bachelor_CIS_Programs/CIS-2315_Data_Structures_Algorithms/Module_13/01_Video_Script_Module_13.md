@@ -26,21 +26,15 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 13 | Greedy Algorithms | CIS-2315"]**
-
-"A greedy algorithm makes the locally optimal choice at each step and never reconsiders past decisions. When greedy works, it is remarkably simple and fast — often O(n) or O(n log n). The challenge is proving that greedy works for a given problem. This module covers three canonical greedy algorithms: activity selection, interval scheduling, and the Jump Game. It also clarifies when greedy fails — specifically, why the 0/1 knapsack problem requires dynamic programming instead."
+A greedy algorithm makes the locally optimal choice at each step and never reconsiders past decisions. When greedy works, it is remarkably simple and fast — often O(n) or O(n log n). The challenge is proving that greedy works for a given problem. This module covers three canonical greedy algorithms: activity selection, interval scheduling, and the Jump Game. It also clarifies when greedy fails — specifically, why the 0/1 knapsack problem requires dynamic programming instead.
 
 ---
 
-## [01:30 – 08:00] Part 1 — Activity Selection and Interval Scheduling
+## Part 1 — Activity Selection and Interval Scheduling
 
-**[SHOW SLIDE: "Activity Selection — Greedy by Earliest Finish Time"]**
-
-"Given a list of activities with start and finish times, select the maximum number of non-overlapping activities.
-
-**[SHOW DIAGRAM: activities as horizontal bars on a timeline]**
+Given a list of activities with start and finish times, select the maximum number of non-overlapping activities.
 
 ```text
 Activity:  A   B   C   D   E   F
@@ -49,8 +43,6 @@ Finish:    2   4   6   7   5   9
 ```
 
 Greedy strategy: always pick the activity that finishes earliest. This leaves the most room for future activities.
-
-[PAUSE]
 
 ```python
 def activity_selection(activities):
@@ -74,25 +66,19 @@ def activity_selection(activities):
     return selected
 ```
 
-**[DEMO: trace on activities above — sorted by finish: A(1,2), B(3,4), E(3,5), D(5,7), C(0,6), F(5,9)]**
-
 Wait — let me sort correctly: A(1,2), B(3,4), E(3,5), C(0,6), D(5,7), F(5,9).
 
 Selected: A(finish=2). Next B: start=3 >= 2 → select B(finish=4). Next E: start=3 < 4 → skip. Next C: start=0 < 4 → skip. Next D: start=5 >= 4 → select D(finish=7). Next F: start=5 < 7 → skip.
 
 Result: A, B, D — 3 activities. This is optimal.
 
-[PAUSE]
-
-**Why does earliest-finish greedy work?** Exchange argument: suppose an optimal solution selects activity X as its first choice instead of the earliest-finishing activity A. Since A finishes no later than X, we can replace X with A in the optimal solution — the remaining available activities don't decrease. So any optimal solution can be converted to one that starts with A, without reducing the total count."
+**Why does earliest-finish greedy work?** Exchange argument: suppose an optimal solution selects activity X as its first choice instead of the earliest-finishing activity A. Since A finishes no later than X, we can replace X with A in the optimal solution — the remaining available activities don't decrease. So any optimal solution can be converted to one that starts with A, without reducing the total count.
 
 ---
 
-## [08:00 – 14:00] Part 2 — Jump Game I and II
+## Part 2 — Jump Game I and II
 
-**[SHOW SLIDE: "Jump Game — Greedy Reachability"]**
-
-"**Jump Game I (LeetCode #55):** Given an array where each element is the maximum jump length, return True if you can reach the last index from index 0.
+**Jump Game I (LeetCode #55):** Given an array where each element is the maximum jump length, return True if you can reach the last index from index 0.
 
 Greedy: track the furthest index reachable from any position seen so far.
 
@@ -110,11 +96,9 @@ def can_jump(nums):
     return True
 ```
 
-**[DEMO: `can_jump([2,3,1,1,4])` — trace: max_reach=0;i=0,jump=2,reach=2;i=1,jump=3,reach=4;i=2,reach=3 no update;i=3,reach=4;i=4,reach=8 → return True]**
+**)` — trace: max_reach=0;i=0,jump=2,reach=2;i=1,jump=3,reach=4;i=2,reach=3 no update;i=3,reach=4;i=4,reach=8 → return True]**
 
-**[DEMO: `can_jump([3,2,1,0,4])` — trace: i=3,max_reach=3;i=4,i>max_reach → return False]**
-
-[PAUSE]
+**)` — trace: i=3,max_reach=3;i=4,i>max_reach → return False]**
 
 **Jump Game II (LeetCode #45):** Minimum number of jumps to reach the last index (guaranteed reachable).
 
@@ -139,7 +123,7 @@ def jump(nums):
     return jumps
 ```
 
-**[DEMO: `jump([2,3,1,1,4])` — trace:]**
+**)` — trace:]**
 
 ```text
 i=0: farthest=max(0,0+2)=2; i==current_end(0) → jumps=1, current_end=2
@@ -150,11 +134,9 @@ Return jumps=2 ✓
 
 ---
 
-## [14:00 – 19:00] Part 3 — When Greedy Fails
+## Part 3 — When Greedy Fails
 
-**[SHOW SLIDE: "Greedy Failure: 0/1 Knapsack"]**
-
-"Greedy works when local optimality implies global optimality. It fails when taking the best current choice forecloses a better future choice.
+Greedy works when local optimality implies global optimality. It fails when taking the best current choice forecloses a better future choice.
 
 **Fractional Knapsack** (greedy works): items can be divided. Sort by value/weight ratio; take the most valuable fraction first.
 
@@ -191,19 +173,15 @@ Optimal: take B(20kg) + C(30kg) = 50kg → total 220
 Greedy gives 160; optimal is 220. Greedy fails.
 ```
 
-[PAUSE]
-
 The reason: taking the highest-ratio item (A) fills space and prevents the combination B+C that has better total value. Without fractional option, greedy cannot see this.
 
-**0/1 Knapsack requires dynamic programming** — see Module 14."
+**0/1 Knapsack requires dynamic programming** — see Module 14.
 
 ---
 
-## [19:00 – 23:00] Part 4 — Gas Station (LeetCode #134)
+## Part 4 — Gas Station (LeetCode #134)
 
-**[SHOW SLIDE: "Gas Station — Circular Greedy"]**
-
-"Given gas stations arranged in a circle, each with `gas[i]` liters of fuel and `cost[i]` to reach the next station, find the starting station index to complete the circuit, or -1 if impossible.
+Given gas stations arranged in a circle, each with `gas[i]` liters of fuel and `cost[i]` to reach the next station, find the starting station index to complete the circuit, or -1 if impossible.
 
 ```python
 def can_complete_circuit(gas, cost):
@@ -229,7 +207,7 @@ def can_complete_circuit(gas, cost):
     return start if total_tank >= 0 else -1
 ```
 
-**[DEMO: gas=[1,2,3,4,5], cost=[3,4,5,1,2]]**
+**, cost=[3,4,5,1,2]]**
 
 ```text
 i=0: diff=-2, total=-2, curr=-2 < 0 → start=1, curr=0
@@ -242,7 +220,7 @@ total >= 0 → return start=3 ✓
 
 The greedy insight: if total gas >= total cost, a solution always exists and is unique. When the running tank goes negative at station i, none of stations 0..i can be the start — reset to i+1.
 
-The Module 13 lab covers activity selection, Jump Game I and II, and the Gas Station problem, plus a comparison of fractional vs 0/1 knapsack. Good luck."
+The Module 13 lab covers activity selection, Jump Game I and II, and the Gas Station problem, plus a comparison of fractional vs 0/1 knapsack. Good luck.
 
 ---
 

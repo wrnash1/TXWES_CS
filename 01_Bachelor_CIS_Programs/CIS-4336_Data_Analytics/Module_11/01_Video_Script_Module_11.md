@@ -54,8 +54,6 @@ The `products` table contains: product_id, product_name, category, and unit_pric
 
 [SHOW CHART — Entity-relationship diagram of the three tables with primary and foreign key connections]
 
-[PAUSE]
-
 These three tables will appear in every example. Keep this diagram in mind as we go.
 
 ---
@@ -63,8 +61,6 @@ These three tables will appear in every example. Keep this diagram in mind as we
 ## Segment 3: Aggregations and GROUP BY (2:30–6:00)
 
 Aggregation functions operate on a set of rows and return a single value. The most important ones are COUNT, SUM, AVG, MIN, and MAX.
-
-[PAUSE]
 
 ```sql
 -- Total revenue and order count by region
@@ -82,8 +78,6 @@ ORDER BY total_revenue DESC;
 
 The `GROUP BY` clause collapses all rows with the same region value into a single output row. The aggregate functions then apply within each group.
 
-[PAUSE]
-
 A critical rule: every column in the SELECT list that is not inside an aggregate function must appear in the GROUP BY clause. If you SELECT `region` and `sales_rep` but only GROUP BY `region`, the database does not know which `sales_rep` value to show — it will throw an error or return undefined behavior.
 
 ```sql
@@ -97,8 +91,6 @@ FROM orders
 GROUP BY region, EXTRACT(YEAR FROM order_date)
 ORDER BY order_year, total_revenue DESC;
 ```
-
-[PAUSE]
 
 ### HAVING Clause
 
@@ -117,8 +109,6 @@ HAVING SUM(amount) > 500000
 ORDER BY total_revenue DESC;
 ```
 
-[PAUSE]
-
 Mnemonic for the order of SQL clause execution:
 
 `FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT`
@@ -134,8 +124,6 @@ Window functions are the most powerful feature we are covering today. They perfo
 Unlike GROUP BY, window functions do not reduce the number of output rows. Every input row still appears in the output, with the window function result added as an additional column.
 
 [SHOW CHART — Visual diagram: regular aggregate collapses rows vs. window function adds a column while keeping all rows]
-
-[PAUSE]
 
 The syntax is:
 
@@ -162,8 +150,6 @@ SELECT
 FROM orders;
 ```
 
-[PAUSE]
-
 ROW_NUMBER always produces unique values — even if two rows are tied, they receive different numbers. This makes it useful for selecting exactly N rows per group.
 
 ```sql
@@ -182,8 +168,6 @@ FROM (
 WHERE rn <= 3;
 ```
 
-[PAUSE]
-
 ### RANK and DENSE_RANK
 
 RANK assigns the same rank to tied values, then skips to leave a gap. If two rows tie for rank 1, the next row gets rank 3 (not 2).
@@ -200,8 +184,6 @@ SELECT
 FROM orders
 ORDER BY amount DESC;
 ```
-
-[PAUSE]
 
 When to use each:
 
@@ -239,8 +221,6 @@ FROM (
 ORDER BY order_month;
 ```
 
-[PAUSE]
-
 `LAG(column, offset)` returns the value from `offset` rows before the current row. `LEAD(column, offset)` returns the value from `offset` rows after.
 
 Both functions accept an optional third argument — the default value to return when the offset goes beyond the partition boundaries (e.g., the first row has no previous row for LAG).
@@ -249,8 +229,6 @@ Both functions accept an optional third argument — the default value to return
 -- LAG with default value of 0
 LAG(monthly_revenue, 1, 0) OVER (ORDER BY order_month)
 ```
-
-[PAUSE]
 
 ### Running Total with SUM OVER
 
@@ -287,8 +265,6 @@ WITH cte_name AS (
 SELECT * FROM cte_name;
 ```
 
-[PAUSE]
-
 You can chain multiple CTEs in a single query:
 
 ```sql
@@ -315,8 +291,6 @@ WHERE rank_val = 1
 ORDER BY rep_revenue DESC;
 ```
 
-[PAUSE]
-
 This query is equivalent to nested subqueries but far more readable. Notice that `ranked_reps` references `regional_totals` — CTEs can reference earlier CTEs in the same WITH clause.
 
 CTEs are also the building block for recursive queries, which can traverse hierarchical data (like an organizational chart) — though that is beyond today's scope.
@@ -326,8 +300,6 @@ CTEs are also the building block for recursive queries, which can traverse hiera
 ## Segment 7: Subqueries (17:00–19:30)
 
 A subquery is a SELECT statement nested inside another SQL statement. Subqueries can appear in the SELECT, FROM, WHERE, and HAVING clauses.
-
-[PAUSE]
 
 ### Subquery in WHERE
 
@@ -344,8 +316,6 @@ ORDER BY amount DESC;
 
 The inner query `SELECT AVG(amount) FROM orders` executes first and returns a single value. The outer query then filters using that value.
 
-[PAUSE]
-
 ### Correlated Subquery
 
 A correlated subquery references a column from the outer query — it executes once per outer row, which can be slow on large tables.
@@ -361,8 +331,6 @@ WHERE o.amount > (
 )
 ORDER BY o.customer_id, o.amount DESC;
 ```
-
-[PAUSE]
 
 ### Subquery in FROM (Derived Table)
 
@@ -388,8 +356,6 @@ This pattern — a subquery in the FROM clause — is sometimes called a derived
 ## Segment 8: Module Summary (19:30–21:00)
 
 Let me wrap up.
-
-[PAUSE]
 
 Aggregations and GROUP BY:
 

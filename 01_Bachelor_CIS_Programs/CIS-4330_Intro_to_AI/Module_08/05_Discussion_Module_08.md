@@ -20,7 +20,7 @@ Professor Nash note: Each scenario involves a genuine tension between efficiency
 
 A company with 8,000 employees conducts quarterly engagement surveys. Each survey includes five open-ended text questions. Leadership wants to use Azure AI Language sentiment analysis and key phrase extraction to automatically score and summarize responses rather than reading them manually.
 
-The HR director argues this will surface systemic issues faster. The employee union representative argues that automated sentiment scoring may misread sarcasm, cultural idioms, and context — particularly from non-native English speakers — and could lead to dismissing real complaints because they score as "neutral."
+The HR director argues this will surface systemic issues faster. The employee union representative argues that automated sentiment scoring may misread sarcasm, cultural idioms, and context — particularly from non-native English speakers — and could lead to dismissing real complaints because they score as "neutral.
 
 Respond to the following prompts in 175–225 words:
 

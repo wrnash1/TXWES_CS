@@ -195,7 +195,7 @@ Throwaway prototyping (also called rapid or exploratory prototyping) creates a p
 Characteristics:
 
 - Speed is the priority over quality or robustness
-- Code and design are deliberately "rough"
+- Code and design are deliberately "rough
 - Typically used for high-uncertainty requirements
 - Result feeds back into requirements, not directly into development
 
@@ -319,7 +319,7 @@ Facilitation principles for design validation:
 - Begin with a brief explanation: participants are evaluating the design, not being evaluated themselves
 - Ask participants to think aloud — narrate what they are trying to do and what they expect to happen
 - Do not intervene when participants struggle unless they are completely stuck
-- Ask probing questions after tasks: "What were you expecting to happen when you clicked that?" "Was there anything that confused you?"
+- Ask probing questions after tasks: "What were you expecting to happen when you clicked that?" "Was there anything that confused you?
 
 ### 5.4 Documenting Findings
 
@@ -551,8 +551,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

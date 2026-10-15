@@ -38,7 +38,7 @@ Respond to at least two classmates' posts (minimum 75 words each):
 
 ## Scenario 2: The SOC 2 Audit Preparation Sprint
 
-A SaaS company has been notified that its largest client — representing 38% of annual revenue — will require a SOC 2 Type II report within 90 days as a condition of contract renewal. The company has never undergone a SOC 2 audit. An internal assessment reveals: no formal change management process (changes are deployed by developers directly to production), no documented incident response plan, and no access review process — former employees' accounts are reviewed manually and inconsistently. The CEO says, "We just need to pass the audit. Do whatever it takes in 90 days."
+A SaaS company has been notified that its largest client — representing 38% of annual revenue — will require a SOC 2 Type II report within 90 days as a condition of contract renewal. The company has never undergone a SOC 2 audit. An internal assessment reveals: no formal change management process (changes are deployed by developers directly to production), no documented incident response plan, and no access review process — former employees' accounts are reviewed manually and inconsistently. The CEO says, "We just need to pass the audit. Do whatever it takes in 90 days.
 
 **Initial Post Prompt (Due Wednesday at 11:59 PM):**
 
@@ -60,7 +60,7 @@ Respond to at least two classmates' posts (minimum 75 words each):
 
 ## Scenario 3: The Compliance Dashboard Debate
 
-An IT director at a government contractor presents a compliance dashboard at a quarterly leadership meeting. The dashboard shows: 94% of controls green, 6% yellow, zero red. The compliance team celebrates. Two weeks later, an external auditor reports 17 findings from the same quarter — including three related to access control failures that affect systems handling government contract data. The IT director is confused: "How can we have a 94% green dashboard and 17 audit findings?"
+An IT director at a government contractor presents a compliance dashboard at a quarterly leadership meeting. The dashboard shows: 94% of controls green, 6% yellow, zero red. The compliance team celebrates. Two weeks later, an external auditor reports 17 findings from the same quarter — including three related to access control failures that affect systems handling government contract data. The IT director is confused: "How can we have a 94% green dashboard and 17 audit findings?
 
 **Initial Post Prompt (Due Wednesday at 11:59 PM):**
 

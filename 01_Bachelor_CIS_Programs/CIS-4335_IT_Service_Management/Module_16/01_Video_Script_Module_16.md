@@ -28,11 +28,8 @@
 
 ---
 
-## Section 1: Welcome and Final Module Overview [00:00 - 02:30]
-
+## Section 1: Welcome and Final Module Overview
 Welcome to Module 16 — the final module of CIS-4335. I am Professor Nash. This module is dedicated entirely to ITIL 4 Foundation exam preparation. Everything we have covered in the previous fifteen modules has been building toward this moment.
-
-[SHOW DIAGRAM: Title slide — "Module 16: ITIL 4 Foundation Exam Preparation" with ITIL 4 Foundation certification badge and exam format summary: 40 questions, 65% pass mark, 60 minutes]
 
 The ITIL 4 Foundation exam is a globally recognized certification administered by Axelos and tested by PeopleCert. Earning this credential signals to employers that you understand the language, principles, and practices of modern IT service management. It is the starting point for a career pathway in ITSM and the prerequisite for the higher ITIL 4 certifications.
 
@@ -40,9 +37,7 @@ In this module we will review all key concepts, walk through the exam format and
 
 ---
 
-## Section 2: Exam Format and Rules [02:30 - 05:00]
-
-[SHOW DIAGRAM: Exam format summary card — 40 multiple choice questions, 26 correct to pass (65%), 60 minutes, closed book, no negative marking, all questions equally weighted, available online proctored or at test centers]
+## Section 2: Exam Format and Rules
 
 The ITIL 4 Foundation exam has five key format facts you must know:
 
@@ -56,15 +51,11 @@ The ITIL 4 Foundation exam has five key format facts you must know:
 
 **No negative marking.** There is no penalty for wrong answers. If you are unsure of an answer, always guess — do not leave a question blank.
 
-[PAUSE]
-
 The exam is available through PeopleCert either as an online proctored exam (taken from your own computer with webcam monitoring) or at an authorized test center. The course fee may include an exam voucher — check with your institution.
 
 ---
 
-## Section 3: Key Concepts Review — Service Value System [05:00 - 10:00]
-
-[SHOW DIAGRAM: ITIL 4 SVS complete diagram — five components: Guiding Principles, Governance, Service Value Chain, Practices, and Continual Improvement — surrounding the central "Value" output]
+## Section 3: Key Concepts Review — Service Value System
 
 ### The Service Value System
 
@@ -80,8 +71,6 @@ The ITIL 4 Service Value System (SVS) describes how all the components and activ
 
 **Continual Improvement** — an ongoing effort to improve all aspects of the organization's products, services, and practices.
 
-[PAUSE]
-
 ### The Four Dimensions
 
 ITIL 4 defines four dimensions of service management that must be considered for every service and practice:
@@ -95,9 +84,7 @@ The exam may present scenarios and ask which dimension is being neglected. Remem
 
 ---
 
-## Section 4: Key Concepts Review — Practices [10:00 - 17:00]
-
-[SHOW DIAGRAM: Practice reference grid — all 17 service management practices organized in a table with purpose statements visible for the most-tested ones]
+## Section 4: Key Concepts Review — Practices
 
 The ITIL 4 Foundation exam tests a subset of practices more heavily than others. Know the purpose of every practice, but master these in detail:
 
@@ -121,8 +108,6 @@ Key terms: Problem (unknown root cause of one or more incidents), Known Error (i
 
 Key terms: Standard change (pre-authorized), Normal change (requires individual assessment), Emergency change (expedited), Change Advisory Board (CAB), Change schedule (formerly Change Forward Schedule).
 
-[PAUSE]
-
 ### Service Request Management
 
 **Purpose:** To support the agreed quality of a service by handling all pre-defined, user-initiated service requests in an effective and user-friendly manner.
@@ -143,9 +128,7 @@ Key terms: Single point of contact, shift-left (move resolution to lower-cost ch
 
 ---
 
-## Section 5: Key Concepts Review — Value and Outcomes [17:00 - 20:00]
-
-[SHOW DIAGRAM: Value terminology map — Service, Product, Outcome, Output, Value, Utility, Warranty, Cost, Risk — with definitions and connecting arrows]
+## Section 5: Key Concepts Review — Value and Outcomes
 
 ### Critical Terminology
 
@@ -163,17 +146,13 @@ Key terms: Single point of contact, shift-left (move resolution to lower-cost ch
 
 **Risk** — A possible event that could cause harm or loss. Services remove risks from customers (they don't need to manage uptime) but may impose risks (the provider could fail to deliver).
 
-[PAUSE]
-
 ### Value Co-Creation
 
 ITIL 4 emphasizes that value is not delivered by the service provider alone — it is co-created through the relationship between provider and customer. The customer contributes to value creation by using the service effectively, providing feedback, and managing their own side of the service relationship.
 
 ---
 
-## Section 6: Exam Strategy [20:00 - 22:30]
-
-[SHOW DIAGRAM: Exam strategy checklist — five tactics listed with visual icons]
+## Section 6: Exam Strategy
 
 ### Five Exam Tactics
 
@@ -189,9 +168,7 @@ ITIL 4 emphasizes that value is not delivered by the service provider alone — 
 
 ---
 
-## Section 7: Career Pathways in ITSM [22:30 - 25:00]
-
-[SHOW DIAGRAM: ITIL 4 certification pathway — Foundation → Managing Professional or Strategic Leader → Master. Alongside: ITSM career roles — Service Desk Analyst, ITSM Process Owner, Service Delivery Manager, IT Operations Manager, CISO, CIO]
+## Section 7: Career Pathways in ITSM
 
 ### ITIL 4 Certification Pathway
 

@@ -25,15 +25,9 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: Course banner — "CIS-3321 Network Administration | Module 01: Networking Fundamentals and the OSI Model | Texas Wesleyan University"]
-
 ---
 
 ### Section 1: Welcome and Module Overview
-
-[00:00 – 01:30]
-
-[SHOW SLIDE: Professor Nash on camera with module title card]
 
 Welcome to Module 01 of CIS-3321, Network Administration. I'm Professor Nash, and I want to start by telling you something important: everything you learn in this course — routing, switching, security, wireless — all of it is built on a single conceptual framework called the OSI model. If you invest the time to truly internalize the OSI model this week, every topic that follows will make significantly more sense.
 
@@ -45,10 +39,6 @@ Let's begin.
 
 ### Section 2: Why Do We Need a Network Model?
 
-[01:30 – 03:30]
-
-[SHOW SLIDE: Split screen — left side shows two computers from different manufacturers (a Dell PC and an Apple Mac) with a question mark between them; right side shows the same two computers connected with a green checkmark]
-
 Before the OSI model existed, networks were proprietary. IBM had its own networking standard. Digital Equipment Corporation had another. A computer from one vendor literally could not communicate with a computer from another vendor without expensive, custom-built translation hardware.
 
 In 1984, the International Organization for Standardization — ISO — published the OSI model to solve this problem. It defined a universal set of rules that any vendor could follow, allowing any two devices, from any manufacturer, running any operating system, to communicate over a network.
@@ -58,10 +48,6 @@ The OSI model does not describe actual software. It is a reference model — a c
 ---
 
 ### Section 3: The Seven Layers of the OSI Model
-
-[03:30 – 07:00]
-
-[SHOW DIAGRAM: Vertical stack of seven labeled rectangles, numbered bottom to top: Layer 1 Physical, Layer 2 Data Link, Layer 3 Network, Layer 4 Transport, Layer 5 Session, Layer 6 Presentation, Layer 7 Application. Each layer has a color band — warm colors for Layers 1–4, cool colors for Layers 5–7.]
 
 [Alt-text: A vertical diagram showing seven stacked rectangles representing the OSI model layers. From bottom to top: Layer 1 Physical (red), Layer 2 Data Link (orange), Layer 3 Network (yellow), Layer 4 Transport (green), Layer 5 Session (teal), Layer 6 Presentation (blue), Layer 7 Application (purple). Each rectangle is labeled with the layer number and name.]
 
@@ -85,16 +71,12 @@ There are seven layers. Let me give you a clear description of each one, working
 
 ### Section 4: Mnemonics for the OSI Model
 
-[07:00 – 08:30]
-
-[SHOW SLIDE: Two mnemonic phrases with each word aligned to a layer]
-
 For the CompTIA Network+ exam, you must be able to name the layers from memory — both top-to-bottom and bottom-to-top.
 
-Bottom to top: "Please Do Not Throw Sausage Pizza Away"
+Bottom to top: "Please Do Not Throw Sausage Pizza Away
 Physical, Data Link, Network, Transport, Session, Presentation, Application.
 
-Top to bottom: "All People Seem To Need Data Processing"
+Top to bottom: "All People Seem To Need Data Processing
 Application, Presentation, Session, Transport, Network, Data Link, Physical.
 
 Pick one and commit it to memory this week. You will use it throughout the entire course.
@@ -104,10 +86,6 @@ Pick one and commit it to memory this week. You will use it throughout the entir
 ---
 
 ### Section 5: Protocol Data Units and Encapsulation
-
-[08:30 – 11:30]
-
-[SHOW DIAGRAM: A vertical stack showing data transformation at each layer. At the top, a block labeled "Data" at Layer 7. As the stack descends, each layer adds a header. At Layer 4, a "TCP/UDP Header" wraps the data, forming a Segment. At Layer 3, an "IP Header" wraps the segment, forming a Packet. At Layer 2, a "Frame Header" and "FCS Trailer" wrap the packet, forming a Frame. At Layer 1, the frame becomes a stream of Bits.]
 
 [Alt-text: A diagram showing the encapsulation process through the OSI layers. Starting at Layer 7 as a plain data block, each lower layer adds a protocol header. Layer 4 adds a transport header creating a Segment. Layer 3 adds an IP header creating a Packet. Layer 2 adds a frame header and trailer creating a Frame. Layer 1 outputs the Frame as a bitstream.]
 
@@ -124,10 +102,6 @@ This is why the OSI model is so powerful. Each layer trusts that the layers belo
 ---
 
 ### Section 6: Part 1 Summary
-
-[11:30 – 13:00]
-
-[SHOW SLIDE: Summary table with three columns — Layer Name, PDU Name, Key Devices/Protocols]
 
 Let's recap Part 1. You now understand why the OSI model was created and what happens at each of the seven layers. You know the PDU name at each layer — bit, frame, packet, segment, data. You understand encapsulation (adding headers going down) and decapsulation (removing headers going up).
 

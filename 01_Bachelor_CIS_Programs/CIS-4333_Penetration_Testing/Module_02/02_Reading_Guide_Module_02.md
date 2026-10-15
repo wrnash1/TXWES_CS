@@ -96,7 +96,7 @@ These topics fall primarily under the **Planning and Scoping** domain of the PT0
 
 ### Definitions You Must Know
 
-**Authorization Letter (Permission Letter):** A written document signed by a client executive granting a named tester or team permission to conduct testing against specified systems within a defined time window. Carried during the engagement and presented if internal security or law enforcement challenges the testing activity. Commonly called the "get-out-of-jail card."
+**Authorization Letter (Permission Letter):** A written document signed by a client executive granting a named tester or team permission to conduct testing against specified systems within a defined time window. Carried during the engagement and presented if internal security or law enforcement challenges the testing activity. Commonly called the "get-out-of-jail card.
 
 **Computer Fraud and Abuse Act (CFAA):** 18 U.S.C. § 1030, the primary US federal law criminalizing unauthorized computer access. Establishes both civil and criminal liability. Written authorization from the system owner is the legal mechanism that makes penetration testing lawful under this statute.
 
@@ -141,9 +141,9 @@ A complete, professionally drafted Rules of Engagement document must contain all
 
 Ambiguous scope language creates legal and professional risk. Compare these two scope definitions:
 
-Weak: "Test the client's web infrastructure."
+Weak: "Test the client's web infrastructure.
 
-Strong: "Test the web application at `app.example.com`, the API at `api.example.com`, and the server at 203.0.113.15. All other systems are explicitly out of scope including the payment processor at `pay.example.com` and all systems in the 10.100.0.0/16 range."
+Strong: "Test the web application at `app.example.com`, the API at `api.example.com`, and the server at 203.0.113.15. All other systems are explicitly out of scope including the payment processor at `pay.example.com` and all systems in the 10.100.0.0/16 range.
 
 The strong version leaves no room for interpretation. Every tester on the team, every client stakeholder, and any legal reviewer would reach the same conclusion about what is and is not authorized.
 
@@ -445,8 +445,6 @@ SANS publishes free white papers on legal and ethical considerations in penetrat
 **3. OffSec — PWK / PEN-200 Ethics and Legal Module**
 [https://www.offsec.com/courses/pen-200/](https://www.offsec.com/courses/pen-200/)
 The Offensive Security PEN-200 course (OSCP preparation) includes a dedicated module on legal and ethical responsibilities, authorization documentation, and professional conduct that aligns with PT0-002 planning and scoping objectives.
-
-
 
 ---
 

@@ -287,7 +287,7 @@ Partitioning and clustering are complementary, not alternatives:
 - The view must be authorized on the source dataset (in addition to granting the consumer
   access to the view dataset)
 - Authorized views are the standard ACE exam answer for "share data with another project
-  without exposing the raw table"
+  without exposing the raw table
 - VPC Service Controls can further restrict BigQuery access to specific VPC networks
 
 ---
@@ -443,8 +443,6 @@ Hands-on lab loading public dataset tables into BigQuery, writing SQL queries, e
 **3. Google Cloud Documentation — Introduction to Optimizing Query Performance**
 <https://cloud.google.com/bigquery/docs/best-practices-performance-overview>
 Best practices guide covering partitioning, clustering, authorized views, materialized views, and avoiding full-table scans — the optimization topics most commonly tested in ACE exam scenario questions on BigQuery cost and performance.
-
-
 
 ---
 

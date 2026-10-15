@@ -441,8 +441,6 @@ article covers the complete ufw workflow including application profiles and inte
 with other services. Both articles include worked examples and common configuration patterns
 not found in the official man pages.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

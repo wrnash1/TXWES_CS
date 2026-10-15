@@ -253,7 +253,7 @@ _________________________________________________________________
 Total params: 34,634
 ```
 
-The output shape shows `None` for the batch dimension — Keras uses `None` as a placeholder meaning "any batch size."
+The output shape shows `None` for the batch dimension — Keras uses `None` as a placeholder meaning "any batch size.
 
 ### Parameter Count Formula
 
@@ -566,8 +566,6 @@ Official guide demonstrating multi-input models, skip connections, and shared la
 **3. TensorFlow Core — tf.Tensor Guide**
 <https://www.tensorflow.org/guide/tensor>
 Comprehensive reference for tensor creation, shape manipulation, dtype casting, and the relationship between TensorFlow tensors and NumPy arrays. Covers `tf.reshape`, `tf.cast`, `tf.matmul`, and `tf.reduce_sum` — all operations appearing in this module's quiz and lab.
-
-
 
 ---
 

@@ -28,8 +28,6 @@ ERP security has three interconnected goals. First, confidentiality: only the ri
 
 In this module we cover four areas. Salesforce profiles and permission sets — the building blocks of Salesforce access control. SAP authorization objects and roles — how SAP implements access control through a structured authorization concept. Segregation of Duties — what it is, why it matters, and how to enforce it. And audit trails — how both platforms record who did what, when.
 
-[PAUSE]
-
 ---
 
 ## Segment 2: Salesforce Profiles and Permission Sets (Lines 41–85)
@@ -96,7 +94,7 @@ There are over 1,000 authorization objects in a standard SAP system. Each one go
 
 [SLIDE: Authorizations]
 
-An **Authorization** is one specific combination of values for an authorization object's fields. So an authorization for `F_BKPF_BUK` might specify: ACTVT = 01 (Create), BUKRS = 1000 (Dallas). That authorization means "can create financial documents in company code 1000."
+An **Authorization** is one specific combination of values for an authorization object's fields. So an authorization for `F_BKPF_BUK` might specify: ACTVT = 01 (Create), BUKRS = 1000 (Dallas). That authorization means "can create financial documents in company code 1000.
 
 [SLIDE: Authorization Profiles]
 
@@ -117,8 +115,6 @@ The user master record in SAP (transaction SU01) is where roles are assigned to 
 When a user is denied access to a transaction, they see an authorization error. Transaction SU53 displays the last failed authorization check for a user, showing exactly which authorization object, which field, and which value was missing. This is your primary diagnostic tool for access issues.
 
 For the SAP exam: know what SU53 does, what PFCG is, and the difference between a single role and a composite role.
-
-[PAUSE]
 
 ---
 
@@ -149,8 +145,6 @@ The Salesforce Shield platform provides three products relevant to security and 
 In practice, it is sometimes impossible to fully eliminate an SoD conflict — particularly in small organizations where there are not enough people to fully separate duties. In these cases, organizations implement compensating controls: additional manual or automated checks that detect abuse even if prevention is not fully enforced.
 
 Examples of compensating controls include supervisory review of all payment approvals above a threshold, automated reconciliation reports that flag unusual patterns, and monthly access reviews that confirm each user's role assignments are still appropriate.
-
-[PAUSE]
 
 ---
 
@@ -183,8 +177,6 @@ You can view change documents in transaction AUT10 or through the change history
 Beyond data change documents, SAP has a Security Audit Log (SM20) that records authentication events: logins, logouts, failed login attempts, and access to sensitive transactions. The Security Audit Log is distinct from Change Documents — it records system-level security events, not data changes.
 
 For SOX compliance, SAP Security Audit Log data is exported to a SIEM (Security Information and Event Management) system for long-term retention and anomaly detection.
-
-[PAUSE]
 
 ---
 

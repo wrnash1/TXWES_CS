@@ -26,25 +26,19 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 07 | Heaps & Priority Queues | CIS-2315"]**
-
-"This module covers the heap — the most efficient data structure for repeatedly finding and removing the minimum (or maximum) element. A heap supports insert and extract-min both in O(log n), making it the engine behind priority queues, heap sort, Dijkstra's shortest path algorithm, and the top-K element pattern that appears in dozens of interview problems. Python provides `heapq` as a built-in min-heap. By the end of this module you will understand the heap property, the array representation, the sift-up and sift-down operations, and the key patterns that appear in interviews."
+This module covers the heap — the most efficient data structure for repeatedly finding and removing the minimum (or maximum) element. A heap supports insert and extract-min both in O(log n), making it the engine behind priority queues, heap sort, Dijkstra's shortest path algorithm, and the top-K element pattern that appears in dozens of interview problems. Python provides `heapq` as a built-in min-heap. By the end of this module you will understand the heap property, the array representation, the sift-up and sift-down operations, and the key patterns that appear in interviews.
 
 ---
 
-## [01:30 – 07:00] Part 1 — Heap Structure and Array Representation
+## Part 1 — Heap Structure and Array Representation
 
-**[SHOW SLIDE: "The Heap — Complete Binary Tree with Heap Property"]**
-
-"A heap is a complete binary tree (all levels fully filled except possibly the last, which fills left to right) that satisfies the heap property.
+A heap is a complete binary tree (all levels fully filled except possibly the last, which fills left to right) that satisfies the heap property.
 
 In a **min-heap**: every node's value is ≤ its children's values. The minimum is always at the root.
 
 In a **max-heap**: every node's value is ≥ its children's values. The maximum is always at the root.
-
-**[SHOW DIAGRAM: min-heap tree with values 1, 3, 5, 4, 8, 7, 6]**
 
 ```text
          1
@@ -53,8 +47,6 @@ In a **max-heap**: every node's value is ≥ its children's values. The maximum 
      / \   / \
     4   8 7   6
 ```
-
-[PAUSE]
 
 **Array representation:** Because the heap is a complete binary tree, we can store it in an array without any pointers. For a node at index i:
 
@@ -71,17 +63,13 @@ Value: [1, 3, 5, 4, 8, 7, 6]
 
 Root at index 0. Left child of node at index 1 is at index 3. Right child is at index 4. Parent of node at index 3 is `(3-1)//2 = 1`. ✓
 
-[PAUSE]
-
-This array representation is why heaps are cache-friendly — nodes are stored contiguously in memory, with no pointer overhead."
+This array representation is why heaps are cache-friendly — nodes are stored contiguously in memory, with no pointer overhead.
 
 ---
 
-## [07:00 – 12:00] Part 2 — Heap Operations
+## Part 2 — Heap Operations
 
-**[SHOW SLIDE: "Insert (Sift Up) and Extract-Min (Sift Down)"]**
-
-"**Insert — O(log n):**
+**Insert — O(log n):**
 
 To insert a new value, append it to the end of the array, then bubble it up (sift up) until the heap property is restored.
 
@@ -99,8 +87,6 @@ def heap_push(heap, val):
 ```
 
 Worst case: bubble all the way from a leaf to the root — O(log n) swaps.
-
-[PAUSE]
 
 **Extract-Min — O(log n):**
 
@@ -131,8 +117,6 @@ def heap_pop(heap):
 
 Sift down always swaps with the smaller child to preserve the min-heap property.
 
-[PAUSE]
-
 **Python's heapq:**
 
 ```python
@@ -147,15 +131,13 @@ print(heapq.heappop(h))   # 3
 print(heapq.heappop(h))   # 5
 ```
 
-`heapq` is a min-heap. For a max-heap, negate values: push `-val`, negate when popping."
+`heapq` is a min-heap. For a max-heap, negate values: push `-val`, negate when popping.
 
 ---
 
-## [12:00 – 16:00] Part 3 — Heapify: O(n) Build
+## Part 3 — Heapify: O(n) Build
 
-**[SHOW SLIDE: "heapify — Building a Heap in O(n)"]**
-
-"You might expect building a heap from a list to cost O(n log n) — one push per element. But there is a smarter algorithm: sift down every internal node from the last internal node to the root.
+You might expect building a heap from a list to cost O(n log n) — one push per element. But there is a smarter algorithm: sift down every internal node from the last internal node to the root.
 
 ```python
 def heapify(arr):
@@ -185,11 +167,9 @@ print(data)   # [1, 3, 2, 5, 9, 8, 7] — min at index 0
 
 ---
 
-## [16:00 – 20:00] Part 4 — Key Interview Patterns
+## Part 4 — Key Interview Patterns
 
-**[SHOW SLIDE: "Top K Elements Pattern"]**
-
-"The most common heap interview pattern: find the K largest (or smallest) elements in a stream or list.
+The most common heap interview pattern: find the K largest (or smallest) elements in a stream or list.
 
 **K Largest Elements — maintain a min-heap of size K:**
 
@@ -206,8 +186,6 @@ def k_largest(nums, k):
 ```
 
 The heap always contains the K largest values seen so far. Anything smaller than the current minimum of the heap gets rejected. Time: O(n log k).
-
-[PAUSE]
 
 **Merge K Sorted Lists (LeetCode #23):**
 
@@ -228,15 +206,13 @@ def merge_k_sorted(lists):
     return result
 ```
 
-The heap always contains the current minimum from each remaining list. For K lists with total N elements, time is O(N log K)."
+The heap always contains the current minimum from each remaining list. For K lists with total N elements, time is O(N log K).
 
 ---
 
-## [20:00 – 23:00] Part 5 — Heap Sort and Complexity
+## Part 5 — Heap Sort and Complexity
 
-**[SHOW SLIDE: "Heap Sort and Complexity Summary"]**
-
-"Heap sort uses a heap to sort in O(n log n) with O(1) auxiliary space:
+Heap sort uses a heap to sort in O(n log n) with O(1) auxiliary space:
 
 1. Build a max-heap from the array — O(n)
 2. Repeatedly extract the max, placing it at the end — O(n log n)
@@ -254,7 +230,7 @@ Total: O(n log n) time, O(1) space (sorting in place). Unlike merge sort, heap s
 | Heap sort | O(n log n) | Build O(n) + n pops × O(log n) |
 | Space | O(n) | Array storage |
 
-The Module 07 lab has you implement heap push and pop from scratch, use Python's `heapq` for the K-largest pattern, and solve LeetCode #703 and #215. Good luck."
+The Module 07 lab has you implement heap push and pop from scratch, use Python's `heapq` for the K-largest pattern, and solve LeetCode #703 and #215. Good luck.
 
 ---
 

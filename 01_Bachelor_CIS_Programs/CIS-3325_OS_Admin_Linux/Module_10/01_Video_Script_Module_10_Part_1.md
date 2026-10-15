@@ -50,7 +50,7 @@ Before Linux had sophisticated package managers, installing software meant:
 4. Copying files to the right locations
 5. Never knowing exactly what was installed or where
 
-"Dependency hell" was real — software A requires library version 1.2, but software B requires version 1.5, and they cannot coexist.
+Dependency hell" was real — software A requires library version 1.2, but software B requires version 1.5, and they cannot coexist.
 
 Modern package managers solve this:
 

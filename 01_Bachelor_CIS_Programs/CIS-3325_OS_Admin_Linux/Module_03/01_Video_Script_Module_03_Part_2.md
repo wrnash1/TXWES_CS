@@ -153,7 +153,7 @@ Find files by size — larger than 10 MB:
 find /var/log -type f -size +10M
 ```
 
-The `+` before a size means "greater than." `-` means "less than." No sign means "exactly."
+The `+` before a size means "greater than." `-` means "less than." No sign means "exactly.
 
 Find files modified in the last 7 days:
 

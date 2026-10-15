@@ -96,7 +96,7 @@ Tools for detecting and measuring bias include:
 
 - **Fairlearn** — open-source Python library for assessing and mitigating bias, integrated into Azure ML
 - **Responsible AI Dashboard** in Azure ML — visual tool for group-level performance analysis
-- **Counterfactual Analysis** — "What would the prediction be if only this one attribute changed?"
+- **Counterfactual Analysis** — "What would the prediction be if only this one attribute changed?
 
 ### Mitigating Bias
 
@@ -179,7 +179,7 @@ Transparency has two dimensions: transparency about the AI system's capabilities
 - What data it uses and retains
 - What its known error rates and limitations are
 
-**Decision transparency** — also called **explainability** — means being able to provide a meaningful explanation for why the AI produced a specific output for a specific input. This is technically difficult for deep learning models, which are often called "black boxes."
+**Decision transparency** — also called **explainability** — means being able to provide a meaningful explanation for why the AI produced a specific output for a specific input. This is technically difficult for deep learning models, which are often called "black boxes.
 
 ---
 

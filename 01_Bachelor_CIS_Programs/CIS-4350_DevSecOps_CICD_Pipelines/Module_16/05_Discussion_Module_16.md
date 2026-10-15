@@ -14,7 +14,7 @@ This final discussion asks you to reflect on the complete arc of CIS-4350 and co
 
 ### Scenario
 
-You have been offered a DevSecOps Engineer role at a mid-size SaaS company. In your final interview, the engineering director asks you: "We have fifteen development teams, about 200 engineers, and we want to build a real DevSecOps program over the next 18 months. We have no security tooling in the CI/CD pipeline today. Where do you start, and how do you know when you have succeeded?"
+You have been offered a DevSecOps Engineer role at a mid-size SaaS company. In your final interview, the engineering director asks you: "We have fifteen development teams, about 200 engineers, and we want to build a real DevSecOps program over the next 18 months. We have no security tooling in the CI/CD pipeline today. Where do you start, and how do you know when you have succeeded?
 
 This is the question this discussion asks you to answer.
 

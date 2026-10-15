@@ -22,7 +22,7 @@ A fintech company's development team is in the middle of a two-week sprint and h
 
 ---
 
-## Scenario B: "We Don't Need ITIL, We Have DevOps"
+## Scenario B: "We Don't Need ITIL, We Have DevOps
 
 A startup has scaled from 10 to 150 engineers over three years. Their DevOps practices are strong: CI/CD pipelines, Kubernetes, observability tooling, daily deployments. However, they have had three major incidents in the past six months where:
 
@@ -38,7 +38,7 @@ The CTO says "we don't need ITIL — we have DevOps." Senior engineers are pushi
 
 ## Scenario C: The Human Cost of Toil
 
-A cloud operations team of 8 engineers manages infrastructure supporting 200 development teams. The ops team handles 300–400 operational tasks per week: password resets, certificate renewals, access provisioning, routine restarts of unstable services, and manual compliance report generation. The team works long hours and turnover is high — three engineers left in the past year. The remaining engineers describe their job as "purely reactive, never creative."
+A cloud operations team of 8 engineers manages infrastructure supporting 200 development teams. The ops team handles 300–400 operational tasks per week: password resets, certificate renewals, access provisioning, routine restarts of unstable services, and manual compliance report generation. The team works long hours and turnover is high — three engineers left in the past year. The remaining engineers describe their job as "purely reactive, never creative.
 
 **Prompt:** Using the SRE concept of toil, categorize the described work into toil vs. non-toil. Estimate what percentage of the team's effort is toil. What is the human cost of excessive toil, and how does it connect to turnover? Design a 6-month toil reduction roadmap using automation and process improvement. How does this align with ITIL 4's "optimize and automate" principle?
 

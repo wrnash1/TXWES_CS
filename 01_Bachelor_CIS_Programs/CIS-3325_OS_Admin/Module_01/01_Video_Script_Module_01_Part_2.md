@@ -200,7 +200,7 @@ Before you make any significant changes to your VM, take a snapshot. This is one
 valuable features of working with virtual machines.
 
 In the VirtualBox Manager, with your VM selected (but not running, or in a saved state), click
-the Snapshots button. Click Take and name the snapshot "Clean Install - Module 01."
+the Snapshots button. Click Take and name the snapshot "Clean Install - Module 01.
 
 Now if anything goes wrong in a future lab, you can right-click the snapshot and choose Restore
 to go back to this exact state.

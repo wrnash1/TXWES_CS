@@ -360,7 +360,7 @@ A project manager is told to manage the deployment of a new HR system that will 
 **Distractor Analysis:**
 
 - *Why A is correct:* Integrating with existing systems requires Integration Management coordination. Vendor contracting falls under Procurement Management. Regulatory compliance introduces risks managed by Risk Management.
-- *Why B is incorrect:* Cost, Schedule, and Quality Management are universally relevant but are not specifically indicated by "vendor contracting," "system integration," and "regulatory review."
+- *Why B is incorrect:* Cost, Schedule, and Quality Management are universally relevant but are not specifically indicated by "vendor contracting," "system integration," and "regulatory review.
 - *Why C is incorrect:* While Communications and Resource Management are always relevant, they are not the primary areas triggered by the three described project conditions.
 - *Why D is incorrect:* Risk Management fits, but Stakeholder and Cost Management are not the primary knowledge areas implied by vendor contracting and system integration needs.
 

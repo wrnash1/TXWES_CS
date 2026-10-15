@@ -26,25 +26,19 @@
 
 ---
 
-## [00:00 – 01:00] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 09 | Array Iteration and Callback Functions | CIS-1320"]**
+Module 09 deepens two ideas introduced in the previous module: callbacks and array iteration. Module 08 showed you `map`, `filter`, and `reduce`. This module explains the underlying mechanism — what a callback function actually is, how functions are passed as values, and how to use that pattern deliberately.
 
-"Module 09 deepens two ideas introduced in the previous module: callbacks and array iteration. Module 08 showed you `map`, `filter`, and `reduce`. This module explains the underlying mechanism — what a callback function actually is, how functions are passed as values, and how to use that pattern deliberately.
-
-We will also add several array methods that complete the iteration toolkit: `forEach`, `every`, `some`, `flat`, and `flatMap`. By the end of this module, you will understand not just how to use these methods but why the callback pattern exists and what it enables. Let us start with the concept."
+We will also add several array methods that complete the iteration toolkit: `forEach`, `every`, `some`, `flat`, and `flatMap`. By the end of this module, you will understand not just how to use these methods but why the callback pattern exists and what it enables. Let us start with the concept.
 
 ---
 
-## [01:00 – 05:00] Part 1 — Callbacks: Functions as Values
+## Part 1 — Callbacks: Functions as Values
 
-**[SHOW SLIDE: "Callback Functions"]**
-
-"A **callback** is a function passed as an argument to another function, to be called later. We touched on this in Module 06, but now we go deeper.
+A **callback** is a function passed as an argument to another function, to be called later. We touched on this in Module 06, but now we go deeper.
 
 In JavaScript, functions are first-class values — you can store them in variables, pass them to other functions, and return them from functions. When you pass a function to `map` or `filter`, you are passing a callback.
-
-**[DEMO]**
 
 ```javascript
 // A named function used as a callback
@@ -59,8 +53,6 @@ console.log(evens);   // [2, 4, 6]
 
 Notice: `isEven` is passed **without parentheses**. `filter(isEven)` passes the function itself. `filter(isEven())` would call it immediately and pass its return value — `false` — which is not what we want.
 
-[PAUSE]
-
 The same result with an inline arrow function:
 
 ```javascript
@@ -68,8 +60,6 @@ const evens2 = nums.filter(n => n % 2 === 0);
 ```
 
 Both forms are equivalent. Named functions are better when the callback is complex or reused in multiple places. Arrow functions are better for short, one-use logic.
-
-**[DEMO — writing a function that accepts a callback]**
 
 ```javascript
 function applyToAll(arr, callback) {
@@ -89,8 +79,6 @@ console.log(squared);   // [1, 4, 9, 16]
 
 `applyToAll` is a higher-order function — a function that takes another function as a parameter. This is exactly what `map`, `filter`, and `reduce` are. You can write your own.
 
-[PAUSE]
-
 **Callbacks and closures — a brief preview:**
 
 ```javascript
@@ -105,17 +93,13 @@ console.log(triple(5));     // 15 — factor is 3
 console.log(quadruple(5));  // 20 — factor is 4
 ```
 
-`triple` is a function that remembers `factor = 3` even after `makeMultiplier` has returned. The inner arrow function has access to `factor` from its enclosing scope — this is a **closure**. We will cover closures fully in Module 12, but you have been using them every time you pass an arrow function that references an outer variable."
+`triple` is a function that remembers `factor = 3` even after `makeMultiplier` has returned. The inner arrow function has access to `factor` from its enclosing scope — this is a **closure**. We will cover closures fully in Module 12, but you have been using them every time you pass an arrow function that references an outer variable.
 
 ---
 
-## [05:00 – 09:00] Part 2 — `forEach`, `every`, `some`
+## Part 2 — `forEach`, `every`, `some`
 
-**[SHOW SLIDE: "forEach, every, some"]**
-
-"**`forEach`** calls a callback once for each element. It does not return a value — it is used purely for side effects:
-
-**[DEMO]**
+**`forEach`** calls a callback once for each element. It does not return a value — it is used purely for side effects:
 
 ```javascript
 const fruits = ['apple', 'banana', 'cherry'];
@@ -144,8 +128,6 @@ console.log(forEachResult);   // undefined — forEach always returns undefined
 
 Use `forEach` when you need to perform a side effect for each element — logging, updating the DOM, writing to a variable. Use `map` when you need the transformed results as a new array.
 
-[PAUSE]
-
 **`every`** returns `true` if the callback returns truthy for **every** element. It short-circuits on the first falsy result:
 
 ```javascript
@@ -161,8 +143,6 @@ console.log(scores.every(s => s >= 90));   // false — stops at 85 (first failu
 console.log(scores.some(s => s >= 90));   // true — stops at 92 (first match)
 console.log(scores.some(s => s < 50));    // false — checks all, none qualify
 ```
-
-[PAUSE]
 
 **Short-circuit behavior:**
 
@@ -184,17 +164,13 @@ arr.some(n => {
 });
 ```
 
-This makes `every` and `some` efficient for existence and validation checks — they do the minimum work needed to answer the question."
+This makes `every` and `some` efficient for existence and validation checks — they do the minimum work needed to answer the question.
 
 ---
 
-## [09:00 – 13:00] Part 3 — `flat` and `flatMap`
+## Part 3 — `flat` and `flatMap`
 
-**[SHOW SLIDE: "flat and flatMap"]**
-
-"**`flat`** flattens nested arrays into a single array. By default it flattens one level deep:
-
-**[DEMO]**
+**`flat`** flattens nested arrays into a single array. By default it flattens one level deep:
 
 ```javascript
 const nested = [1, [2, 3], [4, [5, 6]]];
@@ -205,8 +181,6 @@ console.log(nested.flat(Infinity)); // [1, 2, 3, 4, 5, 6] — all levels
 ```
 
 `flat(depth)` accepts a depth argument. `Infinity` flattens all levels regardless of nesting depth.
-
-[PAUSE]
 
 **`flatMap`** is `map` followed by `flat(1)` — it maps each element to an array and then flattens one level:
 
@@ -241,13 +215,9 @@ console.log(units);   // ['widget', 'widget', 'widget', 'gadget', 'gadget']
 
 ---
 
-## [13:00 – 16:00] Part 4 — Callback Patterns in Practice
+## Part 4 — Callback Patterns in Practice
 
-**[SHOW SLIDE: "Callback Patterns"]**
-
-"Let us put everything together with a realistic example. We have an array of students with test scores and we want to perform several operations:
-
-**[DEMO]**
+Let us put everything together with a realistic example. We have an array of students with test scores and we want to perform several operations:
 
 ```javascript
 const students = [
@@ -278,15 +248,13 @@ console.log('All scores:', allScores);
 console.log('Class max:', Math.max(...allScores));
 ```
 
-Each method has a clear role: `every` for universal validation, `some` for existence checks, `forEach` for side effects, `flatMap` for flattening nested data. Choosing the right method makes your intent immediately readable — anyone who sees `every` knows you are checking a universal condition."
+Each method has a clear role: `every` for universal validation, `some` for existence checks, `forEach` for side effects, `flatMap` for flattening nested data. Choosing the right method makes your intent immediately readable — anyone who sees `every` knows you are checking a universal condition.
 
 ---
 
-## [16:00 – 17:30] Closing — Lab Preview
+## Closing — Lab Preview
 
-**[SHOW SLIDE: "Module 09 Lab Preview"]**
-
-"The Module 09 lab has four parts.
+The Module 09 lab has four parts.
 
 Part 1 works with callbacks as values — you will pass named functions vs inline arrows to the same higher-order function and compare the results.
 
@@ -296,7 +264,7 @@ Part 3 covers `every` and `some` with visible short-circuit behavior — you wil
 
 Part 4 covers `flat` and `flatMap` on nested data, and puts the whole module together in a student analytics exercise.
 
-The quiz focuses on `forEach` vs `map` return values, `every`/`some` short-circuiting, and `flatMap` output. Read the reading guide before the lab. Good luck."
+The quiz focuses on `forEach` vs `map` return values, `every`/`some` short-circuiting, and `flatMap` output. Read the reading guide before the lab. Good luck.
 
 ---
 

@@ -25,15 +25,9 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: Course banner — "CIS-3321 Network Administration | Module 06: Wireless Networking — 802.11 Standards and Security | Texas Wesleyan University"]
-
 ---
 
 ### Section 1: Introduction
-
-[00:00 – 01:00]
-
-[SHOW SLIDE: Professor Nash on camera with module title card]
 
 Welcome to Module 06. I'm Professor Nash. Wireless networking is everywhere — in offices, classrooms, hospitals, warehouses, and stadiums. It is also one of the most security-critical topics in network administration because wireless signals travel through walls and into parking lots, making them accessible to anyone within range. This module covers the 802.11 wireless standards, frequency bands, channel planning, and the progression of wireless security from the completely broken WEP all the way to the current WPA3 standard.
 
@@ -42,10 +36,6 @@ Part 1 covers 802.11 standard generations, frequency bands, and channel planning
 ---
 
 ### Section 2: The 802.11 Standards — Generations of Wi-Fi
-
-[01:00 – 05:30]
-
-[SHOW DIAGRAM: A table showing Wi-Fi standard generations. Columns: Standard, Common Name, Frequency Band(s), Max Speed, Key Feature. Rows: 802.11a (5 GHz, 54 Mbps), 802.11b (2.4 GHz, 11 Mbps), 802.11g (2.4 GHz, 54 Mbps), 802.11n/Wi-Fi 4 (2.4 and 5 GHz, 600 Mbps, MIMO), 802.11ac/Wi-Fi 5 (5 GHz only, 3.5 Gbps, MU-MIMO), 802.11ax/Wi-Fi 6 (2.4, 5, 6 GHz, 9.6 Gbps, OFDMA).]
 
 [Alt-text: A six-row table comparing Wi-Fi standards. Column headers are Standard, Common Name, Frequency Band, Maximum Speed, and Key Technology. Row 1: 802.11a, no common name at time of release, 5 GHz only, 54 Mbps, OFDM. Row 2: 802.11b, no common name, 2.4 GHz only, 11 Mbps, DSSS. Row 3: 802.11g, no common name, 2.4 GHz only, 54 Mbps, OFDM. Row 4: 802.11n, Wi-Fi 4, 2.4 and 5 GHz dual-band, 600 Mbps, MIMO and channel bonding. Row 5: 802.11ac, Wi-Fi 5, 5 GHz only, 3.5 Gbps, MU-MIMO and beamforming. Row 6: 802.11ax, Wi-Fi 6, 2.4 and 5 and 6 GHz, 9.6 Gbps, OFDMA.]
 
@@ -69,10 +59,6 @@ Let's walk through each Wi-Fi standard generation.
 
 ### Section 3: 2.4 GHz vs. 5 GHz Band Comparison
 
-[05:30 – 08:00]
-
-[SHOW DIAGRAM: A two-column comparison table. Left column: 2.4 GHz Band. Right column: 5 GHz Band. Rows compare: range, wall penetration, number of non-overlapping channels, interference sources, and standards using each band.]
-
 [Alt-text: A two-column comparison table. Left column header is 2.4 GHz Band. Right column header is 5 GHz Band. Row 1: 2.4 GHz has longer range versus 5 GHz has shorter range. Row 2: 2.4 GHz penetrates walls better versus 5 GHz attenuates more through walls. Row 3: 2.4 GHz has 3 non-overlapping channels (1, 6, 11) versus 5 GHz has 24 or more non-overlapping channels. Row 4: 2.4 GHz suffers interference from Bluetooth, microwave ovens, baby monitors versus 5 GHz has significantly less congestion. Row 5: 2.4 GHz is used by 802.11b, g, n, ax versus 5 GHz is used by 802.11a, n, ac, ax.]
 
 The 2.4 GHz band penetrates walls and floors better because lower-frequency signals diffract around obstacles more readily. This makes 2.4 GHz better for coverage in older buildings with thick walls. The trade-off is that the 2.4 GHz band is extremely crowded — only three non-overlapping channels (1, 6, and 11 in the US), and it shares spectrum with Bluetooth, microwave ovens, and countless other devices.
@@ -84,10 +70,6 @@ Modern enterprise deployments use both bands — 2.4 GHz for coverage in difficu
 ---
 
 ### Section 4: Channel Planning and Co-Channel Interference
-
-[08:00 – 11:00]
-
-[SHOW DIAGRAM: The 2.4 GHz spectrum shown as a horizontal band divided into 11 numbered channels. Visual overlap shown between adjacent channels. Channels 1, 6, and 11 are highlighted in green and labeled "Non-overlapping." All other channels show overlapping visual bands with a red warning label "Co-channel interference."]
 
 [Alt-text: A horizontal diagram showing the 2.4 GHz spectrum from channel 1 to channel 11. Each channel is shown as a colored band approximately 22 MHz wide, overlapping with adjacent channels. Channels 1, 6, and 11 are highlighted with green bands and labeled "Non-overlapping — use for neighboring APs." The remaining channels (2, 3, 4, 5, 7, 8, 9, 10) are shown with overlapping red bands labeled "Overlapping — avoid for neighboring APs."]
 
@@ -104,10 +86,6 @@ The 5 GHz band has more than 24 non-overlapping channels (depending on the regul
 ---
 
 ### Section 5: Part 1 Summary
-
-[11:00 – 12:30]
-
-[SHOW SLIDE: Summary bullet list]
 
 In Part 1, we covered the 802.11 standard generations from 802.11a/b/g through 802.11n, 802.11ac, and 802.11ax. We compared the 2.4 GHz and 5 GHz bands with their respective trade-offs. We established the critical channel planning rule — use channels 1, 6, and 11 for 2.4 GHz non-overlapping deployment.
 

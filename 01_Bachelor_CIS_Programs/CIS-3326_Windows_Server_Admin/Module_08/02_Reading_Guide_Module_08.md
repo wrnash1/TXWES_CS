@@ -500,8 +500,6 @@ Covers how to read Event IDs in the Group Policy operational log under Applicati
 
 *Review all sections before beginning Lab 08, Quiz 08, and Discussion 08.*
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

@@ -30,14 +30,9 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: Course banner — "CSC-6361 Advanced Computer Networks | Module 07: Structured Troubleshooting Methodology — OSPF, EIGRP, BGP | Texas Wesleyan University | Graduate Level"]
-
 ---
 
 ### Section 1: Welcome to Module 07
-
-[00:00 – 02:30]
-[SHOW SLIDE: Professor Nash on camera, network troubleshooting flowchart visible behind.]
 
 Welcome to Module 07 — the final module of CSC-6361. This week we bring everything together. We have spent six modules building expertise in OSPF, EIGRP, BGP, switching, QoS, security, and cloud/SD-WAN. This week is about applying that knowledge systematically when things go wrong — and things always go wrong in production networks.
 
@@ -50,9 +45,6 @@ Let's begin.
 ---
 
 ### Section 2: Structured Troubleshooting Methodology
-
-[02:30 – 06:00]
-[SHOW DIAGRAM: Troubleshooting methodology flowchart — three approaches labeled OSI Layer-by-Layer, Divide and Conquer, Follow-the-Path]
 
 The CCNP ENCOR exam and Cisco's official troubleshooting framework recognize three primary structured methodologies. Understanding when to apply each is itself a professional skill.
 
@@ -89,9 +81,6 @@ Best used when: you have limited access (can only run commands from one end) or 
 ---
 
 ### Section 3: OSPF Neighbor Failure Scenarios
-
-[06:00 – 10:00]
-[SHOW DIAGRAM: OSPF neighbor state machine — Down → Init → 2-Way → ExStart → Exchange → Loading → Full]
 
 OSPF neighbors that fail to reach the Full state are one of the most common topics on the CCNP ENCOR exam and one of the most common real-world troubleshooting scenarios. A healthy OSPF neighbor relationship progresses through: Down → Init → 2-Way → ExStart → Exchange → Loading → Full. Neighbors stuck in a state other than Full (or 2-Way for DROther routers) indicate a problem at a specific stage.
 
@@ -160,9 +149,6 @@ debug ip ospf adj                           ! Shows authentication failure reaso
 
 ### Section 4: EIGRP Troubleshooting
 
-[10:00 – 13:30]
-[SHOW DIAGRAM: EIGRP neighbor states and DUAL finite state machine — Passive (stable), Active (querying for new path)]
-
 #### Failure Scenario 1: EIGRP Neighbors Not Forming
 
 Root causes with EIGRP-specific additions beyond the OSPF parallels:
@@ -208,9 +194,6 @@ The standard fix for SIA propagation depth is EIGRP route summarization. A summa
 ---
 
 ### Section 5: BGP Session Troubleshooting
-
-[13:30 – 17:00]
-[SHOW DIAGRAM: BGP finite state machine — Idle → Connect → Active → OpenSent → OpenConfirm → Established]
 
 BGP has a formal finite state machine defined in RFC 4271. Understanding which state a stuck BGP session is in immediately narrows the root cause to a specific layer or configuration element.
 
@@ -259,9 +242,6 @@ show bgp ipv4 unicast 192.168.1.0                         ! Per-prefix: path, ne
 
 ### Section 6: CCNP Exam Strategy for Troubleshooting Questions
 
-[17:00 – 19:30]
-[SHOW SLIDE: CCNP ENCOR troubleshooting question strategy — read symptom, identify layer, eliminate wrong options systematically]
-
 Troubleshooting questions on the CCNP ENCOR 350-401 exam are typically structured as: "A network engineer runs the following command and observes this output. What is the most likely root cause?" You are given one or more `show` command outputs and four answer choices.
 
 #### The Systematic Approach — Apply Every Time
@@ -282,9 +262,6 @@ Troubleshooting questions on the CCNP ENCOR 350-401 exam are typically structure
 ---
 
 ### Section 7: Part 1 Summary
-
-[19:30 – 21:00]
-[SHOW SLIDE: Module 07 Part 1 key concept summary]
 
 In Part 1 you have learned:
 

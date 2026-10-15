@@ -190,7 +190,7 @@ Create a table with five rows (one per artifact) and these columns:
 |-------------|-------------|----------|-----------------------|----------------|----------------------|-------------|
 
 Fill in all fields based on your work in Parts 2 and 3. The "Status Before Cleanup" column
-should say Present or Absent based on your Part 2 findings. The "Status After Cleanup"
+should say Present or Absent based on your Part 2 findings. The "Status After Cleanup
 column should say Removed or Not Found.
 
 **Section 3 — Evidence Chain of Custody**

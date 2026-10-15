@@ -34,8 +34,6 @@ Welcome back. In Part 1 we covered hypervisors, virtual machines, virtual switch
 
 ### [SECTION 1: THE TRADITIONAL NETWORK PROBLEM]
 
-[SHOW DIAGRAM: Traditional network — each switch and router has its own control plane and data plane, requiring manual configuration on each device]
-
 In a traditional network, every switch and router is a self-contained unit with two functional components:
 
 Data plane (forwarding plane) — The hardware that actually forwards packets and frames based on tables (routing tables, MAC address tables). This happens at line speed in ASICs.
@@ -47,8 +45,6 @@ The problem: in a large network with hundreds of switches, every change — a ne
 ---
 
 ### [SECTION 2: SOFTWARE-DEFINED NETWORKING (SDN)]
-
-[SHOW DIAGRAM: SDN architecture — SDN Controller at top, connected to switches via southbound API; applications connected to controller via northbound API; data plane (switches) only forward based on flow tables]
 
 Software-Defined Networking (SDN) separates the control plane from the data plane. Instead of each device running its own control plane software, a centralized SDN Controller makes all forwarding decisions and pushes them down to the switches.
 
@@ -64,8 +60,6 @@ Infrastructure Layer (bottom) — Physical and virtual switches that forward tra
 
 ### [SECTION 3: SDN INTERFACES AND APIS]
 
-[SHOW DIAGRAM: SDN controller with labeled northbound and southbound interfaces]
-
 Northbound API — The interface between the SDN controller and higher-layer applications. Allows applications to request network services (create a path, enforce a policy, prioritize traffic) without knowing the underlying topology details. REST APIs are common for northbound interfaces.
 
 Southbound API — The interface between the SDN controller and the network devices (switches, routers). The controller uses this API to push flow tables and forwarding rules. OpenFlow (developed at Stanford, standardized by ONF) is the most common southbound protocol. It allows the controller to install forwarding rules directly into switch flow tables.
@@ -75,8 +69,6 @@ East/West APIs — Communication between multiple SDN controllers to share topol
 ---
 
 ### [SECTION 4: OPENFLOW AND FLOW TABLES]
-
-[SHOW DIAGRAM: OpenFlow-enabled switch — flow table with match fields (source IP, destination IP, in-port) and actions (forward, drop, modify)]
 
 OpenFlow defines how SDN controllers communicate forwarding rules to switches. An OpenFlow switch maintains a flow table instead of a traditional MAC address table or routing table.
 
@@ -92,8 +84,6 @@ When a packet arrives at an OpenFlow switch and no matching flow entry exists, t
 
 ### [SECTION 5: OVERLAY NETWORKS]
 
-[SHOW DIAGRAM: Overlay network — logical tunnel (VXLAN) running over a physical underlay network, connecting VMs across different physical hosts]
-
 An overlay network is a virtual network built on top of an existing physical network infrastructure. The overlay creates tunnels between endpoints, encapsulating traffic from one network inside another network's packets.
 
 Why overlays? In a virtualized data center, VMs can move between physical hosts. If VMs moved between hosts and retained their IP addresses, the underlying network would need to route traffic to a new physical location constantly. Overlays abstract the VM's network location from the physical topology.
@@ -107,8 +97,6 @@ MPLS (Multiprotocol Label Switching) — Used by service providers to create vir
 ---
 
 ### [SECTION 6: CLOUD NETWORKING CONCEPTS]
-
-[SHOW DIAGRAM: AWS or Azure VPC — subnets, internet gateway, security groups, and virtual network interfaces shown]
 
 Cloud providers implement networking through software-defined virtual infrastructure. Key concepts:
 
@@ -128,8 +116,6 @@ NAT Gateway — Allows VMs in private subnets to initiate outbound internet conn
 
 ### [SECTION 7: MICROSEGMENTATION]
 
-[SHOW DIAGRAM: Traditional perimeter security (firewall at network edge only) versus microsegmentation (policy applied between every VM pair)]
-
 Microsegmentation is a security architecture enabled by SDN and overlay networks. Traditional network security relied on a firewall at the perimeter — traffic inside the LAN was largely trusted. Once an attacker gained access inside the perimeter, lateral movement was relatively easy.
 
 Microsegmentation applies security policies between individual workloads — between every VM pair if needed. A web server VM cannot communicate with a database VM unless an explicit policy allows it, even though they are on the same physical host.
@@ -141,8 +127,6 @@ The key phrase for the exam: microsegmentation moves security from the network p
 ---
 
 ### [SECTION 8: SDN USE CASES AND VENDORS]
-
-[SHOW DIAGRAM: SDN use cases — data center automation, WAN optimization, campus network policy management]
 
 Major SDN deployments and vendor platforms:
 

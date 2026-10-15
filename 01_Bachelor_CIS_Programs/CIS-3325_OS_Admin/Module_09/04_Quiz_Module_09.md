@@ -133,15 +133,15 @@ Distractor Analysis:
 **Question 7**
 
 An administrator needs to add a persistent static route for the 10.50.0.0/16 network through
-the gateway 192.168.1.100 using NetworkManager on a system with a connection named "eth0-static."
+the gateway 192.168.1.100 using NetworkManager on a system with a connection named "eth0-static.
 Which command sequence is correct?
 
 - A) ip route add 10.50.0.0/16 via 192.168.1.100
-- B) nmcli con mod "eth0-static" +ipv4.routes "10.50.0.0/16 192.168.1.100" && nmcli con up "eth0-static"
+- B) nmcli con mod "eth0-static" +ipv4.routes "10.50.0.0/16 192.168.1.100" && nmcli con up "eth0-static
 - C) echo "10.50.0.0/16 via 192.168.1.100" >> /etc/routes
 - D) route add -net 10.50.0.0 netmask 255.255.0.0 gw 192.168.1.100
 
-Correct Answer: B) nmcli con mod "eth0-static" +ipv4.routes "10.50.0.0/16 192.168.1.100" && nmcli con up "eth0-static"
+Correct Answer: B) nmcli con mod "eth0-static" +ipv4.routes "10.50.0.0/16 192.168.1.100" && nmcli con up "eth0-static
 
 Distractor Analysis:
 
@@ -246,7 +246,7 @@ the correct specific route?
 - A) ip route add 10.0.0.0/8 via 192.168.1.1 dev ens33
 - B) ip route add 10.0.0.0/8 dev ens36
 - C) ip route add default via 10.0.0.1 dev ens36
-- D) nmcli con mod ens36 ipv4.routes "10.5.5.5/32 0.0.0.0"
+- D) nmcli con mod ens36 ipv4.routes "10.5.5.5/32 0.0.0.0
 
 Correct Answer: B) ip route add 10.0.0.0/8 dev ens36
 

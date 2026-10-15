@@ -491,8 +491,6 @@ Description: ISACA's free Risk IT framework publication that bridges IT risk man
 URL: https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final
 Description: Free NIST publication providing the most comprehensive catalog of security and privacy controls available, organized into 20 control families. Each control entry includes a description, supplemental guidance, and control enhancements. Essential reference for understanding how controls are categorized, selected, and documented in the risk treatment process covered in Module 05.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

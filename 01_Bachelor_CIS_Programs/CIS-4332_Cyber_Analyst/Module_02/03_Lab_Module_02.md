@@ -114,7 +114,7 @@ TLP Marking: TLP:CLEAR
 ### Intelligence Item 2-B
 
 Source: A peer analyst at a partner financial institution who called you directly
-Content: A list of 15 IP addresses observed in an active campaign against financial sector targets in the last 48 hours. The peer says: "Do not share this beyond your team — we haven't disclosed this to our leadership yet."
+Content: A list of 15 IP addresses observed in an active campaign against financial sector targets in the last 48 hours. The peer says: "Do not share this beyond your team — we haven't disclosed this to our leadership yet.
 TLP Marking: No TLP marking provided
 
 ### Intelligence Item 2-C
@@ -217,7 +217,7 @@ You are given a simplified detection inventory. Your organization has active SIE
 
 1. Build a coverage table listing each of the six threat actor techniques, whether your organization has a detection, and the ATT&CK tactic each belongs to.
 2. For each uncovered technique, identify the log source most likely to produce detectable evidence (e.g., Windows Security Event Log, Sysmon, network proxy logs).
-3. Write a one-sentence detection hypothesis for T1003.001 in this format: "Alert when [observable event] occurs on [asset type] during [time or context condition]."
+3. Write a one-sentence detection hypothesis for T1003.001 in this format: "Alert when [observable event] occurs on [asset type] during [time or context condition].
 4. Explain which of the uncovered techniques poses the highest risk if undetected and justify your answer using the Pyramid of Pain.
 
 ### Challenge 2: Intelligence Product Assessment

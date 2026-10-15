@@ -302,7 +302,7 @@ For each scenario below, identify (a) the affected Network+ exam domain, (b) the
 
 4. All workstations on a floor can reach the internet but cannot reach the file server at 10.10.30.50. The workstations are on 10.10.20.0/24 and there is no static or dynamic route for 10.10.30.0/24 on the distribution switch.
 
-5. A wireless user connects to the corporate SSID and is prompted for credentials. After entering the correct username and password, they receive an "Authentication failed" error. The RADIUS server log shows "EAP-TLS certificate expired."
+5. A wireless user connects to the corporate SSID and is prompted for credentials. After entering the correct username and password, they receive an "Authentication failed" error. The RADIUS server log shows "EAP-TLS certificate expired.
 
 **Challenge Question 1:** For scenario 5 (expired EAP-TLS certificate), trace the full 802.1X authentication path from the wireless client to the RADIUS server. Identify at which step the failure occurs, what the RADIUS server sends back to the authenticator, and what the authenticator does to the client's switch port as a result.
 

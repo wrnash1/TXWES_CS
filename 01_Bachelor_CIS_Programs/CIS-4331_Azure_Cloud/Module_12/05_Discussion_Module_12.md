@@ -41,7 +41,7 @@ Meridian Health Network is a regional hospital system migrating from on-premises
 - Requirement 2: Access to systems containing PHI must be logged and auditable
 - Requirement 3: PHI data must be discoverable — the organization must know what PHI they hold and where it lives
 
-The cloud architect proposes using three Azure services to address these requirements: Azure Policy for encryption enforcement, Defender for Cloud for audit logging, and Microsoft Purview for PHI data discovery. The compliance officer is skeptical, asking: "How does configuring Azure resources help me prove HIPAA compliance? HIPAA talks about patient data, not resource configurations."
+The cloud architect proposes using three Azure services to address these requirements: Azure Policy for encryption enforcement, Defender for Cloud for audit logging, and Microsoft Purview for PHI data discovery. The compliance officer is skeptical, asking: "How does configuring Azure resources help me prove HIPAA compliance? HIPAA talks about patient data, not resource configurations.
 
 In 175-225 words, address all of the following:
 
@@ -60,7 +60,7 @@ TechForward Global is a software company deploying a new SaaS platform on Azure.
 - Azure SQL Databases must have Transparent Data Encryption enabled
 - Storage accounts must use HTTPS-only transfers
 
-The platform team's lead architect is pushing back on the governance board. She argues: "Applying a Deny policy for all four requirements will break our CI/CD pipelines. Our deployment scripts were written before these policies existed and will fail until we update every script. We'll lose two weeks of velocity fixing pipelines. Can we use Audit mode for everything and just report on non-compliance?"
+The platform team's lead architect is pushing back on the governance board. She argues: "Applying a Deny policy for all four requirements will break our CI/CD pipelines. Our deployment scripts were written before these policies existed and will fail until we update every script. We'll lose two weeks of velocity fixing pipelines. Can we use Audit mode for everything and just report on non-compliance?
 
 In 175-225 words, address all of the following:
 

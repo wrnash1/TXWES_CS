@@ -26,23 +26,17 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 12 | Event Handling and Listeners | CIS-1320"]**
+A web page that cannot respond to user actions is just a document. Events — clicks, keystrokes, form submissions, mouse movements — are how JavaScript makes pages interactive. Module 12 covers the complete event handling model: how to register listeners, what the event object contains, how events travel through the DOM, and how to handle many elements efficiently with a single listener.
 
-"A web page that cannot respond to user actions is just a document. Events — clicks, keystrokes, form submissions, mouse movements — are how JavaScript makes pages interactive. Module 12 covers the complete event handling model: how to register listeners, what the event object contains, how events travel through the DOM, and how to handle many elements efficiently with a single listener.
-
-By the end of this module, you will understand not just how to write a click handler but why events work the way they do — and that understanding will save you hours of debugging."
+By the end of this module, you will understand not just how to write a click handler but why events work the way they do — and that understanding will save you hours of debugging.
 
 ---
 
-## [01:30 – 06:00] Part 1 — `addEventListener`
+## Part 1 — `addEventListener`
 
-**[SHOW SLIDE: "addEventListener"]**
-
-"`addEventListener` is the standard way to respond to events in modern JavaScript.
-
-**[DEMO]**
+`addEventListener` is the standard way to respond to events in modern JavaScript.
 
 ```javascript
 const btn = document.getElementById('my-btn');
@@ -59,8 +53,6 @@ The three pieces:
 2. The **event type** as a string: `'click'`
 3. The **handler function** (the callback): receives the event object
 
-[PAUSE]
-
 **Why `addEventListener` instead of `onclick`?**
 
 You may see older code using `element.onclick = function() {...}` or HTML attributes like `<button onclick='doSomething()'>`. These work, but they have a critical limitation: you can only assign one handler. `addEventListener` allows multiple listeners on the same element for the same event:
@@ -72,8 +64,6 @@ btn.addEventListener('click', () => console.log('Second listener'));
 ```
 
 Always use `addEventListener` in new code.
-
-[PAUSE]
 
 **Removing a listener — `removeEventListener`:**
 
@@ -97,17 +87,13 @@ btn.addEventListener('click', () => console.log('inline'));
 // This does nothing — a different function object
 ```
 
-Store the handler in a named variable or function declaration if you need to remove it later."
+Store the handler in a named variable or function declaration if you need to remove it later.
 
 ---
 
-## [06:00 – 11:00] Part 2 — The Event Object
+## Part 2 — The Event Object
 
-**[SHOW SLIDE: "The Event Object"]**
-
-"Every event handler receives an **event object** as its first argument. This object contains information about what happened: what element was interacted with, where the mouse was, what key was pressed, and more.
-
-**[DEMO — `event.target` and `event.type`]**
+Every event handler receives an **event object** as its first argument. This object contains information about what happened: what element was interacted with, where the mouse was, what key was pressed, and more.
 
 ```javascript
 document.addEventListener('click', (event) => {
@@ -118,8 +104,6 @@ document.addEventListener('click', (event) => {
 ```
 
 `event.target` is the element that the user actually interacted with — the element where the event originated. This is not necessarily the element you attached the listener to. More on that in the bubbling section.
-
-[PAUSE]
 
 **Mouse events:**
 
@@ -134,8 +118,6 @@ box.addEventListener('mouseenter', () => console.log('Mouse entered'));
 box.addEventListener('mouseleave', () => console.log('Mouse left'));
 ```
 
-[PAUSE]
-
 **Keyboard events:**
 
 ```javascript
@@ -148,8 +130,6 @@ document.addEventListener('keydown', (event) => {
 ```
 
 `event.key` is the logical key value — what the key produces. `event.code` is the physical key location. For most purposes, use `event.key`.
-
-[PAUSE]
 
 **Form events:**
 
@@ -166,8 +146,6 @@ input.addEventListener('change', (event) => {
   console.log('Final value:', event.target.value);
 });
 ```
-
-[PAUSE]
 
 **`preventDefault` — stopping default behavior:**
 
@@ -187,17 +165,13 @@ link.addEventListener('click', (event) => {
 });
 ```
 
-`preventDefault` tells the browser not to perform its built-in response to the event. It does not stop other JavaScript listeners."
+`preventDefault` tells the browser not to perform its built-in response to the event. It does not stop other JavaScript listeners.
 
 ---
 
-## [11:00 – 15:30] Part 3 — Event Bubbling and `stopPropagation`
+## Part 3 — Event Bubbling and `stopPropagation`
 
-**[SHOW SLIDE: "Event Bubbling"]**
-
-"When an event fires on an element, it does not just stay there. It **bubbles** up through the DOM — from the target element to its parent, to its grandparent, all the way to `document`. Every ancestor that has a listener for the same event type also receives it.
-
-**[DEMO]**
+When an event fires on an element, it does not just stay there. It **bubbles** up through the DOM — from the target element to its parent, to its grandparent, all the way to `document`. Every ancestor that has a listener for the same event type also receives it.
 
 ```html
 <div id="outer">
@@ -223,8 +197,6 @@ outer
 
 The event starts at `button`, bubbles to `inner`, then to `outer`. This is bubbling.
 
-[PAUSE]
-
 **`event.stopPropagation()`** — stops the event from bubbling further:
 
 ```javascript
@@ -235,8 +207,6 @@ document.getElementById('btn').addEventListener('click', (event) => {
 ```
 
 Use `stopPropagation` sparingly — it makes event behavior harder to reason about in complex UIs.
-
-[PAUSE]
 
 **`event.target` vs `event.currentTarget`:**
 
@@ -249,19 +219,15 @@ document.getElementById('outer').addEventListener('click', (event) => {
 
 `event.target` — where the event originated.
 `event.currentTarget` — the element the listener is attached to.
-When the event bubbles, `target` stays fixed at the origin; `currentTarget` changes as the event moves up."
+When the event bubbles, `target` stays fixed at the origin; `currentTarget` changes as the event moves up.
 
 ---
 
-## [15:30 – 19:00] Part 4 — Event Delegation
+## Part 4 — Event Delegation
 
-**[SHOW SLIDE: "Event Delegation"]**
-
-"Bubbling enables one of the most important patterns in DOM event handling: **event delegation**.
+Bubbling enables one of the most important patterns in DOM event handling: **event delegation**.
 
 Imagine a list with 100 items. You want each item to be clickable. Adding 100 separate listeners is wasteful. Instead, add one listener to the parent — events from the children bubble up to it:
-
-**[DEMO]**
 
 ```javascript
 const list = document.getElementById('item-list');
@@ -277,8 +243,6 @@ list.addEventListener('click', (event) => {
 
 One listener handles all current and future list items — including items added to the list after the listener was registered. This is the key advantage of delegation over individual listeners.
 
-[PAUSE]
-
 **`event.target.closest(selector)`** — a cleaner check:
 
 ```javascript
@@ -293,8 +257,6 @@ list.addEventListener('click', (event) => {
 
 `closest(selector)` starts at `event.target` and walks up the DOM until it finds an ancestor matching the selector, or returns `null` if none is found. This handles clicks on child elements inside an `<li>` (like a `<strong>` or `<span>`) — `event.target` might be the inner element, but `closest('li')` still finds the `<li>` ancestor.
 
-[PAUSE]
-
 **When to use event delegation:**
 
 - Lists of items where each needs the same handler
@@ -304,15 +266,13 @@ list.addEventListener('click', (event) => {
 **When not to use it:**
 
 - Events that do not bubble (`focus`, `blur`, `scroll` — though `focusin`/`focusout` do bubble)
-- When you need different behavior for each element that cannot be determined from the element itself"
+- When you need different behavior for each element that cannot be determined from the element itself
 
 ---
 
-## [19:00 – 21:00] Part 5 — `DOMContentLoaded`
+## Part 5 — `DOMContentLoaded`
 
-**[SHOW SLIDE: "DOMContentLoaded"]**
-
-"A brief but important concept: when does JavaScript run relative to the DOM?
+A brief but important concept: when does JavaScript run relative to the DOM?
 
 If your `<script>` tag is in the `<head>`, the browser parses and executes the script before it has finished parsing the `<body>`. Any `document.getElementById` call in that script will return `null` — the element does not exist yet.
 
@@ -349,15 +309,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ```
 
-`DOMContentLoaded` fires when the HTML is fully parsed and the DOM tree is built, before stylesheets and images finish loading. The labs place `<script>` at the end of `<body>`, so this is not required — but you will see it frequently in real codebases."
+`DOMContentLoaded` fires when the HTML is fully parsed and the DOM tree is built, before stylesheets and images finish loading. The labs place `<script>` at the end of `<body>`, so this is not required — but you will see it frequently in real codebases.
 
 ---
 
-## [21:00 – 22:00] Closing — Lab Preview
+## Closing — Lab Preview
 
-**[SHOW SLIDE: "Module 12 Lab Preview"]**
-
-"The Module 12 lab has four parts.
+The Module 12 lab has four parts.
 
 Part 1 covers `addEventListener` and multiple listeners — you will add several event types to the same element and confirm they fire independently.
 
@@ -367,7 +325,7 @@ Part 3 covers event bubbling — you will build a nested structure, observe the 
 
 Part 4 is the integration — a task list application using event delegation. Adding a new task, marking tasks complete, and removing tasks are all handled by delegated listeners on the container rather than individual listeners on each task.
 
-Read the reading guide before the lab — `event.target` vs `event.currentTarget` and the `closest` technique are both covered in more depth there. Good luck."
+Read the reading guide before the lab — `event.target` vs `event.currentTarget` and the `closest` technique are both covered in more depth there. Good luck.
 
 ---
 

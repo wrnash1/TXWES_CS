@@ -30,8 +30,6 @@
 
 ## SEGMENT 1 — Introduction and Motivation (0:00–2:30)
 
-**[ON CAMERA]**
-
 Welcome back, everyone. I'm Professor Nash, and this is Module 10 of CIS-4345.
 
 So far in this course we have studied feedforward networks and convolutional networks. Both of those architectures share a key assumption: each input is independent of every other input. Feed in an image, get a prediction — done. The model has no memory of what it saw before.
@@ -181,7 +179,7 @@ The LSTM controls information flow using three learned **gates**. Each gate is a
 f_t = sigmoid(W_f * [h_(t-1), x_t] + b_f)
 ```
 
-A value near 0 means "forget everything." Near 1 means "keep everything."
+A value near 0 means "forget everything." Near 1 means "keep everything.
 
 **Input Gate** — decides what new information to add:
 
@@ -305,8 +303,6 @@ Practical tips for working with RNNs in production:
 ---
 
 ## SEGMENT 8 — Wrap-Up and Certification Alignment (22:00–24:00)
-
-**[ON CAMERA]**
 
 Let's bring this all together.
 

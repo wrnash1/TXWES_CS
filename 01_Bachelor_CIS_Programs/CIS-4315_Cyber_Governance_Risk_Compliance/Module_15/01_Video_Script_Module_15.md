@@ -106,7 +106,7 @@ The **Privacy Rule** governs the use and disclosure of Protected Health Informat
 
 The **Security Rule** governs Electronic PHI, or ePHI. It requires covered entities to implement administrative safeguards, physical safeguards, and technical safeguards. Unlike GDPR or PCI-DSS, HIPAA does not prescribe specific technologies. It uses the terms "required" for mandatory safeguards and "addressable" for safeguards where an organization may implement an alternative measure that achieves the same result.
 
-The **Breach Notification Rule** requires notification to affected individuals within 60 days of discovery, notification to the HHS Secretary, and for breaches affecting more than 500 residents of a state, notification to prominent media outlets in that state. Large breaches are posted on what practitioners call the HHS "Wall of Shame."
+The **Breach Notification Rule** requires notification to affected individuals within 60 days of discovery, notification to the HHS Secretary, and for breaches affecting more than 500 residents of a state, notification to prominent media outlets in that state. Large breaches are posted on what practitioners call the HHS "Wall of Shame.
 
 Penalties under HIPAA's tiered structure range from $137 to $68,928 per violation depending on culpability, with annual caps per violation category. The highest tier — willful neglect not corrected — carries penalties up to $2.067 million per year per violation category.
 

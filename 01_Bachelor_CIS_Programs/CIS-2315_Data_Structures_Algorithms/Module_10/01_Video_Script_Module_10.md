@@ -26,19 +26,15 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 10 | BFS & DFS | CIS-2315"]**
-
-"This module covers the two fundamental graph traversal algorithms: Breadth-First Search and Depth-First Search. BFS explores a graph level by level using a queue and finds shortest paths in unweighted graphs. DFS explores as far as possible before backtracking using a stack or recursion, and powers topological sort, cycle detection, and connected component counting. Together, BFS and DFS solve the majority of graph interview problems. Every graph algorithm you will learn — Dijkstra, topological sort, Kosaraju's SCC — is built on one of these two traversals."
+This module covers the two fundamental graph traversal algorithms: Breadth-First Search and Depth-First Search. BFS explores a graph level by level using a queue and finds shortest paths in unweighted graphs. DFS explores as far as possible before backtracking using a stack or recursion, and powers topological sort, cycle detection, and connected component counting. Together, BFS and DFS solve the majority of graph interview problems. Every graph algorithm you will learn — Dijkstra, topological sort, Kosaraju's SCC — is built on one of these two traversals.
 
 ---
 
-## [01:30 – 09:00] Part 1 — Breadth-First Search
+## Part 1 — Breadth-First Search
 
-**[SHOW SLIDE: "BFS — Queue-Based Level-by-Level Exploration"]**
-
-"**[SHOW DIAGRAM: graph with nodes A at center, B and C adjacent to A, D and E adjacent to B, F adjacent to C]**
+"
 
 ```text
       A
@@ -49,8 +45,6 @@
 ```
 
 BFS starts at node A and visits all nodes at distance 1 before visiting any at distance 2. The order is A, B, C, D, E, F.
-
-[PAUSE]
 
 **BFS uses a queue (FIFO):**
 
@@ -75,8 +69,6 @@ def bfs(graph, start):
     return order
 ```
 
-**[DEMO: trace on the graph above — show queue state after each popleft]**
-
 ```text
 Start:   queue=['A'], visited={'A'}
 Step 1:  pop A → order=['A'], enqueue B,C → queue=['B','C'], visited={'A','B','C'}
@@ -87,14 +79,10 @@ Step 5:  pop E → order=['A','B','C','D','E']
 Step 6:  pop F → order=['A','B','C','D','E','F']
 ```
 
-[PAUSE]
-
 **Critical detail:** Mark nodes as visited when you enqueue them, not when you dequeue them. If you wait until dequeue, the same node can be enqueued multiple times — causing duplicates and O(E²) behavior on dense graphs.
 
 **Time complexity:** O(V + E) — every vertex and every edge is processed once.
 **Space complexity:** O(V) — the queue and visited set together hold at most V nodes.
-
-[PAUSE]
 
 **BFS finds shortest paths in unweighted graphs.** Because BFS expands nodes level by level, the first time BFS reaches a node is the shortest path from the source. Track distances:
 
@@ -113,20 +101,16 @@ def bfs_distances(graph, start):
     return dist
 ```
 
-**[DEMO: bfs_distances on the tree above — show dist = {'A':0,'B':1,'C':1,'D':2,'E':2,'F':2}]**"
+"
 
 ---
 
-## [09:00 – 16:00] Part 2 — Depth-First Search
+## Part 2 — Depth-First Search
 
-**[SHOW SLIDE: "DFS — Stack-Based Deep Exploration"]**
-
-"DFS explores as far as possible down one path before backtracking and trying another. For the same graph:
+DFS explores as far as possible down one path before backtracking and trying another. For the same graph:
 
 BFS order: A, B, C, D, E, F (level by level)
 DFS order: A, B, D, E, C, F (deep first)
-
-[PAUSE]
 
 **Iterative DFS (explicit stack — LIFO):**
 
@@ -162,10 +146,6 @@ def dfs_recursive(graph, start, visited=None):
     return order
 ```
 
-**[DEMO: trace dfs_iterative on the same tree — show stack state at each step]**
-
-[PAUSE]
-
 **Connected components using DFS:**
 
 Count disconnected subgraphs — each time we start a fresh DFS from an unvisited node, we have found a new component.
@@ -188,8 +168,6 @@ def count_components(graph):
 
     return components
 ```
-
-[PAUSE]
 
 **Topological Sort (DFS-based, for DAGs):**
 
@@ -214,15 +192,13 @@ def topological_sort(graph):
     return result[::-1]    # reverse gives topological order
 ```
 
-**[DEMO: topological sort on course prerequisites graph: Math→CS101→CS201, Science→CS101]**"
+"
 
 ---
 
-## [16:00 – 21:00] Part 3 — Number of Islands (LeetCode #200)
+## Part 3 — Number of Islands (LeetCode #200)
 
-**[SHOW SLIDE: "BFS/DFS on Grids — Number of Islands"]**
-
-"The Number of Islands problem is the most common graph interview problem. Given a 2D grid of `'1'` (land) and `'0'` (water), count the number of islands (connected groups of land cells).
+The Number of Islands problem is the most common graph interview problem. Given a 2D grid of `'1'` (land) and `'0'` (water), count the number of islands (connected groups of land cells).
 
 **Model:** each `'1'` cell is a vertex; edges connect horizontally and vertically adjacent `'1'` cells. The problem asks for the number of connected components.
 
@@ -264,20 +240,16 @@ def num_islands(grid):
 
 Expected: 3 islands]
 
-[PAUSE]
-
 The `grid[r][c] = '0'` trick sinks visited cells in-place, replacing the `visited` set. When we find a `'1'`, we start a DFS that sinks the entire island — each DFS call corresponds to one island, so `count` increments exactly once per island.
 
 **Time:** O(m × n) — every cell is visited at most once.
-**Space:** O(m × n) in the worst case (recursion depth for a grid of all 1s)."
+**Space:** O(m × n) in the worst case (recursion depth for a grid of all 1s).
 
 ---
 
-## [21:00 – 25:00] Part 4 — BFS vs. DFS Decision Guide
+## Part 4 — BFS vs. DFS Decision Guide
 
-**[SHOW SLIDE: "When to Use BFS vs. DFS"]**
-
-"Choosing between BFS and DFS depends on what you need from the traversal:
+Choosing between BFS and DFS depends on what you need from the traversal:
 
 | Goal | Algorithm | Why |
 |---|---|---|
@@ -288,13 +260,11 @@ The `grid[r][c] = '0'` trick sinks visited cells in-place, replacing the `visite
 | Grid traversal (islands) | Either | DFS is simpler to implement recursively |
 | Detect if path exists | Either | Stop as soon as destination is reached |
 
-[PAUSE]
-
 **BFS pitfall:** Using a `list` instead of `deque` for the queue. `list.pop(0)` is O(n) — it shifts all remaining elements. Always use `deque.popleft()` which is O(1).
 
 **DFS pitfall:** Python's default recursion limit is 1000. For deep graphs (e.g., a chain of 10,000 nodes), recursive DFS will raise `RecursionError`. Use iterative DFS with an explicit stack for large inputs.
 
-The Module 10 lab has you implement BFS with distance tracking, DFS (both recursive and iterative), connected component counting, topological sort, and the Number of Islands problem. Good luck."
+The Module 10 lab has you implement BFS with distance tracking, DFS (both recursive and iterative), connected component counting, topological sort, and the Number of Islands problem. Good luck.
 
 ---
 

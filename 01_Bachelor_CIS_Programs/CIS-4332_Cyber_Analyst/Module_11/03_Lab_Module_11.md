@@ -40,7 +40,7 @@ Your organization is a regional financial services firm. You are the on-call Tie
 - **Alert 2** — Network: Outbound connection from WS-FINANCE-047 to 185.220.101.47 port 443, sustained for 14 minutes, at 22:10 UTC
 - **Alert 3** — Authentication: Failed RDP login attempts against four internal servers (DC-PROD-01, FS-PROD-02, APP-PROD-03, HR-PROD-04) from WS-FINANCE-047, at 22:11 UTC
 
-The SIEM correlation rule that fired is titled "Possible C2 Beaconing + Lateral Movement Probe."
+The SIEM correlation rule that fired is titled "Possible C2 Beaconing + Lateral Movement Probe.
 
 ---
 
@@ -107,7 +107,7 @@ Start:            22:10:07 UTC
 End:              22:24:29 UTC
 ```
 
-Threat intelligence lookup of 185.220.101.47 returns: "Known Tor exit node. Previously observed in C2 communications for multiple commodity RAT families."
+Threat intelligence lookup of 185.220.101.47 returns: "Known Tor exit node. Previously observed in C2 communications for multiple commodity RAT families.
 
 Answer in your lab report:
 

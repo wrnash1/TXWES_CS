@@ -26,27 +26,21 @@
 
 ---
 
-## [00:00 – 00:45] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 13 | Modules and Packages | CIS-1310"]**
-
-"Welcome back. So far every program you have written has been a single file. As programs grow, a single file becomes unmanageable — thousands of lines of code, no organization, nothing reusable across projects.
+Welcome back. So far every program you have written has been a single file. As programs grow, a single file becomes unmanageable — thousands of lines of code, no organization, nothing reusable across projects.
 
 Python solves this with modules and packages. A module is simply a `.py` file. A package is a directory of modules. Python ships with hundreds of ready-to-use modules in the standard library, and the pip package manager gives you access to hundreds of thousands more.
 
-This module covers how to import and use modules, how to create your own, and how to install third-party packages with pip. These are everyday professional skills — and the import system is tested on the PCAP exam."
+This module covers how to import and use modules, how to create your own, and how to install third-party packages with pip. These are everyday professional skills — and the import system is tested on the PCAP exam.
 
 ---
 
-## [00:45 – 03:30] import — Three Ways to Import
+## import — Three Ways to Import
 
-**[SHOW SLIDE: "Three Forms of import"]**
-
-"There are three forms of the import statement. Each one controls what names land in your namespace.
+There are three forms of the import statement. Each one controls what names land in your namespace.
 
 ### Form 1: import module
-
-**[DEMO — import module]**
 
 ```python
 import math
@@ -58,11 +52,7 @@ print(math.floor(3.7))  # 3
 
 This imports the `math` module and makes it available under the name `math`. Every name you use must be prefixed: `math.sqrt`, `math.pi`. This keeps your namespace clean — there is no risk of a name in `math` colliding with a name you defined yourself.
 
-[PAUSE]
-
 ### Form 2: from module import name
-
-**[DEMO — from module import name]**
 
 ```python
 from math import sqrt, pi
@@ -74,8 +64,6 @@ print(pi)          # 3.141592653589793
 This imports specific names directly into your current namespace. No prefix needed. But now `sqrt` and `pi` are local names — if you later define a variable called `sqrt`, you would shadow the imported function.
 
 ### Form 3: import as alias
-
-**[DEMO — import as alias]**
 
 ```python
 import math as m
@@ -91,8 +79,6 @@ print(fact(5))    # 120
 
 The `as` keyword creates an alias — a shorter name. You see this constantly in professional code: `import numpy as np`, `import pandas as pd`. The PCAP exam tests all three forms, including aliases.
 
-[PAUSE]
-
 **What about `from math import *`?**
 
 ```python
@@ -102,17 +88,13 @@ print(sqrt(4))    # works
 print(pi)         # works
 ```
 
-This imports everything from the module — every public name — directly into your namespace. This is considered bad practice because you cannot tell where any name came from. If two modules both define a function called `log`, the second import silently overwrites the first. Avoid `import *` in production code."
+This imports everything from the module — every public name — directly into your namespace. This is considered bad practice because you cannot tell where any name came from. If two modules both define a function called `log`, the second import silently overwrites the first. Avoid `import *` in production code.
 
 ---
 
-## [03:30 – 05:30] Standard Library — Commonly Used Modules
+## Standard Library — Commonly Used Modules
 
-**[SHOW SLIDE: "Python Standard Library — No Installation Needed"]**
-
-"The standard library is built into Python. These modules are always available.
-
-**[DEMO — math module]**
+The standard library is built into Python. These modules are always available.
 
 ```python
 import math
@@ -125,8 +107,6 @@ print(math.pi)              # 3.141592653589793
 print(math.e)               # 2.718281828459045
 ```
 
-**[DEMO — random module]**
-
 ```python
 import random
 
@@ -137,8 +117,6 @@ items = [1, 2, 3, 4, 5]
 random.shuffle(items)
 print(items)                        # shuffled in place
 ```
-
-**[DEMO — os module]**
 
 ```python
 import os
@@ -152,8 +130,6 @@ print(files)                     # list of files in current directory
 
 `os.path.join` is the right way to build file paths — it automatically uses the correct separator for the operating system.
 
-**[DEMO — sys module]**
-
 ```python
 import sys
 
@@ -164,8 +140,6 @@ sys.exit(0)            # terminate the program (status code 0 = success)
 ```
 
 `sys.path` is the list of directories Python searches when you write `import something`. Python checks them left to right — the first match wins.
-
-**[DEMO — datetime module]**
 
 ```python
 from datetime import datetime, date
@@ -180,13 +154,9 @@ print(now.strftime('%Y-%m-%d %H:%M'))  # formatted: '2025-03-15 14:22'
 
 ---
 
-## [05:30 – 08:00] Creating Your Own Modules
+## Creating Your Own Modules
 
-**[SHOW SLIDE: "Any .py file is a module"]**
-
-"Any `.py` file you write is already a module. Other files can import from it.
-
-**[DEMO — create two files]**
+Any `.py` file you write is already a module. Other files can import from it.
 
 Create `greetings.py`:
 
@@ -222,11 +192,7 @@ Goodbye, Bob!
 1.0
 ```
 
-[PAUSE]
-
 When you `import greetings`, Python executes the entire `greetings.py` file. Any function definitions, class definitions, and variable assignments at the top level of `greetings.py` run at import time, and the names become available under `greetings.name_here`.
-
-**[DEMO — from greetings import hello]**
 
 ```python
 from greetings import hello, GREETING_VERSION
@@ -237,23 +203,19 @@ print(GREETING_VERSION)
 
 You can also import specific names. Only those two names land in your namespace.
 
-**[DEMO — the .pyc cache]**
-
 After running `main.py`, look in the directory:
 
 ```bash
 ls __pycache__/
 ```
 
-Python automatically compiles your module to bytecode (`.pyc` files) and caches them in `__pycache__/`. On subsequent imports, Python loads the bytecode cache instead of re-parsing the source file — this makes imports faster."
+Python automatically compiles your module to bytecode (`.pyc` files) and caches them in `__pycache__/`. On subsequent imports, Python loads the bytecode cache instead of re-parsing the source file — this makes imports faster.
 
 ---
 
-## [08:00 – 10:00] `__name__ == '__main__'` — The Module Guard
+## `__name__ == '__main__'` — The Module Guard
 
-**[SHOW SLIDE: "`__name__` — Running vs Importing"]**
-
-"Here is one of the most important Python patterns you will ever learn.
+Here is one of the most important Python patterns you will ever learn.
 
 Every Python file has a special variable called `__name__`. Its value depends on how the file is being run:
 
@@ -261,8 +223,6 @@ Every Python file has a special variable called `__name__`. Its value depends on
 - When the file is imported by another file: `__name__` equals the module's name (e.g., `'greetings'`)
 
 This lets you write code that only runs when you execute the file directly — not when someone imports it.
-
-**[DEMO — add the guard to greetings.py]**
 
 ```python
 # greetings.py
@@ -283,8 +243,6 @@ if __name__ == '__main__':
     print(goodbye('Test User'))
 ```
 
-**[DEMO — run greetings.py directly]**
-
 ```bash
 python3 greetings.py
 ```
@@ -295,8 +253,6 @@ Hello, Test User!
 Goodbye, Test User!
 ```
 
-**[DEMO — now import it from main.py]**
-
 ```python
 import greetings    # the test block does NOT run
 print(greetings.hello('Alice'))
@@ -306,25 +262,17 @@ print(greetings.hello('Alice'))
 Hello, Alice!
 ```
 
-[PAUSE]
-
-The test block is invisible to importers. This is the standard professional pattern: functions and classes at the top level, test or demo code inside `if __name__ == '__main__':`. Every Python module you will ever read in the real world uses this pattern."
+The test block is invisible to importers. This is the standard professional pattern: functions and classes at the top level, test or demo code inside `if __name__ == '__main__':`. Every Python module you will ever read in the real world uses this pattern.
 
 ---
 
-## [10:00 – 12:30] pip — Installing Third-Party Packages
+## pip — Installing Third-Party Packages
 
-**[SHOW SLIDE: "pip — Python's Package Installer"]**
-
-"The Python standard library is powerful, but the real ecosystem is on PyPI — the Python Package Index. PyPI has over 500,000 packages. You install them with `pip`.
-
-**[DEMO — check pip version]**
+The Python standard library is powerful, but the real ecosystem is on PyPI — the Python Package Index. PyPI has over 500,000 packages. You install them with `pip`.
 
 ```bash
 pip3 --version
 ```
-
-**[DEMO — install a package]**
 
 ```bash
 pip3 install requests
@@ -340,19 +288,13 @@ print(response.status_code)    # 200
 print(type(response))          # <class 'requests.models.Response'>
 ```
 
-**[DEMO — list installed packages]**
-
 ```bash
 pip3 list
 ```
 
-**[DEMO — uninstall a package]**
-
 ```bash
 pip3 uninstall requests
 ```
-
-**[DEMO — install a specific version]**
 
 ```bash
 pip3 install requests==2.28.0
@@ -364,8 +306,6 @@ By default, `pip install` puts packages in your system-wide Python installation.
 
 The solution is a virtual environment — an isolated Python installation per project.
 
-**[DEMO — create and use a virtual environment]**
-
 ```bash
 python3 -m venv myenv
 source myenv/bin/activate
@@ -374,17 +314,13 @@ pip3 list
 deactivate
 ```
 
-Inside the activated environment, `pip install` only affects that project. When you `deactivate`, you return to the system Python. This is standard practice for all Python development."
+Inside the activated environment, `pip install` only affects that project. When you `deactivate`, you return to the system Python. This is standard practice for all Python development.
 
 ---
 
-## [12:30 – 14:30] dir() and help() — Exploring Modules
+## dir() and help() — Exploring Modules
 
-**[SHOW SLIDE: "dir() and help() — Interactive Documentation"]**
-
-"Python gives you two built-in tools for exploring any module interactively.
-
-**[DEMO — dir()]**
+Python gives you two built-in tools for exploring any module interactively.
 
 ```python
 import math
@@ -405,8 +341,6 @@ print(dir(math))
 
 `dir(module)` returns a sorted list of every name defined in the module. This is how you discover what a module contains without reading the docs.
 
-**[DEMO — help()]**
-
 ```python
 help(math.sqrt)
 ```
@@ -420,22 +354,18 @@ sqrt(x, /)
 
 `help(name)` prints the docstring. Use `help(math)` for the full module, `help(math.sqrt)` for a specific function.
 
-**[DEMO — dir() on any object]**
-
 ```python
 s = 'hello'
 print(dir(s))
 ```
 
-`dir()` works on any Python object — strings, lists, custom classes. You used `dir` when exploring builtins in Module 9 as well."
+`dir()` works on any Python object — strings, lists, custom classes. You used `dir` when exploring builtins in Module 9 as well.
 
 ---
 
-## [14:30 – 15:30] PCAP Exam Tips and Wrap-Up
+## PCAP Exam Tips and Wrap-Up
 
-**[SHOW SLIDE: "Module 13 — PCAP Alignment"]**
-
-"Key exam take-aways:
+Key exam take-aways:
 
 **1.** Three import forms: `import module`, `from module import name`, `import module as alias`. Know what each puts in your namespace and how you call it.
 
@@ -451,7 +381,7 @@ print(dir(s))
 
 **7.** A package is a directory containing an `__init__.py` file. When you do `import package.module`, Python runs `__init__.py` first, then loads the submodule.
 
-Module 14 covers object-oriented programming — classes, `__init__`, self, and encapsulation. The OOP modules are the most conceptually demanding material in this course, so come in prepared. See you there."
+Module 14 covers object-oriented programming — classes, `__init__`, self, and encapsulation. The OOP modules are the most conceptually demanding material in this course, so come in prepared. See you there.
 
 ---
 

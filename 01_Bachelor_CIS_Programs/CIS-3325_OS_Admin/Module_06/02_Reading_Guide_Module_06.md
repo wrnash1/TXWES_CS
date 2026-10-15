@@ -495,8 +495,6 @@ Coverage: Comprehensive journalctl reference covering all filtering options (--s
 and forwarding journal entries to syslog. The most complete freely available journalctl
 guide outside the man page.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

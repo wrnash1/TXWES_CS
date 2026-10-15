@@ -47,8 +47,6 @@ By the end of this module you will be able to:
 
 Let's get started.
 
-[PAUSE]
-
 ---
 
 ## Section 1: What Is Terraform Cloud (1:30 – 4:30)
@@ -60,8 +58,6 @@ Terraform Cloud is a managed platform from HashiCorp that provides a centralized
 - **Business tier** — self-managed agents, audit trails, and enterprise SLA features
 
 The exam focuses on the features, not the pricing, so let's go through what each capability does.
-
-[PAUSE]
 
 ### Remote State Storage
 
@@ -79,8 +75,6 @@ Instead of running `terraform plan` and `terraform apply` on your local machine,
 ### Shared Variables and Secrets
 
 Variables are stored per workspace in Terraform Cloud's encrypted secrets store. Team members trigger runs; Terraform Cloud injects the variables — no one needs to know the actual secret values.
-
-[PAUSE]
 
 ---
 
@@ -113,8 +107,6 @@ terraform init
 
 `terraform login` opens a browser window to generate an API token, which is stored in `~/.terraform.d/credentials.tfrc.json`. Subsequent `terraform plan` and `terraform apply` commands execute remotely in Terraform Cloud.
 
-[PAUSE]
-
 ### Workspace Tags
 
 Instead of pinning to a single workspace name, you can use tags to target multiple workspaces:
@@ -132,8 +124,6 @@ terraform {
 ```
 
 This is useful when you have multiple workspaces with the same configuration, tagged for identification.
-
-[PAUSE]
 
 ---
 
@@ -154,15 +144,11 @@ CLI workspaces (`terraform workspace new`) are a simpler mechanism that only sep
 
 When you connect to Terraform Cloud and target a workspace named `my-app-prod`, all plans and applies for that workspace run in Terraform Cloud's execution environment with the workspace's variables injected automatically.
 
-[PAUSE]
-
 ### Variable Sets
 
 Terraform Cloud allows you to define **variable sets** — collections of variables that can be shared across multiple workspaces. This is ideal for credentials or common tags that apply to all workspaces in an organization.
 
 For example, a variable set named `AWS-Production-Creds` containing `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as environment variables can be applied to all production workspaces — without duplicating the secret in each workspace.
-
-[PAUSE]
 
 ---
 
@@ -194,13 +180,9 @@ Developer → git push → GitHub → Terraform Cloud webhook
 
 This is **GitOps for infrastructure**: every infrastructure change is tracked in Git, reviewed in a PR, and applied through a controlled, auditable pipeline.
 
-[PAUSE]
-
 ### Speculative Plans
 
 A speculative plan is a Terraform plan that runs against a pull request but does not lock state or allow an apply. It shows what WOULD change if the PR were merged — surfacing any errors or unintended consequences before merge.
-
-[PAUSE]
 
 ---
 
@@ -240,8 +222,6 @@ main = rule {
 }
 ```
 
-[PAUSE]
-
 ### Policy Enforcement Levels
 
 Sentinel policies have three enforcement levels:
@@ -251,8 +231,6 @@ Sentinel policies have three enforcement levels:
 - **Hard mandatory** — Policy failures always block the apply; cannot be overridden
 
 This graduated enforcement allows teams to introduce policies gradually — starting with advisory, promoting to soft mandatory as teams adapt, then locking down with hard mandatory for critical controls.
-
-[PAUSE]
 
 ---
 
@@ -281,8 +259,6 @@ Plans and applies run locally on your machine, but state is stored in Terraform 
 ### Agent Execution
 
 Plans and applies run on self-hosted Terraform agents — useful when your infrastructure is in a private network that Terraform Cloud's managed agents cannot reach.
-
-[PAUSE]
 
 ---
 
@@ -315,8 +291,6 @@ A typical team structure for a production deployment workflow:
 
 In Terraform Cloud you can configure workspaces to require manual approval before applies run. This is the primary mechanism for enforcing a human-in-the-loop review before production changes.
 
-[PAUSE]
-
 ---
 
 ## Summary and Exam Tips (22:00 – 23:30)
@@ -339,8 +313,6 @@ Here is what we covered in Module 11:
 - Sentinel is a paid feature (Team tier and above)
 - Remote execution uses Terraform Cloud's agents; agent execution uses self-hosted agents
 - Variable sets can be applied globally (all workspaces) or to specific workspaces
-
-[PAUSE]
 
 ---
 

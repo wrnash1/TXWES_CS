@@ -61,7 +61,7 @@ within the internal network — not from the internet.
 Create a report cover page block containing the following elements. Format it as you would
 the first page of a professional report document.
 
-1. Report title: "Penetration Test Assessment Report — Meridian Financial Services"
+1. Report title: "Penetration Test Assessment Report — Meridian Financial Services
 2. Classification marking: CONFIDENTIAL
 3. Engagement dates: 2026-05-19 through 2026-05-30
 4. Scope summary: One sentence describing the authorized scope
@@ -190,7 +190,7 @@ Submit a single document to the Canvas assignment portal containing:
   non-security business executive understand this sentence?" If the answer is no, revise.
 - **Remediation too vague**: Every remediation should answer: "What exactly does the
   system administrator click, type, or configure to fix this?" Generic statements like
-  "update the software" are insufficient.
+  update the software" are insufficient.
 
 ---
 

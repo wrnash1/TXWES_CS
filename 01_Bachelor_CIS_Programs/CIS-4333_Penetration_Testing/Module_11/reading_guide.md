@@ -338,8 +338,6 @@ A phishing campaign captures 45 sets of real employee credentials. What is the F
 - Hadnagy, C. (2010). *Social Engineering: The Art of Human Hacking.* Wiley.
 - Truth in Caller ID Act, 47 U.S.C. § 227(e).
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

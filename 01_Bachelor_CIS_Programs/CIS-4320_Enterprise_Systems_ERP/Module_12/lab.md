@@ -148,7 +148,7 @@ Document the following (screenshot or written description):
 
 ### Task 2.2: Create a Connected App
 
-In Setup, navigate to App Manager. Click "New Connected App."
+In Setup, navigate to App Manager. Click "New Connected App.
 
 Fill in the following settings:
 
@@ -157,7 +157,7 @@ Fill in the following settings:
 - Contact Email: your TXWES email address
 - Enable OAuth Settings: checked
 - Callback URL: `https://login.salesforce.com/services/oauth2/callback`
-- Selected OAuth Scopes: Add "Manage user data via APIs (api)" and "Perform requests at any time (refresh_token, offline_access)"
+- Selected OAuth Scopes: Add "Manage user data via APIs (api)" and "Perform requests at any time (refresh_token, offline_access)
 
 Save the Connected App. After saving, record:
 

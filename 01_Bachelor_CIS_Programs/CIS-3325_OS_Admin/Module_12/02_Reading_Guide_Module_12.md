@@ -418,8 +418,6 @@ Before the quiz and lab, confirm you can do all of the following without looking
 - Use iostat -x to identify a disk bottleneck
 - Use sar to review historical performance data
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

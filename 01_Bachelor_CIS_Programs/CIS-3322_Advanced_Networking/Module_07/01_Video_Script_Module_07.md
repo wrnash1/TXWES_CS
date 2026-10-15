@@ -1,5 +1,23 @@
 # Video Script: Module 07 - Inter-VLAN Routing Solutions
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course &bull; Module 07</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ" title="Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Jeremy's IT Lab &bull; Cisco CCNA 200-301 Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 3: IP Connectivity - 25%)
 **Estimated Duration:** 22 minutes
@@ -7,13 +25,10 @@
 
 ---
 
-## Section 1: Introduction - Why VLANs Need a Router [00:00 - 03:00]
-
+## Section 1: Introduction - Why VLANs Need a Router
 Welcome to Module 07. I am Professor Nash. Today we solve a problem that every network engineer faces: VLANs create logical broadcast boundaries, but how do devices in different VLANs communicate with each other?
 
 By design, VLANs are isolated. VLAN 10 (Engineering) and VLAN 20 (Sales) cannot exchange traffic at Layer 2. They need a Layer 3 device to route between them. That is where inter-VLAN routing comes in.
-
-[SHOW DIAGRAM: Two VLANs shown as separate broadcast bubbles on a switch. An arrow showing an IP packet that needs to travel from VLAN 10 to VLAN 20 being blocked at the VLAN boundary, with a question mark showing the missing routing step]
 
 There are three methods for inter-VLAN routing:
 
@@ -25,9 +40,7 @@ Today we cover the last two methods in detail with full configuration walkthroug
 
 ---
 
-## Section 2: Router-on-a-Stick (ROAS) [03:00 - 10:00]
-
-[SHOW DIAGRAM: A switch connected to a router via a single trunk link. The router's interface is divided into three subinterfaces: G0/0.10, G0/0.20, G0/0.30 each labeled with their VLAN and IP address]
+## Section 2: Router-on-a-Stick (ROAS)
 
 Router-on-a-stick uses a single physical router interface connected to the switch's trunk port. The physical interface is subdivided into logical subinterfaces — one per VLAN. Each subinterface is configured with:
 
@@ -78,9 +91,7 @@ All inter-VLAN traffic must traverse the single physical link between the switch
 
 ---
 
-## Section 3: Layer 3 Switch SVIs [10:00 - 16:30]
-
-[SHOW DIAGRAM: A Cisco Catalyst 3650 (multilayer switch) with three SVIs labeled VLAN 10, VLAN 20, VLAN 30, each showing an IP address. End devices connect directly to the same switch via access ports. No external router required for inter-VLAN routing]
+## Section 3: Layer 3 Switch SVIs
 
 A Layer 3 switch performs routing internally using Switched Virtual Interfaces (SVIs). Each SVI is a virtual interface that represents one VLAN. Assigning an IP address to an SVI makes the switch the default gateway for all hosts in that VLAN.
 
@@ -131,9 +142,7 @@ CCNA Exam Tip: An SVI is only in the `up/up` state when at least one access port
 
 ---
 
-## Section 4: Method Comparison and Troubleshooting [16:30 - 19:30]
-
-[SHOW DIAGRAM: Side-by-side comparison table showing Router-on-a-Stick vs Layer 3 Switch SVIs across six rows: Hardware needed, Traffic path, Scalability, Configuration complexity, Best use case, CCNA test focus]
+## Section 4: Method Comparison and Troubleshooting
 
 | Criteria | Router-on-a-Stick | Layer 3 Switch SVIs |
 |---|---|---|
@@ -159,8 +168,7 @@ Layer 3 switch SVI common issues:
 
 ---
 
-## Section 5: Lab Preview and Exam Readiness [19:30 - 22:00]
-
+## Section 5: Lab Preview and Exam Readiness
 This week's lab has two parts: Part 1 uses router-on-a-stick with a 1941 router, and Part 2 replaces the external router with a Catalyst 3650 multilayer switch using SVIs. You will verify inter-VLAN routing in both topologies using ping between hosts in different VLANs.
 
 Key verification commands:

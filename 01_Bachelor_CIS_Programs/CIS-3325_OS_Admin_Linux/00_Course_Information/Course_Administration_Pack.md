@@ -41,29 +41,29 @@ Start by reviewing the **Syllabus** in the Course Information section and then p
 
 **[0:00 – 0:30] — Hook**
 
-"Welcome to Operating System Administration, Linux Track. I'm Professor Nash. Before we get into the course overview, I want you to open a terminal — any terminal — and type this command: `uptime`. On Windows, open WSL and type it. On Mac, open Terminal and type it. That one command tells you how long your system has been running, how many users are logged in, and the load average over the last 1, 5, and 15 minutes. You just read system health data. That is what Linux administrators do, and that is what this course is about."
+Welcome to Operating System Administration, Linux Track. I'm Professor Nash. Before we get into the course overview, I want you to open a terminal — any terminal — and type this command: `uptime`. On Windows, open WSL and type it. On Mac, open Terminal and type it. That one command tells you how long your system has been running, how many users are logged in, and the load average over the last 1, 5, and 15 minutes. You just read system health data. That is what Linux administrators do, and that is what this course is about.
 
 **[0:30 – 1:15] — Why Linux Matters**
 
-"Linux is not a niche skill. It runs the servers behind every website you visit, every cloud application you use, and every container your code runs in. When you deploy an application to AWS or Google Cloud, it is running on Linux. When Verizon manages network infrastructure, it is running on Linux. If you want to work in cloud, DevOps, cybersecurity, or enterprise networking — learning Linux is not optional. It is the price of admission.
+Linux is not a niche skill. It runs the servers behind every website you visit, every cloud application you use, and every container your code runs in. When you deploy an application to AWS or Google Cloud, it is running on Linux. When Verizon manages network infrastructure, it is running on Linux. If you want to work in cloud, DevOps, cybersecurity, or enterprise networking — learning Linux is not optional. It is the price of admission.
 
-This course is fully aligned with the CompTIA Linux+ certification, exam code XK0-005. That certification validates that you can administer real Linux systems. By the end of this course, you will sit for that exam."
+This course is fully aligned with the CompTIA Linux+ certification, exam code XK0-005. That certification validates that you can administer real Linux systems. By the end of this course, you will sit for that exam.
 
 **[1:15 – 2:00] — How the Course Works**
 
-"This is a fully asynchronous online course. Every week you have one module, and every module follows the same structure: a video script page to read, a reading guide pointing you to free OER resources, a hands-on lab you complete in your own Linux VM, a practice quiz, and a graded discussion board. All assignments are due Sunday at 11:59 PM CST.
+This is a fully asynchronous online course. Every week you have one module, and every module follows the same structure: a video script page to read, a reading guide pointing you to free OER resources, a hands-on lab you complete in your own Linux VM, a practice quiz, and a graded discussion board. All assignments are due Sunday at 11:59 PM CST.
 
-There is no textbook to buy. Everything is free. The primary textbook is *The Linux Command Line* by William Shotts — it is freely available online and it is excellent. The primary video resource is the LearnLinuxTV Linux Essentials playlist on YouTube — also free. Check the ZTC Reading Materials file in the Course Information folder for all links."
+There is no textbook to buy. Everything is free. The primary textbook is *The Linux Command Line* by William Shotts — it is freely available online and it is excellent. The primary video resource is the LearnLinuxTV Linux Essentials playlist on YouTube — also free. Check the ZTC Reading Materials file in the Course Information folder for all links.
 
 **[2:00 – 2:45] — The Lab Environment**
 
-"Before Module 01 is due, you need a Linux environment. I recommend installing VirtualBox on your laptop and creating an Ubuntu Server 24.04 LTS virtual machine. The instructions are in the Student Guide and in Module 01. If you are on Windows 10 or 11, Windows Subsystem for Linux — WSL2 — also works for most modules.
+Before Module 01 is due, you need a Linux environment. I recommend installing VirtualBox on your laptop and creating an Ubuntu Server 24.04 LTS virtual machine. The instructions are in the Student Guide and in Module 01. If you are on Windows 10 or 11, Windows Subsystem for Linux — WSL2 — also works for most modules.
 
-The labs in this course require root access. That is another reason we use a VM — you can break things and rebuild them safely. Breaking things is actually part of the curriculum. Deliberately misconfigure permissions, delete the wrong file, and fix it. That is how Linux skills get built."
+The labs in this course require root access. That is another reason we use a VM — you can break things and rebuild them safely. Breaking things is actually part of the curriculum. Deliberately misconfigure permissions, delete the wrong file, and fix it. That is how Linux skills get built.
 
 **[2:45 – 3:00] — Closing**
 
-"Review the syllabus, get your Linux VM running, and meet me in Module 01. The terminal is waiting. Let's get started."
+Review the syllabus, get your Linux VM running, and meet me in Module 01. The terminal is waiting. Let's get started.
 
 ---
 

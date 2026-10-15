@@ -26,9 +26,7 @@
 
 ---
 
-## [00:00 - 02:30] Introduction and Module Overview
-
-[SHOW SLIDE: Title card — "Module 09: Peripheral Devices and Interfaces"]
+## Introduction and Module Overview
 
 Welcome back, class. I am Professor Nash, and this is Module 09: Peripheral Devices and Interfaces.
 
@@ -44,9 +42,7 @@ Let's get started.
 
 ---
 
-## [02:30 - 08:30] Section 1 — USB Standards: Versions, Speeds, and Color Coding
-
-[SHOW SLIDE: USB version comparison table]
+## Section 1 — USB Standards: Versions, Speeds, and Color Coding
 
 [SHOW COMPONENT: USB Type-A connectors — blue 3.0 and white 2.0 side by side]
 
@@ -70,8 +66,6 @@ USB4: Maximum speed 40 Gbps. This is the newest generation and uses the USB-C co
 
 Now let's talk about connector shapes, because this is where students get confused.
 
-[SHOW SLIDE: USB connector type chart]
-
 USB Type-A: The flat rectangular connector most people recognize. This is the standard host-side connector on PCs, laptops, and hubs. USB 2.0 Type-A is white or black. USB 3.0 Type-A is blue.
 
 USB Type-B: A square-ish connector used on devices like printers and scanners. Less common today but still appears on the exam.
@@ -88,9 +82,7 @@ Write this down: A USB Type-C port may deliver USB 2.0 speeds (480 Mbps), USB 3.
 
 ---
 
-## [08:30 - 13:30] Section 2 — Thunderbolt Interface
-
-[SHOW SLIDE: Thunderbolt version comparison table]
+## Section 2 — Thunderbolt Interface
 
 [SHOW COMPONENT: Thunderbolt cable with lightning bolt icon]
 
@@ -110,9 +102,7 @@ The lightning bolt icon is your field identification tool. If the port on a lapt
 
 ---
 
-## [13:30 - 17:30] Section 3 — KVM Switches
-
-[SHOW SLIDE: KVM switch diagram]
+## Section 3 — KVM Switches
 
 KVM stands for Keyboard, Video, Mouse. A KVM switch is a hardware device that allows a single set of peripherals — one keyboard, one monitor, and one mouse — to control two or more computers by physically switching the USB and video connections between them.
 
@@ -128,9 +118,7 @@ A common troubleshooting scenario: After switching to Computer 2, the monitor sh
 
 ---
 
-## [17:30 - 20:30] Section 4 — Authentication Peripherals: Smart Cards and Biometrics
-
-[SHOW SLIDE: Authentication factors chart]
+## Section 4 — Authentication Peripherals: Smart Cards and Biometrics
 
 [SHOW COMPONENT: USB fingerprint reader or smart card reader]
 
@@ -142,8 +130,6 @@ Something you have: A physical object you possess — a smart card, a hardware t
 
 Something you are: A physical biometric characteristic — fingerprint, iris pattern, facial geometry, voice print. Inherence-based.
 
-[SHOW SLIDE: Smart card vs. biometric scanner comparison table]
-
 A smart card reader is a peripheral that reads the embedded cryptographic chip in a physical smart card. Smart cards are used in government (Common Access Card, or CAC) and corporate environments for workstation login. The card stores a cryptographic certificate that is presented to the authentication system when inserted into the reader. Because the user must physically possess the card, smart card authentication represents the "something you have" factor.
 
 A biometric scanner reads a physical characteristic of the user's body. Fingerprint scanners are the most common — they capture the ridge pattern of a finger and compare it against an enrolled template. Iris scanners, facial recognition cameras, and voice recognition systems also fall in this category. Biometric authentication represents the "something you are" factor.
@@ -154,13 +140,11 @@ Both devices require driver installation on the host OS. Windows integrates both
 
 **A+ Exam Tip:** The exam will describe a multi-factor authentication scenario and ask which factor category a given device represents. Smart card = something you have. Fingerprint = something you are. Password = something you know. These are tested precisely — do not mix them up.
 
-A common distractor pairs a biometric scanner with "something you have." Biometrics are physical characteristics of your body — they belong to you, but they cannot be taken from you and given to someone else the way a physical card can. That distinction separates "something you are" from "something you have."
+A common distractor pairs a biometric scanner with "something you have." Biometrics are physical characteristics of your body — they belong to you, but they cannot be taken from you and given to someone else the way a physical card can. That distinction separates "something you are" from "something you have.
 
 ---
 
-## [20:30 - 22:30] Closing and Lab Preview
-
-[SHOW SLIDE: End card]
+## Closing and Lab Preview
 
 Let's recap what we covered today. USB version hierarchy: 2.0 at 480 Mbps, 3.0 at 5 Gbps with blue connectors, 3.1 Gen 2 at 10 Gbps, Thunderbolt 3/4 at 40 Gbps. USB Type-C is a connector shape only — it does not guarantee any specific speed. Thunderbolt cables and standard USB-C cables are not interchangeable for Thunderbolt performance. KVM switches share one console across multiple computers and are OS-agnostic. Smart cards = something you have. Biometrics = something you are.
 

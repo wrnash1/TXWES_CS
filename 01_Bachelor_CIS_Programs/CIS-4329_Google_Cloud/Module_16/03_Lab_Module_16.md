@@ -332,7 +332,7 @@ Create an uptime check (via Cloud Console — uptime checks are not fully suppor
 
 After saving, create an alerting policy:
 
-1. In the uptime check, click "Create Alerting Policy"
+1. In the uptime check, click "Create Alerting Policy
 2. Set alert when uptime check fails from any location for 1 minute
 3. Add a notification channel (email) if desired
 4. Save the policy

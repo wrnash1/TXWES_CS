@@ -220,9 +220,9 @@ Choose the "Validate by text input" option.
 
 Copy the entire contents of your `index.html` file and paste it into the text area.
 
-Click "Check."
+Click "Check.
 
-A passing result shows a green banner reading "Document checking completed. No errors or warnings to show."
+A passing result shows a green banner reading "Document checking completed. No errors or warnings to show.
 
 If you see errors, read each message carefully. Common beginner errors include:
 
@@ -235,7 +235,7 @@ Fix each error and re-validate until the checker passes with zero errors.
 
 ### Step 12: Accessibility check with browser DevTools
 
-In Chrome, open DevTools (F12), click the "Elements" panel, then select any landmark element (`<header>`, `<nav>`, `<main>`, `<footer>`). In the right panel, click "Accessibility."
+In Chrome, open DevTools (F12), click the "Elements" panel, then select any landmark element (`<header>`, `<nav>`, `<main>`, `<footer>`). In the right panel, click "Accessibility.
 
 Verify each landmark has the correct role listed:
 

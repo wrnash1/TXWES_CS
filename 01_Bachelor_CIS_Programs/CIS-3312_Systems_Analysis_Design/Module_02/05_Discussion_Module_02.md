@@ -35,7 +35,7 @@ A large insurance company assigned a BA to a project replacing its claims proces
 Sub-questions:
 
 1. Identify at least three specific factors from this scenario that should have signaled that a predictive approach was required, and explain each factor using BABOK KA 2 approach selection criteria.
-2. Describe what the BA should have included in the BA Approach document that would have prevented this stop-work order, referencing the KA 2 task "Plan Business Analysis Governance."
+2. Describe what the BA should have included in the BA Approach document that would have prevented this stop-work order, referencing the KA 2 task "Plan Business Analysis Governance.
 3. Is the project sponsor blameless in this situation? Discuss the BA's professional responsibility to recommend the correct approach even when the sponsor does not push back.
 
 ---

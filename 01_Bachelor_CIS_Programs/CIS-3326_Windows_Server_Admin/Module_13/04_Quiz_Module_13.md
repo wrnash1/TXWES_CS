@@ -306,7 +306,7 @@ happens to write operations on Server A during the outage?
 
 An administrator needs to verify the health of all physical disks in a Storage
 Spaces pool and identify any disks with a `HealthStatus` of "Warning" or
-"Unhealthy." Which PowerShell command retrieves this information?
+Unhealthy." Which PowerShell command retrieves this information?
 
 - A) `Get-StoragePool | Select-Object FriendlyName, HealthStatus`
 - B) `Get-PhysicalDisk | Where-Object {$_.HealthStatus -ne "Healthy"} | Select-Object FriendlyName, HealthStatus, OperationalStatus`

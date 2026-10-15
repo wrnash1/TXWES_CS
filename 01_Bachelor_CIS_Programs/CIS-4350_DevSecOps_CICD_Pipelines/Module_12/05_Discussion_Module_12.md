@@ -16,7 +16,7 @@ This week's discussion explores Kubernetes security through three scenarios draw
 
 ### Scenario 1 — The Compromised CI/CD Pipeline
 
-A fintech company's GitHub Actions pipeline uses a Kubernetes service account named `deploy-sa` to push application updates to the `payments-prod` namespace. An incident investigation reveals that an attacker who compromised a pull request workflow used the pipeline's credentials to enumerate all Secrets in the cluster, discover database passwords, and exfiltrate payment processing credentials. The root cause: `deploy-sa` was bound to the `cluster-admin` ClusterRole via a ClusterRoleBinding because "it was the easiest way to make the pipeline work."
+A fintech company's GitHub Actions pipeline uses a Kubernetes service account named `deploy-sa` to push application updates to the `payments-prod` namespace. An incident investigation reveals that an attacker who compromised a pull request workflow used the pipeline's credentials to enumerate all Secrets in the cluster, discover database passwords, and exfiltrate payment processing credentials. The root cause: `deploy-sa` was bound to the `cluster-admin` ClusterRole via a ClusterRoleBinding because "it was the easiest way to make the pipeline work.
 
 In 175–225 words, analyze this incident and design the remediation from an RBAC perspective. Address:
 
@@ -28,7 +28,7 @@ In 175–225 words, analyze this incident and design the remediation from an RBA
 
 ### Scenario 2 — The Network Policy Migration Failure
 
-A startup deploys a default-deny-all NetworkPolicy to their `app-prod` namespace as the first step in a micro-segmentation initiative. Within 90 seconds, all 12 microservices in the namespace are reporting DNS resolution failures, health check timeouts, and database connection errors. The on-call engineer rolls back the NetworkPolicy and opens a ticket: "Network Policies break everything — we should not use them."
+A startup deploys a default-deny-all NetworkPolicy to their `app-prod` namespace as the first step in a micro-segmentation initiative. Within 90 seconds, all 12 microservices in the namespace are reporting DNS resolution failures, health check timeouts, and database connection errors. The on-call engineer rolls back the NetworkPolicy and opens a ticket: "Network Policies break everything — we should not use them.
 
 In 175–225 words, write a technical post-mortem explaining what went wrong and how to implement Network Policies correctly. Address:
 
@@ -40,7 +40,7 @@ In 175–225 words, write a technical post-mortem explaining what went wrong and
 
 ### Scenario 3 — The Privileged Container Escape
 
-A security audit of a production Kubernetes cluster finds that 8 out of 14 application Deployments have containers running with the default Security Context — no `runAsNonRoot`, no `allowPrivilegeEscalation: false`, no `readOnlyRootFilesystem`. One container is running as root. During a penetration test, the tester exploits a Remote Code Execution vulnerability in one of the root-running containers and demonstrates a container escape to the Kubernetes node. The CISO asks: "How do we prevent this class of attack systematically — not just fix these 8 deployments?"
+A security audit of a production Kubernetes cluster finds that 8 out of 14 application Deployments have containers running with the default Security Context — no `runAsNonRoot`, no `allowPrivilegeEscalation: false`, no `readOnlyRootFilesystem`. One container is running as root. During a penetration test, the tester exploits a Remote Code Execution vulnerability in one of the root-running containers and demonstrates a container escape to the Kubernetes node. The CISO asks: "How do we prevent this class of attack systematically — not just fix these 8 deployments?
 
 In 175–225 words, respond to the CISO with a systematic hardening plan that addresses:
 

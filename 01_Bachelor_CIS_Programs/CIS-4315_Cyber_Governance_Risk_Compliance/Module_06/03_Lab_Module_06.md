@@ -94,7 +94,7 @@ Write a numbered step-by-step procedure (minimum 8 steps) for an employee to set
 
 ### Tier 4: Remote Work Security Guideline
 
-Write a short guideline (6–10 bullet points) with recommended best practices for employees working remotely. This document is non-mandatory — frame the language accordingly using "should" rather than "must."
+Write a short guideline (6–10 bullet points) with recommended best practices for employees working remotely. This document is non-mandatory — frame the language accordingly using "should" rather than "must.
 
 ### Grading Criteria — Part B
 

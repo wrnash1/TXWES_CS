@@ -97,7 +97,7 @@ Welcome to Module 1 of CIS-3325 OS Administration Linux. This module establishes
 Review these definitions carefully. These terms appear on the CompTIA Linux+ exam and will be used throughout the course.
 
 - **Linux kernel**: The core of the Linux operating system, written by Linus Torvalds in 1991. Manages hardware resources, memory, processes, and provides system calls that user programs use to interact with hardware. Licensed under GPL v2.
-- **GNU Project**: Launched by Richard Stallman in 1983 with the goal of creating a free Unix-like operating system. Produced essential tools including bash, GCC, and the C library. GNU tools combined with the Linux kernel form what most people call "Linux."
+- **GNU Project**: Launched by Richard Stallman in 1983 with the goal of creating a free Unix-like operating system. Produced essential tools including bash, GCC, and the C library. GNU tools combined with the Linux kernel form what most people call "Linux.
 - **FOSS**: Free and Open Source Software. "Free" refers to freedom (to run, study, modify, distribute) rather than price. Requires public access to source code.
 - **GPL (GNU General Public License)**: A copyleft license — software licensed under the GPL must be distributed with source code, and derivative works must also be licensed under the GPL. The Linux kernel uses GPL v2.
 - **MIT License**: A permissive open-source license. Code can be used in proprietary software without requiring the derivative work to be open sourced.
@@ -313,8 +313,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

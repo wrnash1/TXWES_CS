@@ -27,14 +27,14 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-- [ ] Title slide loaded: "Module 03 - OSINT and Passive Reconnaissance"
+- [ ] Title slide loaded: "Module 03 - OSINT and Passive Reconnaissance
 - [ ] Browser tabs open: WHOIS lookup, Shodan, Google search
 - [ ] Terminal window ready for theHarvester and Maltego demos
 - [ ] Reminder on screen: all demos use fictional or publicly consented targets only
 
 ---
 
-## [00:00 - 01:30] Opening
+## Opening
 
 **[SLIDE: Module 03 — OSINT and Passive Reconnaissance]**
 
@@ -53,7 +53,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 04:30] What Is OSINT and Why Does It Matter?
+## What Is OSINT and Why Does It Matter?
 
 **[SLIDE: OSINT Definition and Value]**
 
@@ -83,7 +83,7 @@ Professional penetration testers never skip passive reconnaissance. Skipping it 
 
 ---
 
-## [04:30 - 08:30] WHOIS, DNS, and Certificate Transparency
+## WHOIS, DNS, and Certificate Transparency
 
 **[SLIDE: WHOIS and DNS Enumeration]**
 
@@ -161,7 +161,7 @@ This returns every subdomain that has ever had a certificate issued — includin
 
 ---
 
-## [08:30 - 12:00] Google Dorking
+## Google Dorking
 
 **[SLIDE: Google Dorking — Advanced Search Operators]**
 
@@ -191,7 +191,7 @@ This information is publicly accessible. You are not hacking anything to retriev
 
 ---
 
-## [12:00 - 15:30] theHarvester and Social Media OSINT
+## theHarvester and Social Media OSINT
 
 **[SLIDE: theHarvester — Email and Subdomain Discovery]**
 
@@ -228,7 +228,7 @@ GitHub is another critical source. Developers often accidentally commit credenti
 
 ---
 
-## [15:30 - 18:30] Shodan — The Search Engine for Devices
+## Shodan — The Search Engine for Devices
 
 **[SLIDE: Shodan — Internet-Connected Device Discovery]**
 
@@ -255,7 +255,7 @@ Shodan provides this data passively from their own crawls — you are querying S
 
 ---
 
-## [18:30 - 21:00] Organizing OSINT — Maltego and Documentation
+## Organizing OSINT — Maltego and Documentation
 
 **[SLIDE: Maltego — Visualizing OSINT Relationships]**
 
@@ -277,7 +277,7 @@ This documentation feeds directly into your reconnaissance report section and pr
 
 ---
 
-## [21:00 - 23:00] Exam Tips and Summary
+## Exam Tips and Summary
 
 **[SLIDE: PT0-002 Exam Tips — Module 03]**
 
@@ -297,7 +297,7 @@ For additional study, visit **professormesser.com** and review the official PT0-
 
 ---
 
-## [23:00 - 24:00] Closing
+## Closing
 
 In Module 04 we move into active reconnaissance — specifically using Nmap for port scanning and service enumeration. You will send actual packets to target systems, so authorization must be fully in place before you begin.
 

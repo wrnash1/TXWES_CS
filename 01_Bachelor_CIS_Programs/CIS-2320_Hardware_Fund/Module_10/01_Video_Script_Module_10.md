@@ -26,15 +26,11 @@
 
 ---
 
-## [00:00 - 02:30] Introduction and The Four Boot Stages
-
-[SHOW SLIDE: Title card — "Module 10: Troubleshooting Boot Issues"]
+## Introduction and The Four Boot Stages
 
 Welcome back, class. I am Professor Nash, and this is Module 10: Troubleshooting Boot Issues.
 
 This module covers what happens between the moment you press the power button and the moment you see your desktop. That sequence — power on, POST, bootloader, OS load — is where the vast majority of hardware-related failures manifest. When a technician walks up to a computer that will not start, their entire job in the first two minutes is to figure out which of those four stages failed. That answer determines everything else they do.
-
-[SHOW SLIDE: The four boot stages diagram]
 
 [PAUSE — 3 seconds]
 
@@ -54,9 +50,7 @@ Every boot failure fits into one of these four stages. A beep code with no displ
 
 ---
 
-## [02:30 - 08:30] Section 1 — POST Failures and Beep Codes
-
-[SHOW SLIDE: POST failure indicators]
+## Section 1 — POST Failures and Beep Codes
 
 [SHOW COMPONENT: Motherboard with diagnostic LED array]
 
@@ -65,8 +59,6 @@ POST failures are the most challenging category because they happen before video
 When POST cannot display an error on screen, it communicates through three channels: beep codes, numeric POST codes on a display built into the motherboard, and LED indicators on the motherboard.
 
 Let's talk about beep codes first. The onboard speaker — a small piezo buzzer on most motherboards — emits a pattern of short and long beeps corresponding to a specific fault. The key thing to understand is that beep codes are manufacturer-specific.
-
-[SHOW SLIDE: AMI vs. Award/Phoenix beep code reference table]
 
 [SHOW COMPONENT: Motherboard close-up on speaker header]
 
@@ -94,9 +86,7 @@ Fourth, if neither RAM nor GPU is the issue, consult the motherboard's POST code
 
 ---
 
-## [08:30 - 14:00] Section 2 — Blue Screen of Death and Kernel Panic
-
-[SHOW SLIDE: BSOD anatomy]
+## Section 2 — Blue Screen of Death and Kernel Panic
 
 [SHOW COMPONENT: Screenshot or printout of a BSOD]
 
@@ -107,8 +97,6 @@ Let's break down what is on a BSOD because the exam will ask about specific stop
 The most prominent element is the stop code — a text string in ALL CAPS describing the error category. Examples: IRQL_NOT_LESS_OR_EQUAL, PAGE_FAULT_IN_NONPAGED_AREA, INACCESSIBLE_BOOT_DEVICE, SYSTEM_SERVICE_EXCEPTION.
 
 Below the stop code, Windows displays additional parameters — memory addresses, driver names, or hex error codes — that help engineers diagnose the specific fault. Modern Windows BSODs also include a QR code linking to Microsoft's support documentation for that specific stop code.
-
-[SHOW SLIDE: Common BSOD stop codes table]
 
 Let's go through the most A+ exam-relevant stop codes.
 
@@ -126,9 +114,7 @@ The Linux and macOS equivalent of a BSOD is a Kernel Panic. Linux displays a bla
 
 ---
 
-## [14:00 - 18:30] Section 3 — Boot Order and UEFI Configuration
-
-[SHOW SLIDE: UEFI boot order navigation screenshot]
+## Section 3 — Boot Order and UEFI Configuration
 
 Boot order — also called boot priority — is a BIOS/UEFI configuration setting that defines the sequence of devices the firmware checks for a bootable partition. On every power-on, the firmware reads this list from top to bottom and attempts to boot from each device in sequence until it finds a valid bootloader or exhausts the list.
 
@@ -136,7 +122,7 @@ The default boot order after a fresh OS installation typically looks like this: 
 
 Why does boot order matter for troubleshooting? Because the most common "no bootable device" symptom is not a failed drive — it is a boot order that no longer matches the physical drive configuration.
 
-The most common scenario is a drive replacement. A technician removes an old SATA drive and installs a new NVMe SSD. The OS is installed on the NVMe drive. But the BIOS boot order still lists the old SATA drive as the first boot device. Since that drive is gone, the firmware finds nothing at the first position. If USB or optical is second, the system may attempt to boot from those. If nothing is found, the system displays "No bootable device found" or "Operating System Not Found."
+The most common scenario is a drive replacement. A technician removes an old SATA drive and installs a new NVMe SSD. The OS is installed on the NVMe drive. But the BIOS boot order still lists the old SATA drive as the first boot device. Since that drive is gone, the firmware finds nothing at the first position. If USB or optical is second, the system may attempt to boot from those. If nothing is found, the system displays "No bootable device found" or "Operating System Not Found.
 
 [PAUSE — 2 seconds]
 
@@ -152,9 +138,7 @@ Secure Boot: UEFI Secure Boot is a feature that validates the digital signature 
 
 ---
 
-## [18:30 - 21:00] Section 4 — Boot Failure Decision Tree and Diagnostic Strategy
-
-[SHOW SLIDE: Boot failure decision tree]
+## Section 4 — Boot Failure Decision Tree and Diagnostic Strategy
 
 Let's build a systematic diagnostic flow for any boot failure scenario. On the A+ exam, this decision tree is how you identify the correct answer quickly.
 
@@ -172,9 +156,7 @@ Step 4 — Does Windows start loading but then crash with a BSOD? POST completed
 
 ---
 
-## [21:00 - 22:30] Closing and Lab Preview
-
-[SHOW SLIDE: End card]
+## Closing and Lab Preview
 
 Let's recap Module 10. The four boot stages are Power On, POST, Bootloader, and OS Load. POST communicates failures via beep codes, on-screen codes, and LEDs. Beep codes are manufacturer-specific — always look up the pattern in the motherboard manual. BSOD stop codes identify the OS-stage failure type — INACCESSIBLE_BOOT_DEVICE, PAGE_FAULT_IN_NONPAGED_AREA, and IRQL_NOT_LESS_OR_EQUAL are the most A+ exam-relevant codes. Boot order in UEFI controls which device is tried first and is the first thing to check when a replaced drive is not booting.
 

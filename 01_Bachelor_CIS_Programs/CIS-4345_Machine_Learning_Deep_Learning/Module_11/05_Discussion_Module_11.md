@@ -40,7 +40,7 @@ For 300 images per class, I would start with feature extraction only. Fine-tunin
 
 A data scientist fine-tunes VGG16 on a satellite image classification task with 8 classes and 2,000 images per class (16,000 total). After Phase 1 feature extraction, validation accuracy reaches 87%. She then runs Phase 2 fine-tuning by unfreezing all 19 convolutional layers at once and training with the same learning rate she used in Phase 1 (`1e-3`). After 10 epochs of fine-tuning, validation accuracy has dropped to 61% — worse than a simpler baseline she tested earlier.
 
-She is confused because she expected fine-tuning to improve on Phase 1. She asks her team: "Did I do something wrong, or does fine-tuning just not work for satellite images?"
+She is confused because she expected fine-tuning to improve on Phase 1. She asks her team: "Did I do something wrong, or does fine-tuning just not work for satellite images?
 
 Respond to the following: What went wrong, and what specific changes would you make to her fine-tuning procedure? In what order would you apply those changes? Why does fine-tuning sometimes make things worse rather than better? Is there a general principle for deciding how many layers to unfreeze and at what learning rate?
 
@@ -56,9 +56,9 @@ The general principle: unfreeze from the top down, use learning rates 10–100x 
 
 ## Scenario C — Transfer Learning Across Domains
 
-A hospital research team wants to use transfer learning to classify histopathology slides (microscope images of tissue samples) into malignant and benign categories. They have 800 labeled slides per class. A radiologist on the team is skeptical: "These microscopy images look nothing like the natural photos in ImageNet. How can features trained on dogs and cars help classify cancer cells?"
+A hospital research team wants to use transfer learning to classify histopathology slides (microscope images of tissue samples) into malignant and benign categories. They have 800 labeled slides per class. A radiologist on the team is skeptical: "These microscopy images look nothing like the natural photos in ImageNet. How can features trained on dogs and cars help classify cancer cells?
 
-A deep learning researcher responds: "Transfer learning works even across very different domains because early CNN layers learn universal features that are useful everywhere."
+A deep learning researcher responds: "Transfer learning works even across very different domains because early CNN layers learn universal features that are useful everywhere.
 
 Both make reasonable points. The reality is nuanced.
 

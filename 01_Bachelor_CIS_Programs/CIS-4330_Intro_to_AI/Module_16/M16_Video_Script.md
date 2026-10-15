@@ -10,8 +10,6 @@
 
 ## SEGMENT 1 — Welcome and Context (Slides 1–3) [3 min]
 
-[ON CAMERA]
-
 Welcome to Module 16 — the final module of CIS-4330. You have worked through 15 modules covering the breadth of artificial intelligence, from fundamental concepts to cutting-edge emerging technologies. Everything in this final module is designed to do one thing: make sure you walk into the AI-900 exam with maximum confidence and maximum preparation.
 
 Let me give you the facts about this exam. The AI-900 is a 45-minute, 40–60 question multiple choice exam. It is designed as a foundational certification — not an expert-level test. Microsoft describes it as appropriate for people who are just beginning to work with AI-based solutions and services. If you have engaged with this course, you are more than prepared.

@@ -28,7 +28,7 @@ Your initial post should be 175–225 words and address all three sub-questions.
 
 ## Scenario B: The Out-of-Control Chart
 
-A cloud services company monitors the response time of its customer portal using a Control Chart. The Upper Control Limit is 2.2 seconds. In the past three weeks, the team observes: Week 1 (Monday–Friday): all five data points between 1.8 and 2.0 seconds. Week 2: all five data points between 1.9 and 2.1 seconds. Week 3, Day 1: 2.3 seconds (above UCL). The operations manager says: "One data point above the limit is probably just noise — let's ignore it."
+A cloud services company monitors the response time of its customer portal using a Control Chart. The Upper Control Limit is 2.2 seconds. In the past three weeks, the team observes: Week 1 (Monday–Friday): all five data points between 1.8 and 2.0 seconds. Week 2: all five data points between 1.9 and 2.1 seconds. Week 3, Day 1: 2.3 seconds (above UCL). The operations manager says: "One data point above the limit is probably just noise — let's ignore it.
 
 Sub-questions for Scenario B:
 

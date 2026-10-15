@@ -255,10 +255,10 @@ A Product Owner says: "Our average cycle time is 18 days and our average lead ti
 
 A Scrum Team uses their Release Burndown to forecast completion. The chart shows 180 remaining points. The last four Sprint velocities were 28, 31, 27, and 30. A stakeholder asks: "Will we be done in 6 Sprints?" What is the most honest and accurate response?
 
-- A) "Yes — 180 ÷ 29 (average velocity) = 6.2 Sprints, which rounds to 6"
-- B) "Probably not — the forecast of approximately 6 Sprints assumes the backlog does not grow; if the Product Owner continues adding items as in previous Sprints, the actual delivery may be 7–8 Sprints"
-- C) "We cannot forecast because the backlog may change"
-- D) "Yes — we commit to delivering in exactly 6 Sprints"
+- A) "Yes — 180 ÷ 29 (average velocity) = 6.2 Sprints, which rounds to 6
+- B) "Probably not — the forecast of approximately 6 Sprints assumes the backlog does not grow; if the Product Owner continues adding items as in previous Sprints, the actual delivery may be 7–8 Sprints
+- C) "We cannot forecast because the backlog may change
+- D) "Yes — we commit to delivering in exactly 6 Sprints
 
 - **Correct Answer:** B
 - **Distractor Analysis:**

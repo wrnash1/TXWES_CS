@@ -28,8 +28,6 @@
 
 ### Opening
 
-**[SHOW SLIDE: Module 04 — Cloud Spanner: Globally Distributed Databases]**
-
 Hello, and welcome back to CIS-4327. I am Professor Nash. This is Module 04: Cloud Spanner.
 
 Cloud Spanner is one of the most distinctive database technologies in the world. It is the only commercially available database that provides both full ACID transactions and horizontal scalability across a globally distributed infrastructure. Understanding what makes Spanner different — and when to use it versus Cloud SQL — is one of the most heavily tested topics on the GCP Database Engineer exam.
@@ -39,8 +37,6 @@ In Part 1 we cover Spanner's architecture, its consistency model, schema design,
 ---
 
 ### Section 1 — Why Cloud Spanner Exists
-
-**[SHOW SLIDE: The CAP theorem triangle — Consistency, Availability, Partition Tolerance]**
 
 The traditional database engineering constraint is the CAP theorem: in a distributed system, you can have at most two of three properties — Consistency, Availability, and Partition Tolerance. Most distributed NoSQL databases choose availability and partition tolerance over strong consistency.
 
@@ -56,8 +52,6 @@ Together, TrueTime and Paxos allow Spanner to offer what Google calls external c
 
 ### Section 2 — Cloud Spanner Architecture
 
-**[SHOW SLIDE: Spanner instance hierarchy — instance, databases, tables, rows]**
-
 A Cloud Spanner deployment has three layers.
 
 An instance is the compute and storage resource allocation for Spanner. You configure the number of processing units (PUs) or nodes. One node provides approximately 2,000 QPS of reads and 1,000 QPS of writes.
@@ -65,8 +59,6 @@ An instance is the compute and storage resource allocation for Spanner. You conf
 A database lives within an instance. You can have multiple databases per instance.
 
 Tables and rows are the standard relational constructs inside a database.
-
-**[SHOW SLIDE: Single-region vs. multi-region Spanner configurations]**
 
 Spanner offers two configuration types.
 
@@ -101,8 +93,6 @@ Processing units (PUs) are the compute unit for Cloud Spanner. 1000 PUs equals o
 ---
 
 ### Section 4 — Spanner DDL
-
-**[SHOW SLIDE: Spanner DDL — similar to standard SQL with key differences]**
 
 Spanner uses a SQL-like DDL for schema definition, but there are important differences from standard PostgreSQL or MySQL.
 
@@ -149,8 +139,6 @@ INTERLEAVE IN PARENT physically co-locates child table rows with their parent ro
 
 ### Section 5 — Primary Key Design in Spanner
 
-**[SHOW SLIDE: Hot-spotting diagram — sequential keys all going to one tablet; UUID keys distributed across tablets]**
-
 Primary key design is critical in Cloud Spanner. Poor key choice creates write hotspots that negate the scaling benefits of Spanner's distributed architecture.
 
 A hotspot occurs when new rows are consistently written to the same Spanner tablet because their keys are sequential. If you use an auto-incrementing integer as a primary key, every INSERT goes to the tablet holding the highest-valued key range. That one tablet becomes a bottleneck regardless of how many nodes you have.
@@ -168,8 +156,6 @@ Use composite keys that distribute naturally. (region, timestamp) distributes wr
 ---
 
 ### Section 6 — Spanner vs. Cloud SQL — When to Use Each
-
-**[SHOW SLIDE: Decision criteria table — Cloud SQL vs. Cloud Spanner]**
 
 This is the most important decision framework for the GCP exam.
 
@@ -189,8 +175,6 @@ The decision rule for the exam: if the scenario requires global consistency and 
 ---
 
 ### Closing — Part 1 Summary
-
-**[SHOW SLIDE: Module 04 Part 1 key concepts]**
 
 In Part 1 we covered Cloud Spanner's architecture: TrueTime for global timestamp ordering, Paxos replication for consistency, and the instance-database-table hierarchy.
 

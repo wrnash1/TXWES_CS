@@ -78,7 +78,7 @@ Write an initial post of 175–225 words addressing all three sub-questions.
 
 The following is an example of a substantive peer response that meets the minimum standard.
 
-"Your point about static NAT being bidirectional is exactly right, and I want to add one nuance: static NAT does not just translate outbound traffic — it also lets the NAT router accept inbound connections from the internet and forward them to the internal server. This is why static NAT is essential for any publicly accessible service. PAT cannot do this because PAT entries are only created when the inside host initiates the connection. If an external client tries to connect to a PAT-translated address with no active session, the router has no entry in the table and drops the packet. That is why web servers need static NAT, not PAT."
+Your point about static NAT being bidirectional is exactly right, and I want to add one nuance: static NAT does not just translate outbound traffic — it also lets the NAT router accept inbound connections from the internet and forward them to the internal server. This is why static NAT is essential for any publicly accessible service. PAT cannot do this because PAT entries are only created when the inside host initiates the connection. If an external client tries to connect to a PAT-translated address with no active session, the router has no entry in the table and drops the packet. That is why web servers need static NAT, not PAT.
 
 ---
 

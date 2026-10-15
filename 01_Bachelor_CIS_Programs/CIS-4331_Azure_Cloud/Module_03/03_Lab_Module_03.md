@@ -82,7 +82,7 @@ This command may take 2-5 minutes to complete. When it finishes, include the ful
 
 **[SHOW PORTAL — Navigate to portal.azure.com > Virtual Machines]**
 
-Navigate to the Azure Portal and find your newly created VM under "Virtual Machines."
+Navigate to the Azure Portal and find your newly created VM under "Virtual Machines.
 
 Take a screenshot of the VM Overview blade showing:
 

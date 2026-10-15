@@ -23,7 +23,7 @@ Choose ONE of the three scenarios below. Write an initial post of 175–225 word
 
 A radiology AI startup deploys a deep learning model that reads chest X-rays and flags potential pneumonia cases for priority radiologist review. A cybersecurity researcher publishes a paper demonstrating that carefully crafted pixel-level perturbations, undetectable to human observers, can cause the model to classify severe pneumonia cases as normal.
 
-The startup CEO responds publicly: "This is a theoretical research attack. Our system has never been attacked in the wild. We have no evidence of a real incident. We will monitor the situation but will not delay our hospital deployments."
+The startup CEO responds publicly: "This is a theoretical research attack. Our system has never been attacked in the wild. We have no evidence of a real incident. We will monitor the situation but will not delay our hospital deployments.
 
 **Prompt:** Is the CEO's response adequate? What obligations does a company have to address known adversarial vulnerabilities in a medical AI system, even if the attack has never been exploited in a real incident? Apply both technical and ethical perspectives from Module 14 in your response.
 

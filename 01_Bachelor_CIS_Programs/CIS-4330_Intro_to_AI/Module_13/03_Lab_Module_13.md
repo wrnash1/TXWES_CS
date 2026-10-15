@@ -76,7 +76,7 @@ The following columns appear in a dataset being prepared to train a hotel bookin
 
 ### Booking Source Encoding (5 points)
 
-Column: "BookingSource"
+Column: "BookingSource
 
 Values observed: Online, Travel Agent, Corporate, Walk-In, Phone
 
@@ -86,12 +86,12 @@ Values observed: Online, Travel Agent, Corporate, Walk-In, Phone
 
 ### Lead Time Encoding (5 points)
 
-Column: "CancellationRisk"
+Column: "CancellationRisk
 
 Values observed: Low, Medium, High
 
 1. Which encoding method should be applied to this column?
-2. Write out exactly what the encoded representation would look like for a record where CancellationRisk = "Medium."
+2. Write out exactly what the encoded representation would look like for a record where CancellationRisk = "Medium.
 3. Why is the alternative encoding method inappropriate here?
 
 ### Date Feature Engineering (5 points)

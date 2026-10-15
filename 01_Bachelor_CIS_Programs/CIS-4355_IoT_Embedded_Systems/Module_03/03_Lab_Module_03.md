@@ -141,7 +141,7 @@ Step 5: Toggle bit 3 again using XOR. Print label "Toggle bit 3 (second):" and t
 
 Step 6: Test if bit 7 is set. Print "Bit 7 is SET" if true, "Bit 7 is CLEAR" if false.
 
-Step 7: Reset `reg` to `0b00000000` and print "Reset. Pausing 5 seconds."
+Step 7: Reset `reg` to `0b00000000` and print "Reset. Pausing 5 seconds.
 
 - After the sequence, `delay(5000)` so the output is readable before repeating.
 

@@ -26,7 +26,7 @@ Respond to the following in 175–225 words: What does the gap between the low c
 
 ## Scenario B — Executive Exemption
 
-A retail company's security awareness manager has designed a new phishing simulation campaign. When she presents the campaign plan to the CTO, he tells her that the executive team — the C-suite and all VPs — should be excluded from the simulations because "if an executive clicks a phishing link, we don't want that leaking to the board or the press." He adds that executives are "too busy to deal with simulation emails."
+A retail company's security awareness manager has designed a new phishing simulation campaign. When she presents the campaign plan to the CTO, he tells her that the executive team — the C-suite and all VPs — should be excluded from the simulations because "if an executive clicks a phishing link, we don't want that leaking to the board or the press." He adds that executives are "too busy to deal with simulation emails.
 
 Respond to the following in 175–225 words: What are the security risks of exempting the executive team from phishing simulations? What is the CTO's underlying concern, and is there a way to address that concern without creating an exemption that undermines the program? Your response should address both the technical risk of executive exemption and the cultural message it sends to the broader workforce. Reference the connection between leadership behavior and security culture from the module content.
 

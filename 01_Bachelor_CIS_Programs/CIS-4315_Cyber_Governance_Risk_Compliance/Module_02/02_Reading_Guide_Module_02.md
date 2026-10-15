@@ -201,7 +201,7 @@ Security strategy must identify all applicable regulatory obligations and map th
 
 The vision statement articulates the desired future state of the security program. It should be concise, aspirational, and tied to the organization's business mission. The mission statement articulates the fundamental purpose of the security program.
 
-Example vision: "To enable Meridian Regional Hospital to deliver exceptional patient care by ensuring that information assets are protected, available, and trustworthy."
+Example vision: "To enable Meridian Regional Hospital to deliver exceptional patient care by ensuring that information assets are protected, available, and trustworthy.
 
 ### 3.2 Strategic Objectives
 
@@ -489,8 +489,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

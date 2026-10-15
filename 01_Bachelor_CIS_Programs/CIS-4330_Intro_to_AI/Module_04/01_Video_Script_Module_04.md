@@ -26,7 +26,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening
+## Opening
 
 Welcome back. Professor Nash here, and this is Module 04. We have spent the last three modules building a solid foundation in machine learning concepts. Today we take a significant step forward: neural networks and deep learning. This is one of the most exciting areas in modern AI — it is the technology behind image recognition, speech-to-text, language translation, and generative AI systems.
 
@@ -34,9 +34,7 @@ Deep learning appears in the AI-900 exam primarily in the context of Azure Machi
 
 ---
 
-## [01:30 - 05:00] The Biological Inspiration
-
-[SHOW DIAGRAM: Left side — a simplified neuron with labeled dendrites, cell body, and axon. Right side — an artificial neuron with labeled inputs (x1, x2, x3), weights (w1, w2, w3), summation function, activation function, and output.]
+## The Biological Inspiration
 
 Neural networks are loosely inspired by the structure of the human brain. The brain contains roughly 86 billion neurons. Each neuron receives signals from thousands of other neurons through dendrites, processes those signals in the cell body, and fires an output signal through its axon to other neurons when the combined input exceeds a threshold.
 
@@ -46,9 +44,7 @@ The key insight is that the weights are learned from data. At the start of train
 
 ---
 
-## [05:00 - 09:30] Neural Network Architecture
-
-[SHOW DIAGRAM: Three-layer neural network. Left column: three circles labeled "Input Layer" with labels x1, x2, x3. Middle columns: two layers of circles labeled "Hidden Layer 1" and "Hidden Layer 2." Right column: one circle labeled "Output Layer." Lines connecting all nodes between adjacent layers, labeled "weights."]
+## Neural Network Architecture
 
 A neural network is organized into layers. Let me walk through the standard architecture.
 
@@ -62,9 +58,7 @@ The depth of a network — the number of hidden layers — determines its capaci
 
 ---
 
-## [09:30 - 13:00] Forward Pass and Backward Pass
-
-[SHOW DIAGRAM: Same network diagram with two sets of arrows. Red arrows going left to right labeled "Forward Pass: compute predictions." Blue arrows going right to left labeled "Backward Pass: propagate error gradients."]
+## Forward Pass and Backward Pass
 
 Training a neural network involves two passes through the network: forward and backward.
 
@@ -78,7 +72,7 @@ The forward and backward passes repeat for many training examples across many it
 
 ---
 
-## [13:00 - 16:00] Activation Functions
+## Activation Functions
 
 Activation functions are crucial because they introduce non-linearity. Without activation functions, a neural network with any number of layers would collapse mathematically to a single linear transformation — it could only learn linear patterns, making deep layers useless.
 
@@ -92,7 +86,7 @@ The three activation functions you need to know for this course:
 
 ---
 
-## [16:00 - 19:00] Types of Deep Learning Architectures
+## Types of Deep Learning Architectures
 
 Different types of neural network architectures are designed for different types of data.
 
@@ -108,7 +102,7 @@ For the AI-900 exam, you need to know: CNNs for images, RNNs for sequences, tran
 
 ---
 
-## [19:00 - 21:30] Deep Learning in Azure
+## Deep Learning in Azure
 
 Azure Machine Learning supports deep learning training through its compute clusters and integration with popular frameworks. Supported frameworks include PyTorch, TensorFlow, and Keras, which can all be used within Azure ML training runs.
 
@@ -118,7 +112,7 @@ For the AI-900 exam, the key distinction is: Azure Machine Learning is for train
 
 ---
 
-## [21:30 - 23:30] Module Summary and Lab Preview
+## Module Summary and Lab Preview
 
 Let me recap Module 04.
 

@@ -51,7 +51,7 @@ Investigation notes gathered so far:
   applications in addition to the registration portal
 - A weekly database maintenance job runs every Sunday night at 11:00 PM
 - AppSrv-01 logs show memory utilization above 95% at the time of each incident
-- The maintenance job is configured to run for "up to 8 hours"
+- The maintenance job is configured to run for "up to 8 hours
 - No changes to AppSrv-01 have been logged in the change schedule
 
 ### Part A Instructions

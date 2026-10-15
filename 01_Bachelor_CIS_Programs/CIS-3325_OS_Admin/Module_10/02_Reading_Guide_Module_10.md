@@ -432,8 +432,6 @@ troubleshooting authentication failures. The companion OpenSSH article covers se
 configuration, security hardening, and jump host configuration with ProxyJump. Both are
 regularly updated and include current best-practice recommendations.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

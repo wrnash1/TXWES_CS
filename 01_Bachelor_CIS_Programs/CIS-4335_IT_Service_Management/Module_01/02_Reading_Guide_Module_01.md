@@ -256,7 +256,7 @@ The Foundation exam focuses most heavily on Service Management Practices and a s
 
 ## 10. ITIL 4 Foundation Exam Tips
 
-1. **"Practices" not "processes."** If an exam question uses ITIL v3 terminology as the correct answer in an ITIL 4 context, it is almost always a distractor. ITIL 4 uses "practices."
+1. **"Practices" not "processes."** If an exam question uses ITIL v3 terminology as the correct answer in an ITIL 4 context, it is almost always a distractor. ITIL 4 uses "practices.
 
 2. **Value is co-created.** Exam scenarios that describe the provider "delivering value to" a customer are using outdated framing. Value is co-created between provider and consumer.
 
@@ -471,8 +471,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

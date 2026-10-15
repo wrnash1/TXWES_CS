@@ -250,7 +250,7 @@ Business rules to encode:
 
 For each foreign key in your logical ERD, write one sentence confirming the referential
 integrity constraint it enforces. Example: "Loan.MemberID must match an existing value in
-Member.MemberID, ensuring a loan cannot be recorded for a non-existent member."
+Member.MemberID, ensuring a loan cannot be recorded for a non-existent member.
 
 Submit eight referential integrity statements — one per foreign key relationship.
 

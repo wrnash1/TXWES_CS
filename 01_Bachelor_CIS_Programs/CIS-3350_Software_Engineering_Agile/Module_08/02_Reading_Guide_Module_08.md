@@ -112,7 +112,7 @@ Story points are a unit of measure for expressing the overall effort required to
 - Effort: how much work is involved, regardless of complexity?
 - Uncertainty: how much is unknown that could affect the outcome?
 
-Story points are relative and team-specific. A "5-point story" means this story is roughly the same size as the team's agreed reference story for 5 points. It does not mean "5 hours" or "5 days" — it means "5 units of this team's experience-calibrated complexity scale."
+Story points are relative and team-specific. A "5-point story" means this story is roughly the same size as the team's agreed reference story for 5 points. It does not mean "5 hours" or "5 days" — it means "5 units of this team's experience-calibrated complexity scale.
 
 ### The Fibonacci Sequence
 
@@ -130,7 +130,7 @@ A modified Fibonacci scale (1, 2, 3, 5, 8, 13, 20, 40, 100) is also commonly use
 
 ### The Reference Story
 
-Teams often calibrate their story point scale by agreeing on a reference story — a story everyone knows well from past work, assigned a specific point value (often 3 or 5 points). New stories are estimated relative to the reference story: "Is this bigger or smaller than our reference 3-point story?"
+Teams often calibrate their story point scale by agreeing on a reference story — a story everyone knows well from past work, assigned a specific point value (often 3 or 5 points). New stories are estimated relative to the reference story: "Is this bigger or smaller than our reference 3-point story?
 
 ---
 
@@ -160,9 +160,9 @@ Step 6 — Record and continue: The agreed estimate is recorded against the stor
 
 ### Special Cards
 
-- Question mark (?): "I don't understand this story well enough to estimate. We need more information before I can give a meaningful number."
-- Infinity: "This story is too large to estimate. It needs to be split before we can assess its size."
-- 0: "This story is trivial — effectively no effort required."
+- Question mark (?): "I don't understand this story well enough to estimate. We need more information before I can give a meaningful number.
+- Infinity: "This story is too large to estimate. It needs to be split before we can assess its size.
+- 0: "This story is trivial — effectively no effort required.
 
 ### Why Simultaneous Reveal Matters
 
@@ -268,9 +268,6 @@ The Agile Alliance's canonical glossary entry on Planning Poker. Covers the tech
 
 ---
 
-
----
-
 ## Deep Theoretical Foundations & Conceptual Architecture
 
 ### 1. Epistemological Framework & First Principles
@@ -353,7 +350,6 @@ Before proceeding to this module's laboratory exercises, synthesize concise, rig
 1. **First-Principles Invariant Defense:** How does the theoretical model in this module ensure state correctness under adverse operating conditions? What mathematical proof or telemetry metric validates this behavior?
 2. **Architectural Trade-Off Analysis:** If forced to reduce execution latency by 50%, what specific compromises in consistency, redundancy, or capital expenditure would your architecture be forced to accept?
 3. **Failure Mode Pathology:** Explain the exact mechanistic chain of events that occurs when this module's primary subsystem experiences an unhandled resource starvation condition.
-
 
 ## 8. Study Checklist
 

@@ -27,14 +27,14 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-- [ ] Title slide loaded: "Module 01 - Penetration Testing Methodology and Scoping"
+- [ ] Title slide loaded: "Module 01 - Penetration Testing Methodology and Scoping
 - [ ] Terminal window open with dark theme
 - [ ] Sample RoE template document ready to display
 - [ ] PenTest+ PT0-002 domain map visible on second monitor
 
 ---
 
-## [00:00 - 01:30] Opening and Module Overview
+## Opening and Module Overview
 
 **[SLIDE: CIS-4333 Module 01 — Penetration Testing Methodology and Scoping]**
 
@@ -54,7 +54,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 04:00] What Is Penetration Testing?
+## What Is Penetration Testing?
 
 **[SLIDE: Definition and Purpose]**
 
@@ -77,7 +77,7 @@ The PenTest+ exam may present scenarios asking you to identify which type of eng
 
 ---
 
-## [04:00 - 08:00] The Five-Phase Penetration Testing Methodology
+## The Five-Phase Penetration Testing Methodology
 
 **[SLIDE: Five Phases — PTES Framework]**
 
@@ -117,7 +117,7 @@ Think of these phases as a pipeline. Each phase feeds into the next. You cannot 
 
 ---
 
-## [08:00 - 12:30] Pre-Engagement Documents
+## Pre-Engagement Documents
 
 **[SLIDE: Pre-Engagement Document Hierarchy]**
 
@@ -133,7 +133,7 @@ If you work for a security firm that has an ongoing relationship with a client, 
 
 ### Statement of Work
 
-The SOW is attached to or incorporated into the MSA for a specific engagement. It defines what work will be performed, when, and for how much. For a pentest, the SOW would say something like: "Perform a black-box external network penetration test of the systems listed in Appendix A between the dates of X and Y."
+The SOW is attached to or incorporated into the MSA for a specific engagement. It defines what work will be performed, when, and for how much. For a pentest, the SOW would say something like: "Perform a black-box external network penetration test of the systems listed in Appendix A between the dates of X and Y.
 
 ### Rules of Engagement
 
@@ -165,7 +165,7 @@ Memorize this table. The exam will present scenarios describing a situation and 
 
 ---
 
-## [12:30 - 16:00] Scoping — Defining the Boundaries
+## Scoping — Defining the Boundaries
 
 **[SLIDE: Scoping in Detail]**
 
@@ -224,7 +224,7 @@ The PenTest+ exam also tests the three main test types:
 
 ---
 
-## [16:00 - 19:00] Legal and Compliance Considerations
+## Legal and Compliance Considerations
 
 **[SLIDE: Legal Framework — CFAA and Related Laws]**
 
@@ -245,7 +245,7 @@ Similarly, if an ISP or CDN sits in front of the target, their permission may be
 
 ---
 
-## [19:00 - 22:00] Putting It Together — The Pre-Engagement Workflow
+## Putting It Together — The Pre-Engagement Workflow
 
 **[SLIDE: Pre-Engagement Workflow Steps]**
 
@@ -294,13 +294,13 @@ This level of specificity is what separates a professional RoE from a vague agre
 
 ---
 
-## [22:00 - 23:30] Exam Tips and Module Summary
+## Exam Tips and Module Summary
 
 **[SLIDE: PT0-002 Exam Tips — Module 01]**
 
 Before we close, here are the exam tips that will help you score points on the PT0-002.
 
-First: **Planning and Scoping is 14% of the exam**. Do not underestimate it. Every question in this domain is scenario-based. Read the scenario carefully and look for keywords like "before testing begins," "authorization," "out of scope," or "third-party systems."
+First: **Planning and Scoping is 14% of the exam**. Do not underestimate it. Every question in this domain is scenario-based. Read the scenario carefully and look for keywords like "before testing begins," "authorization," "out of scope," or "third-party systems.
 
 Second: When in doubt, stop and ask. If an exam scenario presents a situation where a tester has found something unexpected — an unscoped system, a live production database, PII — the correct action is almost always to stop and notify the client before proceeding.
 
@@ -314,7 +314,7 @@ For additional study, I recommend the PenTest+ resources at **professormesser.co
 
 ---
 
-## [23:30 - 24:00] Closing
+## Closing
 
 Your lab this week asks you to draft a complete scope of work and Rules of Engagement document for a hypothetical engagement scenario. Take it seriously — the document structure you practice in this lab is exactly what you would produce in a real professional engagement.
 

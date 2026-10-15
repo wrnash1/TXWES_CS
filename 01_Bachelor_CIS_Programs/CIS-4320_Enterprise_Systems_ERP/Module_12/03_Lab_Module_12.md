@@ -14,7 +14,7 @@ This lab develops your ability to analyze source data quality, design transforma
 
 **Estimated Time:** 90 minutes
 
-**Submission:** Upload to Canvas under "Lab 12 -- Data Migration."
+**Submission:** Upload to Canvas under "Lab 12 -- Data Migration.
 
 ---
 
@@ -68,7 +68,7 @@ For each finding, identify the data quality dimension it violates and recommend 
 
 ### A-2: Data Quality Impact Analysis
 
-The project manager reviews the profiling results and says: "The numbers look manageable. Let's just migrate everything as-is and let the business clean up the data in the new system after go-live."
+The project manager reviews the profiling results and says: "The numbers look manageable. Let's just migrate everything as-is and let the business clean up the data in the new system after go-live.
 
 In 100–150 words, explain why this approach is risky. What specific business process failures are likely to occur in SAP or Salesforce if the data is migrated without cleansing? Reference at least two of the specific quality issues identified above and explain the downstream ERP or CRM impact of each.
 
@@ -210,7 +210,7 @@ Cascade's cutover window is Friday 8:00 PM to Sunday 11:59 PM — a 52-hour wind
 
 1. Compile all responses into a single document.
 2. Name your file: `Lab12_LastName_FirstName.pdf`
-3. Upload to Canvas under "Lab 12 -- Data Migration."
+3. Upload to Canvas under "Lab 12 -- Data Migration.
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
 
 ---

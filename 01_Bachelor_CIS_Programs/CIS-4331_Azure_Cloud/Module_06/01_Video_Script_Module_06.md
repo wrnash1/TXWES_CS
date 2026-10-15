@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 - 01:30] Opening and Learning Objectives
+## Opening and Learning Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -27,8 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-**[INSTRUCTOR ON CAMERA — title card: "Module 06: Azure Storage Services"]**
-
 Welcome to Module 06. I'm Professor Nash. Today we cover Azure Storage Services — the foundation for data persistence in the cloud. Every application we have discussed so far — VMs, containers, App Service — needs to store data somewhere. Azure Storage provides that somewhere in multiple forms, each optimized for different data types and access patterns.
 
 AZ-900 expects you to recognize each storage service, understand its use case, and know how redundancy options affect durability and cost.
@@ -43,7 +41,7 @@ By the end of this module you will be able to:
 
 ---
 
-## [01:30 - 05:30] Azure Storage Account Overview
+## Azure Storage Account Overview
 
 **[SLIDE: "Azure Storage Account"]**
 
@@ -63,7 +61,7 @@ When you create a storage account in the Portal, notice that the redundancy opti
 
 ---
 
-## [05:30 - 11:00] Azure Storage Service Types
+## Azure Storage Service Types
 
 **[SLIDE: "Blob Storage — Unstructured Data at Scale"]**
 
@@ -121,7 +119,7 @@ Note: Azure Cosmos DB for Table API is the premium, globally distributed success
 
 ---
 
-## [11:00 - 16:00] Storage Redundancy Options
+## Storage Redundancy Options
 
 **[SLIDE: "Azure Storage Redundancy — Critical AZ-900 Topic"]**
 
@@ -172,7 +170,7 @@ Best for: Maximum durability and availability requirements.
 
 ---
 
-## [16:00 - 19:00] Storage Access and Security
+## Storage Access and Security
 
 **[SLIDE: "Storage Access Methods"]**
 
@@ -215,7 +213,7 @@ az storage blob list \
 
 ---
 
-## [19:00 - 22:30] Lab Preview and Exam Alignment
+## Lab Preview and Exam Alignment
 
 **[SLIDE: "Module 06 Lab"]**
 
@@ -233,9 +231,7 @@ The highest-frequency storage exam topics:
 
 ---
 
-## [22:30 - 24:00] Closing
-
-**[INSTRUCTOR ON CAMERA]**
+## Closing
 
 You now understand Azure Storage Services — the four service types, redundancy options, access tiers, and access control mechanisms. Storage is the foundation beneath every Azure workload.
 

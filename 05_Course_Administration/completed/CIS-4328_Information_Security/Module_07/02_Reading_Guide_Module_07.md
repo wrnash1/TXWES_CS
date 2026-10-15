@@ -292,7 +292,7 @@ Before taking the Module 07 quiz, verify you can do each of the following withou
 
 - Distinguish forward proxy from reverse proxy by what each protects.
 
-- Explain implicit deny in your own words without using the term "firewall."
+- Explain implicit deny in your own words without using the term "firewall.
 
 - Describe microsegmentation and explain how it limits lateral movement compared to VLAN segmentation.
 

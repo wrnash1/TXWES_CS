@@ -336,11 +336,11 @@ Salesforce sandbox environments are the primary staging and testing environments
 Complete before attempting the quiz:
 
 - **Salesforce Trailhead — Salesforce Developer Experience**
-  URL: trailhead.salesforce.com — search "Sandbox Basics"
+  URL: trailhead.salesforce.com — search "Sandbox Basics
   Covers Salesforce sandbox types and their use in the implementation lifecycle.
 
 - **Salesforce Trailhead — Change Management Basics**
-  URL: trailhead.salesforce.com — search "Change Management"
+  URL: trailhead.salesforce.com — search "Change Management
   Connects Salesforce project best practices to change management principles.
 
 ---
@@ -486,8 +486,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

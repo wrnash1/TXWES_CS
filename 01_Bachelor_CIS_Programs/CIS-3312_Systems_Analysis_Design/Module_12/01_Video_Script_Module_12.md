@@ -177,7 +177,7 @@ Now OrderItems is in 2NF. Every non-key attribute depends on the full composite 
 
 Important note: if your table has a single-column primary key — not composite — it is automatically in 2NF. Partial dependencies can only exist with composite keys.
 
-As a BA, when you see a table with a composite key and attributes that belong to only one of the key columns, that is a partial dependency. Ask yourself: "Could I move this attribute to its own table with just that key part?"
+As a BA, when you see a table with a composite key and attributes that belong to only one of the key columns, that is a partial dependency. Ask yourself: "Could I move this attribute to its own table with just that key part?
 
 ---
 
@@ -283,7 +283,7 @@ Second Normal Form: no partial dependencies on a composite key.
 
 Third Normal Form: no transitive dependencies between non-key attributes.
 
-The practical mnemonic: "the key, the whole key, and nothing but the key."
+The practical mnemonic: "the key, the whole key, and nothing but the key.
 
 Denormalization is sometimes right — but it is always a documented, stakeholder-approved decision, never an accident.
 

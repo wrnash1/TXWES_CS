@@ -7,7 +7,7 @@
 
 ---
 
-## [00:00 – 01:30] Opening and Module Objectives
+## Opening and Module Objectives
 
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
@@ -35,9 +35,7 @@ This is a high-density module for the exam. Every component we discuss today wil
 
 ---
 
-## [01:30 – 04:00] The SVS — Purpose and Structure
-
-[SHOW DIAGRAM]
+## The SVS — Purpose and Structure
 
 The Service Value System is ITIL 4's answer to a fundamental question: how does an organization take the demand for services and the opportunities available to it, and convert those inputs into genuine value for stakeholders?
 
@@ -51,7 +49,7 @@ Inside the SVS there are five components: Guiding Principles, Governance, the Se
 
 ---
 
-## [04:00 – 07:00] Component 1: Guiding Principles
+## Component 1: Guiding Principles
 
 The Guiding Principles are seven universal recommendations that guide an organization's decisions and actions in all circumstances, regardless of changes in goals, strategies, type of work, or management structure.
 
@@ -77,7 +75,7 @@ The exam often presents a scenario and asks which principle applies. We will dri
 
 ---
 
-## [07:00 – 09:00] Component 2: Governance
+## Component 2: Governance
 
 Governance is the means by which an organization is directed and controlled. In ITIL 4, governance operates at the highest level of the organization — it is how the board, executive leadership, or governing body establishes direction, delegates authority, and monitors performance.
 
@@ -89,9 +87,7 @@ For the exam: governance directs and controls. The Service Value Chain executes.
 
 ---
 
-## [09:00 – 14:00] Component 3: The Service Value Chain
-
-[SHOW DIAGRAM]
+## Component 3: The Service Value Chain
 
 The Service Value Chain is the operational core of the SVS. It is a flexible operating model for the creation, delivery, and continual improvement of services.
 
@@ -115,7 +111,7 @@ A critical exam point: these six activities do not correspond one-to-one with th
 
 ---
 
-## [14:00 – 17:30] Value Streams
+## Value Streams
 
 A **value stream** is a series of steps an organization takes to create and deliver products and services to a service consumer. Value streams are specific instances of the Service Value Chain activities being combined in a particular sequence to accomplish a particular objective.
 
@@ -127,7 +123,7 @@ When organizations analyze their value streams, they often discover waste — st
 
 ---
 
-## [17:30 – 20:00] Components 4 and 5: Practices and Continual Improvement
+## Components 4 and 5: Practices and Continual Improvement
 
 Practices are sets of organizational resources designed to perform work or accomplish an objective. ITIL 4 defines 34 practices in three categories: General Management Practices, Service Management Practices, and Technical Management Practices.
 
@@ -141,7 +137,7 @@ As a practice, Continual Improvement uses a seven-step model we will cover in de
 
 ---
 
-## [20:00 – 22:30] SVS Integration and Organizational Agility
+## SVS Integration and Organizational Agility
 
 One of the design goals of ITIL 4 was to create a framework that supports organizational agility — the ability to respond quickly and effectively to changing circumstances.
 
@@ -151,7 +147,7 @@ The exam sometimes asks why ITIL 4 was redesigned. A key part of the answer is t
 
 ---
 
-## [22:30 – 24:00] Module Summary and What Is Next
+## Module Summary and What Is Next
 
 Let us recap Module 02.
 

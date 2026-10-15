@@ -25,14 +25,10 @@
 ---
 
 ### Pre-Roll Slide
-[SHOW SLIDE: "CSC-6361 — Module 04 Part 2: Layer 2 Security, BGP Hardening & Infrastructure Baseline | Texas Wesleyan University"]
 
 ---
 
 ### Section 1: Layer 2 Security — The Overlooked Attack Surface
-
-[00:00 – 07:00]
-[SHOW DIAGRAM: Layer 2 attack vectors — ARP spoofing, DHCP starvation, rogue DHCP, MAC flooding]
 
 Layer 2 security is one of the most overlooked areas in enterprise networks. Because Layer 2 operates inside the trusted campus, many organizations assume it is inherently safe. It is not. A device that gains access to the physical or wireless network can execute Layer 2 attacks with devastating effect.
 
@@ -115,9 +111,6 @@ interface FastEthernet0/5
 
 ### Section 2: BGP Security — Route Filtering and Hardening
 
-[07:00 – 12:00]
-[SHOW DIAGRAM: BGP route filtering — inbound prefix list blocking unwanted advertisements]
-
 BGP is the routing protocol of the internet and is increasingly used inside enterprises (especially with SD-WAN and cloud connectivity). Misconfigured or unprotected BGP can have catastrophic consequences — BGP route leaks have caused major internet outages.
 
 **BGP Prefix Filtering — Inbound:**
@@ -162,9 +155,6 @@ router bgp 65001
 ---
 
 ### Section 3: Module 04 Lab Preview
-
-[12:00 – 14:00]
-[SHOW SLIDE: Module 04 Lab Topology]
 
 In the Module 04 lab, you will:
 1. Configure AAA with local authentication (TACACS+ server is simulated via local username database in Packet Tracer).

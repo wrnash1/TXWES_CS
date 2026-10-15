@@ -27,7 +27,7 @@ Your initial post should be 175 to 225 words. Posts outside this range will rece
 
 ## Scenario B: SEO Strategy for an E-Commerce Launch
 
-A startup is launching an online marketplace. The engineering team has built all product listing pages using React with server-side rendering (SSR). The marketing team reports that product pages are not appearing in Google search results even two weeks after launch. An SEO consultant reviews the HTML source and finds that every page has the same `<title>Texas Marketplace</title>` and the same generic `<meta name="description" content="Buy products online.">`. Product images have `alt=""` on all of them. The `<h1>` on every product page reads "Product Details."
+A startup is launching an online marketplace. The engineering team has built all product listing pages using React with server-side rendering (SSR). The marketing team reports that product pages are not appearing in Google search results even two weeks after launch. An SEO consultant reviews the HTML source and finds that every page has the same `<title>Texas Marketplace</title>` and the same generic `<meta name="description" content="Buy products online.">`. Product images have `alt=""` on all of them. The `<h1>` on every product page reads "Product Details.
 
 Address all three of the following in your post:
 

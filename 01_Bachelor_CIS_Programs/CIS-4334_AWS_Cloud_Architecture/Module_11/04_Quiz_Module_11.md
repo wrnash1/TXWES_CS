@@ -75,7 +75,7 @@ D. Yes — IAM policies only apply to authenticated requests from the same accou
 - A is incorrect. IAM policies apply to IAM principals (authenticated users, roles). Unauthenticated public requests do not have an IAM identity, so IAM deny policies cannot be applied to them. The S3 bucket policy is the only applicable policy for public requests.
 - B is correct. When an unauthenticated (public) request is made, there is no IAM principal associated with it. AWS evaluates only the resource-based policy (bucket policy). The bucket policy allows `s3:GetObject` for `"Principal": "*"` (which includes unauthenticated requests). IAM identity-based deny policies do not apply to requests with no IAM identity. Note: for this to work, the bucket's Block Public Access settings must also be disabled.
 - C is incorrect. `"Principal": "*"` in an S3 bucket policy does include unauthenticated (anonymous) requests in addition to authenticated ones.
-- D is incorrect in its framing but points toward the correct concept. The reason public access works is because unauthenticated requests have no IAM principal, not because IAM is "bypassed."
+- D is incorrect in its framing but points toward the correct concept. The reason public access works is because unauthenticated requests have no IAM principal, not because IAM is "bypassed.
 
 ---
 

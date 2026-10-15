@@ -26,23 +26,19 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 11 | DOM Manipulation and Styling | CIS-1320"]**
-
-"Module 10 taught you how to find elements and change their content. Module 11 goes further: you will learn to create brand-new elements from scratch, insert them into the page, remove them, and clone them. You will also learn to build page structures from data — taking an array of objects and generating the corresponding HTML entirely in JavaScript.
+Module 10 taught you how to find elements and change their content. Module 11 goes further: you will learn to create brand-new elements from scratch, insert them into the page, remove them, and clone them. You will also learn to build page structures from data — taking an array of objects and generating the corresponding HTML entirely in JavaScript.
 
 These skills are the foundation of every dynamic web application. A to-do list that adds items when you click a button, a product grid that renders from JSON fetched from a server, a comment section that appends new posts — all of these use exactly what you will learn today.
 
-Let us start with the fundamental operation: creating a new element."
+Let us start with the fundamental operation: creating a new element.
 
 ---
 
-## [01:30 – 06:00] Part 1 — Creating and Inserting Elements
+## Part 1 — Creating and Inserting Elements
 
-**[SHOW SLIDE: "createElement and appendChild"]**
-
-"**[DEMO]**
+"
 
 ```javascript
 // Step 1: Create a new element
@@ -60,11 +56,7 @@ document.body.appendChild(newPara);
 
 `document.createElement('p')` creates a new `<p>` element in memory — it exists as a JavaScript object but is not yet on the page. You set properties on it just like any existing element: `textContent`, `className`, `setAttribute`, `style`. Then `appendChild` inserts it as the last child of the target element.
 
-[PAUSE]
-
 Notice the four steps: **create → configure → insert**. Create and configure first, insert last. Once inserted, the browser renders it.
-
-**[DEMO — Targeting the insertion point]**
 
 ```javascript
 // Append to a specific container, not just body
@@ -73,8 +65,6 @@ const newItem = document.createElement('li');
 newItem.textContent = 'New Item';
 list.appendChild(newItem);   // appended as the last <li>
 ```
-
-[PAUSE]
 
 **Other insertion methods — `insertBefore` and `prepend`:**
 
@@ -92,8 +82,6 @@ ul.prepend(prepended);   // same result, simpler syntax
 // append — can accept multiple nodes or strings
 ul.append(newItem, 'trailing text');   // modern, flexible
 ```
-
-[PAUSE]
 
 **`insertAdjacentHTML` — insert HTML strings at specific positions:**
 
@@ -113,17 +101,13 @@ container.insertAdjacentHTML('beforeend', '<p>Last inside</p>');
 container.insertAdjacentHTML('afterend', '<p>After the container</p>');
 ```
 
-`insertAdjacentHTML` is convenient when you have a static HTML string to insert — for example, from a template literal. It parses the string as HTML. The same XSS warning applies: never use user-provided data in the HTML string."
+`insertAdjacentHTML` is convenient when you have a static HTML string to insert — for example, from a template literal. It parses the string as HTML. The same XSS warning applies: never use user-provided data in the HTML string.
 
 ---
 
-## [06:00 – 10:00] Part 2 — Removing and Replacing Elements
+## Part 2 — Removing and Replacing Elements
 
-**[SHOW SLIDE: "Removing and Replacing DOM Nodes"]**
-
-"**Removing — `remove()` and `removeChild`:**
-
-**[DEMO]**
+**Removing — `remove()` and `removeChild`:**
 
 ```javascript
 // Modern: element.remove() — removes the element itself
@@ -138,8 +122,6 @@ list.removeChild(lastItem);
 
 `element.remove()` is the modern approach — clean and direct. `removeChild` requires a reference to the parent and the child. You will see `removeChild` in older code. Both work.
 
-[PAUSE]
-
 **Removing by condition — filtering elements out of the DOM:**
 
 ```javascript
@@ -150,8 +132,6 @@ items.forEach(item => {
   }
 });
 ```
-
-[PAUSE]
 
 **Replacing — `replaceWith` and `replaceChild`:**
 
@@ -168,8 +148,6 @@ const parent = document.getElementById('container');
 parent.replaceChild(newHeading, oldHeading);
 ```
 
-[PAUSE]
-
 **Emptying a container:**
 
 A common task is clearing all children from a container before re-rendering:
@@ -185,17 +163,13 @@ while (container.firstChild) {
 }
 ```
 
-`innerHTML = ''` is the simplest and most common approach for clearing a container."
+`innerHTML = ''` is the simplest and most common approach for clearing a container.
 
 ---
 
-## [10:00 – 14:00] Part 3 — Cloning Nodes
+## Part 3 — Cloning Nodes
 
-**[SHOW SLIDE: "cloneNode"]**
-
-"Sometimes you need to create multiple copies of an element structure. Instead of building each from scratch with `createElement`, you can clone an existing element.
-
-**[DEMO]**
+Sometimes you need to create multiple copies of an element structure. Instead of building each from scratch with `createElement`, you can clone an existing element.
 
 ```javascript
 const card = document.querySelector('.card');
@@ -212,8 +186,6 @@ document.getElementById('card-container').appendChild(deepClone);
 ```
 
 `cloneNode(true)` copies the element, all its children, all their attributes, and all their text content. It does **not** copy event listeners attached via `addEventListener`.
-
-[PAUSE]
 
 **Practical use — rendering repeated structures from data:**
 
@@ -234,17 +206,13 @@ users.forEach(user => {
 });
 ```
 
-This pattern — clone, populate, insert — is the most common approach to rendering repeated UI from data without a framework."
+This pattern — clone, populate, insert — is the most common approach to rendering repeated UI from data without a framework.
 
 ---
 
-## [14:00 – 18:00] Part 4 — Building Structures from Data
+## Part 4 — Building Structures from Data
 
-**[SHOW SLIDE: "Rendering Data as DOM Nodes"]**
-
-"Let us build a complete working example. We have an array of products and we want to render them as cards on the page.
-
-**[DEMO — the data]**
+Let us build a complete working example. We have an array of products and we want to render them as cards on the page.
 
 ```javascript
 const products = [
@@ -253,8 +221,6 @@ const products = [
   { id: 3, name: 'Super Tool',  price: 49.99, inStock: true }
 ];
 ```
-
-**[DEMO — building with createElement]**
 
 ```javascript
 function renderProducts(data) {
@@ -291,11 +257,7 @@ function renderProducts(data) {
 renderProducts(products);
 ```
 
-[PAUSE]
-
 Notice the structure: for each product, we create the card container first, build all the inner elements, then append the card to the page. The entire card is configured in memory before a single insertion — this is more efficient than inserting and re-querying.
-
-**[DEMO — building with a template literal and insertAdjacentHTML]**
 
 For simple structures with no user-provided data, a template literal is faster to write:
 
@@ -314,17 +276,13 @@ function renderProductsHTML(data) {
 }
 ```
 
-This is clean and readable. The warning: only use this pattern when the data is controlled — from your own code, not from user input. If `p.name` came from a user, it could contain HTML that would be injected."
+This is clean and readable. The warning: only use this pattern when the data is controlled — from your own code, not from user input. If `p.name` came from a user, it could contain HTML that would be injected.
 
 ---
 
-## [18:00 – 21:00] Part 5 — `document.createTextNode` and Safe Node Construction
+## Part 5 — `document.createTextNode` and Safe Node Construction
 
-**[SHOW SLIDE: "Safe DOM Construction"]**
-
-"When you need to insert text into the DOM safely — especially text from user input — the safest approach is to create a text node directly:
-
-**[DEMO]**
+When you need to insert text into the DOM safely — especially text from user input — the safest approach is to create a text node directly:
 
 ```javascript
 const div = document.createElement('div');
@@ -343,15 +301,13 @@ div.textContent = userInput;   // equivalent safety, simpler syntax
 document.body.appendChild(div);
 ```
 
-Both treat the content as text, not markup. Use whichever you find more readable — `textContent` is the modern convention."
+Both treat the content as text, not markup. Use whichever you find more readable — `textContent` is the modern convention.
 
 ---
 
-## [21:00 – 22:00] Closing — Lab Preview
+## Closing — Lab Preview
 
-**[SHOW SLIDE: "Module 11 Lab Preview"]**
-
-"The Module 11 lab has four parts.
+The Module 11 lab has four parts.
 
 Part 1 covers creating and inserting — you will use `createElement`, `appendChild`, `prepend`, and `insertAdjacentHTML` to add elements at specific positions.
 
@@ -361,7 +317,7 @@ Part 3 covers cloning — you will use `cloneNode(true)` to build a repeated car
 
 Part 4 is the integration — a complete product grid renderer using both `createElement` and the template literal approach, with a sort and filter feature that re-renders the list.
 
-The quiz focuses on the `createElement`/`appendChild` pipeline, insertion positions, `remove` vs `removeChild`, `cloneNode` depth parameter, and the safety distinction between `textContent` and `innerHTML` for user data. Read the reading guide before the lab. Good luck."
+The quiz focuses on the `createElement`/`appendChild` pipeline, insertion positions, `remove` vs `removeChild`, `cloneNode` depth parameter, and the safety distinction between `textContent` and `innerHTML` for user data. Read the reading guide before the lab. Good luck.
 
 ---
 

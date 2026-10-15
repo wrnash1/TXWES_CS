@@ -17,7 +17,7 @@ Initial post length: 175–225 words. Peer responses: at least 75 words each, ad
 
 ## Scenario A — The Documentation Battle
 
-A large enterprise software team has just adopted Agile after years of Waterfall. The project manager still requires a complete functional specification, a detailed design document, and a test plan document before each Sprint begins. She argues: "The Agile Manifesto says documentation has value — so we're still Agile." A developer on the team argues back: "This is just Waterfall with shorter phases."
+A large enterprise software team has just adopted Agile after years of Waterfall. The project manager still requires a complete functional specification, a detailed design document, and a test plan document before each Sprint begins. She argues: "The Agile Manifesto says documentation has value — so we're still Agile." A developer on the team argues back: "This is just Waterfall with shorter phases.
 
 Sub-questions:
 

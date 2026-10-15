@@ -26,19 +26,15 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 05 | Binary Trees & BSTs | CIS-2315"]**
-
-"Module 04 gave you the recursive thinking skills you need for this module. Now we apply them to the most important data structure in technical interviews: the binary tree. Trees are everywhere — file systems, compilers, databases, HTML DOM, and virtually every algorithm problem at the medium and hard level on LeetCode. By the end of this module, you will implement binary trees from scratch, traverse them in all four orders, and build a complete binary search tree with search, insert, and delete."
+Module 04 gave you the recursive thinking skills you need for this module. Now we apply them to the most important data structure in technical interviews: the binary tree. Trees are everywhere — file systems, compilers, databases, HTML DOM, and virtually every algorithm problem at the medium and hard level on LeetCode. By the end of this module, you will implement binary trees from scratch, traverse them in all four orders, and build a complete binary search tree with search, insert, and delete.
 
 ---
 
-## [01:30 – 06:00] Part 1 — Binary Tree Structure
+## Part 1 — Binary Tree Structure
 
-**[SHOW SLIDE: "Binary Tree — Nodes and References"]**
-
-"A binary tree is a data structure where each node has at most two children: a left child and a right child.
+A binary tree is a data structure where each node has at most two children: a left child and a right child.
 
 ```python
 class TreeNode:
@@ -50,8 +46,6 @@ class TreeNode:
 
 That is the complete node definition. The tree is just a reference to the root node.
 
-**[SHOW DIAGRAM: tree with nodes 4 at root, 2 and 6 as children, 1,3,5,7 as leaves]**
-
 Key terminology:
 
 - **Root** — the topmost node; has no parent
@@ -60,11 +54,7 @@ Key terminology:
 - **Depth** — the distance from the root to a given node
 - **Subtree** — any node together with all its descendants
 
-[PAUSE]
-
 Height and depth matter for complexity analysis. In a balanced binary tree with n nodes, the height is O(log n). In a degenerate tree — where every node has only one child — the height is O(n), which degrades every operation.
-
-[PAUSE]
 
 Let me build the tree `[4, 2, 6, 1, 3, 5, 7]` manually:
 
@@ -78,17 +68,13 @@ root.right.left = TreeNode(5)
 root.right.right = TreeNode(7)
 ```
 
-This is the reference tree we will use for every traversal."
+This is the reference tree we will use for every traversal.
 
 ---
 
-## [06:00 – 12:00] Part 2 — Tree Traversals
+## Part 2 — Tree Traversals
 
-**[SHOW SLIDE: "The Four Traversal Orders"]**
-
-"Traversal means visiting every node in the tree. There are four orders, and each has specific uses.
-
-**[DEMO — Inorder: Left → Root → Right]**
+Traversal means visiting every node in the tree. There are four orders, and each has specific uses.
 
 ```python
 def inorder(root):
@@ -99,10 +85,6 @@ def inorder(root):
 
 For our tree `[4,2,6,1,3,5,7]`: `[1, 2, 3, 4, 5, 6, 7]` — sorted order. This is the key property of a BST.
 
-[PAUSE]
-
-**[DEMO — Preorder: Root → Left → Right]**
-
 ```python
 def preorder(root):
     if root is None:
@@ -112,10 +94,6 @@ def preorder(root):
 
 Result: `[4, 2, 1, 3, 6, 5, 7]`. Preorder gives you the root first — useful for serializing a tree (saving it to a file and reconstructing it later).
 
-[PAUSE]
-
-**[DEMO — Postorder: Left → Right → Root]**
-
 ```python
 def postorder(root):
     if root is None:
@@ -124,10 +102,6 @@ def postorder(root):
 ```
 
 Result: `[1, 3, 2, 5, 7, 6, 4]`. Postorder processes children before parents — useful for deleting a tree or computing directory sizes (process subdirectories before the parent directory).
-
-[PAUSE]
-
-**[DEMO — Level-Order (BFS): Level by Level]**
 
 ```python
 from collections import deque
@@ -148,25 +122,15 @@ def level_order(root):
 
 Result: `[4, 2, 6, 1, 3, 5, 7]` — level by level, left to right. Level-order uses a queue (BFS). The other three use recursion (DFS).
 
-[PAUSE]
-
-**Memory aid:** In-Pre-Post refers to where the root is processed — **In**between children, **Pre**vious (before) children, **Post** (after) children."
+**Memory aid:** In-Pre-Post refers to where the root is processed — **In**between children, **Pre**vious (before) children, **Post** (after) children.
 
 ---
 
-## [12:00 – 16:30] Part 3 — Binary Search Tree
+## Part 3 — Binary Search Tree
 
-**[SHOW SLIDE: "BST Property"]**
-
-"A Binary Search Tree (BST) is a binary tree with an ordering property: for every node, all values in its left subtree are less than the node's value, and all values in its right subtree are greater.
-
-**[SHOW DIAGRAM: BST with root 5, left subtree 3→(2,4), right subtree 7→(6,8)]**
+A Binary Search Tree (BST) is a binary tree with an ordering property: for every node, all values in its left subtree are less than the node's value, and all values in its right subtree are greater.
 
 This property allows O(log n) average-case search, insert, and delete — comparable to binary search on a sorted array, but with O(log n) insert and delete instead of O(n).
-
-[PAUSE]
-
-**[DEMO — BST Search]**
 
 ```python
 def search(root, target):
@@ -181,10 +145,6 @@ def search(root, target):
 
 At each node, you eliminate half the tree. If the target is less than the current value, it cannot be in the right subtree — ignore it and go left. This is why BST search is O(height).
 
-[PAUSE]
-
-**[DEMO — BST Insert]**
-
 ```python
 def insert(root, value):
     if root is None:
@@ -196,15 +156,13 @@ def insert(root, value):
     return root
 ```
 
-The pattern `root.left = insert(root.left, value)` is the standard recursive insert idiom. The function returns the root of the (possibly modified) subtree, which is reassigned to the parent's child pointer."
+The pattern `root.left = insert(root.left, value)` is the standard recursive insert idiom. The function returns the root of the (possibly modified) subtree, which is reassigned to the parent's child pointer.
 
 ---
 
-## [16:30 – 20:30] Part 4 — BST Delete and Validate
+## Part 4 — BST Delete and Validate
 
-**[SHOW SLIDE: "BST Delete — Three Cases"]**
-
-"BST delete is the most complex tree operation because there are three cases:
+BST delete is the most complex tree operation because there are three cases:
 
 1. **Node is a leaf** — simply remove it (return `None`)
 2. **Node has one child** — replace node with its only child
@@ -235,10 +193,6 @@ def delete(root, value):
 
 The inorder successor is the leftmost node in the right subtree — the smallest value greater than the current node.
 
-[PAUSE]
-
-**[DEMO — Validate BST (LeetCode #98)]**
-
 A tree that looks like a BST visually might not be one. The correct validation passes range bounds down:
 
 ```python
@@ -251,15 +205,13 @@ def is_valid_bst(root, min_val=float('-inf'), max_val=float('inf')):
             is_valid_bst(root.right, root.value, max_val))
 ```
 
-For every node, we verify it is within the bounds set by all its ancestors. Simply checking `root.left.value < root.value` is not enough — a value in the left subtree could violate an ancestor's upper bound."
+For every node, we verify it is within the bounds set by all its ancestors. Simply checking `root.left.value < root.value` is not enough — a value in the left subtree could violate an ancestor's upper bound.
 
 ---
 
-## [20:30 – 24:00] Part 5 — Height and Complexity
+## Part 5 — Height and Complexity
 
-**[SHOW SLIDE: "Tree Height and Complexity"]**
-
-"Maximum depth (height) is one of the most common interview tree problems.
+Maximum depth (height) is one of the most common interview tree problems.
 
 ```python
 def max_depth(root):
@@ -269,8 +221,6 @@ def max_depth(root):
 ```
 
 Time: O(n) — every node is visited once. Space: O(h) call stack where h = height = O(log n) balanced, O(n) skewed.
-
-[PAUSE]
 
 BST complexity summary:
 
@@ -283,7 +233,7 @@ BST complexity summary:
 
 The worst case occurs when the BST degenerates into a linked list — inserting values in sorted order `[1, 2, 3, 4, 5]` creates a right-skewed chain. Module 06 addresses this with self-balancing trees (AVL and Red-Black trees) that guarantee O(log n) for all operations.
 
-The Module 05 lab has you implement all four traversals, BST insert/search/delete, and solve LeetCode problems #104, #226, #98, and #102. Good luck."
+The Module 05 lab has you implement all four traversals, BST insert/search/delete, and solve LeetCode problems #104, #226, #98, and #102. Good luck.
 
 ---
 

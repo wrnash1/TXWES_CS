@@ -67,7 +67,7 @@ Resilient architectures survive component failures without total system failure.
 - Warm Standby — reduced-scale running copy; scale to full on disaster
 - Multi-Site Active-Active — full capacity in two regions simultaneously; lowest RTO/RPO, highest cost
 
-**Auto Scaling.** Know the three scaling policy types: simple (step), target tracking, and scheduled. Target tracking is the easiest and most common exam answer for "automatically scale to maintain a metric target."
+**Auto Scaling.** Know the three scaling policy types: simple (step), target tracking, and scheduled. Target tracking is the easiest and most common exam answer for "automatically scale to maintain a metric target.
 
 ---
 

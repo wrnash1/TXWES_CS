@@ -535,8 +535,6 @@ Full documentation for WFAS including firewall profiles, inbound and outbound ru
 
 *Review all sections before beginning Lab 11, Quiz 11, and Discussion 11.*
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

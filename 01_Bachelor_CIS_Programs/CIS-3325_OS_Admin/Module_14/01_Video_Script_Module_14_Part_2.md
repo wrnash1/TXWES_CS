@@ -260,7 +260,7 @@ SELinux modes: Enforcing blocks and logs. Permissive logs only. Disabled means o
 three and what `getenforce` returns for each.
 
 `setenforce` is temporary. `/etc/selinux/config` is permanent. Both are needed for the two-step
-"fix and persist" workflow.
+fix and persist" workflow.
 
 `chcon` is temporary. `semanage fcontext + restorecon` is permanent. This is a directly tested
 exam scenario.

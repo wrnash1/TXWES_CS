@@ -16,7 +16,7 @@ B) The system shall generate a monthly sales report in PDF format.
 
 C) The system shall respond to any search query within 2 seconds under normal load conditions.
 
-D) The system shall send an email notification when an order status changes to "Shipped."
+D) The system shall send an email notification when an order status changes to "Shipped.
 
 Correct Answer: C
 
@@ -81,9 +81,9 @@ Which of the following best describes a business rule as opposed to a functional
 
 A) A statement describing how fast the system must process transactions
 
-B) A constraint or policy from the business domain that the system must enforce, such as "All purchase orders over $10,000 require dual approval"
+B) A constraint or policy from the business domain that the system must enforce, such as "All purchase orders over $10,000 require dual approval
 
-C) A specific system behavior triggered by a user action, such as "clicking Save stores the record to the database"
+C) A specific system behavior triggered by a user action, such as "clicking Save stores the record to the database
 
 D) A diagram showing the relationships between data entities stored in the system database
 
@@ -140,7 +140,7 @@ Distractor Analysis:
 - Why A is incorrect: The requirement does not contradict other requirements; consistency is not the issue here.
 - Why C is incorrect: User interface usability is a legitimate business need; it is not optional. The Necessary criterion is not violated.
 - Why D is incorrect: While specifying the user audience would improve the requirement, the primary and more fundamental failure is that "user-friendly" cannot be objectively tested.
-- Why B is correct: "User-friendly" is a subjective, unmeasurable qualifier. No QA analyst can write a test case with a clear pass/fail outcome against this requirement. The fix is to specify a measurable standard, such as: "The system shall achieve a System Usability Scale score of at least 70 in post-deployment user testing with a sample of 20 representative users."
+- Why B is correct: "User-friendly" is a subjective, unmeasurable qualifier. No QA analyst can write a test case with a clear pass/fail outcome against this requirement. The fix is to specify a measurable standard, such as: "The system shall achieve a System Usability Scale score of at least 70 in post-deployment user testing with a sample of 20 representative users.
 
 ---
 

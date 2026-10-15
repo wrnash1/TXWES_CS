@@ -64,7 +64,7 @@ find / -name "sshd_config" 2>/dev/null
 
 The 2>/dev/null redirects error messages (stderr) to /dev/null, which discards them. You will
 see this pattern constantly when running find as a non-root user because you get many
-"Permission denied" errors for directories you cannot read.
+Permission denied" errors for directories you cannot read.
 
 ```bash
 find /var/log -mtime -1
@@ -78,7 +78,7 @@ find /home -size +1M
 ```
 
 -size +1M finds files larger than 1 megabyte. Capital M is megabytes. Lowercase k is kilobytes.
-Capital G is gigabytes. The plus sign means "greater than." A minus sign means "less than."
+Capital G is gigabytes. The plus sign means "greater than." A minus sign means "less than.
 
 ```bash
 find /etc -type f -name "*.conf"

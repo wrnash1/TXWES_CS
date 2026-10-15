@@ -91,12 +91,12 @@ Complete the following audit fields for your lab report:
 
 1. Navigate to your bucket → **Permissions** tab
 2. Look at the **Bucket policy** section
-3. If empty, note "No bucket policy — defaults to private"
+3. If empty, note "No bucket policy — defaults to private
 
 ### Step 2.2 — Check the Access Control List
 
 1. Still in **Permissions**, find the **Access control list (ACL)** section
-2. Review what permissions are listed for "Everyone (public access)"
+2. Review what permissions are listed for "Everyone (public access)
 3. Record what you see in your lab report
 
 ### Step 2.3 — Attempt to Make Object Public (Demonstration)

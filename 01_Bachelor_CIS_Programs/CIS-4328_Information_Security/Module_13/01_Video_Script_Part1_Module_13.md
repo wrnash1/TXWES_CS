@@ -83,7 +83,7 @@ When threat is high, vulnerability is high, and impact is high — risk is high.
 
 **Risk Appetite** — the amount of risk an organization is willing to accept in pursuit of its objectives. An organization with low risk appetite (a nuclear power plant) accepts very little risk and invests heavily in controls. An organization with high risk appetite (a startup) accepts more risk to move faster. Risk appetite is a business decision made by executive leadership, not by the security team.
 
-**Risk Tolerance** — the specific acceptable variation around the risk appetite. If the risk appetite is "low financial exposure from security incidents," the risk tolerance might be "no single incident will cost more than $500,000."
+**Risk Tolerance** — the specific acceptable variation around the risk appetite. If the risk appetite is "low financial exposure from security incidents," the risk tolerance might be "no single incident will cost more than $500,000.
 
 **Risk Threshold** — the point at which risk becomes unacceptable and requires mandatory treatment. Risks above the threshold must be addressed. Risks below the threshold are acceptable.
 

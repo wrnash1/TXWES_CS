@@ -28,15 +28,11 @@
 
 ## Opening — Recap and Transition
 
-**[INSTRUCTOR ON CAMERA]**
-
 Welcome back. In Part 1 we built the conceptual foundation: the CIA Triad, the controls framework, threat actor types, vulnerability classes, and active versus passive attacks. In Part 2 we are going to do three things: apply those concepts to attack surface analysis, walk through how these topics appear on the actual SY0-701 exam in scenario-based questions, and give you a practical exam strategy for Module 01 questions.
 
 ---
 
 ## Section 1 — Attack Surface Analysis
-
-**[SHOW DIAGRAM: A target organization represented as a series of concentric rings. Outermost ring: Internet-facing services — web servers, email, VPN endpoints. Middle ring: Internal network — workstations, file servers, printers. Inner ring: Data assets — databases, intellectual property, customer records. Arrows labeled Attack Vector point inward from the outside.]**
 
 **[Alt-text: Concentric rings diagram titled Attack Surface. Outermost ring is labeled Internet-Facing Services and lists web servers, email gateways, and VPN endpoints. Middle ring is labeled Internal Network and lists workstations, file servers, and printers. Inner ring is labeled Data Assets and lists databases and customer records. Red arrows labeled Attack Vector point from outside the diagram toward the center.]**
 
@@ -64,8 +60,6 @@ The **attack surface** is the total set of entry points where an attacker can at
 
 ## Section 2 — Indicators of Compromise
 
-**[SHOW DIAGRAM: Three-column table. Column 1: Indicator Category. Column 2: Example. Column 3: What It Suggests. Rows cover: Unusual Outbound Traffic, Account Privilege Escalation, Unexpected New Admin Accounts, Unusual Login Times/Locations, Anomalous Process Execution.]**
-
 **[Alt-text: Three-column table titled Indicators of Compromise. Row 1: Unusual Outbound Traffic — Large data transfer to unknown foreign IP — Data exfiltration. Row 2: Account Privilege Escalation — Standard user account gains admin rights without IT ticket — Insider threat or credential compromise. Row 3: Unexpected New Admin Accounts — New local admin account created after business hours — Attacker establishing persistence. Row 4: Unusual Login Times — User account authenticates at 3 AM from a foreign country — Credential theft or account compromise. Row 5: Anomalous Process Execution — System32 process spawning PowerShell — Fileless malware or living-off-the-land attack.]**
 
 An **Indicator of Compromise** — IOC — is a piece of forensic evidence that suggests a system may have been breached. Security operations centers use IOCs to detect and respond to attacks in progress.
@@ -83,8 +77,6 @@ Key IOC categories tested on SY0-701:
 ---
 
 ## Section 3 — Exam Scenario Walkthroughs
-
-**[INSTRUCTOR ON CAMERA]**
 
 Let me walk you through three exam-style scenarios so you can see how these concepts are tested. This is exactly the kind of reasoning the SY0-701 expects.
 
@@ -110,8 +102,6 @@ Answer: Integrity has been violated — files were modified without authorizatio
 
 ## Section 4 — Threat Intelligence Sources
 
-**[SHOW DIAGRAM: Hub-and-spoke diagram. Center hub: Threat Intelligence. Spokes leading to: OSINT, ISAC, Commercial Feeds, Dark Web Monitoring, Government Advisories (CISA).]**
-
 **[Alt-text: Hub-and-spoke diagram titled Threat Intelligence Sources. Central hub labeled Threat Intelligence. Five spokes extend to: OSINT — Open-Source Intelligence from public internet sources; ISAC — Information Sharing and Analysis Centers for sector-specific threat sharing; Commercial Feeds — Paid threat intelligence subscriptions; Dark Web Monitoring — Surveillance of criminal forums for stolen data or sale of exploits; Government Advisories — CISA alerts and FBI notifications.]**
 
 **Threat intelligence** is processed information about current and emerging threats used to inform defensive decisions. The SY0-701 exam tests your ability to identify and apply threat intelligence sources.
@@ -126,8 +116,6 @@ Answer: Integrity has been violated — files were modified without authorizatio
 ---
 
 ## Section 5 — Exam-Day Strategy for Module 01
-
-**[INSTRUCTOR ON CAMERA]**
 
 Here is your exam-day strategy specifically for the threat, attack, and vulnerability questions on SY0-701.
 
@@ -146,8 +134,6 @@ For comprehensive study on every SY0-701 objective, visit **professormesser.com*
 ---
 
 ## Closing
-
-**[INSTRUCTOR ON CAMERA]**
 
 That wraps up Module 01. You now have the vocabulary and the reasoning framework to attack — pun intended — the rest of this course. Every module from here builds on the CIA Triad, the controls framework, and the threat actor taxonomy we established today.
 

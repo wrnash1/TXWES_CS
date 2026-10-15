@@ -28,8 +28,6 @@
 
 ### Opening
 
-**[SHOW SLIDE: Module 03 — Cloud SQL: MySQL and PostgreSQL on GCP]**
-
 Hello, and welcome back to CIS-4327. I am Professor Nash. This is Module 03: Cloud SQL — MySQL and PostgreSQL on GCP.
 
 Cloud SQL is Google Cloud's fully managed relational database service. It supports MySQL, PostgreSQL, and SQL Server. You do not manage the underlying virtual machines, operating system patches, or storage infrastructure — Google handles all of that. Your job as a Cloud Database Engineer is to configure, secure, tune, and operate Cloud SQL instances correctly.
@@ -94,8 +92,6 @@ The `--availability-type=REGIONAL` flag creates a high-availability instance wit
 
 ### Section 3 — Connecting to Cloud SQL
 
-**[SHOW SLIDE: Three connection methods — Cloud SQL Auth Proxy, Private IP, Cloud Shell]**
-
 Connecting to Cloud SQL requires understanding the three available methods.
 
 The Cloud SQL Auth Proxy is the recommended connection method for applications. It handles TLS encryption and IAM authentication automatically, without requiring you to manage SSL certificates or maintain an allowlist of IP addresses. The proxy runs as a sidecar process alongside your application and establishes an encrypted tunnel to Cloud SQL.
@@ -134,8 +130,6 @@ gcloud sql connect txwes-pg-prod --user=postgres --quiet
 ---
 
 ### Section 4 — Users and Database-Level Access
-
-**[SHOW SLIDE: Cloud SQL user management — IAM database users vs. built-in users]**
 
 Cloud SQL supports two types of database users.
 
@@ -181,8 +175,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_user;
 
 ### Section 5 — Cloud SQL Editions and Pricing Model
 
-**[SHOW SLIDE: Cloud SQL Enterprise vs. Enterprise Plus comparison table]**
-
 Cloud SQL offers two editions for MySQL and PostgreSQL.
 
 Cloud SQL Enterprise is the standard edition. It provides SLA of 99.95% for high-availability instances, automated backups, read replicas in the same region, and standard I/O performance.
@@ -194,8 +186,6 @@ For the exam, know that Enterprise Plus provides higher performance and a strong
 ---
 
 ### Section 6 — Storage Configuration
-
-**[SHOW SLIDE: Storage type comparison — SSD vs. HDD, auto-increase]**
 
 Cloud SQL storage decisions directly affect performance and cost.
 
@@ -210,8 +200,6 @@ The maximum storage increase per increment is configurable. The default behavior
 ---
 
 ### Closing — Part 1 Summary
-
-**[SHOW SLIDE: Module 03 Part 1 key concepts]**
 
 In Part 1 we covered Cloud SQL's supported engines — MySQL, PostgreSQL, and SQL Server — and the key configuration dimensions: database version, region, machine type, storage type, and maintenance window.
 

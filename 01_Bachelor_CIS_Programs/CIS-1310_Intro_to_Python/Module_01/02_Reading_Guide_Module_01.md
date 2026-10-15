@@ -284,7 +284,7 @@ Dr. Charles Severance's open textbook used by millions of learners worldwide. Ch
 
 **3. Real Python — Python Basics: A Practical Introduction**
 [https://realpython.com/python-basics/](https://realpython.com/python-basics/)
-Real Python's free introductory articles cover the Python interpreter, REPL, and first scripts with clear diagrams and annotated code. Particularly useful: "How to Run Your Python Scripts" and "Interacting With Python."
+Real Python's free introductory articles cover the Python interpreter, REPL, and first scripts with clear diagrams and annotated code. Particularly useful: "How to Run Your Python Scripts" and "Interacting With Python.
 
 **4. PEP 8 — Style Guide for Python Code (Official)**
 [https://peps.python.org/pep-0008/](https://peps.python.org/pep-0008/)
@@ -293,9 +293,6 @@ The official style guide maintained by the Python Software Foundation. Read the 
 **5. CS50P — Introduction to Programming with Python (Harvard, Free)**
 [https://cs50.harvard.edu/python/](https://cs50.harvard.edu/python/)
 Harvard's free Python course available on edX and YouTube. Lecture 0 ("Functions, Variables") covers setting up Python and running first scripts — an excellent companion video with live coding demonstrations.
-
----
-
 
 ---
 
@@ -381,7 +378,6 @@ Before proceeding to this module's laboratory exercises, synthesize concise, rig
 1. **First-Principles Invariant Defense:** How does the theoretical model in this module ensure state correctness under adverse operating conditions? What mathematical proof or telemetry metric validates this behavior?
 2. **Architectural Trade-Off Analysis:** If forced to reduce execution latency by 50%, what specific compromises in consistency, redundancy, or capital expenditure would your architecture be forced to accept?
 3. **Failure Mode Pathology:** Explain the exact mechanistic chain of events that occurs when this module's primary subsystem experiences an unhandled resource starvation condition.
-
 
 ## 8. Study Checklist
 

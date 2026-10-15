@@ -100,7 +100,7 @@ Question Answering supports multi-turn conversations through a feature called **
 
 For example:
 
-- User: "What is your refund policy?"
+- User: "What is your refund policy?
 - Bot: "Our standard refund window is 30 days." [Follow-up prompts: "How do I start a refund?" | "What items are non-refundable?"]
 
 ### Confidence Threshold
@@ -115,8 +115,8 @@ This is good practice and prevents the bot from confidently giving wrong answers
 
 Real-world bots typically need both capabilities:
 
-- **CLU** handles task-oriented requests: "Book a meeting," "Cancel my order," "Reset my password"
-- **Question Answering** handles informational requests: "What are your hours?" "How long does shipping take?"
+- **CLU** handles task-oriented requests: "Book a meeting," "Cancel my order," "Reset my password
+- **Question Answering** handles informational requests: "What are your hours?" "How long does shipping take?
 
 The **Orchestration Workflow** feature in Azure AI Language lets you create a meta-model that routes incoming user messages to either a CLU project or a Question Answering project, whichever is the better match.
 

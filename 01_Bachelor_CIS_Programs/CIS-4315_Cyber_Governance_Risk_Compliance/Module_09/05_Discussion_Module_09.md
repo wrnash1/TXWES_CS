@@ -36,7 +36,7 @@ FinServe Credit Union recently hired Marcus, a new Information Security Manager,
 
 - Total log entries processed by the SIEM: 186,000,000
 
-The current CISO considers this report a strength of the program, pointing out that "the numbers show how active and engaged the security team is."
+The current CISO considers this report a strength of the program, pointing out that "the numbers show how active and engaged the security team is.
 
 Marcus disagrees and wants to redesign the metrics program before next month's board meeting.
 
@@ -58,9 +58,9 @@ Last month, a threat actor compromised a privileged service account, moved later
 
 Priya is the Information Security Manager for a regional hospital network operating under HIPAA. She has prepared her first quarterly security report for the board of directors. The report is 22 pages long and includes detailed vulnerability scan output, a complete list of SIEM correlation rules and their fire rates, a technical architecture diagram of the new firewall deployment, and an appendix listing every security incident with associated CVE numbers.
 
-After the board meeting, the board chair sends Priya a note: "I appreciate the thoroughness, but honestly, I am not sure what you need from us or whether we should be concerned about anything. Can you simplify next quarter?"
+After the board meeting, the board chair sends Priya a note: "I appreciate the thoroughness, but honestly, I am not sure what you need from us or whether we should be concerned about anything. Can you simplify next quarter?
 
-The CFO adds separately: "I could not find anything about our HIPAA compliance status or what we would be fined if something went wrong."
+The CFO adds separately: "I could not find anything about our HIPAA compliance status or what we would be fined if something went wrong.
 
 **Discussion Prompt**: Diagnose the specific problems with Priya's executive report using the reporting principles and anti-patterns covered in Module 9. Explain what was missing and why those omissions made the report ineffective for a board governance audience. Then, outline the revised structure you would recommend for Priya's next quarterly report, including the specific content each section should contain and how each section addresses the concerns raised by the board chair and CFO.
 

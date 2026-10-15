@@ -96,7 +96,7 @@ before
 caught division by zero
 ```
 
-"after" is never printed because `10 / 0` raises the exception and control jumps immediately to `except`.
+after" is never printed because `10 / 0` raises the exception and control jumps immediately to `except`.
 
 ### Step 1.4 — Accessing the Exception Message with as
 

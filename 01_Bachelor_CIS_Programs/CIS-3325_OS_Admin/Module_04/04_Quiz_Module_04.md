@@ -196,7 +196,7 @@ Distractor Analysis:
 
 After running usermod -aG docker labadmin on a running Ubuntu server, the administrator
 immediately tests whether the change worked by running docker ps. The command returns
-"permission denied." What is the most likely reason?
+permission denied." What is the most likely reason?
 
 - A) The docker group does not exist. The administrator must first create it with groupadd docker.
 - B) The usermod command failed silently because only root can belong to the docker group.
@@ -239,7 +239,7 @@ Distractor Analysis:
 
 **Question 12**
 
-A systems administrator creates a user with useradd -m -s /bin/bash -c "Web App Service"
+A systems administrator creates a user with useradd -m -s /bin/bash -c "Web App Service
 -r webapp. Which statement correctly describes the resulting account?
 
 - A) The account is a regular user account with UID above 1000 and a home directory at /home/webapp.

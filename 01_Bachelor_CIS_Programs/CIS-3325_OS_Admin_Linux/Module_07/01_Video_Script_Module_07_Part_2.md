@@ -119,7 +119,7 @@ WEBADMINS  ALL=(ALL)  WEBSERVICES
 jsmith  webserver01=(ALL)  ALL
 ```
 
-The four-field structure: WHO runs the command, on WHICH HOST, AS WHICH USER, running WHAT COMMANDS. The `ALL` keyword means "no restriction on that field."
+The four-field structure: WHO runs the command, on WHICH HOST, AS WHICH USER, running WHAT COMMANDS. The `ALL` keyword means "no restriction on that field.
 
 ---
 

@@ -231,7 +231,7 @@ An autoencoder trained on manufacturing sensor data achieves low reconstruction 
 A VAE is trained on MNIST digits. After training, you sample two latent vectors `z_1` and `z_2` corresponding to the encoded representations of a "3" and an "8". You decode 10 evenly spaced points along the straight line between `z_1` and `z_2`. What is this operation called, and what result do you expect in a well-trained VAE?
 
 - A) Latent projection; the decoded images will all look like noise because points off the training manifold are unseen
-- B) Latent interpolation; the decoded images should show a smooth visual transition from "3" to "8"
+- B) Latent interpolation; the decoded images should show a smooth visual transition from "3" to "8
 - C) Latent sampling; the decoded images will be random digits from the full prior distribution
 - D) Latent clustering; each decoded image will snap to the nearest class centroid
 

@@ -511,8 +511,6 @@ Hands-on lab configuring a Global HTTP(S) Load Balancer with managed instance gr
 <https://cloud.google.com/cdn/docs/caching>
 Detailed explanation of the three Cloud CDN cache modes (`USE_ORIGIN_HEADERS`, `CACHE_ALL_STATIC`, `FORCE_CACHE_ALL`), cache key configuration, TTL overrides, and cache invalidation — all of which appear in ACE exam scenario questions.
 
-
-
 ---
 
 ## Deep Theoretical Foundations & Conceptual Architecture

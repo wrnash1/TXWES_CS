@@ -139,7 +139,7 @@ Riverstone has three critical business functions that must be evaluated in the B
 
 ## Part 5 — Risk Response Justification
 
-**Lab Question 10:** Riverstone's office manager reviews the risk register and asks: "We are a small practice with limited budget. Can we just accept the risk of the patient portal being defaced? It's just a scheduling page."
+**Lab Question 10:** Riverstone's office manager reviews the risk register and asks: "We are a small practice with limited budget. Can we just accept the risk of the patient portal being defaced? It's just a scheduling page.
 
 Write a 150 to 200-word response to the office manager that:
 

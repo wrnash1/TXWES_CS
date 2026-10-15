@@ -36,8 +36,6 @@ These two services are consistently tested on the ACE exam. The exam presents a 
 
 ## Section 1: The Serverless Compute Spectrum
 
-**[SHOW SLIDE: Spectrum from most control to least control: Compute Engine, GKE, Cloud Run, App Engine, Cloud Functions]**
-
 GCP has multiple compute options on a spectrum from maximum control to maximum abstraction:
 
 - Compute Engine: you manage everything — OS, patches, scaling, software
@@ -51,8 +49,6 @@ Today we focus on Cloud Run and App Engine — the two primary serverless web pl
 ---
 
 ## Section 2: Cloud Run
-
-**[SHOW SLIDE: Container image arrow to Cloud Run service arrow to HTTPS endpoint with auto-scaling and scale-to-zero]**
 
 Cloud Run is GCP's fully managed container runtime. You push a container image and Cloud Run provides an HTTPS endpoint, handles load balancing, and scales automatically.
 
@@ -131,8 +127,6 @@ Use Cloud Run when:
 ---
 
 ## Section 3: App Engine Standard Environment
-
-**[SHOW SLIDE: App Engine diagram showing web app to app.yaml to gcloud app deploy to automatic HTTPS scaling monitoring]**
 
 App Engine is GCP's original platform-as-a-service. You deploy code in a supported language framework and App Engine handles everything else.
 

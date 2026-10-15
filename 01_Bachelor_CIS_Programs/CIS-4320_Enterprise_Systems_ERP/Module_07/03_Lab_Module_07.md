@@ -14,7 +14,7 @@ This lab develops your ability to map customer-facing business scenarios to Sale
 
 **Estimated Time:** 90 minutes
 
-**Submission:** Upload to Canvas under "Lab 07 — Customer Relationship Management Modules."
+**Submission:** Upload to Canvas under "Lab 07 — Customer Relationship Management Modules.
 
 ---
 
@@ -179,7 +179,7 @@ Three months after the Salesforce-SAP integration goes live, the implementation 
 
 1. Compile all responses into a single document.
 2. Name your file: `Lab07_LastName_FirstName.pdf`
-3. Upload to Canvas under "Lab 07 -- Customer Relationship Management Modules."
+3. Upload to Canvas under "Lab 07 -- Customer Relationship Management Modules.
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
 
 ---

@@ -26,23 +26,17 @@
 
 ---
 
-## [00:00 – 01:30] Opening
+## Opening
 
-**[INSTRUCTOR ON CAMERA — Title card: "Module 15 | Error Handling & Debugging | CIS-1320"]**
+Every program encounters unexpected conditions. A network request fails. A user passes the wrong type of value. A property is accessed on `undefined`. Module 15 is about two complementary skills: writing code that handles errors gracefully, so your application can recover rather than crash, and using debugging tools effectively, so you can find and fix problems quickly.
 
-"Every program encounters unexpected conditions. A network request fails. A user passes the wrong type of value. A property is accessed on `undefined`. Module 15 is about two complementary skills: writing code that handles errors gracefully, so your application can recover rather than crash, and using debugging tools effectively, so you can find and fix problems quickly.
-
-By the end of this module, you will know JavaScript's built-in error types, how to catch and throw errors with `try/catch/finally`, how to create custom error classes, and how to use Chrome DevTools and `console` methods to diagnose problems in running code. These skills apply to every project from this point forward."
+By the end of this module, you will know JavaScript's built-in error types, how to catch and throw errors with `try/catch/finally`, how to create custom error classes, and how to use Chrome DevTools and `console` methods to diagnose problems in running code. These skills apply to every project from this point forward.
 
 ---
 
-## [01:30 – 05:30] Part 1 — JavaScript Error Types
+## Part 1 — JavaScript Error Types
 
-**[SHOW SLIDE: "JavaScript Built-In Error Types"]**
-
-"When JavaScript encounters a problem it cannot resolve, it throws an error. The error is an object — an instance of one of the built-in error classes. There are six you need to know for the JSE exam.
-
-**[DEMO — open Chrome DevTools Console]**
+When JavaScript encounters a problem it cannot resolve, it throws an error. The error is an object — an instance of one of the built-in error classes. There are six you need to know for the JSE exam.
 
 `SyntaxError` — the code itself is malformed. The engine cannot even parse it.
 
@@ -59,8 +53,6 @@ try {
 
 SyntaxErrors in your actual script files halt execution before any code runs. You see them in the console before any output appears.
 
-[PAUSE]
-
 `ReferenceError` — you tried to use a variable that does not exist.
 
 ```javascript
@@ -71,8 +63,6 @@ try {
   console.log(err.message); // 'undeclaredVariable is not defined'
 }
 ```
-
-[PAUSE]
 
 `TypeError` — the operation is not valid for the type of value you have.
 
@@ -94,8 +84,6 @@ try {
 
 TypeError is the most common error you will encounter in real applications.
 
-[PAUSE]
-
 `RangeError` — a numeric value is outside the valid range.
 
 ```javascript
@@ -113,8 +101,6 @@ try {
 }
 ```
 
-[PAUSE]
-
 `URIError` — malformed URI string passed to `decodeURIComponent` or similar functions.
 
 ```javascript
@@ -126,8 +112,6 @@ try {
 ```
 
 `EvalError` — historically from `eval()` misuse. Rarely seen in practice but listed in the specification. Know the name.
-
-[PAUSE]
 
 **Every error object has three key properties:**
 
@@ -141,17 +125,13 @@ try {
 }
 ```
 
-`name` identifies the error type. `message` describes what went wrong. `stack` is a multi-line string showing the call stack at the moment the error was thrown — invaluable for debugging."
+`name` identifies the error type. `message` describes what went wrong. `stack` is a multi-line string showing the call stack at the moment the error was thrown — invaluable for debugging.
 
 ---
 
-## [05:30 – 10:00] Part 2 — `try/catch/finally` and `throw`
+## Part 2 — `try/catch/finally` and `throw`
 
-**[SHOW SLIDE: "try / catch / finally"]**
-
-"The `try` block contains code that might throw. The `catch` block runs only if something throws. The `finally` block runs always — whether an error occurred or not.
-
-**[DEMO]**
+The `try` block contains code that might throw. The `catch` block runs only if something throws. The `finally` block runs always — whether an error occurred or not.
 
 ```javascript
 function divide(a, b) {
@@ -172,8 +152,6 @@ console.log(divide(10, 0));  // logs 'Caught: Division by zero', logs 'divide() 
 
 `finally` always runs. Even if the `catch` block has a `return`, `finally` still executes before the function returns. Use `finally` for cleanup that must happen regardless of outcome — closing a connection, hiding a loading spinner, releasing a lock.
 
-[PAUSE]
-
 **Throwing errors:**
 
 ```javascript
@@ -183,8 +161,6 @@ throw new RangeError('Value must be between 0 and 100');
 ```
 
 You can throw any value — a string, a number — but always prefer `new Error(message)` or a subclass. Error objects give you `.name`, `.message`, and `.stack`. A thrown string gives you nothing useful.
-
-[PAUSE]
 
 **Rethrowing — when you can handle it, handle it; when you cannot, rethrow:**
 
@@ -203,8 +179,6 @@ async function loadUser(id) {
 
 Catching every error and silently swallowing it is a common mistake. If you do not know how to handle an error, rethrow it.
 
-[PAUSE]
-
 **Checking error type in catch:**
 
 ```javascript
@@ -221,17 +195,13 @@ try {
 }
 ```
 
-Use `instanceof` to check the class of the error, or `err.name` to check the name string."
+Use `instanceof` to check the class of the error, or `err.name` to check the name string.
 
 ---
 
-## [10:00 – 13:00] Part 3 — Custom Error Classes
+## Part 3 — Custom Error Classes
 
-**[SHOW SLIDE: "Custom Error Classes"]**
-
-"When you build a real application, you often need to distinguish your own errors from JavaScript's built-in ones. The standard approach is to extend the `Error` class.
-
-**[DEMO]**
+When you build a real application, you often need to distinguish your own errors from JavaScript's built-in ones. The standard approach is to extend the `Error` class.
 
 ```javascript
 class ValidationError extends Error {
@@ -253,8 +223,6 @@ class NotFoundError extends Error {
 ```
 
 Two steps are required: call `super(message)` to initialize the base Error, and then set `this.name` to your class's name. Without `this.name = 'ValidationError'`, the name will default to `'Error'`.
-
-[PAUSE]
 
 ```javascript
 function validateAge(age) {
@@ -279,17 +247,13 @@ try {
 }
 ```
 
-Custom errors let callers use `instanceof` to respond specifically to your errors versus unexpected system errors. This is the same pattern used in mature libraries and frameworks."
+Custom errors let callers use `instanceof` to respond specifically to your errors versus unexpected system errors. This is the same pattern used in mature libraries and frameworks.
 
 ---
 
-## [13:00 – 17:30] Part 4 — Console Methods and DevTools
+## Part 4 — Console Methods and DevTools
 
-**[SHOW SLIDE: "Console and Debugging Tools"]**
-
-"The `console` object has more than just `log`. Knowing all of its methods makes debugging significantly more efficient.
-
-**[DEMO — Chrome DevTools Console]**
+The `console` object has more than just `log`. Knowing all of its methods makes debugging significantly more efficient.
 
 ```javascript
 console.log('Standard output');
@@ -298,8 +262,6 @@ console.error('This will be red — an error');
 ```
 
 `warn` and `error` are styled differently in DevTools. `error` also produces a stack trace in the console.
-
-[PAUSE]
 
 ```javascript
 const users = [
@@ -312,8 +274,6 @@ console.table(users);   // renders as a formatted table in DevTools
 ```
 
 `console.table` is extremely useful for arrays of objects. Scrolling through `console.log` output for 50 objects is miserable; `console.table` puts them in a sortable grid.
-
-[PAUSE]
 
 ```javascript
 console.group('User Processing');
@@ -329,8 +289,6 @@ console.timeEnd('sort-operation');   // logs: 'sort-operation: 0.123ms'
 
 `console.group` / `console.groupEnd` creates an expandable/collapsible group in the console — useful for grouping related output. `console.time` / `console.timeEnd` measures elapsed time precisely.
 
-[PAUSE]
-
 ```javascript
 const value = 42;
 console.assert(value > 100, 'Expected value to be > 100, got:', value);
@@ -339,8 +297,6 @@ console.assert(value > 100, 'Expected value to be > 100, got:', value);
 ```
 
 `console.assert` is useful for quick sanity checks during development. It logs an error with your message if the condition is false, and does nothing if it is true.
-
-[PAUSE]
 
 **[SWITCH TO SOURCES PANEL — DevTools]**
 
@@ -361,8 +317,6 @@ The toolbar buttons:
 - **Step Into** (F11) — enter the function being called on this line
 - **Step Out** (Shift+F11) — finish the current function, return to caller
 
-[PAUSE]
-
 **The `debugger` statement:**
 
 ```javascript
@@ -374,17 +328,13 @@ function calculateTotal(items) {
 
 The `debugger` statement triggers a breakpoint programmatically. It only has an effect when DevTools is open. Remove it before shipping to production — it will pause all users' browsers if left in.
 
-Use `debugger` when you want to pause at a specific point without clicking through the Sources panel, or when the line number is in generated code that is hard to find."
+Use `debugger` when you want to pause at a specific point without clicking through the Sources panel, or when the line number is in generated code that is hard to find.
 
 ---
 
-## [17:30 – 20:30] Part 5 — Common Bugs and Defensive Patterns
+## Part 5 — Common Bugs and Defensive Patterns
 
-**[SHOW SLIDE: "Common Bugs and Defensive Code"]**
-
-"Let me walk through the bugs you will encounter most often.
-
-**[DEMO]**
+Let me walk through the bugs you will encounter most often.
 
 **Accessing a property on `undefined` or `null`:**
 
@@ -406,8 +356,6 @@ if (user) {
 
 Optional chaining (`?.`) short-circuits to `undefined` if the left side is null or undefined. It does not silence all TypeErrors — only those from null/undefined property access.
 
-[PAUSE]
-
 **Type coercion surprises:**
 
 ```javascript
@@ -421,8 +369,6 @@ console.log(null === undefined); // false
 
 Use `===` by default. `==` with mixed types produces surprises like these.
 
-[PAUSE]
-
 **Forgetting `await`:**
 
 ```javascript
@@ -434,8 +380,6 @@ async function loadData() {
 
 If you are getting `[object Promise]` in your output or `undefined` where you expect data, you most likely forgot `await`.
 
-[PAUSE]
-
 **`parseInt` with missing radix:**
 
 ```javascript
@@ -444,8 +388,6 @@ parseInt('08', 10); // always 8 — always provide the radix
 ```
 
 Always pass `10` as the second argument to `parseInt`. Without it, the behavior for strings starting with `0` is engine-dependent in old code.
-
-[PAUSE]
 
 **Defensive guard clauses — validate at function entry:**
 
@@ -460,15 +402,13 @@ function processOrder(order) {
 }
 ```
 
-Guard clauses at the top of a function make expectations explicit and fail fast with a clear message rather than throwing a confusing error three function calls later."
+Guard clauses at the top of a function make expectations explicit and fail fast with a clear message rather than throwing a confusing error three function calls later.
 
 ---
 
-## [20:30 – 22:00] Closing — Lab Preview
+## Closing — Lab Preview
 
-**[SHOW SLIDE: "Module 15 Lab Preview"]**
-
-"The Module 15 lab has three parts.
+The Module 15 lab has three parts.
 
 Part 1 covers error types and try/catch — you will trigger each built-in error type deliberately, practice catching them by type with `instanceof`, and build a rethrowing pattern.
 
@@ -476,7 +416,7 @@ Part 2 covers custom errors — you will implement `ValidationError` and `NotFou
 
 Part 3 covers debugging — you will use `console.table`, `console.group`, `console.time`, and the `debugger` statement, then step through code in Chrome DevTools using breakpoints.
 
-The quiz tests error type identification, try/catch/finally behavior, throw mechanics, custom Error subclasses, and console methods. Read the guide before the lab. Good luck."
+The quiz tests error type identification, try/catch/finally behavior, throw mechanics, custom Error subclasses, and console methods. Read the guide before the lab. Good luck.
 
 ---
 

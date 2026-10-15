@@ -100,7 +100,7 @@ A financial institution wants any testers caught by their internal security team
 
 **Distractor Analysis:**
 
-- Why C is correct: The authorization letter is a carry-on document identifying the tester, the scope, and the dates of authorized testing. It is presented to internal security or law enforcement to confirm legitimacy — hence the nickname "get-out-of-jail card."
+- Why C is correct: The authorization letter is a carry-on document identifying the tester, the scope, and the dates of authorized testing. It is presented to internal security or law enforcement to confirm legitimacy — hence the nickname "get-out-of-jail card.
 - Why A is incorrect: An NDA protects confidential information but does not authorize testing or serve as proof of permission during an active engagement.
 - Why B is incorrect: A certification proves qualifications but carries no legal authority to conduct testing on a specific organization's systems.
 - Why D is incorrect: The final report is produced after testing concludes and cannot be presented during active testing as real-time proof of authorization.

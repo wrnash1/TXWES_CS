@@ -29,7 +29,7 @@ Let's build something great. Welcome to graduate-level networking!
 **Estimated Duration:** 3–4 minutes
 **Visual:** Instructor on camera, professional setting, network diagram visible on screen behind.
 
-"Welcome to CSC-6361, Advanced Computer Networks. I'm Professor Nash, and if you are in this course, you already understand the fundamentals — the OSI model, basic IP routing, switching. This course is where we go beyond the fundamentals.
+Welcome to CSC-6361, Advanced Computer Networks. I'm Professor Nash, and if you are in this course, you already understand the fundamentals — the OSI model, basic IP routing, switching. This course is where we go beyond the fundamentals.
 
 Over the next seven weeks, we are going to work at the level of a senior network engineer. That means multi-area OSPF, BGP routing with autonomous systems, MPLS label-switched paths, SD-WAN architectures, network automation with Python, and cloud-integrated hybrid networks. This is the material that CCNP Enterprise engineers work with every single day.
 
@@ -37,7 +37,7 @@ Because this is a graduate course, I expect graduate-level work. Your lab report
 
 Everything you need for this course is free. Cisco Packet Tracer, the Cisco Learning Network, Cisco DevNet Labs, and the IETF RFC repository are all zero cost and all linked in Canvas.
 
-We only have seven weeks together, so let's make every one of them count. I look forward to seeing your work."
+We only have seven weeks together, so let's make every one of them count. I look forward to seeing your work.
 
 ---
 

@@ -288,7 +288,7 @@ Distractor Analysis:
   individual core by number and the `_Total` summary instance.
 
 - **D** — `(*)` returns all instances without a numeric limit. There is no
-  "top 10" behavior built into the counter path wildcard.
+  top 10" behavior built into the counter path wildcard.
 
 ---
 

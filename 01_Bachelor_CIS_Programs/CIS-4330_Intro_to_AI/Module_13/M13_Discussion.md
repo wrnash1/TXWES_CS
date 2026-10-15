@@ -21,7 +21,7 @@ Choose ONE of the three scenarios below. Write an initial post of 175–225 word
 
 ## Scenario A — The ROI Skeptic
 
-A regional grocery chain's CFO reviewed an AI demand forecasting proposal from the data science team. The team projected $4.2M in annual savings from reduced overstock and fewer stockouts. The CFO dismissed the proposal, saying: "You built a financial model on top of another model. Every number you gave me is an assumption, not a fact. We could spend $800K on something with no proven return."
+A regional grocery chain's CFO reviewed an AI demand forecasting proposal from the data science team. The team projected $4.2M in annual savings from reduced overstock and fewer stockouts. The CFO dismissed the proposal, saying: "You built a financial model on top of another model. Every number you gave me is an assumption, not a fact. We could spend $800K on something with no proven return.
 
 **Prompt:** How should the data science team respond to the CFO's skepticism? Is the CFO wrong, or does she have legitimate concerns about how AI ROI is typically estimated? What evidence, framing, or methodology changes would make the business case more convincing? Apply the ROI framework from Module 13 in your response.
 

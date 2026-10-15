@@ -370,7 +370,7 @@ void loop() {
 
 1. Upload and run the sketch
 2. Open nRF Connect on your smartphone
-3. Tap Scan and connect to "TXWES-TempSensor"
+3. Tap Scan and connect to "TXWES-TempSensor
 4. Navigate to the Environmental Sensing service (UUID 181A)
 5. Enable notifications on the Temperature characteristic (UUID 2A6E) by tapping the bell icon
 6. Enable notifications on the Humidity characteristic (UUID 2A6F)
@@ -380,7 +380,7 @@ void loop() {
 
 - Screenshot of nRF Connect showing the device connected and service visible
 - Screenshot of the Temperature characteristic showing a notification value (the raw int16 bytes)
-- Screenshot of ESP32 Serial Monitor showing temperature/humidity readings with "Connected: YES"
+- Screenshot of ESP32 Serial Monitor showing temperature/humidity readings with "Connected: YES
 - Written answer (2–3 sentences): The temperature raw value in nRF Connect appears as a hex byte sequence, not a decimal number. For example, 23.45°C would be stored as 2345 decimal = 0x0929. How would a phone app convert this raw bytes back to a human-readable temperature value?
 
 ---

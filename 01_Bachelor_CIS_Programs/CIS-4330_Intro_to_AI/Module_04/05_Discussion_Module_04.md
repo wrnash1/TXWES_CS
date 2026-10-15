@@ -15,7 +15,7 @@ Read all three scenarios below. Choose one scenario for your initial post. Ident
 
 ## Scenario A: The Medical Diagnosis Black Box
 
-A hospital system deploys a deep neural network that analyzes patient lab results, vital signs, and medical history to predict the risk of sepsis within the next 12 hours. The model achieves 94% accuracy and significantly outperforms the hospital's existing clinical scoring tools. However, the intensive care physicians push back against using the model in clinical decisions. "We cannot recommend interventions based on a system we cannot explain," one physician states. "If the model flags a patient and we act on it, and something goes wrong, we need to be able to explain why."
+A hospital system deploys a deep neural network that analyzes patient lab results, vital signs, and medical history to predict the risk of sepsis within the next 12 hours. The model achieves 94% accuracy and significantly outperforms the hospital's existing clinical scoring tools. However, the intensive care physicians push back against using the model in clinical decisions. "We cannot recommend interventions based on a system we cannot explain," one physician states. "If the model flags a patient and we act on it, and something goes wrong, we need to be able to explain why.
 
 In your initial post (175-225 words), address all of the following:
 

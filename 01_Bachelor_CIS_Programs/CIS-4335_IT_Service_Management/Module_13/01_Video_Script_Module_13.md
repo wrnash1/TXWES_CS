@@ -28,11 +28,8 @@
 
 ---
 
-## Section 1: Welcome and Module Overview [00:00 - 02:30]
-
+## Section 1: Welcome and Module Overview
 Welcome to Module 13. I am Professor Nash. Today we are covering IT Asset Management — a practice that sounds administrative on the surface but is absolutely foundational to how an organization controls its costs, manages its risk, and maintains regulatory compliance.
-
-[SHOW DIAGRAM: Title slide — "Module 13: IT Asset Management" with ITIL 4 SVS label and ITIL 4 Foundation certification badge]
 
 Every organization owns or licenses technology assets — servers, laptops, switches, software licenses, cloud subscriptions, mobile devices, virtual machines. IT Asset Management is the practice that ensures those assets are tracked, managed, and disposed of in a way that maximizes value and minimizes risk throughout the asset lifecycle. ITIL 4 defines this practice as ensuring that the value of IT assets is maximized, costs are controlled, risks are managed, and decisions about purchasing, reuse, retirement, and disposal are made based on accurate, complete asset information.
 
@@ -40,17 +37,13 @@ By the end of this module you will be able to: define the purpose of IT Asset Ma
 
 ---
 
-## Section 2: The IT Asset Lifecycle [02:30 - 07:30]
-
-[SHOW DIAGRAM: Asset lifecycle wheel — six stages: Planning, Procurement, Deployment, Maintenance/Operation, Retirement, Disposal — arranged in a cycle with brief description of each stage]
+## Section 2: The IT Asset Lifecycle
 
 An IT asset goes through a defined lifecycle from the moment it is considered for acquisition to the moment it is securely destroyed or transferred. Managing each stage of this lifecycle is what IT Asset Management is about.
 
 **Stage 1: Planning.** Before an asset is purchased, the organization must establish that it is needed. Asset planning identifies requirements, aligns with technology roadmaps, and ensures that procurement is budgeted and approved. Without planning, organizations accumulate redundant assets — duplicate software licenses for the same function, servers that were bought for projects that never launched.
 
 **Stage 2: Procurement.** Assets are acquired — purchased, leased, or licensed. Procurement records establish the asset's identity: what it is, how much it cost, what the license terms are, and who the vendor is. These records are the foundation of all subsequent asset tracking.
-
-[PAUSE]
 
 **Stage 3: Deployment.** The asset is configured, assigned to a user or system, and put into active use. At this stage the asset is registered in the CMDB — the Configuration Management Database — with its attributes, relationships, and ownership recorded.
 
@@ -62,15 +55,11 @@ An IT asset goes through a defined lifecycle from the moment it is considered fo
 
 ---
 
-## Section 3: The Configuration Management Database [07:30 - 12:30]
-
-[SHOW DIAGRAM: CMDB architecture — central CMDB repository connected to: CI records (hardware, software, services, locations), relationships graph, discovery tool feeds, and consuming practices (Change Management, Incident Management, Problem Management, Asset Management)]
+## Section 3: The Configuration Management Database
 
 The Configuration Management Database — CMDB — is the authoritative repository of information about configuration items and their relationships. A configuration item (CI) is any component that needs to be managed in order to deliver a service. Hardware assets, software installations, cloud instances, network devices, and even documentation can be CIs.
 
 The CMDB does not just store individual records — it stores the relationships between them. It knows that Server A hosts Application B, which is used by Service C, which is covered by SLA D. This relationship data is what makes the CMDB powerful for impact analysis. When a CI is about to change, impact analysis traces the relationships to understand what services and users will be affected.
-
-[PAUSE]
 
 The CMDB is only as valuable as its accuracy. An inaccurate CMDB is often worse than no CMDB — it creates false confidence. Organizations that rely on a CMDB with stale or incomplete data make change and incident decisions based on wrong information.
 
@@ -82,9 +71,7 @@ The integration between discovery tools and the CMDB is what enables continuous 
 
 ---
 
-## Section 4: Software License Compliance and SAM [12:30 - 17:30]
-
-[SHOW DIAGRAM: Software license compliance gap analysis — left column: licenses purchased (100), right column: installations detected (127), gap: 27 unlicensed installations → compliance risk + financial exposure]
+## Section 4: Software License Compliance and SAM
 
 Software asset management — SAM — is the subset of IT Asset Management focused specifically on managing software licenses throughout their lifecycle. SAM has two primary goals: ensuring the organization is not using software it has not licensed (under-licensing, which creates legal and compliance risk) and ensuring the organization is not paying for licenses it is not using (over-licensing, which wastes money).
 
@@ -100,17 +87,13 @@ Concurrent or floating licensing: a defined number of simultaneous users can acc
 
 Subscription licensing: the right to use the software is purchased for a period of time, not permanently. When the subscription expires, use must cease or be renewed.
 
-[PAUSE]
-
 ### License Compliance Audits
 
 Software vendors conduct audits — often without advance notice — to verify that customers are using their software within license terms. The consequences of non-compliance can include retroactive license fees, penalties, and reputational damage. SAM programs that maintain accurate entitlement records and regular compliance checks are the primary defense against audit exposure.
 
 ---
 
-## Section 5: Secure Asset Disposal [17:30 - 20:30]
-
-[SHOW DIAGRAM: Data sanitization methods — three boxes: Physical Destruction (shredding/degaussing — 100% unrecoverable), Cryptographic Wipe (software-based overwrite — recoverable with forensic tools if improperly done), Certificate of Destruction (vendor-provided documentation for audit trail)]
+## Section 5: Secure Asset Disposal
 
 Secure disposal is one of the most overlooked risk areas in IT Asset Management. When hardware reaches end of life, it may contain sensitive data — customer records, employee information, financial data, intellectual property. If that hardware is disposed of without proper data sanitization, the data can be recovered.
 
@@ -126,8 +109,7 @@ Documentation matters. Organizations should retain certificates of destruction o
 
 ---
 
-## Section 6: Asset Management and the ITIL 4 SVS [20:30 - 22:30]
-
+## Section 6: Asset Management and the ITIL 4 SVS
 IT Asset Management connects to multiple other ITIL 4 practices. Change Management consults the CMDB to assess the impact of proposed changes on existing assets. Incident Management uses asset relationships to rapidly identify the source of failures. Financial Management relies on asset records for budgeting and cost allocation. Information Security Management depends on accurate asset inventories to ensure all assets are included in security controls.
 
 The ITIL 4 guiding principle "Start with What You Exist" applies directly here. Asset Management builds on existing asset records, discovery data, and procurement systems — it does not require a blank-slate rebuild of every record.

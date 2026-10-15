@@ -220,7 +220,7 @@ With management groups, the organization:
 
 ### Management Groups and Azure Policy
 
-Policy assignments at the Root Management Group apply to the entire tenant. This is the recommended location for enterprise-wide governance policies like "All resources must be in approved regions" or "All resources must have required tags."
+Policy assignments at the Root Management Group apply to the entire tenant. This is the recommended location for enterprise-wide governance policies like "All resources must be in approved regions" or "All resources must have required tags.
 
 Policy assignments at child management groups apply only to subscriptions within that group. This allows Production to have stricter policies than Development.
 
@@ -521,8 +521,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
-
 
 ---
 

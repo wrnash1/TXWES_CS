@@ -25,25 +25,15 @@
 
 ### Pre-Roll Slide
 
-[SHOW SLIDE: "Module 06 Part 2 — Wireless Security Protocols, WPA2/WPA3, and Wireless Threats"]
-
 ---
 
 ### Section 1: Part 2 Introduction
-
-[00:00 – 00:45]
-
-[SHOW SLIDE: Professor Nash on camera]
 
 Welcome back to Module 06. In Part 1 we covered the 802.11 standard generations, frequency band trade-offs, and channel planning. Now in Part 2 we tackle wireless security — the progression from WEP to WPA3, the difference between Personal and Enterprise modes, and the common wireless attacks you need to recognize for the exam.
 
 ---
 
 ### Section 2: Wireless Security — The Evolution from WEP to WPA3
-
-[00:45 – 05:30]
-
-[SHOW DIAGRAM: A timeline showing the progression of wireless security standards. Left to right: WEP (1997, RC4 static key, broken), WPA (2003, TKIP/RC4, deprecated), WPA2 (2004, AES-CCMP, current minimum), WPA3 (2018, SAE, current best practice).]
 
 [Alt-text: A horizontal timeline diagram. From left to right: WEP introduced in 1997 using RC4 with static keys, labeled Completely Broken. WPA introduced in 2003 using TKIP with RC4, labeled Deprecated. WPA2 introduced in 2004 using AES-CCMP, labeled Current Minimum Standard. WPA3 introduced in 2018 using SAE (Simultaneous Authentication of Equals) and forward secrecy, labeled Current Best Practice.]
 
@@ -58,10 +48,6 @@ Welcome back to Module 06. In Part 1 we covered the 802.11 standard generations,
 ---
 
 ### Section 3: WPA2-Personal vs. WPA2-Enterprise
-
-[05:30 – 08:00]
-
-[SHOW DIAGRAM: Two topology diagrams side by side. Left: WPA2-Personal — a client connects to an AP using a shared passphrase (PSK). No server required. Right: WPA2-Enterprise — a client connects to an AP, which contacts a RADIUS server for authentication. The client provides individual credentials. The RADIUS server approves or denies access.]
 
 [Alt-text: Two network diagrams. Left diagram is labeled WPA2-Personal. A client device connects to an AP labeled PSK, with a pre-shared passphrase shown between them and a label that reads "All users share the same passphrase." Right diagram is labeled WPA2-Enterprise. A client device connects to an AP, which connects to a RADIUS Authentication Server. The client provides individual username and password or certificate credentials. A label reads "Each user has unique credentials."]
 
@@ -78,10 +64,6 @@ For enterprise environments with more than a handful of users, WPA2-Enterprise w
 ---
 
 ### Section 4: Wireless Threats and Attacks
-
-[08:00 – 10:30]
-
-[SHOW SLIDE: List of wireless attack types with brief descriptions]
 
 The Network+ exam tests several common wireless attacks. Let's cover the ones you must know.
 
@@ -100,8 +82,6 @@ The Network+ exam tests several common wireless attacks. Let's cover the ones yo
 ---
 
 ### Section 5: Lab Preview and Module Closing
-
-[SHOW SLIDE: Lab overview — wireless scan command output]
 
 In this week's lab, you will use the netsh wlan show networks command on Windows or the iwlist command on Linux to scan for nearby Wi-Fi networks. You will identify the SSID, 802.11 standard, frequency band, channel, and security type for each discovered network. This directly connects the theory from the lecture to observable real-world networks.
 

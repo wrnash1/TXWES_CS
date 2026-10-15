@@ -234,7 +234,7 @@ The loop does not check the type of each object. It simply calls `.speak()` and 
 
 ### Duck Typing
 
-Python's approach to polymorphism: if an object has the method being called, it works — regardless of its type. "If it walks like a duck and quacks like a duck, it is a duck."
+Python's approach to polymorphism: if an object has the method being called, it works — regardless of its type. "If it walks like a duck and quacks like a duck, it is a duck.
 
 ```python
 def make_sound(thing):
@@ -430,7 +430,7 @@ In single inheritance, that is always the parent. `super().__init__()` runs the 
 Python does not enforce type constraints. A function that calls `.speak()` works on any object that has a `speak()` method, regardless of class hierarchy.
 
 **Tip 6 — `isinstance(child_obj, ParentClass)` returns True.**
-A `Dog` instance passes `isinstance(d, Animal)`. Use `isinstance()` when you need to check "is this an Animal (or any subclass of Animal)?"
+A `Dog` instance passes `isinstance(d, Animal)`. Use `isinstance()` when you need to check "is this an Animal (or any subclass of Animal)?
 
 **Tip 7 — `__mro__` shows the method lookup order.**
 `Dog.__mro__` returns a tuple: `(Dog, Animal, object)`. Python searches left to right. The exam may show a multi-level hierarchy and ask which method is called.
@@ -519,9 +519,6 @@ A focused deep-dive into Python's `super()` function — how it uses the MRO, ho
 
 ---
 
-
----
-
 ## Deep Theoretical Foundations & Conceptual Architecture
 
 ### 1. Epistemological Framework & First Principles
@@ -604,7 +601,6 @@ Before proceeding to this module's laboratory exercises, synthesize concise, rig
 1. **First-Principles Invariant Defense:** How does the theoretical model in this module ensure state correctness under adverse operating conditions? What mathematical proof or telemetry metric validates this behavior?
 2. **Architectural Trade-Off Analysis:** If forced to reduce execution latency by 50%, what specific compromises in consistency, redundancy, or capital expenditure would your architecture be forced to accept?
 3. **Failure Mode Pathology:** Explain the exact mechanistic chain of events that occurs when this module's primary subsystem experiences an unhandled resource starvation condition.
-
 
 ## 8. Study Checklist
 

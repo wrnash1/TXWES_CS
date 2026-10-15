@@ -183,7 +183,7 @@ For the grid traversal in Number of Islands, the DFS checks bounds before access
 
 - *Why A is incorrect:* Accessing `grid[r][c]` before checking bounds will raise `IndexError` when `r` or `c` is out of range. The bounds check must come first.
 - *Why B is correct:* Python's `and` operator short-circuits: if `0 <= r < rows and 0 <= c < cols` is False, the second condition `grid[r][c] != '1'` is never evaluated — preventing the index-out-of-range error. This is a critical pattern for all grid problems.
-- *Why C is incorrect:* Python raises `IndexError` for out-of-bounds list access. Negative indices are valid in Python lists (they access from the end), which can silently introduce bugs in grid problems where negative row/column indices should mean "out of bounds."
+- *Why C is incorrect:* Python raises `IndexError` for out-of-bounds list access. Negative indices are valid in Python lists (they access from the end), which can silently introduce bugs in grid problems where negative row/column indices should mean "out of bounds.
 - *Why D is incorrect:* Python evaluates `and` conditions left to right with short-circuit evaluation. Order is essential — placing the array access before the bounds check is a bug.
 
 ---
